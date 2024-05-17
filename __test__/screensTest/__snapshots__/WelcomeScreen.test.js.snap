@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logout ButtonText Renders ButtonText with the correct text: Logout 1`] = `"[object Object]"`;
+
+exports[`WelcomeScreen Renders correctly the WelcomeScreen Component 1`] = `
+<RCTSafeAreaView
+  style={
+    {
+      "backgroundColor": "#f9f7f3",
+      "flexBasis": 0,
+      "flexGrow": 1,
+      "flexShrink": 1,
+      "width": "100%",
+    }
+  }
+  testID="styled-container"
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexBasis": 0,
+        "flexGrow": 1,
+        "flexShrink": 1,
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+    testID="inner-container"
+  >
+    <Image
+      resizeMode="cover"
+      source={1}
+      style={
+        {
+          "height": "50%",
+          "width": "100%",
+        }
+      }
+      testID="welcome-image"
+    />
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexBasis": 0,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "justifyContent": "center",
+          "paddingBottom": 25,
+          "paddingLeft": 25,
+          "paddingRight": 25,
+          "paddingTop": 10,
+          "width": "100%",
+        }
+      }
+      testID="welcome-container"
+    >
+      <Text
+        style={
+          {
+            "color": "#000000",
+            "fontSize": 35,
+            "fontWeight": "bold",
+            "paddingBottom": 10,
+            "paddingLeft": 10,
+            "paddingRight": 10,
+            "paddingTop": 10,
+            "textAlign": "center",
+          }
+        }
+        testID="welcome-title"
+        welcome={true}
+      >
+        Welcome!
+      </Text>
+      <Text
+        style={
+          {
+            "color": "#1a1204",
+            "fontSize": 15,
+            "fontWeight": "normal",
+            "letterSpacing": 1,
+            "marginBottom": 5,
+          }
+        }
+        testID="user-name"
+        welcome={true}
+      >
+        Zen User
+      </Text>
+      <Text
+        style={
+          {
+            "color": "#1a1204",
+            "fontSize": 15,
+            "fontWeight": "normal",
+            "letterSpacing": 1,
+            "marginBottom": 5,
+          }
+        }
+        testID="user-email"
+        welcome={true}
+      >
+        serenity@gmail.com
+      </Text>
+      <View
+        style={
+          {
+            "width": "90%",
+          }
+        }
+      >
+        <Image
+          resizeMode="cover"
+          source={1}
+          style={
+            {
+              "borderBottomLeftRadius": 50,
+              "borderBottomRightRadius": 50,
+              "borderColor": "#ffc554",
+              "borderTopLeftRadius": 50,
+              "borderTopRightRadius": 50,
+              "borderWidth": 2,
+              "height": 100,
+              "marginBottom": 10,
+              "marginLeft": "auto",
+              "marginRight": "auto",
+              "marginTop": 10,
+              "width": 100,
+            }
+          }
+          testID="avatar-image"
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "#ffc500",
+              "height": 1,
+              "marginVertical": 10,
+              "width": "100%",
+            }
+          }
+          testID="line"
+        />
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderBottomLeftRadius": 5,
+              "borderBottomRightRadius": 5,
+              "borderTopLeftRadius": 5,
+              "borderTopRightRadius": 5,
+              "height": 60,
+              "justifyContent": "center",
+              "marginVertical": 5,
+              "paddingBottom": 15,
+              "paddingLeft": 15,
+              "paddingRight": 15,
+              "paddingTop": 15,
+            }
+          }
+          testID="logout-styled-button"
+        >
+          <Text
+            style={
+              {
+                "color": "#ffe1a8",
+                "fontSize": 16,
+              }
+            }
+            testID="logout-button-text"
+          >
+            Logout
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;

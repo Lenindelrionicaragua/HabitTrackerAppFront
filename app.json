@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "ZenTimer",
+    "slug": "ZenTimer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logoZenTimer.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/ZenTimer1.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.zentimer.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/logoZenTimer.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "adc59aa6-8d0c-4ae7-82dc-31d3450b45ed"
+      }
+    },
+    "owner": "lenindelrionicaragua"
+  }
+}
