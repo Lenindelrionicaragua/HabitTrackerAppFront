@@ -35,4 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # Coverage
-.coverage/
+.coverage/.DS_Store
+.idea/
+ZenTimerAppFront/

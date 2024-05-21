@@ -9,11 +9,17 @@
     "splash": {
       "image": "./assets/ZenTimer1.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zentimer.app",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha"
+        }
+      }
     },
     "android": {
       "package": "com.zentimer.app",
