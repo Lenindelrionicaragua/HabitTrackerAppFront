@@ -23,6 +23,7 @@ import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
 
+import * as Google from "expo-google-app-auth";
 // API client
 import axios from "axios";
 
@@ -32,6 +33,7 @@ const LoginScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
+  const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
   const handleLogin = (values, setSubmitting) => {
     setMsg("");
@@ -73,6 +75,44 @@ const LoginScreen = ({ navigation }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+  };
+
+  const handleGoogleSignIn = () => {
+    setGoogleSubmitting(true);
+    const config = {
+      iosClientId: `809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha.apps.googleusercontent.com`,
+      androidClientId: `809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com`,
+      scopes: ["profile", "email"],
+    };
+
+    Google.logInAsync(config)
+      .then((result) => {
+        const { type, user } = result;
+        if ((type = "success")) {
+          const { email, name, photoUrl } = user;
+          handleMessage({
+            successStatus: true,
+            msg: "Google signin was successful",
+          });
+          setTimeout(
+            () =>
+              navigation.navigate("WelcomeScreen", { email, name, photoUrl }),
+            1000
+          );
+        } else {
+          handleMessage({
+            msg: "Google signin was cancelled",
+          });
+        }
+        setGoogleSubmitting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleMessage({
+          msg: "An error ocurred. Check your network and try again",
+        });
+        setGoogleSubmitting(false);
+      });
   };
 
   return (
@@ -156,21 +196,34 @@ const LoginScreen = ({ navigation }) => {
                 )}
 
                 <Line testID="line" />
-                <StyledButton
-                  google={true}
-                  onPress={handleSubmit}
-                  testID="google-styled-button"
-                >
-                  <Fontisto
-                    name="google"
-                    color={grey}
-                    size={20}
-                    testID="google-icon"
-                  />
-                  <ButtonText google={true} testID="google-button-text">
-                    Sign in with Google
-                  </ButtonText>
-                </StyledButton>
+
+                {!googleSubmitting && (
+                  <StyledButton
+                    google={true}
+                    onPress={handleGoogleSignIn}
+                    testID="google-styled-button"
+                  >
+                    <Fontisto
+                      name="google"
+                      color={grey}
+                      size={20}
+                      testID="google-icon"
+                    />
+                    <ButtonText google={true} testID="google-button-text">
+                      Sign in with Google
+                    </ButtonText>
+                  </StyledButton>
+                )}
+
+                {googleSubmitting && (
+                  <StyledButton
+                    google={true}
+                    disabled={true}
+                    testID="google-styled-button"
+                  >
+                    <ActivityIndicator size="large" color={white} />
+                  </StyledButton>
+                )}
                 <FooterView testID="footer-view">
                   <FooterText testID="footer-text">
                     Dont you have an account already?
