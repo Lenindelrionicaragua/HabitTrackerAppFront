@@ -17,7 +17,7 @@ import {
   FooterView,
   FooterText,
   SignupLink,
-  SignupLinkContent
+  SignupLinkContent,
 } from "./LoginScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
@@ -39,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
 
     const credentials = {
       email: values.email,
-      password: values.password
+      password: values.password,
     };
 
     const url =
@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
 
     axios
       .post(url, { user: credentials })
-      .then(response => {
+      .then((response) => {
         const { success, msg, user } = response.data;
 
         if (success) {
@@ -58,11 +58,11 @@ const LoginScreen = ({ navigation }) => {
           handleMessage({ successStatus: true, msg: msg });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         logError(error.response.data.msg);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg
+          msg: error.response.data.msg,
         });
       })
       .finally(() => {
@@ -109,7 +109,7 @@ const LoginScreen = ({ navigation }) => {
               handleBlur,
               handleSubmit,
               values,
-              isSubmitting
+              isSubmitting,
             }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
