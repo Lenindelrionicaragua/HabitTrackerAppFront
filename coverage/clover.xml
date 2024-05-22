@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1716306506506" clover="3.2.0">
-  <project timestamp="1716306506506" name="All files">
-    <metrics statements="203" coveredstatements="174" conditionals="95" coveredconditionals="75" methods="52" coveredmethods="41" elements="350" coveredelements="290" complexity="0" loc="203" ncloc="203" packages="11" files="16" classes="16"/>
+<coverage generated="1716306893831" clover="3.2.0">
+  <project timestamp="1716306893831" name="All files">
+    <metrics statements="206" coveredstatements="174" conditionals="95" coveredconditionals="75" methods="52" coveredmethods="41" elements="353" coveredelements="290" complexity="0" loc="206" ncloc="206" packages="11" files="16" classes="16"/>
     <package name="ZenTimerAppFront">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -59,9 +59,9 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.LoginScreen">
-      <metrics statements="69" coveredstatements="56" conditionals="26" coveredconditionals="22" methods="17" coveredmethods="12"/>
+      <metrics statements="72" coveredstatements="56" conditionals="26" coveredconditionals="22" methods="17" coveredmethods="12"/>
       <file name="LoginScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LoginScreen/LoginScreen.js">
-        <metrics statements="44" coveredstatements="31" conditionals="18" coveredconditionals="14" methods="13" coveredmethods="8"/>
+        <metrics statements="47" coveredstatements="31" conditionals="18" coveredconditionals="14" methods="13" coveredmethods="8"/>
         <line num="30" count="3" type="stmt"/>
         <line num="32" count="3" type="stmt"/>
         <line num="33" count="77" type="stmt"/>
@@ -88,24 +88,27 @@
         <line num="77" count="3" type="stmt"/>
         <line num="80" count="77" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="91" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="91" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="92" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="98" count="0" type="stmt"/>
-        <line num="102" count="0" type="stmt"/>
-        <line num="108" count="0" type="stmt"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="115" count="77" type="stmt"/>
-        <line num="131" count="4" type="cond" truecount="4" falsecount="0"/>
-        <line num="132" count="2" type="stmt"/>
-        <line num="133" count="2" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="118" count="77" type="stmt"/>
+        <line num="134" count="4" type="cond" truecount="4" falsecount="0"/>
         <line num="135" count="2" type="stmt"/>
         <line num="136" count="2" type="stmt"/>
-        <line num="151" count="82" type="stmt"/>
-        <line num="229" count="1" type="stmt"/>
+        <line num="138" count="2" type="stmt"/>
+        <line num="139" count="2" type="stmt"/>
+        <line num="154" count="82" type="stmt"/>
+        <line num="232" count="1" type="stmt"/>
       </file>
       <file name="LoginScreenStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LoginScreen/LoginScreenStyles.js">
         <metrics statements="25" coveredstatements="25" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>

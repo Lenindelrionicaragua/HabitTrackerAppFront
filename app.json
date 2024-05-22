@@ -14,12 +14,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zentimer.app",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha"
-        }
-      }
+      "bundleIdentifier": "com.zentimer.app"
     },
     "android": {
       "package": "com.zentimer.app",
