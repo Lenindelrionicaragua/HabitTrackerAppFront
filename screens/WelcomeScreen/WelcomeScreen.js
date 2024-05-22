@@ -12,11 +12,14 @@ import {
   Line,
   WelcomeContainer,
   WelcomeImage,
-  Avatar
+  Avatar,
 } from "./WelcomeScreenStyles";
 
 const WelcomeScreen = ({ navigation, route }) => {
-  const { name, email } = route.params;
+  const { name, email, photoUrl } = route.params;
+  const AvatarImg = photoUrl
+    ? { uri: photoUrl }
+    : require("./../../assets/logoZenTimer.png");
 
   return (
     <StyledContainer testID="styled-container">
@@ -41,7 +44,7 @@ const WelcomeScreen = ({ navigation, route }) => {
           <StyledFormArea>
             <Avatar
               resizeMode="cover"
-              source={require("./../../assets/logoZenTimer.png")}
+              source={AvatarImg}
               testID="avatar-image"
             />
             <Line testID="line" />
