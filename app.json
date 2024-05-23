@@ -4,7 +4,7 @@
     "slug": "ZenTimer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logoZenTimer.png",
+    "icon": "./assets/logoZenTimer2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/ZenTimer1.png",
@@ -14,22 +14,17 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zentimer.app",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha"
-        }
-      }
+      "bundleIdentifier": "com.zentimer.app"
     },
     "android": {
       "package": "com.zentimer.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/logoZenTimer.png"
+      "favicon": "./assets/logoZenTimer2.png"
     },
     "extra": {
       "eas": {
