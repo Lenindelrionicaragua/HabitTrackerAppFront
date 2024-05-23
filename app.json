@@ -4,7 +4,7 @@
     "slug": "ZenTimer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logoZenTimer.png",
+    "icon": "./assets/logoZenTimer2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/ZenTimer1.png",
@@ -19,12 +19,12 @@
     "android": {
       "package": "com.zentimer.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/logoZenTimer.png"
+      "favicon": "./assets/logoZenTimer2.png"
     },
     "extra": {
       "eas": {
