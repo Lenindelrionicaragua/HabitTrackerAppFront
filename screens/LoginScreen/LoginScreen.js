@@ -17,7 +17,7 @@ import {
   FooterView,
   FooterText,
   SignupLink,
-  SignupLinkContent,
+  SignupLinkContent
 } from "./LoginScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
@@ -26,6 +26,10 @@ import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInput
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import axios from "axios";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// credentials context
+import { CredentialsContext } from "../../context/credentialsContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -45,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
     androidClientId:
       "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
     webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com",
+      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
   });
 
   useEffect(() => {
@@ -57,29 +61,29 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [response]);
 
-  const handleGoogleResponse = (authentication) => {
+  const handleGoogleResponse = authentication => {
     axios
       .get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       )
-      .then((res) => {
+      .then(res => {
         const { email, name, picture } = res.data;
         handleMessage({
           successStatus: true,
-          msg: "Google signin was successful",
+          msg: "Google signin was successful"
         });
         setTimeout(() => {
           navigation.navigate("WelcomeScreen", {
             email,
             name,
-            photoUrl: picture,
+            photoUrl: picture
           });
         }, 1000);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         handleMessage({
-          msg: "An error occurred. Check your network and try again",
+          msg: "An error occurred. Check your network and try again"
         });
         setGoogleSubmitting(false);
       });
@@ -91,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
 
     const credentials = {
       email: values.email,
-      password: values.password,
+      password: values.password
     };
 
     const url =
@@ -99,7 +103,7 @@ const LoginScreen = ({ navigation }) => {
 
     axios
       .post(url, { user: credentials })
-      .then((response) => {
+      .then(response => {
         const { success, msg, user } = response.data;
 
         if (success) {
@@ -110,11 +114,11 @@ const LoginScreen = ({ navigation }) => {
           handleMessage({ successStatus: true, msg: msg });
         }
       })
-      .catch((error) => {
+      .catch(error => {
         logError(error.response.data.msg);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg,
+          msg: error.response.data.msg
         });
       })
       .finally(() => {
@@ -161,7 +165,7 @@ const LoginScreen = ({ navigation }) => {
               handleBlur,
               handleSubmit,
               values,
-              isSubmitting,
+              isSubmitting
             }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
