@@ -8,7 +8,7 @@ import { CredentialsContext } from "./context/credentialsContext";
 
 export default function App() {
   const [appReady, setAppReady] = useState(false);
-  const [storedCredentials, setStoredCredentials] = useState(null);
+  const [storedCredentials, setStoredCredentials] = useState("");
 
   const checkLoginCredentials = () => {
     AsyncStorage.getItem("zenTimerCredentials")
