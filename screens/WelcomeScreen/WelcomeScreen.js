@@ -19,7 +19,7 @@ const WelcomeScreen = ({ navigation, route }) => {
   const { name, email, photoUrl } = route.params;
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
-    : require("./../../assets/logoZenTimer.png");
+    : require("./../../assets/logoZenTimer2.png");
 
   return (
     <StyledContainer testID="styled-container">
