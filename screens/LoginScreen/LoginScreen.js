@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
@@ -28,28 +28,26 @@ import * as WebBrowser from "expo-web-browser";
 import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// credentials context
 import { CredentialsContext } from "../../context/credentialsContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const { white, grey, lightGrey } = Colors;
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
   const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
-      "809713703422-f46fr8qo6qdtvd10nge35gcmb3p61ahg.apps.googleusercontent.com",
-    iosClientId:
-      "809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha.apps.googleusercontent.com",
-    androidClientId:
-      "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
-    webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
+    expoClientId: "YOUR_EXPO_CLIENT_ID",
+    iosClientId: "YOUR_IOS_CLIENT_ID",
+    androidClientId: "YOUR_ANDROID_CLIENT_ID",
+    webClientId: "YOUR_WEB_CLIENT_ID"
   });
 
   useEffect(() => {
@@ -67,18 +65,18 @@ const LoginScreen = ({ navigation }) => {
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       )
       .then(res => {
-        const { email, name, picture } = res.data;
-        handleMessage({
-          successStatus: true,
-          msg: "Google signin was successful"
-        });
-        setTimeout(() => {
-          navigation.navigate("WelcomeScreen", {
+        const { email, name, photoUrl } = res.user;
+        saveLoginCredentials(
+          {
             email,
             name,
-            photoUrl: picture
-          });
-        }, 1000);
+            photoUrl
+          },
+          handleMessage({
+            successStatus: true,
+            msg: "Google signin was successful"
+          })
+        );
       })
       .catch(error => {
         console.log(error);
@@ -108,7 +106,10 @@ const LoginScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate("WelcomeScreen", user);
+          saveLoginCredentials(
+            user,
+            handleMessage({ successStatus: true, msg: msg })
+          );
         } else {
           logInfo(msg);
           handleMessage({ successStatus: true, msg: msg });
@@ -129,6 +130,24 @@ const LoginScreen = ({ navigation }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+  };
+
+  const saveLoginCredentials = (credentials, msg, successStatus) => {
+    AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
+      .then(() => {
+        handleMessage({
+          successStatus: true,
+          msg: "Login credentials saved successfully"
+        });
+        setStoredCredentials(credentials);
+      })
+      .catch(error => {
+        logError(error);
+        handleMessage({
+          successStatus: false,
+          msg: "Failed to save login credentials"
+        });
+      });
   };
 
   return (

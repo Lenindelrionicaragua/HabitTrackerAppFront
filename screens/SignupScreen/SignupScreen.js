@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -24,6 +24,9 @@ import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInp
 // API client
 import axios from "axios";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "../../context/credentialsContext";
+
 // Colors
 const { white, lightGrey } = Colors;
 
@@ -35,6 +38,10 @@ const SignupScreen = ({ navigation }) => {
 
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
+
+  //Context
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -69,7 +76,10 @@ const SignupScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate("WelcomeScreen", user);
+          saveLoginCredentials(
+            user,
+            handleMessage({ successStatus: true, msg: msg })
+          );
         } else {
           logInfo(msg);
           handleMessage({ successStatus: true, msg: msg });
@@ -90,6 +100,24 @@ const SignupScreen = ({ navigation }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+  };
+
+  const saveLoginCredentials = (credentials, msg, successStatus) => {
+    AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
+      .then(() => {
+        handleMessage({
+          successStatus: true,
+          msg: "Login credentials saved successfully"
+        });
+        setStoredCredentials(credentials);
+      })
+      .catch(error => {
+        logError(error);
+        handleMessage({
+          successStatus: false,
+          msg: "Failed to save login credentials"
+        });
+      });
   };
 
   return (
