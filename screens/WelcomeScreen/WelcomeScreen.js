@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StatusBar } from "react-native";
 
 import {
@@ -12,14 +12,29 @@ import {
   Line,
   WelcomeContainer,
   WelcomeImage,
-  Avatar,
+  Avatar
 } from "./WelcomeScreenStyles";
 
-const WelcomeScreen = ({ navigation, route }) => {
-  const { name, email, photoUrl } = route.params;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "../../context/credentialsContext";
+import { logError } from "../../util/logging";
+
+const WelcomeScreen = () => {
+  //Context
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+  const { name, email, photoUrl } = storedCredentials;
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
     : require("./../../assets/logoZenTimer2.png");
+
+  const clearLogin = () => {
+    AsyncStorage.removeItem("zenTimerCredentials")
+      .then(() => {
+        setStoredCredentials("");
+      })
+      .catch(error => logError(error));
+  };
 
   return (
     <StyledContainer testID="styled-container">
@@ -48,12 +63,7 @@ const WelcomeScreen = ({ navigation, route }) => {
               testID="avatar-image"
             />
             <Line testID="line" />
-            <StyledButton
-              onPress={() => {
-                navigation.navigate("LoginScreen");
-              }}
-              testID="logout-styled-button"
-            >
+            <StyledButton onPress={clearLogin} testID="logout-styled-button">
               <ButtonText testID="logout-button-text">Logout</ButtonText>
             </StyledButton>
           </StyledFormArea>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
@@ -17,7 +17,7 @@ import {
   FooterView,
   FooterText,
   SignupLink,
-  SignupLinkContent,
+  SignupLinkContent
 } from "./LoginScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
@@ -26,6 +26,9 @@ import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInput
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import axios from "axios";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "../../context/credentialsContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -37,6 +40,9 @@ const LoginScreen = ({ navigation }) => {
   const [success, setSuccessStatus] = useState("");
   const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "809713703422-f46fr8qo6qdtvd10nge35gcmb3p61ahg.apps.googleusercontent.com",
@@ -45,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
     androidClientId:
       "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
     webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com",
+      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
   });
 
   useEffect(() => {
@@ -57,29 +63,29 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [response]);
 
-  const handleGoogleResponse = (authentication) => {
+  const handleGoogleResponse = authentication => {
     axios
       .get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       )
-      .then((res) => {
+      .then(res => {
         const { email, name, picture } = res.data;
-        handleMessage({
-          successStatus: true,
-          msg: "Google signin was successful",
-        });
-        setTimeout(() => {
-          navigation.navigate("WelcomeScreen", {
+        saveLoginCredentials(
+          {
             email,
             name,
-            photoUrl: picture,
-          });
-        }, 1000);
+            photoUrl: picture
+          },
+          handleMessage({
+            successStatus: true,
+            msg: "Google signin was successful"
+          })
+        );
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         handleMessage({
-          msg: "An error occurred. Check your network and try again",
+          msg: "An error occurred. Check your network and try again"
         });
         setGoogleSubmitting(false);
       });
@@ -91,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
 
     const credentials = {
       email: values.email,
-      password: values.password,
+      password: values.password
     };
 
     const url =
@@ -99,22 +105,25 @@ const LoginScreen = ({ navigation }) => {
 
     axios
       .post(url, { user: credentials })
-      .then((response) => {
+      .then(response => {
         const { success, msg, user } = response.data;
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate("WelcomeScreen", user);
+          saveLoginCredentials(
+            user,
+            handleMessage({ successStatus: true, msg: msg })
+          );
         } else {
           logInfo(msg);
           handleMessage({ successStatus: true, msg: msg });
         }
       })
-      .catch((error) => {
+      .catch(error => {
         logError(error.response.data.msg);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg,
+          msg: error.response.data.msg
         });
       })
       .finally(() => {
@@ -125,6 +134,24 @@ const LoginScreen = ({ navigation }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+  };
+
+  const saveLoginCredentials = (credentials, msg, successStatus) => {
+    AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
+      .then(() => {
+        handleMessage({
+          successStatus: true,
+          msg: "Login credentials saved successfully"
+        });
+        setStoredCredentials(credentials);
+      })
+      .catch(error => {
+        logError(error);
+        handleMessage({
+          successStatus: false,
+          msg: "Failed to save login credentials"
+        });
+      });
   };
 
   return (
@@ -161,7 +188,7 @@ const LoginScreen = ({ navigation }) => {
               handleBlur,
               handleSubmit,
               values,
-              isSubmitting,
+              isSubmitting
             }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
