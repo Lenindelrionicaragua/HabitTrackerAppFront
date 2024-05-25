@@ -17,6 +17,7 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
+import { logError } from "../../util/logging";
 
 const WelcomeScreen = () => {
   //Context
@@ -26,6 +27,14 @@ const WelcomeScreen = () => {
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
     : require("./../../assets/logoZenTimer2.png");
+
+  const clearLogin = () => {
+    AsyncStorage.removeItem("zenTimerCredentials")
+      .then(() => {
+        setStoredCredentials("");
+      })
+      .catch(error => logError(error));
+  };
 
   return (
     <StyledContainer testID="styled-container">
@@ -54,12 +63,7 @@ const WelcomeScreen = () => {
               testID="avatar-image"
             />
             <Line testID="line" />
-            <StyledButton
-              onPress={() => {
-                navigation.navigate("LoginScreen");
-              }}
-              testID="logout-styled-button"
-            >
+            <StyledButton onPress={clearLogin} testID="logout-styled-button">
               <ButtonText testID="logout-button-text">Logout</ButtonText>
             </StyledButton>
           </StyledFormArea>
