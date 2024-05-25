@@ -3,25 +3,31 @@ import { logError } from "./util/logging";
 import RootStack from "./navigators/RootStack";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// credentials context
+// Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
 
 export default function App() {
   const [appReady, setAppReady] = useState(false);
   const [storedCredentials, setStoredCredentials] = useState("");
 
-  const checkLoginCredentials = () => {
-    AsyncStorage.getItem("zenTimerCredentials")
-      .then(result => {
-        if (result !== null) {
-          setStoredCredentials(JSON.parse(result));
-        } else {
-          setStoredCredentials(null);
-        }
-        setAppReady(true);
-      })
-      .catch(error => logError(error));
+  const checkLoginCredentials = async () => {
+    try {
+      const result = await AsyncStorage.getItem("zenTimerCredentials");
+      if (result !== null) {
+        setStoredCredentials(JSON.parse(result));
+      } else {
+        setStoredCredentials(null);
+      }
+    } catch (error) {
+      logError(error);
+    } finally {
+      setAppReady(true);
+    }
   };
+
+  useEffect(() => {
+    checkLoginCredentials();
+  }, []);
 
   if (!appReady) {
     return (
