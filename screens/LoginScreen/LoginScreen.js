@@ -34,7 +34,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const { white, grey, lightGrey } = Colors;
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
@@ -44,10 +44,14 @@ const LoginScreen = () => {
     useContext(CredentialsContext);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: "YOUR_EXPO_CLIENT_ID",
-    iosClientId: "YOUR_IOS_CLIENT_ID",
-    androidClientId: "YOUR_ANDROID_CLIENT_ID",
-    webClientId: "YOUR_WEB_CLIENT_ID"
+    expoClientId:
+      "809713703422-f46fr8qo6qdtvd10nge35gcmb3p61ahg.apps.googleusercontent.com",
+    iosClientId:
+      "809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha.apps.googleusercontent.com",
+    androidClientId:
+      "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
+    webClientId:
+      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
   });
 
   useEffect(() => {
@@ -65,12 +69,12 @@ const LoginScreen = () => {
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       )
       .then(res => {
-        const { email, name, photoUrl } = res.user;
+        const { email, name, picture } = res.data;
         saveLoginCredentials(
           {
             email,
             name,
-            photoUrl
+            photoUrl: picture
           },
           handleMessage({
             successStatus: true,
