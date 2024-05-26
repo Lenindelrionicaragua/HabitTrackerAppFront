@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { logError } from "./util/logging";
 import RootStack from "./navigators/RootStack";
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [appReady, setAppReady] = useState(false);
@@ -22,6 +24,7 @@ export default function App() {
       logError(error);
     } finally {
       setAppReady(true);
+      SplashScreen.hideAsync();
     }
   };
 
@@ -30,13 +33,7 @@ export default function App() {
   }, []);
 
   if (!appReady) {
-    return (
-      <AppLoading
-        startAsync={checkLoginCredentials}
-        onFinish={() => setAppReady(true)}
-        onError={logError}
-      />
-    );
+    return null;
   }
 
   return (
