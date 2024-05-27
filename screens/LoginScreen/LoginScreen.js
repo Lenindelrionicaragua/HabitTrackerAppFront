@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StatusBar, ActivityIndicator } from "react-native";
+import { Platform, StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
 import { Fontisto } from "@expo/vector-icons";
@@ -70,16 +70,23 @@ const LoginScreen = ({ navigation }) => {
       )
       .then(res => {
         const { email, name, picture } = res.data;
+        const platform = getPlatform();
+        sendGoogleDataToServer({
+          email,
+          name,
+          token: authentication.idToken,
+          platform: platform
+        });
         saveLoginCredentials(
           {
             email,
             name,
             photoUrl: picture
           },
-          handleMessage({
+          {
             successStatus: true,
             msg: "Google signin was successful"
-          })
+          }
         );
       })
       .catch(error => {
@@ -89,6 +96,33 @@ const LoginScreen = ({ navigation }) => {
         });
         setGoogleSubmitting(false);
       });
+  };
+
+  const sendGoogleDataToServer = async (userData, platform) => {
+    try {
+      const response = await axios.post(
+        // "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
+        "http://localhost:3000/api/auth/sign-in-with-google",
+        userData
+      );
+      const { success, msg } = response.data;
+      if (success) {
+        logInfo(msg);
+        handleMessage({ successStatus: true, msg: msg });
+      }
+    } catch (error) {
+      console.error("Error sending Google data to server:", error);
+    }
+  };
+
+  const getPlatform = () => {
+    if (Platform.OS === "ios") {
+      return "iOS";
+    } else if (Platform.OS === "android") {
+      return "Android";
+    } else {
+      return "Web";
+    }
   };
 
   const handleLogin = (values, setSubmitting) => {
