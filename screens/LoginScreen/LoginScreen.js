@@ -51,57 +51,77 @@ const LoginScreen = ({ navigation }) => {
     androidClientId:
       "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
     webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
+      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com",
+    scopes: ["profile", "email", "openid"]
   });
 
   useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response;
-      handleGoogleResponse(authentication);
-    } else if (response?.type === "error") {
-      handleMessage({ msg: "Google signin was cancelled or failed" });
-    }
+    const fetchToken = async () => {
+      if (!response) {
+        // Esperar hasta que la respuesta esté disponible
+        return;
+      }
+
+      if (response?.type === "success") {
+        const { authentication } = response;
+        const idToken = authentication.idToken;
+        const accessToken = authentication.accessToken;
+        console.log("ID Token:", idToken);
+        console.log("Access Token:", accessToken);
+        handleGoogleResponse(authentication);
+      } else if (response?.type === "error") {
+        console.log("Google signin was cancelled or failed");
+        handleMessage({ msg: "Google signin was cancelled or failed" });
+      }
+    };
+
+    fetchToken();
   }, [response]);
 
-  const handleGoogleResponse = authentication => {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
-      )
-      .then(res => {
-        const { email, name, picture } = res.data;
-        const platform = getPlatform();
-        sendGoogleDataToServer({
+  const handleGoogleResponse = async authentication => {
+    const idToken = authentication.idToken;
+    const accessToken = authentication.accessToken;
+    console.log("Handling Google response, authentication:", authentication);
+    try {
+      const res = await axios.get(
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`
+      );
+      const { email, name, picture } = res.data;
+      const platform = getPlatform();
+      console.log("Platform:", platform);
+      console.log("User info from Google:", email, name, picture);
+
+      await sendGoogleDataToServer({
+        email,
+        name,
+        token: idToken,
+        platform: platform
+      });
+
+      saveLoginCredentials(
+        {
           email,
           name,
-          token: authentication.idToken,
-          platform: platform
-        });
-        saveLoginCredentials(
-          {
-            email,
-            name,
-            photoUrl: picture
-          },
-          {
-            successStatus: true,
-            msg: "Google signin was successful"
-          }
-        );
-      })
-      .catch(error => {
-        console.log(error);
-        handleMessage({
-          msg: "An error occurred. Check your network and try again"
-        });
-        setGoogleSubmitting(false);
+          photoUrl: picture
+        },
+        {
+          successStatus: true,
+          msg: "Google signin was successful"
+        }
+      );
+    } catch (error) {
+      console.log("Error fetching user info:", error);
+      handleMessage({
+        msg: "An error occurred. Check your network and try again"
       });
+      setGoogleSubmitting(false);
+    }
   };
 
-  const sendGoogleDataToServer = async (userData, platform) => {
+  const sendGoogleDataToServer = async userData => {
     try {
+      console.log("Sending data to server:", userData);
       const response = await axios.post(
-        // "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
         "http://localhost:3000/api/auth/sign-in-with-google",
         userData
       );
