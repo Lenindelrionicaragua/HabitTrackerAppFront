@@ -18,6 +18,7 @@ import * as Google from "expo-auth-session/providers/google";
 import { revokeAsync, useAuthRequest } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
+import axios from "axios";
 import { logInfo, logError } from "../../util/logging";
 
 // Credentials
@@ -57,6 +58,7 @@ const WelcomeScreen = () => {
         );
       }
 
+      // Clear stored credentials
       await AsyncStorage.removeItem("zenTimerCredentials");
       setStoredCredentials("");
       logInfo("Logout successful");
@@ -64,6 +66,16 @@ const WelcomeScreen = () => {
         "Logout successful",
         "You have been logged out successfully."
       );
+      // Make request to the logout at the server
+      const response = await axios.post(
+        // "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in"
+        "http://192.168.178.182:3000/api/auth/log-out" // For test android need ip instead of localHost
+      );
+      if (response.data.success) {
+        logInfo("User successfully logged out");
+      } else {
+        logError("Logout failed: " + response.data.message);
+      }
     } catch (error) {
       logError(error);
       Alert.alert("Logout failed", "An error occurred during logout.");
