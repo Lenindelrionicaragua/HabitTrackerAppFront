@@ -30,6 +30,14 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
+// Credentials
+import {
+  EXPO_CLIENT_ID,
+  IOS_CLIENT_ID,
+  ANDROID_CLIENT_ID,
+  WEB_CLIENT_ID
+} from "@env";
+
 WebBrowser.maybeCompleteAuthSession();
 
 const { white, grey, lightGrey } = Colors;
@@ -44,14 +52,10 @@ const LoginScreen = ({ navigation }) => {
     useContext(CredentialsContext);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
-      "809713703422-f46fr8qo6qdtvd10nge35gcmb3p61ahg.apps.googleusercontent.com",
-    iosClientId:
-      "809713703422-5qnfgkrc56kugvqromu9m5pbtrb17pha.apps.googleusercontent.com",
-    androidClientId:
-      "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
-    webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com",
+    expoClientId: EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    webClientId: WEB_CLIENT_ID,
     scopes: ["profile", "email", "openid"]
   });
 
