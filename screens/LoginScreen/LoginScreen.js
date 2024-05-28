@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StatusBar, ActivityIndicator } from "react-native";
+import { Platform, StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
 import { Fontisto } from "@expo/vector-icons";
@@ -51,44 +51,84 @@ const LoginScreen = ({ navigation }) => {
     androidClientId:
       "809713703422-v67nj19lic0vcjd1jki0usku5535qhcr.apps.googleusercontent.com",
     webClientId:
-      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com"
+      "809713703422-4god00kad8ju78870io15917pulnj26c.apps.googleusercontent.com",
+    scopes: ["profile", "email", "openid"]
   });
 
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
+      console.log("Authentication response:", authentication);
       handleGoogleResponse(authentication);
     } else if (response?.type === "error") {
       handleMessage({ msg: "Google signin was cancelled or failed" });
     }
   }, [response]);
 
-  const handleGoogleResponse = authentication => {
-    axios
-      .get(
+  const handleGoogleResponse = async authentication => {
+    console.log("Handling Google response, authentication:", authentication);
+    try {
+      const res = await axios.get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
-      )
-      .then(res => {
-        const { email, name, picture } = res.data;
-        saveLoginCredentials(
-          {
-            email,
-            name,
-            photoUrl: picture
-          },
-          handleMessage({
-            successStatus: true,
-            msg: "Google signin was successful"
-          })
-        );
-      })
-      .catch(error => {
-        console.log(error);
-        handleMessage({
-          msg: "An error occurred. Check your network and try again"
-        });
-        setGoogleSubmitting(false);
+      );
+      const { email, name, picture } = res.data;
+      const platform = getPlatform();
+      console.log("Platform:", platform);
+      console.log("User info from Google:", email, name, picture);
+
+      await sendGoogleDataToServer({
+        email,
+        name,
+        token: authentication.idToken,
+        platform: platform
       });
+
+      saveLoginCredentials(
+        {
+          email,
+          name,
+          photoUrl: picture
+        },
+        {
+          successStatus: true,
+          msg: "Google signin was successful"
+        }
+      );
+    } catch (error) {
+      console.log("Error fetching user info:", error);
+      handleMessage({
+        msg: "An error occurred. Check your network and try again"
+      });
+      setGoogleSubmitting(false);
+    }
+  };
+
+  const sendGoogleDataToServer = async userData => {
+    try {
+      console.log("Sending data to server:", userData);
+      const response = await axios.post(
+        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
+        // "http://192.168.178.182:3000/api/auth/sign-in-with-google", // For test android need ip instead of localHost
+        userData
+      );
+      const { success, msg } = response.data;
+      if (success) {
+        logInfo(msg);
+        handleMessage({ successStatus: true, msg: msg });
+      }
+    } catch (error) {
+      console.error("Error sending Google data to server:", error);
+    }
+  };
+
+  const getPlatform = () => {
+    if (Platform.OS === "ios") {
+      return "iOS";
+    } else if (Platform.OS === "android") {
+      return "Android";
+    } else {
+      return "Web";
+    }
   };
 
   const handleLogin = (values, setSubmitting) => {
