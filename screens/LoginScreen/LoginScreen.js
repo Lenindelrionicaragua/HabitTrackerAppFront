@@ -107,7 +107,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log("Sending data to server:", userData);
       const response = await axios.post(
-        "http://localhost:3000/api/auth/sign-in-with-google",
+        "http://192.168.178.182:3000/api/auth/sign-in-with-google",
         userData
       );
       const { success, msg } = response.data;
