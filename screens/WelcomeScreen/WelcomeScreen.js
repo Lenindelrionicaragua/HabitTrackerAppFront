@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { StatusBar } from "react-native";
-
+import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
   InnerContainer,
@@ -15,9 +14,19 @@ import {
   Avatar
 } from "./WelcomeScreenStyles";
 
+import * as Google from "expo-auth-session/providers/google";
+import { revokeAsync, useAuthRequest } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
-import { logError } from "../../util/logging";
+import { logInfo, logError } from "../../util/logging";
+
+// Credentials
+import {
+  EXPO_CLIENT_ID,
+  IOS_CLIENT_ID,
+  ANDROID_CLIENT_ID,
+  WEB_CLIENT_ID
+} from "@env";
 
 const WelcomeScreen = () => {
   //Context
@@ -28,12 +37,37 @@ const WelcomeScreen = () => {
     ? { uri: photoUrl }
     : require("./../../assets/logoZenTimer2.png");
 
-  const clearLogin = () => {
-    AsyncStorage.removeItem("zenTimerCredentials")
-      .then(() => {
-        setStoredCredentials("");
-      })
-      .catch(error => logError(error));
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    webClientId: WEB_CLIENT_ID,
+    scopes: ["profile", "email", "openid"]
+  });
+
+  // Google logout function
+  const clearLogin = async () => {
+    try {
+      const token = storedCredentials.token;
+
+      if (token) {
+        await revokeAsync(
+          { token },
+          { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
+        );
+      }
+
+      await AsyncStorage.removeItem("zenTimerCredentials");
+      setStoredCredentials("");
+      logInfo("Logout successful");
+      Alert.alert(
+        "Logout successful",
+        "You have been logged out successfully."
+      );
+    } catch (error) {
+      logError(error);
+      Alert.alert("Logout failed", "An error occurred during logout.");
+    }
   };
 
   return (
