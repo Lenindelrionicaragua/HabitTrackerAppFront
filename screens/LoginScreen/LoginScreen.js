@@ -62,7 +62,6 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      console.log("Authentication response:", authentication);
       handleGoogleResponse(authentication);
     } else if (response?.type === "error") {
       handleMessage({ msg: "Google signin was cancelled or failed" });
@@ -70,16 +69,12 @@ const LoginScreen = ({ navigation }) => {
   }, [response]);
 
   const handleGoogleResponse = async authentication => {
-    console.log("Handling Google response, authentication:", authentication);
     try {
       const res = await axios.get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       );
       const { email, name, picture } = res.data;
       const platform = getPlatform();
-      console.log("Platform:", platform);
-      console.log("User info from Google:", email, name, picture);
-
       await sendGoogleDataToServer({
         email,
         name,
@@ -99,7 +94,6 @@ const LoginScreen = ({ navigation }) => {
         }
       );
     } catch (error) {
-      console.log("Error fetching user info:", error);
       handleMessage({
         msg: "An error occurred. Check your network and try again"
       });
@@ -121,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
         handleMessage({ successStatus: true, msg: msg });
       }
     } catch (error) {
-      console.error("Error sending Google data to server:", error);
+      LogError("Error sending Google data to server:", error);
     }
   };
 
