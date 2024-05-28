@@ -107,7 +107,8 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log("Sending data to server:", userData);
       const response = await axios.post(
-        "http://192.168.178.182:3000/api/auth/sign-in-with-google",
+        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
+        // "http://192.168.178.182:3000/api/auth/sign-in-with-google", // For test android need ip instead of localHost
         userData
       );
       const { success, msg } = response.data;

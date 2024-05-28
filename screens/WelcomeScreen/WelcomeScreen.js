@@ -68,8 +68,8 @@ const WelcomeScreen = () => {
       );
       // Make request to the logout at the server
       const response = await axios.post(
-        // "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in"
-        "http://192.168.178.182:3000/api/auth/log-out" // For test android need ip instead of localHost
+        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-out"
+        // "http://192.168.178.182:3000/api/auth/log-out" // For test android need ip instead of localHost
       );
       if (response.data.success) {
         logInfo("User successfully logged out");
