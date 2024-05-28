@@ -7,8 +7,11 @@ import { Colors } from "../styles/AppStyles";
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
+import LinkVerification from "./../screens/LinkVerification/LinkVerification";
+
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
+import Verification from "./../screens/LinkVerification/LinkVerification";
 
 const { white, orange, grey, yellow, lightGrey, black } = Colors;
 const Stack = createNativeStackNavigator();
@@ -40,6 +43,11 @@ const RootStack = () => {
               />
             ) : (
               <>
+                <Stack.Screen
+                  name="LinkVerification"
+                  component={LinkVerification}
+                  testID="link-verification"
+                />
                 <Stack.Screen
                   name="LoginScreen"
                   component={LoginScreen}
