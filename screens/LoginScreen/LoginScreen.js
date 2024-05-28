@@ -56,35 +56,20 @@ const LoginScreen = ({ navigation }) => {
   });
 
   useEffect(() => {
-    const fetchToken = async () => {
-      if (!response) {
-        // Esperar hasta que la respuesta esté disponible
-        return;
-      }
-
-      if (response?.type === "success") {
-        const { authentication } = response;
-        const idToken = authentication.idToken;
-        const accessToken = authentication.accessToken;
-        console.log("ID Token:", idToken);
-        console.log("Access Token:", accessToken);
-        handleGoogleResponse(authentication);
-      } else if (response?.type === "error") {
-        console.log("Google signin was cancelled or failed");
-        handleMessage({ msg: "Google signin was cancelled or failed" });
-      }
-    };
-
-    fetchToken();
+    if (response?.type === "success") {
+      const { authentication } = response;
+      console.log("Authentication response:", authentication);
+      handleGoogleResponse(authentication);
+    } else if (response?.type === "error") {
+      handleMessage({ msg: "Google signin was cancelled or failed" });
+    }
   }, [response]);
 
   const handleGoogleResponse = async authentication => {
-    const idToken = authentication.idToken;
-    const accessToken = authentication.accessToken;
     console.log("Handling Google response, authentication:", authentication);
     try {
       const res = await axios.get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
       );
       const { email, name, picture } = res.data;
       const platform = getPlatform();
@@ -94,7 +79,7 @@ const LoginScreen = ({ navigation }) => {
       await sendGoogleDataToServer({
         email,
         name,
-        token: idToken,
+        token: authentication.idToken,
         platform: platform
       });
 
