@@ -1,8 +1,8 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 
-const Verification = () => {
+const LinkVerification = () => {
   return <></>;
 };
 
-export default Verification;
+export default LinkVerification;
