@@ -1,15 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import {
-  StyledContainer,
-  TopContainer,
-  BottomContainer,
-  IconBackGround,
-  PageTitle,
   InfoText,
   EmphasizeText,
-  StyledButton,
-  ButtonText,
   InlineGroup,
   TextLink,
   TextLinkContent

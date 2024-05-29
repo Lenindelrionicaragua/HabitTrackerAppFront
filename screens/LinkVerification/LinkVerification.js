@@ -10,10 +10,7 @@ import {
   InfoText,
   EmphasizeText,
   StyledButton,
-  ButtonText,
-  InlineGroup,
-  TextLink,
-  TextLinkContent
+  ButtonText
 } from "./LinkVerificationStyles";
 // icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
