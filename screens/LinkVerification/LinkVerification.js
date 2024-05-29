@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -17,11 +17,36 @@ import { Octicons, Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 // resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
-
 // Colors
-const { white, orange, grey, yellow, lightGrey, black } = Colors;
+const { white, orange } = Colors;
 
 const LinkVerification = () => {
+  const [resendingEmail, setResendingEmail] = useState(false);
+  const [resendStatus, setResendStatus] = useState("Resend");
+
+  // resend timer
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
+  const [activeResend, setActiveResend] = useState(false);
+
+  const calculateTimeLeft = finalTime => {
+    const seconds = finalTime - +new Date();
+    if (seconds >= 0) {
+      setTimeLeft(Match.round(seconds / 1000));
+    } else {
+      setTimeLeft(null);
+      clearInterval(resendTimerInterval);
+      setActiveResend(true);
+    }
+  };
+
+  const triggerTimer = (targetTimeInSeconds = 30) => {
+    setTargetTime(targetTimeInSeconds);
+    setActiveResend(false);
+    const finalTime = +new Date() + targetTimeInSeconds * 1000;
+    resendTimerInterval = setInterval(() => calculateTimeLeft(finalTime), 1000);
+  };
+
   return (
     <StyledContainer style={{ alignItems: "center" }}>
       <TopContainer>
