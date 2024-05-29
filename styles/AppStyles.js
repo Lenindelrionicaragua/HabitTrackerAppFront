@@ -8,4 +8,5 @@ export const Colors = {
   yellow: "#ffc554",
   lightGrey: "#f9f7f3",
   black: "#000000",
+  lightGreen: `rgba(16, 185, 129, 0.1)`
 };
