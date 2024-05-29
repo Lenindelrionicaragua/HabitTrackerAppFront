@@ -18,6 +18,9 @@ import {
 // icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
+// resend timer
+import ResendTimer from "../../component/ResendTimer/ResendTimer";
+
 // Colors
 const { white, orange, grey, yellow, lightGrey, black } = Colors;
 
@@ -40,19 +43,7 @@ const LinkVerification = () => {
           <ButtonText>Send it</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>
-        <View>
-          <InlineGroup>
-            <InfoText>Didn't receive the email?</InfoText>
-            <TextLink onPress={() => {}}>
-              <TextLinkContent style={{ textDecorationLine: "underline" }}>
-                Resend
-              </TextLinkContent>
-            </TextLink>
-          </InlineGroup>
-          <InfoText>
-            in <EmphasizeText>{`20`}</EmphasizeText> second(s)
-          </InfoText>
-        </View>
+        <ResendTimer />
       </BottomContainer>
     </StyledContainer>
   );
