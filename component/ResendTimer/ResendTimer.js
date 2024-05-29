@@ -1,34 +1,60 @@
 import React from "react";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import {
-  StyledContainer,
-  TopContainer,
-  BottomContainer,
-  IconBackGround,
-  PageTitle,
   InfoText,
   EmphasizeText,
-  StyledButton,
-  ButtonText,
   InlineGroup,
   TextLink,
   TextLinkContent
 } from "./ResendTimerStyles";
+import { Colors } from "./../../styles/AppStyles";
 
-const ResendTimer = () => {
+const { lightGrey } = Colors;
+
+const ResendTimer = ({
+  activeResend,
+  resendEmail,
+  resendingEmail,
+  resendStatus,
+  timeLeft,
+  targetTime
+}) => {
   return (
     <View>
       <InlineGroup>
         <InfoText>Didn't receive the email?</InfoText>
-        <TextLink onPress={() => {}}>
-          <TextLinkContent style={{ textDecorationLine: "underline" }}>
-            Resend
-          </TextLinkContent>
-        </TextLink>
+
+        {!resendingEmail && (
+          <TextLink
+            style={{ opacity: !activeResend && 0.5 }}
+            disable={!activeResend}
+            onPress={resendEmail}
+          >
+            <TextLinkContent
+              resendStatus={resendStatus}
+              style={{ textDecorationLine: "underline" }}
+            >
+              {resendStatus}
+            </TextLinkContent>
+          </TextLink>
+        )}
+
+        {resendingEmail && (
+          <TextLink disable>
+            <TextLinkContent
+              resendStatus={resendStatus}
+              style={{ textDecorationLine: "underline" }}
+            >
+              <ActivityIndicator color={lightGrey} />
+            </TextLinkContent>
+          </TextLink>
+        )}
       </InlineGroup>
-      <InfoText>
-        in <EmphasizeText>{`20`}</EmphasizeText> second(s)
-      </InfoText>
+      {!activeResend && (
+        <InfoText>
+          in <EmphasizeText>{timeLeft || targetTime}</EmphasizeText> second(s)
+        </InfoText>
+      )}
     </View>
   );
 };
