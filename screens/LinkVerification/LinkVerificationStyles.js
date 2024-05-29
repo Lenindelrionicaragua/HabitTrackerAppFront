@@ -1,12 +1,5 @@
 import styled from "styled-components/native";
-import {
-  View,
-  Image,
-  Text,
-  TextInput,
-  Pressable,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 
@@ -56,7 +49,7 @@ export const InfoText = styled(Text)`
   text-align: center;
 `;
 
-export const EmphasizeText = styled.Text`
+export const EmphasizeText = styled(Text)`
   font-weight: bold;
   font-style: italic;
 `;
