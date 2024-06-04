@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verified</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f9f7f3;
+      }
+      .container {
+        max-width: 600px;
+        width: 90%;
+        padding: 40px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f7f3;
+        text-align: justify;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      @keyframes scaleUp {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      h1 {
+        color: #4caf50;
+        text-align: center;
+      }
+      p {
+        font-size: 1.2em;
+        margin-top: 20px;
+      }
+      a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+
+      .image-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-top: 20px;
+        animation: scaleUp 0.5s ease-in-out;
+      }
+      .image-container img {
+        width: 100px;
+        height: auto;
+      }
+      @media screen and (min-width: 768px) {
+        .container {
+          max-width: 600px;
+        }
+      }
+      .swing {
+        transform-origin: top center;
+        animation-name: swing;
+      }
+      @keyframes swing {
+        0% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(10deg);
+        }
+        50% {
+          transform: rotate(-10deg);
+        }
+        75% {
+          transform: rotate(5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Email Successfully Verified!</h1>
+      <div class="image-container swing">
+        <?xml version="1.0" encoding="UTF-8"?>
+        <svg
+          width="100px"
+          height="100px"
+          viewBox="0 0 20 20"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+          <title>check_circle</title>
+          <desc>Created with Sketch.</desc>
+          <g
+            id="Icons"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            <g id="Rounded" transform="translate(-646.000000, -200.000000)">
+              <g id="Action" transform="translate(100.000000, 100.000000)">
+                <g
+                  id="-Round-/-Action-/-check_circle"
+                  transform="translate(544.000000, 98.000000)"
+                >
+                  <g>
+                    <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                    <path
+                      d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M9.29,16.29 L5.7,12.7 C5.31,12.31 5.31,11.68 5.7,11.29 C6.09,10.9 6.72,10.9 7.11,11.29 L10,14.17 L16.88,7.29 C17.27,6.9 17.9,6.9 18.29,7.29 C18.68,7.68 18.68,8.31 18.29,8.7 L10.7,16.29 C10.32,16.68 9.68,16.68 9.29,16.29 Z"
+                      id="🔹Icon-Color"
+                      fill="#1D1D1D"
+                    ></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p>
+        Thank you for verifying your email address. Your account is now ready to
+        use.
+      </p>
+      <p>
+        You can now <a href="http://localhost:3000/login">log in</a> to your
+        account.
+      </p>
+    </div>
+  </body>
+</html>
