@@ -35,10 +35,7 @@ import {
   EXPO_CLIENT_ID,
   IOS_CLIENT_ID,
   ANDROID_CLIENT_ID,
-  WEB_CLIENT_ID,
-  NODE_ENV,
-  API_DEV_URL,
-  API_PROD_URL
+  WEB_CLIENT_ID
 } from "@env";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -54,12 +51,6 @@ const LoginScreen = ({ navigation }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
-  const API_URL =
-    process.env.NODE_ENV === "production"
-      ? process.env.API_PROD_URL
-      : process.env.API_DEV_URL;
-
-  // credentials
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -113,12 +104,13 @@ const LoginScreen = ({ navigation }) => {
   const sendGoogleDataToServer = async userData => {
     try {
       console.log("Sending data to server:", userData);
-      const url = `API_URL/auth/sign-in-with-google`;
-      logInfo("this server url before:", url);
-      const response = await axios.post(url, userData);
+      const response = await axios.post(
+        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
+        // "http://192.168.178.182:3000/api/auth/sign-in-with-google", // For test android need ip instead of localHost
+        userData
+      );
       const { success, msg } = response.data;
       if (success) {
-        logInfo("this server url succes:", url);
         logInfo(msg);
         handleMessage({ successStatus: true, msg: msg });
       }
@@ -146,7 +138,9 @@ const LoginScreen = ({ navigation }) => {
       password: values.password
     };
 
-    const url = `API_URL/auth/log-in`;
+    const url =
+      "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
+    // "http://192.168.178.182:3000/api/auth/log-in";
 
     axios
       .post(url, { user: credentials })
