@@ -140,6 +140,7 @@ const LoginScreen = ({ navigation }) => {
 
     const url =
       "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
+    // "http://192.168.178.182:3000/api/auth/log-in";
 
     axios
       .post(url, { user: credentials })

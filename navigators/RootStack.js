@@ -44,11 +44,6 @@ const RootStack = () => {
             ) : (
               <>
                 <Stack.Screen
-                  name="LinkVerification"
-                  component={LinkVerification}
-                  testID="link-verification"
-                />
-                <Stack.Screen
                   name="LoginScreen"
                   component={LoginScreen}
                   testID="login-screen"
@@ -58,6 +53,11 @@ const RootStack = () => {
                   name="SignupScreen"
                   component={SignupScreen}
                   testID="signup-screen"
+                />
+                <Stack.Screen
+                  name="LinkVerification"
+                  component={LinkVerification}
+                  testID="link-verification"
                 />
               </>
             )}
