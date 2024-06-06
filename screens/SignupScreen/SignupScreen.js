@@ -29,8 +29,7 @@ import { CredentialsContext } from "../../context/credentialsContext";
 
 // api url
 
-import { baseApiUrl } from "../../config/confi";
-
+import { baseApiUrl } from "../../component/Shared/Shared";
 // Colors
 const { white, lightGrey } = Colors;
 
