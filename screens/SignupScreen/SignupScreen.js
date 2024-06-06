@@ -27,6 +27,10 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
+// api url
+
+import { baseApiUrl } from "../../config/confi";
+
 // Colors
 const { white, lightGrey } = Colors;
 
@@ -66,9 +70,7 @@ const SignupScreen = ({ navigation }) => {
       dateOfBirth: values.dateOfBirth
     };
 
-    const url =
-      "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-up";
-    // "http://192.168.178.182:3000/api/auth/sign-up";
+    const url = `${baseApiUrl}/auth/sign-up`;
 
     axios
       .post(url, { user: credentials })
