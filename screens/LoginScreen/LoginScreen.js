@@ -30,6 +30,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
+// api url
+import { baseApiUrl } from "../../component/Shared/Shared";
+
 // Credentials
 import {
   EXPO_CLIENT_ID,
@@ -105,8 +108,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log("Sending data to server:", userData);
       const response = await axios.post(
-        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-in-with-google",
-        // "http://192.168.178.182:3000/api/auth/sign-in-with-google", // For test android need ip instead of localHost
+        `${baseApiUrl}/auth/sign-in-with-google`,
         userData
       );
       const { success, msg } = response.data;
@@ -138,9 +140,7 @@ const LoginScreen = ({ navigation }) => {
       password: values.password
     };
 
-    const url =
-      "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
-    // "http://192.168.178.182:3000/api/auth/log-in";
+    const url = `${baseApiUrl}/auth/log-in`;
 
     axios
       .post(url, { user: credentials })
