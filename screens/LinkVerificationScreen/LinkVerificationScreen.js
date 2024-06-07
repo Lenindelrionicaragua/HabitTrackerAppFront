@@ -12,14 +12,21 @@ import {
   StyledButton,
   ButtonText
 } from "./LinkVerificationStyles";
+import axios from "axios";
+
 // icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
+
 // resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
+
+// api url
+import { baseApiUrl } from "../../component/Shared/Shared";
+
 // Colors
 const { white, orange } = Colors;
 
-const LinkVerification = () => {
+const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Resend");
 
@@ -27,6 +34,8 @@ const LinkVerification = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
+
+  const { email, userId } = route?.params;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -54,7 +63,25 @@ const LinkVerification = () => {
     };
   }, []);
 
-  const resendEmail = async () => {};
+  const resendEmail = async () => {
+    setResendingEmail(true);
+    // make request
+    const url = `${baseApiUrl}/auth/resend-verification-link`;
+    try {
+      await axios.post(url, { email, userId });
+      setResendStatus("Sent!");
+    } catch (error) {
+      setResendStatus("Failed");
+      alert(`Resending email failed! ${error.message}`);
+    }
+    setResendingEmail(false);
+    // hold on message
+    setTimeout(() => {
+      setResendStatus("Resend");
+      setActiveResend(false);
+      triggerTimer();
+    }, 5000);
+  };
 
   return (
     <StyledContainer style={{ alignItems: "center" }}>
@@ -68,9 +95,12 @@ const LinkVerification = () => {
         <PageTitle style={{ fontSize: 25 }}>Account Verification</PageTitle>
         <InfoText>
           We will sent you an email to verify your account.
-          <EmphasizeText>{`test.riodeluzcreativos@gmail.com`}</EmphasizeText>
+          <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
-        <StyledButton onPress={() => {}} style={{ flexDirection: "row" }}>
+        <StyledButton
+          onPress={() => navigation.navigate("LoginScreen", { email: email })}
+          style={{ flexDirection: "row" }}
+        >
           <ButtonText>Send it</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>
@@ -87,4 +117,4 @@ const LinkVerification = () => {
   );
 };
 
-export default LinkVerification;
+export default LinkVerificationScreen;
