@@ -19,7 +19,7 @@ import ResendTimer from "../../component/ResendTimer/ResendTimer";
 // Colors
 const { white, orange } = Colors;
 
-const LinkVerification = () => {
+const LinkVerificationScreen = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Resend");
 
@@ -87,4 +87,4 @@ const LinkVerification = () => {
   );
 };
 
-export default LinkVerification;
+export default LinkVerificationScreen;
