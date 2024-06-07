@@ -7,7 +7,7 @@ import { Colors } from "../styles/AppStyles";
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
-import LinkVerificationScreen from "../screens/LinkVerification/LinkVerificationScreen";
+import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
 
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
