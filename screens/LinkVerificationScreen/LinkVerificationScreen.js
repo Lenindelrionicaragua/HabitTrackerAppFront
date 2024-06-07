@@ -12,10 +12,17 @@ import {
   StyledButton,
   ButtonText
 } from "./LinkVerificationStyles";
+import axios from "axios";
+
 // icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
+
 // resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
+
+// api url
+import { baseApiUrl } from "../../component/Shared/Shared";
+
 // Colors
 const { white, orange } = Colors;
 
@@ -56,7 +63,25 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  const resendEmail = async () => {};
+  const resendEmail = async () => {
+    setResendingEmail(true);
+    // make request
+    const url = `${baseApiUrl}/auth/resend-verification-link`;
+    try {
+      await axios.post(url, { email, userId });
+      setResendStatus("Sent!");
+    } catch (error) {
+      setResendStatus("Failed");
+      alert(`Resending email failed! ${error.message}`);
+    }
+    setResendingEmail(false);
+    // hold on message
+    setTimeout(() => {
+      setResendStatus("Resend");
+      setActiveResend(false);
+      triggerTimer();
+    }, 5000);
+  };
 
   return (
     <StyledContainer style={{ alignItems: "center" }}>
@@ -73,7 +98,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
         <StyledButton
-          onPress={(() => navigation.navigate("LoginScreen"), { email: email })}
+          onPress={() => navigation.navigate("LoginScreen", { email: email })}
           style={{ flexDirection: "row" }}
         >
           <ButtonText>Send it</ButtonText>
