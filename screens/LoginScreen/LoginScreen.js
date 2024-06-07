@@ -45,7 +45,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const { white, grey, lightGrey } = Colors;
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, route }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
@@ -207,7 +207,8 @@ const LoginScreen = ({ navigation }) => {
           <SubTitle testID="sub-title">Account Login</SubTitle>
 
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: route?.params?.email, password: "" }}
+            enableReinitialize={true}
             onSubmit={(values, { setSubmitting }) => {
               if (values.email == "" || values.password == "") {
                 handleMessage({ msg: "Please fill all the fields" });
