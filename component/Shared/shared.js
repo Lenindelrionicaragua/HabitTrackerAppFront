@@ -1,3 +1,8 @@
+import { NODE_ENV, API_URL_DEVELOPMENT, API_URL_PRODUCTION } from "@env";
+
 export const baseApiUrl =
-  "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api";
-// "http://192.168.178.182:3000/api"; // For test android need ip instead of localHost
+  NODE_ENV === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT;
+
+console.log("NODE_ENV:", NODE_ENV);
+console.log("API_URL_DEVELOPMENT:", API_URL_DEVELOPMENT);
+console.log("API_URL_PRODUCTION:", API_URL_PRODUCTION);
