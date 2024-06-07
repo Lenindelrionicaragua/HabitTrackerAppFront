@@ -28,8 +28,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // api url
-
 import { baseApiUrl } from "../../component/Shared/Shared";
+
 // Colors
 const { white, lightGrey } = Colors;
 
