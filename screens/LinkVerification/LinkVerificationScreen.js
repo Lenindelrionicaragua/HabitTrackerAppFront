@@ -19,7 +19,7 @@ import ResendTimer from "../../component/ResendTimer/ResendTimer";
 // Colors
 const { white, orange } = Colors;
 
-const LinkVerificationScreen = () => {
+const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Resend");
 
@@ -27,6 +27,8 @@ const LinkVerificationScreen = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
+
+  const { email, userId } = route?.params;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -68,9 +70,12 @@ const LinkVerificationScreen = () => {
         <PageTitle style={{ fontSize: 25 }}>Account Verification</PageTitle>
         <InfoText>
           We will sent you an email to verify your account.
-          <EmphasizeText>{`test.riodeluzcreativos@gmail.com`}</EmphasizeText>
+          <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
-        <StyledButton onPress={() => {}} style={{ flexDirection: "row" }}>
+        <StyledButton
+          onPress={(() => navigation.navigate("LoginScreen"), { email: email })}
+          style={{ flexDirection: "row" }}
+        >
           <ButtonText>Send it</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>
