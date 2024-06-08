@@ -8,6 +8,26 @@ import LoginScreen from "../../screens/LoginScreen/LoginScreen";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import { PageLogo } from "../../screens/LoginScreen/LoginScreenStyles";
+import * as Google from "expo-auth-session/providers/google";
+
+// Mock the environment variables
+jest.mock("@env", () => ({
+  EXPO_CLIENT_ID: "mock_expo_client_id",
+  IOS_CLIENT_ID: "mock_ios_client_id",
+  ANDROID_CLIENT_ID: "mock_android_client_id",
+  WEB_CLIENT_ID: "mock_web_client_id"
+}));
+
+// Mock Google auth request
+jest.mock("expo-auth-session/providers/google", () => {
+  return {
+    useAuthRequest: () => [
+      jest.fn(), // request
+      { type: "success" }, // response
+      jest.fn() // promptAsync
+    ]
+  };
+});
 
 // Rendering Functions
 const renderLoginScreen = () => render(<LoginScreen />);
