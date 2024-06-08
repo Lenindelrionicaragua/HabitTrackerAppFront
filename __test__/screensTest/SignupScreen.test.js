@@ -391,7 +391,7 @@ describe("SignupScreen navigation", () => {
       );
     });
 
-    expect(navigation.navigate).toHaveBeenCalledWith("WelcomeScreen", {
+    expect(navigation.navigate).toHaveBeenCalledWith("LinkVerificationScreen", {
       name: "Alex Lara",
       email: "alexlara2@email.com",
       password: "$2b$10$BvpVRqsJkJ0baUqBFfQ0muu4qJ2q25wDlQtdOso8ZuzE9SFmivFJC",

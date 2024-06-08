@@ -1,14 +1,13 @@
 import React from "react";
 import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
-import MockAdapter from "axios-mock-adapter";
-import axios from "axios";
+// import MockAdapter from "axios-mock-adapter";
+// import axios from "axios";
 import renderer from "react-test-renderer";
 import { Fontisto } from "@expo/vector-icons";
 import LoginScreen from "../../screens/LoginScreen/LoginScreen";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import { PageLogo } from "../../screens/LoginScreen/LoginScreenStyles";
-import { NavigationContainer } from "@react-navigation/native";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
