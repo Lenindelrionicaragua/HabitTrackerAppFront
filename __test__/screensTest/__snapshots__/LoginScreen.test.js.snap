@@ -207,6 +207,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     }
                   }
                   testID="email-input"
+                  value=""
                 />
               </View>
               <View
@@ -606,4 +607,20 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
     </View>
   </RCTScrollView>
 </View>
+`;
+
+exports[`PageLogo Renders the PageLogo component correctly 1`] = `
+<Image
+  style={
+    {
+      "borderBottomLeftRadius": 80,
+      "borderBottomRightRadius": 80,
+      "borderTopLeftRadius": 80,
+      "borderTopRightRadius": 80,
+      "height": 160,
+      "overflow": "hidden",
+      "width": 160,
+    }
+  }
+/>
 `;
