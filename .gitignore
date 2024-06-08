@@ -30,6 +30,8 @@ yarn-error.*
 
 # local env files
 .env*.local
+__mocks__/@env.js
+envVariables.js
 
 # typescript
 *.tsbuildinfo
