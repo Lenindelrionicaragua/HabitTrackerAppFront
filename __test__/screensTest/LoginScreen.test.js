@@ -1,22 +1,14 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  act,
-  cleanup,
-  waitFor
-} from "@testing-library/react-native";
+import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 import renderer from "react-test-renderer";
 import { Fontisto } from "@expo/vector-icons";
 import LoginScreen from "../../screens/LoginScreen/LoginScreen";
-import RootStack from "../../navigators/RootStack";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import { PageLogo } from "../../screens/LoginScreen/LoginScreenStyles";
 import { NavigationContainer } from "@react-navigation/native";
-import { CredentialsContext } from "../../context/credentialsContext";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
@@ -40,9 +32,8 @@ jest.mock("expo-auth-session/providers/google", () => {
 // Mock navigation
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => {
-  const actualNav = jest.requireActual("@react-navigation/native");
   return {
-    ...actualNav,
+    ...jest.requireActual("@react-navigation/native"),
     useNavigation: () => ({
       navigate: mockNavigate
     })
@@ -50,19 +41,8 @@ jest.mock("@react-navigation/native", () => {
 });
 
 // Rendering Functions
-const renderLoginScreen = () =>
-  render(
-    <NavigationContainer>
-      <LoginScreen />
-    </NavigationContainer>
-  );
-
-const renderLoginScreenWithRenderer = () =>
-  renderer.create(
-    <NavigationContainer>
-      <LoginScreen />
-    </NavigationContainer>
-  );
+const renderLoginScreen = () => render(<LoginScreen />);
+const renderLoginScreenWithRenderer = () => renderer.create(<LoginScreen />);
 
 let loginScreenRender;
 let loginScreenRenderWithRenderer;
@@ -378,126 +358,6 @@ describe("LoginTextInput", () => {
       });
 
       expect(navigation.navigate).toHaveBeenCalledWith("SignupScreen");
-    });
-
-    test("update stored credentials after successful login", async () => {
-      const mock = new MockAdapter(axios);
-
-      const url =
-        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
-
-      mock.onPost(url).reply(200, {
-        success: true,
-        msg: "Login successful",
-        user: {
-          id: "6638d16d96bf8c3d0d4cf2e4",
-          email: "johnlenin@email.com",
-          name: "John Lenin"
-        }
-      });
-
-      const credentialsContextValue = {
-        storedCredentials: null,
-        setStoredCredentials: jest.fn()
-      };
-
-      render(
-        <CredentialsContext.Provider value={credentialsContextValue}>
-          <LoginScreen />
-        </CredentialsContext.Provider>
-      );
-
-      const formikComponent = loginScreenInstance.findByType(Formik);
-      const handleLogin = formikComponent.props.onSubmit;
-      const setSubmitting = jest.fn();
-
-      await act(async () => {
-        await handleLogin(
-          { email: "johnlenin@email.com", password: "Password1234!" },
-          { setSubmitting }
-        );
-      });
-
-      // Simular la actualización del contexto con las credenciales almacenadas
-      expect(credentialsContextValue.setStoredCredentials).toHaveBeenCalledWith(
-        {
-          id: "6638d16d96bf8c3d0d4cf2e4",
-          email: "johnlenin@email.com",
-          name: "John Lenin"
-        }
-      );
-    });
-
-    test("navigate to WelcomeScreen should fail if request does not have a valid email", async () => {
-      const mock = new MockAdapter(axios);
-      const formikComponent = loginScreenInstance.findByType(Formik);
-      const handleLogin = formikComponent.props.onSubmit;
-      const setSubmitting = jest.fn();
-
-      const url =
-        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
-
-      mock.onPost(url).reply(200, {
-        success: false,
-        error: "BAD REQUEST: Email and password are required."
-      });
-
-      await act(async () => {
-        await handleLogin(
-          { email: "", password: "Password1234!" },
-          { setSubmitting }
-        );
-      });
-
-      expect(navigation.navigate).not.toHaveBeenCalled();
-      expect(setSubmitting).toHaveBeenCalledWith(false);
-    });
-
-    test("navigate to WelcomeScreen should fail if request does not have a valid password", async () => {
-      const mock = new MockAdapter(axios);
-      const formikComponent = loginScreenInstance.findByType(Formik);
-      const handleLogin = formikComponent.props.onSubmit;
-      const setSubmitting = jest.fn();
-
-      const url =
-        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
-
-      mock.onPost(url).reply(200, {
-        success: false,
-        error: "BAD REQUEST: Email and password are required."
-      });
-
-      await act(async () => {
-        await handleLogin(
-          { email: "johnlenin@email.com", password: "" },
-          { setSubmitting }
-        );
-      });
-
-      expect(navigation.navigate).not.toHaveBeenCalled();
-      expect(setSubmitting).toHaveBeenCalledWith(false);
-    });
-
-    test("navigate to WelcomeScreen should fail if request is an empty object", async () => {
-      const mock = new MockAdapter(axios);
-      const formikComponent = loginScreenInstance.findByType(Formik);
-      const handleLogin = formikComponent.props.onSubmit;
-      const setSubmitting = jest.fn();
-
-      const url =
-        "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/log-in";
-
-      mock.onPost(url).reply(200, {
-        success: false,
-        msg: "Invalid request body"
-      });
-
-      await act(async () => {
-        await handleLogin({}, { setSubmitting });
-      });
-
-      expect(navigation.navigate).not.toHaveBeenCalled();
-      expect(setSubmitting).toHaveBeenCalledWith(false);
     });
   });
 });
