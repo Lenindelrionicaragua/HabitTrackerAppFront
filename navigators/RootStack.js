@@ -22,7 +22,7 @@ const RootStack = () => {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              headerStyled: {
+              headerStyle: {
                 backgroundColor: "transparent"
               },
               headerTintColor: lightGrey,
