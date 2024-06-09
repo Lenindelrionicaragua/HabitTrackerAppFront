@@ -195,7 +195,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoider>
-      <StyledContainer testID="styled-container">
+      <StyledContainer testID="login-styled-container">
         <StatusBar style="light" />
         <InnerContainer testID="inner-container">
           <PageLogo

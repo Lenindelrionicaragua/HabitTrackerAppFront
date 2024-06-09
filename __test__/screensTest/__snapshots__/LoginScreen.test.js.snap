@@ -63,7 +63,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
               "width": "100%",
             }
           }
-          testID="styled-container"
+          testID="login-styled-container"
         >
           <View
             style={
