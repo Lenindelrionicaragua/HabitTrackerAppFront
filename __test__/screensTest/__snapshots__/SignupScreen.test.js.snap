@@ -67,7 +67,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
               "width": "100%",
             }
           }
-          testID="styled-container"
+          testID="signup-styled-container"
         >
           <View
             style={

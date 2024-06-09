@@ -84,7 +84,10 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   };
 
   return (
-    <StyledContainer style={{ alignItems: "center" }}>
+    <StyledContainer
+      style={{ alignItems: "center" }}
+      testID="link-verification-container"
+    >
       <TopContainer>
         <IconBackGround>
           <StatusBar style="dark" />
