@@ -63,7 +63,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
               "width": "100%",
             }
           }
-          testID="styled-container"
+          testID="login-styled-container"
         >
           <View
             style={
@@ -360,7 +360,9 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                 }
                 testID="msg-box"
                 type="ERROR"
-              />
+              >
+                An error occurred. Check your network and try again
+              </Text>
               <View
                 accessibilityState={
                   {
@@ -438,7 +440,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   {
                     "busy": undefined,
                     "checked": undefined,
-                    "disabled": undefined,
+                    "disabled": false,
                     "expanded": undefined,
                     "selected": undefined,
                   }
@@ -545,7 +547,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   }
                   testID="footer-text"
                 >
-                  Dont you have an account already?
+                  Don't you have an account already?
                 </Text>
                 <View
                   accessibilityState={

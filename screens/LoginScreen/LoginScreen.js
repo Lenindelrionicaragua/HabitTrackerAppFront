@@ -195,7 +195,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoider>
-      <StyledContainer testID="styled-container">
+      <StyledContainer testID="login-styled-container">
         <StatusBar style="light" />
         <InnerContainer testID="inner-container">
           <PageLogo
@@ -207,7 +207,7 @@ const LoginScreen = ({ navigation, route }) => {
           <SubTitle testID="sub-title">Account Login</SubTitle>
 
           <Formik
-            initialValues={{ email: route?.params?.email, password: "" }}
+            initialValues={{ email: route?.params?.email ?? "", password: "" }}
             enableReinitialize={true}
             onSubmit={(values, { setSubmitting }) => {
               if (values.email == "" || values.password == "") {
