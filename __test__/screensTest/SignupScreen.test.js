@@ -44,7 +44,7 @@ describe("SignupScreen", () => {
   test("Render UI components correctly", () => {
     const { getByTestId } = signupScreenRender;
 
-    expect(getByTestId("styled-container")).toBeTruthy();
+    expect(getByTestId("signup-styled-container")).toBeTruthy();
     expect(getByTestId("inner-container")).toBeTruthy();
     expect(getByTestId("page-title")).toBeTruthy();
     expect(getByTestId("sub-title")).toBeTruthy();

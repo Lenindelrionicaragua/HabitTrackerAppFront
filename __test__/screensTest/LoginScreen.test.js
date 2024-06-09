@@ -71,7 +71,7 @@ describe("LoginScreen", () => {
   test("Render UI components correctly", () => {
     const { getByTestId } = loginScreenRender;
 
-    expect(getByTestId("styled-container")).toBeTruthy();
+    expect(getByTestId("login-styled-container")).toBeTruthy();
     expect(getByTestId("inner-container")).toBeTruthy();
     expect(getByTestId("page-logo")).toBeTruthy();
     expect(getByTestId("page-title")).toBeTruthy();

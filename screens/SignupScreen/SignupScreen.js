@@ -125,7 +125,7 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoider>
-      <StyledContainer testID="styled-container">
+      <StyledContainer testID="signup-styled-container">
         <StatusBar style="dark" />
         <InnerContainer testID="inner-container">
           <PageTitle testID="page-title">ZenTimer</PageTitle>
