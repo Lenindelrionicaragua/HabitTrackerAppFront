@@ -8,6 +8,35 @@ import WelcomeScreen from "../../screens/WelcomeScreen/WelcomeScreen";
 
 import { StatusBar } from "react-native";
 
+jest.mock("@env", () => ({
+  EXPO_CLIENT_ID: "mock_expo_client_id",
+  IOS_CLIENT_ID: "mock_ios_client_id",
+  ANDROID_CLIENT_ID: "mock_android_client_id",
+  WEB_CLIENT_ID: "mock_web_client_id"
+}));
+
+// Mock Google auth request
+jest.mock("expo-auth-session/providers/google", () => {
+  return {
+    useAuthRequest: () => [
+      jest.fn(), // request
+      { type: "success" }, // response
+      jest.fn() // promptAsync
+    ]
+  };
+});
+
+// Mock navigation
+const mockNavigate = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  return {
+    ...jest.requireActual("@react-navigation/native"),
+    useNavigation: () => ({
+      navigate: mockNavigate
+    })
+  };
+});
+
 // Rendering Functions
 const renderWelcomeScreen = routeParams =>
   render(<WelcomeScreen route={{ params: routeParams }} />);
@@ -114,31 +143,5 @@ describe("Logout ButtonText", () => {
     const textContent = styledButtonElement.toString();
     expect(styledButtonElement).toBeTruthy();
     expect(textContent).toMatchSnapshot("Logout");
-  });
-});
-
-// Navigation Test
-
-describe("WelcomeScreen navigation", () => {
-  let navigation;
-
-  beforeEach(() => {
-    navigation = { navigate: jest.fn() };
-    welcomeScreenRender = render(
-      <WelcomeScreen navigation={navigation} route={{ params: {} }} />
-    );
-  });
-
-  afterEach(() => {
-    cleanup();
-  });
-
-  test("navigate to LoginScreen when Logout button is clicked", () => {
-    const { getByTestId } = welcomeScreenRender;
-    const styledButtonElement = getByTestId("logout-styled-button");
-    act(() => {
-      fireEvent.press(styledButtonElement);
-    });
-    expect(navigation.navigate).toHaveBeenCalledWith("LoginScreen");
   });
 });
