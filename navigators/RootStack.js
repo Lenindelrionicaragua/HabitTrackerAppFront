@@ -12,7 +12,7 @@ import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerifi
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
 
-const { white, orange, grey, yellow, lightGrey, black } = Colors;
+const { grey, lightGrey } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
@@ -22,7 +22,7 @@ const RootStack = () => {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              headerStyled: {
+              headerStyle: {
                 backgroundColor: "transparent"
               },
               headerTintColor: lightGrey,
