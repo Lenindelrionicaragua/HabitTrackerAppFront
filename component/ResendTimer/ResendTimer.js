@@ -26,13 +26,15 @@ const ResendTimer = ({
 
         {!resendingEmail && (
           <TextLink
-            style={{ opacity: !activeResend && 0.5 }}
             disable={!activeResend}
-            onPress={resendEmail}
+            onPress={activeResend ? resendEmail : null}
           >
             <TextLinkContent
+              style={{
+                opacity: activeResend ? 1 : 0.5,
+                textDecorationLine: "underline"
+              }}
               resendStatus={resendStatus}
-              style={{ textDecorationLine: "underline" }}
             >
               {resendStatus}
             </TextLinkContent>
