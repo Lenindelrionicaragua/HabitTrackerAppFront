@@ -28,7 +28,7 @@ const { white, orange } = Colors;
 
 const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
-  const [resendStatus, setResendStatus] = useState("Resend");
+  const [resendStatus, setResendStatus] = useState("Please wait");
 
   // resend timer
   const [timeLeft, setTimeLeft] = useState(null);
@@ -104,7 +104,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           onPress={() => navigation.navigate("LoginScreen", { email: email })}
           style={{ flexDirection: "row" }}
         >
-          <ButtonText>Send it</ButtonText>
+          <ButtonText>Proceed</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>
         <ResendTimer
