@@ -25,7 +25,24 @@
       }
     },
     "web": {
-      "favicon": "./assets/logoZenTimer2.png"
+      "favicon": "./assets/logoZenTimer2.png",
+      "name": "Zen Timer",
+      "backgroundColor": "#ffffff",
+      "shortName": "Zen Timer",
+      "themeColor": "#000000",
+      "manifest": {
+        "display": "standalone",
+        "orientation": "portrait",
+        "start_url": "/",
+        "scope": "/",
+        "icons": [
+          {
+            "src": "./assets/logoZenTimer2.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          }
+        ]
+      }
     },
     "extra": {
       "eas": {
