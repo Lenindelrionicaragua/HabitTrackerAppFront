@@ -7,6 +7,7 @@
     "icon": "./assets/logoZenTimer2.png",
     "userInterfaceStyle": "light",
     "scheme": "zenTimerScheme",
+    "entryPoint": "./AppEntry.js",
     "splash": {
       "image": "./assets/ZenTimer1.png",
       "resizeMode": "contain",
@@ -30,8 +31,8 @@
       "backgroundColor": "#ffffff",
       "shortName": "Zen Timer",
       "themeColor": "#000000",
-      "output": "server",
-      "bundler": "metro",
+      // "output": "server",
+      // "bundler": "metro",
       "manifest": {
         "display": "standalone",
         "orientation": "portrait",
@@ -44,6 +45,9 @@
             "type": "image/png"
           }
         ]
+      },
+      "build": {
+        "config": "./webpack.config.js"
       }
     },
     "extra": {
