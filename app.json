@@ -30,8 +30,6 @@
       "backgroundColor": "#ffffff",
       "shortName": "Zen Timer",
       "themeColor": "#000000",
-      "output": "server",
-      "bundler": "metro",
       "manifest": {
         "display": "standalone",
         "orientation": "portrait",
