@@ -16,5 +16,9 @@ module.exports = async function (env, argv) {
     vm: require.resolve("vm-browserify")
   };
 
+  config.entry = {
+    app: "./App.js"
+  };
+
   return config;
 };
