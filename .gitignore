@@ -40,3 +40,9 @@ envVariables.js
 .coverage/.DS_Store
 .idea/
 ZenTimerAppFront/
+
+# Local Netlify folder
+.netlify
+
+# cypress
+cypress.config.js
