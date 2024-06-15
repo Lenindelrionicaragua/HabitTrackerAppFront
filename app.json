@@ -7,7 +7,7 @@
     "icon": "./assets/logoZenTimer2.png",
     "userInterfaceStyle": "light",
     "scheme": "zenTimerScheme",
-    "entryPoint": "./AppEntry.js",
+    "entryPoint": "./App.js",
     "splash": {
       "image": "./assets/ZenTimer1.png",
       "resizeMode": "contain",
