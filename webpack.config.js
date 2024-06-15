@@ -1,35 +1,32 @@
 const path = require("path");
-const webpack = require("webpack");
 
 module.exports = {
-  entry: "./index.web.js",
+  mode: "development", // Modo de desarrollo
+  entry: "./App.js", // Archivo de entrada principal de tu aplicación
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
-  },
-  resolve: {
-    alias: {
-      "react-native$": "react-native-web"
-    },
-    extensions: [".web.js", ".js"]
+    path: path.resolve(__dirname, "dist"), // Carpeta de salida
+    filename: "bundle.js" // Nombre del archivo de salida
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/, // Archivos JavaScript y JSX
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: "babel-loader", // Usa babel-loader para transpilar
           options: {
-            presets: ["module:metro-react-native-babel-preset"]
+            presets: ["@babel/preset-env", "@babel/preset-react"] // Presets de Babel
           }
         }
+      },
+      {
+        test: /\.css$/, // Archivos CSS
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i, // Imágenes
+        type: "asset/resource"
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      __DEV__: JSON.stringify(true)
-    })
-  ]
+  }
 };
