@@ -1,20 +1,35 @@
-const createExpoWebpackConfigAsync = require("@expo/webpack-config");
+const path = require("path");
+const webpack = require("webpack");
 
-module.exports = async function (env, argv) {
-  const config = await createExpoWebpackConfigAsync(env, argv);
-
-  config.resolve.fallback = {
-    ...config.resolve.fallback,
-    crypto: require.resolve("crypto-browserify"),
-    stream: require.resolve("stream-browserify"),
-    assert: require.resolve("assert"),
-    http: require.resolve("stream-http"),
-    https: require.resolve("https-browserify"),
-    os: require.resolve("os-browserify"),
-    url: require.resolve("url"),
-    zlib: require.resolve("browserify-zlib"),
-    vm: require.resolve("vm-browserify")
-  };
-
-  return config;
+module.exports = {
+  entry: "./index.web.js",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js"
+  },
+  resolve: {
+    alias: {
+      "react-native$": "react-native-web"
+    },
+    extensions: [".web.js", ".js"]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["module:metro-react-native-babel-preset"]
+          }
+        }
+      }
+    ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(true)
+    })
+  ]
 };
