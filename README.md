@@ -1,9 +1,7 @@
 # ZenTimer!
 
 
-Deployed link:
 
-https://zentimerappfront.netlify.app/
 
 ![Diseño sin título](https://github.com/Lenindelrionicaragua/ZenTimerAppFront/assets/142052112/2af4fba1-b240-49d8-a14d-b76af7df4d20)
 
