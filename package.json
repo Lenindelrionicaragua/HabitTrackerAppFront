@@ -18,7 +18,7 @@
     "components": "^0.1.0",
     "constants": "^0.0.2",
     "crypto-browserify": "^3.12.0",
-    "expo": "^51.0.14",
+    "expo": "^50.0.0",
     "expo-asset": "^10.0.9",
     "expo-auth-session": "~5.5.2",
     "expo-camera": "~15.0.9",
@@ -62,7 +62,7 @@
     "web": "expo start --web",
     "format": "prettier --write \"*.js\"",
     "build": "webpack --config webpack.config.js",
-    "heroku-postbuild": "npm install --legacy-peer-deps"
+    "heroku-postbuild": "npm install --force"
   },
   "engines": {
     "node": "18.16.0"
