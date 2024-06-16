@@ -29,6 +29,7 @@
     "expo-splash-screen": "~0.27.4",
     "expo-status-bar": "~1.12.1",
     "expo-web-browser": "~13.0.3",
+    "@expo/webpack-config": "~19.0.1",
     "formik": "^2.4.5",
     "jest-expo": "~51.0.2",
     "jslint": "^0.12.1",
@@ -60,7 +61,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "format": "prettier --write \"*.js\"",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "heroku-postbuild": "npm install --legacy-peer-deps"
   },
   "engines": {
     "node": "18.16.0"
