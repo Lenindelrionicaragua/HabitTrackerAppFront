@@ -7,7 +7,6 @@
     "icon": "./assets/logoZenTimer2.png",
     "userInterfaceStyle": "light",
     "scheme": "zenTimerScheme",
-    "entryPoint": "./App.js",
     "splash": {
       "image": "./assets/ZenTimer1.png",
       "resizeMode": "contain",
@@ -26,28 +25,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/logoZenTimer2.png",
-      "name": "Zen Timer",
-      "backgroundColor": "#ffffff",
-      "shortName": "Zen Timer",
-      "themeColor": "#000000",
-      "bundler": "metro",
-      "manifest": {
-        "display": "standalone",
-        "orientation": "portrait",
-        "start_url": "/",
-        "scope": "/",
-        "icons": [
-          {
-            "src": "./assets/logoZenTimer2.png",
-            "sizes": "192x192",
-            "type": "image/png"
-          }
-        ]
-      },
-      "build": {
-        "config": "./webpack.config.js"
-      }
+      "favicon": "./assets/logoZenTimer2.png"
     },
     "extra": {
       "eas": {
