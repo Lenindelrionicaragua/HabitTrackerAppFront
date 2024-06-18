@@ -1,4 +1,3 @@
 [build]
-  command = "npx expo export"
-  publish = "web-build"
-
+  command = "npm run build"
+  publish = "dist"
