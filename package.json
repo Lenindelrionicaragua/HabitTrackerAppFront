@@ -26,6 +26,7 @@
     "formik": "^2.4.5",
     "jest-expo": "~51.0.2",
     "jslint": "^0.12.1",
+    "nodejs": "^0.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.1",
@@ -49,6 +50,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "format": "prettier --write \"*.js\""
+  },
+  "engines": {
+    "node": ">=14.x"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
