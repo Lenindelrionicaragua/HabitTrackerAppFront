@@ -21,7 +21,7 @@ import { Octicons, Ionicons } from "@expo/vector-icons";
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
 
 // api url
-import { baseApiUrl } from "../../component/Shared/Shared";
+import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
 // Colors
 const { white, orange } = Colors;
