@@ -2,6 +2,5 @@
   command = "npx expo export"
   publish = "dist"
 
-# Comentar o eliminar la siguiente sección si no usas funciones
-# [functions]
-#   directory = "netlify/functions"
+[functions]
+  directory = "netlify/functions"
