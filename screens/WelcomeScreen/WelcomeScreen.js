@@ -22,7 +22,7 @@ import axios from "axios";
 import { logInfo, logError } from "../../util/logging";
 
 // api url
-import { baseApiUrl } from "../../component/Shared/Shared";
+import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
 // Credentials
 import {
