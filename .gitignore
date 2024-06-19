@@ -45,4 +45,4 @@ ZenTimerAppFront/
 .netlify
 
 # cypress
-cypress.config.js
+cypress.config.jk
