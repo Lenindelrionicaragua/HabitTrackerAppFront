@@ -49,7 +49,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "format": "prettier --write \"*.js\"",
-    "build": "expo export"
+    "build": "expo export",
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
