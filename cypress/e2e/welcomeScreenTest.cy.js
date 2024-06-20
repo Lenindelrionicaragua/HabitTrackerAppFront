@@ -60,7 +60,7 @@ describe("welcomeScreen", () => {
     // Click the logout button
     cy.get('[data-testId="logout-button-text"]').click();
 
-    // Verify that the page title exists and has the correct text
+    // Verify that the user navigate to the loginScreen after click de logout
     cy.get('[data-testId="page-title"]')
       .should("exist")
       .should("have.text", "ZenTimer");
