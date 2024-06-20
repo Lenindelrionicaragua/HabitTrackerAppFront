@@ -756,7 +756,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "justifyContent": "center",
                     }
                   }
-                  testID="footer-text"
+                  testID="signup-footer-text"
                 >
                   Already have an account?
                 </Text>
