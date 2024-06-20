@@ -215,7 +215,7 @@ const SignupScreen = ({ navigation }) => {
                   onBlur={handleBlur("email")}
                   value={values.email}
                   keyboardType="email-address"
-                  testID="email-input"
+                  testID="signup-screen-email-input"
                 />
 
                 <TextInputSignupScreen
@@ -241,7 +241,7 @@ const SignupScreen = ({ navigation }) => {
                   onBlur={handleBlur("password")}
                   value={values.password}
                   secureTextEntry={hidePassword}
-                  testID="password-input"
+                  testID="signup-screen-password-input"
                   isPassword={true}
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
