@@ -282,7 +282,7 @@ const SignupScreen = ({ navigation }) => {
 
                 <Line testID="line" />
                 <FooterView testID="footer-view">
-                  <FooterText testID="footer-text">
+                  <FooterText testID="signup-footer-text">
                     Already have an account?
                   </FooterText>
                   <FooterLink

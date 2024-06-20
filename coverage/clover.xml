@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1718884080569" clover="3.2.0">
-  <project timestamp="1718884080569" name="All files">
-    <metrics statements="1244" coveredstatements="63" conditionals="166" coveredconditionals="21" methods="347" coveredmethods="10" elements="1757" coveredelements="94" complexity="0" loc="1244" ncloc="1244" packages="19" files="49" classes="49"/>
+<coverage generated="1718884642650" clover="3.2.0">
+  <project timestamp="1718884642650" name="All files">
+    <metrics statements="1247" coveredstatements="63" conditionals="166" coveredconditionals="21" methods="347" coveredmethods="10" elements="1760" coveredelements="94" complexity="0" loc="1247" ncloc="1247" packages="19" files="49" classes="49"/>
     <package name="ZenTimerAppFront">
       <metrics statements="20" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -116,7 +116,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.cypress.e2e">
-      <metrics statements="75" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="0"/>
+      <metrics statements="78" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="0"/>
       <file name="loginScreenTest.cy.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/cypress/e2e/loginScreenTest.cy.js">
         <metrics statements="37" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -158,7 +158,7 @@
         <line num="83" count="0" type="stmt"/>
       </file>
       <file name="signinScreenTest.cy.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/cypress/e2e/signinScreenTest.cy.js">
-        <metrics statements="14" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="17" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -173,6 +173,9 @@
         <line num="26" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
       </file>
       <file name="welcomeScreenTest.cy.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/cypress/e2e/welcomeScreenTest.cy.js">
         <metrics statements="24" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
