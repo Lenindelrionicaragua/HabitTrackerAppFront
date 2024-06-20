@@ -31,4 +31,21 @@ describe("welcomeScreen", () => {
       .should("exist")
       .and("have.text", "Logout");
   });
+
+  it("Navigate to loginScreen when the user click the logout button", () => {
+    cy.visit("http://192.168.178.182:8081");
+
+    const testEmail = "usertest@gmail.com";
+    const testPassword = "Password1234!";
+
+    cy.get('[data-testId="email-input"]').type(testEmail);
+    cy.get('[data-testId="password-input"]').type(testPassword);
+    cy.get('[data-testId="login-styled-button"]').click();
+
+    cy.get('[data-testId="logout-button-text"]').click();
+
+    cy.get('[data-testId="page-title"]')
+      .should("exist")
+      .should("have.text", "ZenTimer");
+  });
 });
