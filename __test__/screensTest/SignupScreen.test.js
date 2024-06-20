@@ -107,9 +107,9 @@ describe("Formik Integration Tests", () => {
     const renderForm = () => {
       const { getByTestId } = signupScreenRender;
       name = getByTestId("name");
-      emailInput = getByTestId("email-input");
+      emailInput = getByTestId("signup-screen-email-input");
       dateOfBirth = getByTestId("date-of-birth");
-      passwordInput = getByTestId("password-input");
+      passwordInput = getByTestId("signup-screen-password-input");
       confirmPasswordInput = getByTestId("confirm-password-input");
     };
 
