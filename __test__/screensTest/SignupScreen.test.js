@@ -251,13 +251,13 @@ describe("Formik Integration Tests", () => {
 
     test("Render correctly", () => {
       const { getByTestId } = signupScreenRender;
-      const footerTextElement = getByTestId("footer-text");
+      const footerTextElement = getByTestId("signup-footer-text");
       expect(footerTextElement).toBeTruthy();
     });
 
     test("Render the correct text", () => {
       const { getByTestId } = signupScreenRender;
-      const footerTextElement = getByTestId("footer-text");
+      const footerTextElement = getByTestId("signup-footer-text");
       const textContent = footerTextElement.props.children;
       expect(textContent).toBe("Already have an account?");
     });

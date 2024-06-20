@@ -28,5 +28,15 @@ describe("SigninScreen", () => {
     cy.get('[data-testId="msg-box"]').should("exist");
 
     cy.get('[data-testId="signup-styled-button"]').should("exist");
+
+    cy.get('[data-testId="line"]').should("exist");
+
+    cy.get('[data-testId="signup-footer-text"]')
+      .should("exist")
+      .should("have.text", "Already have an account?");
+
+    cy.get('[data-testId="footer-login-link"]')
+      .should("exist")
+      .should("have.text", "Login");
   });
 });
