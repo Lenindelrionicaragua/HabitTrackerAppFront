@@ -95,7 +95,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   "textAlign": "center",
                 }
               }
-              testID="page-title"
+              testID="signup-page-title"
             >
               ZenTimer
             </Text>
@@ -109,7 +109,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   "marginBottom": 20,
                 }
               }
-              testID="sub-title"
+              testID="signup-page-sub-title"
             >
               Account Sign Up
             </Text>
@@ -708,7 +708,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     "paddingTop": 15,
                   }
                 }
-                testID="login-styled-button"
+                testID="signup-styled-button"
               >
                 <Text
                   style={
@@ -717,7 +717,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "fontSize": 16,
                     }
                   }
-                  testID="login-button-text"
+                  testID="signup-button-text"
                 >
                   Sign Up
                 </Text>
