@@ -78,7 +78,10 @@ const SignupScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate("LinkVerificationScreen", { ...user });
+          navigation.navigate(
+            "LinkVerificationScreen",
+            ({ ...user } = response.data)
+          );
           // saveLoginCredentials(
           //   user,
           //   handleMessage({ successStatus: true, msg: msg })
@@ -89,6 +92,7 @@ const SignupScreen = ({ navigation }) => {
         }
       })
       .catch(error => {
+        const errorMsg = error.response?.data?.msg || "An error occurred";
         logError(error.response.data.msg);
         handleMessage({
           successStatus: false,
@@ -128,8 +132,8 @@ const SignupScreen = ({ navigation }) => {
       <StyledContainer testID="signup-styled-container">
         <StatusBar style="dark" />
         <InnerContainer testID="inner-container">
-          <PageTitle testID="page-title">ZenTimer</PageTitle>
-          <SubTitle testID="sub-title">Account Sign Up</SubTitle>
+          <PageTitle testID="signup-page-title">ZenTimer</PageTitle>
+          <SubTitle testID="signup-page-sub-title">Account Sign Up</SubTitle>
 
           {show && (
             <DateTimePicker
@@ -263,10 +267,10 @@ const SignupScreen = ({ navigation }) => {
 
                 {!isSubmitting && (
                   <StyledButton
-                    testID="login-styled-button"
+                    testID="signup-styled-button"
                     onPress={handleSubmit}
                   >
-                    <ButtonText testID="login-button-text">Sign Up</ButtonText>
+                    <ButtonText testID="signup-button-text">Sign Up</ButtonText>
                   </StyledButton>
                 )}
 
