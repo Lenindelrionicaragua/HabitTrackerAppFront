@@ -13,6 +13,7 @@
     "axios-mock-adapter": "^1.22.0",
     "components": "^0.1.0",
     "constants": "^0.0.2",
+    "cypress-real-events": "^1.13.0",
     "expo": "51.0.8",
     "expo-auth-session": "~5.5.2",
     "expo-camera": "~15.0.9",
