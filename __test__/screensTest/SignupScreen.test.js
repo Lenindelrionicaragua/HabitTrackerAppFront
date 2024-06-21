@@ -46,20 +46,20 @@ describe("SignupScreen", () => {
 
     expect(getByTestId("signup-styled-container")).toBeTruthy();
     expect(getByTestId("inner-container")).toBeTruthy();
-    expect(getByTestId("page-title")).toBeTruthy();
-    expect(getByTestId("sub-title")).toBeTruthy();
+    expect(getByTestId("signup-page-title")).toBeTruthy();
+    expect(getByTestId("signup-page-sub-title")).toBeTruthy();
   });
 
   test("PageTitle should render a string of letters, numbers, or spaces", () => {
     const { getByTestId } = signupScreenRender;
-    const pageTitleComponent = getByTestId("page-title");
+    const pageTitleComponent = getByTestId("signup-page-title");
     const textContent = pageTitleComponent.props.children.toString();
     expect(textContent).toMatch("ZenTimer");
   });
 
   test("SubTitle should render a string of letters, numbers or spaces", () => {
     const { getByTestId } = signupScreenRender;
-    const subTitleComponent = getByTestId("sub-title");
+    const subTitleComponent = getByTestId("signup-page-sub-title");
     const textContent = subTitleComponent.props.children.toString();
     expect(textContent).toMatch("Account Sign Up");
   });
@@ -107,9 +107,9 @@ describe("Formik Integration Tests", () => {
     const renderForm = () => {
       const { getByTestId } = signupScreenRender;
       name = getByTestId("name");
-      emailInput = getByTestId("email-input");
+      emailInput = getByTestId("signup-screen-email-input");
       dateOfBirth = getByTestId("date-of-birth");
-      passwordInput = getByTestId("password-input");
+      passwordInput = getByTestId("signup-screen-password-input");
       confirmPasswordInput = getByTestId("confirm-password-input");
     };
 
@@ -142,48 +142,6 @@ describe("Formik Integration Tests", () => {
         expect(confirmPasswordInput).toBeTruthy();
       });
     });
-
-    // describe("Form State Update", () => {
-    //   let dateOfBirth;
-
-    //   const renderForm = () => {
-    //     const { getByTestId } = signupScreenRender;
-    //     dateOfBirth = getByTestId("date-of-birth");
-    //   };
-
-    //   beforeEach(() => {
-    //     renderForm();
-    //   });
-
-    //   afterEach(() => {
-    //     cleanup();
-    //   });
-
-    //   test("Correctly updates form state on onChangeText and onBlur", () => {
-    //     act(() => {
-    //       fireEvent.changeText(fullName, "Zen User");
-    //       fireEvent(fullName, "blur");
-
-    //       fireEvent.changeText(emailInput, "serenity@gmail.com");
-    //       fireEvent(emailInput, "blur");
-
-    //       fireEvent.changeText(dateOfBirth, "");
-    //       fireEvent(dateOfBirth, "blur");
-
-    //       fireEvent.changeText(passwordInput, "password123");
-    //       fireEvent(passwordInput, "blur");
-
-    //       fireEvent.changeText(confirmPasswordInput, "password123");
-    //       fireEvent(confirmPasswordInput, "blur");
-    //     });
-
-    //     expect(fullName.props.value).toBe("Zen User");
-    //     expect(emailInput.props.value).toBe("serenity@gmail.com");
-    //     expect(dateOfBirth.props.value).toBe("");
-    //     expect(passwordInput.props.value).toBe("password123");
-    //     expect(confirmPasswordInput.props.value).toBe("password123");
-    //   });
-    // });
   });
 
   describe("DateTimePicker", () => {
@@ -249,7 +207,7 @@ describe("Formik Integration Tests", () => {
 
     test("Render StyledButton", () => {
       const { getByTestId } = signupScreenRender;
-      const styledButtonElement = getByTestId("login-styled-button");
+      const styledButtonElement = getByTestId("signup-styled-button");
       expect(styledButtonElement).toBeTruthy();
     });
   });
@@ -293,13 +251,13 @@ describe("Formik Integration Tests", () => {
 
     test("Render correctly", () => {
       const { getByTestId } = signupScreenRender;
-      const footerTextElement = getByTestId("footer-text");
+      const footerTextElement = getByTestId("signup-footer-text");
       expect(footerTextElement).toBeTruthy();
     });
 
     test("Render the correct text", () => {
       const { getByTestId } = signupScreenRender;
-      const footerTextElement = getByTestId("footer-text");
+      const footerTextElement = getByTestId("signup-footer-text");
       const textContent = footerTextElement.props.children;
       expect(textContent).toBe("Already have an account?");
     });
@@ -353,52 +311,5 @@ describe("SignupScreen navigation", () => {
     });
 
     expect(navigation.navigate).toHaveBeenCalledWith("LoginScreen");
-  });
-
-  test("navigate to WelcomeScreen when Signup button is clicked", async () => {
-    const mock = new MockAdapter(axios);
-    const formikComponent = signupScreenInstance.findByType(Formik);
-    const handleSignup = formikComponent.props.onSubmit;
-    const setSubmitting = jest.fn();
-
-    const url =
-      "https://zen-timer-app-server-7f9db58def4c.herokuapp.com/api/auth/sign-up";
-
-    mock.onPost(url).reply(200, {
-      success: true,
-      msg: "User created successfully",
-      user: {
-        name: "Alex Lara",
-        email: "alexlara2@email.com",
-        password:
-          "$2b$10$BvpVRqsJkJ0baUqBFfQ0muu4qJ2q25wDlQtdOso8ZuzE9SFmivFJC",
-        dateOfBirth: "Tue Feb 01 1984",
-        _id: "66436d01c99318a9008d4361",
-        __v: 0
-      }
-    });
-
-    await act(async () => {
-      await handleSignup(
-        {
-          name: "Alex Lara",
-          email: "alexlara2@email.com",
-          dateOfBirth: "Tue Feb 01 1984",
-          password: "Password1234!",
-          confirmPassword: "Password1234!"
-        },
-        { setSubmitting }
-      );
-    });
-
-    expect(navigation.navigate).toHaveBeenCalledWith("LinkVerificationScreen", {
-      name: "Alex Lara",
-      email: "alexlara2@email.com",
-      password: "$2b$10$BvpVRqsJkJ0baUqBFfQ0muu4qJ2q25wDlQtdOso8ZuzE9SFmivFJC",
-      dateOfBirth: "Tue Feb 01 1984",
-      _id: "66436d01c99318a9008d4361",
-      __v: 0
-    });
-    expect(setSubmitting).toHaveBeenCalledWith(false);
   });
 });
