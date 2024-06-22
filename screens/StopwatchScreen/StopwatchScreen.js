@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Svg, { Circle } from "react-native-svg";
+import Svg, { Circle, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 
 const { white, black, orange, lightGrey } = Colors;
@@ -39,12 +39,12 @@ const App = () => {
     setRunning(true);
   };
 
-  const circumference = 2 * Math.PI * 50;
+  const circumference = 2 * Math.PI * 150;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>ZenTimer</Text>
-      <Text style={styles.subHeader}>Stop Watch In Native</Text>
+      <Text style={styles.header}>ZEN TIMER</Text>
+      <Text style={styles.subHeader}>track your time</Text>
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <rect width="100%" height="100%" fill="black" />
@@ -66,9 +66,18 @@ const App = () => {
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * time) / MAX_TIME}
           />
+          <SvgText
+            x="180"
+            y="180"
+            textAnchor="middle"
+            dy=".3em"
+            fontSize="48"
+            fill="white"
+          >
+            {time}s
+          </SvgText>
         </Svg>
       </View>
-      <Text style={styles.timeText}>{time}s</Text>
       <View style={styles.buttonContainer}>
         {running ? (
           <TouchableOpacity
@@ -111,7 +120,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black"
+    backgroundColor: "black",
+    fontFamily: "Roboto"
   },
   header: {
     fontSize: 30,
