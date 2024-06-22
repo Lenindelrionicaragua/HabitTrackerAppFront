@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
@@ -12,11 +12,15 @@ const App = () => {
   const startTimeRef = useRef(0);
   const MAX_TIME = 60;
 
+  const pad = num => {
+    return num.toString().padStart(2, "0");
+  };
+
   const startStopwatch = () => {
-    startTimeRef.current = Date.now() - time * 1000;
+    startTimeRef.current = Date.now() - time * 10;
     intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
-    }, 1000);
+      setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
+    }, 10);
     setRunning(true);
   };
 
@@ -31,11 +35,18 @@ const App = () => {
     setRunning(false);
   };
 
+  const formatTime = totalMilliseconds => {
+    const minutes = Math.floor((totalMilliseconds / (100 * 60)) % 60);
+    const seconds = Math.floor((totalMilliseconds / 100) % 60);
+    const milliseconds = Math.floor((totalMilliseconds % 100) / 1);
+    return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
+  };
+
   const resumeStopwatch = () => {
-    startTimeRef.current = Date.now() - time * 1000;
+    startTimeRef.current = Date.now() - time * 10;
     intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
-    }, 1000);
+      setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
+    }, 10);
     setRunning(true);
   };
 
@@ -64,7 +75,9 @@ const App = () => {
             strokeWidth="10"
             fill="none"
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * time) / MAX_TIME}
+            strokeDashoffset={
+              circumference - (circumference * time) / (MAX_TIME * 100)
+            }
           />
           <SvgText
             x="180"
@@ -74,7 +87,7 @@ const App = () => {
             fontSize="48"
             fill="white"
           >
-            {time}s
+            {formatTime(time)}
           </SvgText>
         </Svg>
       </View>
@@ -120,8 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
-    fontFamily: "Roboto"
+    backgroundColor: "black"
   },
   header: {
     fontSize: 30,
