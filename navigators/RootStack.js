@@ -8,6 +8,7 @@ import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
 import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
+import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
@@ -32,7 +33,8 @@ const RootStack = () => {
                 paddingLeft: 20
               }
             }}
-            initialRouteName="LoginScreen"
+            initialRouteName="StopwatchScreen"
+            // initialRouteName="LoginScreen"
           >
             {storedCredentials ? (
               <Stack.Screen
@@ -42,6 +44,11 @@ const RootStack = () => {
               />
             ) : (
               <>
+                <Stack.Screen
+                  name="StopwatchScreen"
+                  component={StopwatchScreen}
+                  testID="stopwatch-screen"
+                />
                 <Stack.Screen
                   name="LoginScreen"
                   component={LoginScreen}
