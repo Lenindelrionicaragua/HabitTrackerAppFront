@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Svg, { Circle, Text as SvgText } from "react-native-svg";
+import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 
 const { white, black, orange, lightGrey } = Colors;
@@ -58,7 +58,8 @@ const App = () => {
       <Text style={styles.subHeader}>track your time</Text>
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
-          <rect width="100%" height="100%" fill="black" />
+          <Rect x="0" y="0" width="360" height="360" fill="black" />
+
           <Circle
             cx="180"
             cy="180"
