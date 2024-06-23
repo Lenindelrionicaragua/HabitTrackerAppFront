@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: netlify/actions/cli@v2
         with:
           node-version: '16'  # Ensure this is Node.js version 16 or higher
 
@@ -25,7 +25,7 @@ jobs:
 
       - name: Deploy to Netlify
         uses: netlify/actions/cli@v1
-        with:
-          command: 'netlify deploy --prod --dir=dist'  # Adjust this command as per your setup
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+  with:
+    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    COMMAND: deploy --prod
