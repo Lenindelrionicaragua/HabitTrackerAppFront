@@ -12,7 +12,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Ensure this is Node.js version 16 or higher
+          node-version: '16'
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,10 +24,10 @@ jobs:
         run: npm install
 
       - name: Build Expo project
-        run: npm run build  # Adjust this command as per your setup
+        run: npm run build
 
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@v2
+        uses: netlify/actions/cli@v1  # Utiliza la versión v1
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
