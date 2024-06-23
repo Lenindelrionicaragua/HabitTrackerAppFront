@@ -1,34 +1,33 @@
-name: Build and Deploy
+name: Deploy to Netlify
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Install Expo CLI
-        run: npm install -g expo-cli
+      - name: Use Node.js 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
 
-      - name: Install dependencies
-        run: npm install
+      - name: Clean and Install dependencies
+        run: |
+          npm ci
+          npm install
 
-      - name: Build Expo project
+      - name: Build Nuxt app
         run: npm run build
 
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@v1  # Utiliza la versión v1
-        with:
+        env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          COMMAND: deploy --prod
+        timeout-minutes: 5
+        run: |
+          npx netlify-cli deploy --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --prod
