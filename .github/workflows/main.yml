@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node.js
-        uses: netlify/actions/cli@v2
+        uses: actions/setup-node@v2
         with:
           node-version: '16'  # Ensure this is Node.js version 16 or higher
 
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
 
       - name: Install dependencies
         run: npm install
@@ -24,8 +27,8 @@ jobs:
         run: npm run build  # Adjust this command as per your setup
 
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@v1
-  with:
-    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-    NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-    COMMAND: deploy --prod
+        uses: netlify/actions/cli@v2
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          COMMAND: deploy --prod
