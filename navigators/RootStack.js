@@ -33,8 +33,8 @@ const RootStack = () => {
                 paddingLeft: 20
               }
             }}
-            // initialRouteName="StopwatchScreen"
-            initialRouteName="LoginScreen"
+            initialRouteName="StopwatchScreen"
+            // initialRouteName="LoginScreen"
           >
             {storedCredentials ? (
               <Stack.Screen
