@@ -54,7 +54,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>ZEN TIMER</Text>
+      <Text style={styles.header}>ZEN TIMER2</Text>
       <Text style={styles.subHeader}>track your time</Text>
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
@@ -137,6 +137,20 @@ const App = () => {
           </>
         )}
       </View>
+      <View style={styles.addButtonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.addFocusTimeButton]}
+          onPress={pauseStopwatch}
+        >
+          <Text style={styles.buttonText}>Add Focus Time</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.addBreakTimeButton]}
+          onPress={startStopwatch}
+        >
+          <Text style={styles.buttonText}>Add Break Time</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -167,13 +181,25 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: 20
+    marginTop: 20,
+    width: "80%",
+    justifyContent: "space-between"
+  },
+  addButtonContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    width: "80%",
+    justifyContent: "space-between"
   },
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginHorizontal: 5
+    marginHorizontal: 5,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: 100
   },
   startButton: {
     backgroundColor: orange
@@ -185,6 +211,12 @@ const styles = StyleSheet.create({
     backgroundColor: orange
   },
   resumeButton: {
+    backgroundColor: skyBlue
+  },
+  addBreakTimeButton: {
+    backgroundColor: skyBlue
+  },
+  addFocusTimeButton: {
     backgroundColor: skyBlue
   },
   buttonText: {
