@@ -9,6 +9,9 @@
       "ios": {
         "resourceClass": "m-medium",
         "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "preview": {
