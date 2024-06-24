@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, orange, lightGrey } = Colors;
+const { white, black, orange, skyBlue } = Colors;
 
 const App = () => {
   const [time, setTime] = useState(0);
@@ -94,19 +94,12 @@ const App = () => {
       </View>
       <View style={styles.buttonContainer}>
         {running ? (
-          <TouchableOpacity
-            style={[styles.button, styles.pauseButton]}
-            onPress={pauseStopwatch}
-          >
-            <Text style={styles.buttonText}>Pause</Text>
-          </TouchableOpacity>
-        ) : (
           <>
             <TouchableOpacity
-              style={[styles.button, styles.startButton]}
-              onPress={startStopwatch}
+              style={[styles.button, styles.pauseButton]}
+              onPress={pauseStopwatch}
             >
-              <Text style={styles.buttonText}>Start</Text>
+              <Text style={styles.buttonText}>Pause</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.resetButton]}
@@ -115,14 +108,33 @@ const App = () => {
               <Text style={styles.buttonText}>Reset</Text>
             </TouchableOpacity>
           </>
+        ) : (
+          <>
+            {!running && time === 0 && (
+              <TouchableOpacity
+                style={[styles.button, styles.startButton]}
+                onPress={startStopwatch}
+              >
+                <Text style={styles.buttonText}>Start</Text>
+              </TouchableOpacity>
+            )}
+          </>
         )}
         {!running && time > 0 && (
-          <TouchableOpacity
-            style={[styles.button, styles.resumeButton]}
-            onPress={resumeStopwatch}
-          >
-            <Text style={styles.buttonText}>Resume</Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={[styles.button, styles.resumeButton]}
+              onPress={resumeStopwatch}
+            >
+              <Text style={styles.buttonText}>Resume</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.resetButton]}
+              onPress={resetStopwatch}
+            >
+              <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+          </>
         )}
       </View>
     </View>
@@ -164,19 +176,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   startButton: {
-    backgroundColor: "orange"
+    backgroundColor: orange
   },
   resetButton: {
-    backgroundColor: "white"
+    backgroundColor: white
   },
   pauseButton: {
-    backgroundColor: "orange"
+    backgroundColor: orange
   },
   resumeButton: {
-    backgroundColor: "white"
+    backgroundColor: skyBlue
   },
   buttonText: {
-    color: "black",
+    color: black,
     fontSize: 16
   }
 });
