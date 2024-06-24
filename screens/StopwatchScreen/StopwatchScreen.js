@@ -54,8 +54,21 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>ZEN TIMER2</Text>
-      <Text style={styles.subHeader}>track your time</Text>
+      <Text style={styles.header}>ZEN TIMER</Text>
+      <View style={styles.addButtonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.topButton]}
+          onPress={pauseStopwatch}
+        >
+          <Text style={styles.buttonText}>insights</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.topButton]}
+          onPress={startStopwatch}
+        >
+          <Text style={styles.buttonText}>focus</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="black" />
@@ -92,6 +105,8 @@ const App = () => {
           </SvgText>
         </Svg>
       </View>
+      <Text style={styles.subHeader}>track your time</Text>
+      <Text style={styles.subText}>say start or pause</Text>
       <View style={styles.buttonContainer}>
         {running ? (
           <>
@@ -172,6 +187,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "orange"
   },
+  subText: {
+    fontSize: 12,
+    marginBottom: 10,
+    color: "orange"
+  },
   svgContainer: {
     marginVertical: 20
   },
@@ -214,10 +234,13 @@ const styles = StyleSheet.create({
     backgroundColor: skyBlue
   },
   addBreakTimeButton: {
-    backgroundColor: skyBlue
+    backgroundColor: orange
   },
   addFocusTimeButton: {
-    backgroundColor: skyBlue
+    backgroundColor: orange
+  },
+  topButton: {
+    backgroundColor: orange
   },
   buttonText: {
     color: black,
