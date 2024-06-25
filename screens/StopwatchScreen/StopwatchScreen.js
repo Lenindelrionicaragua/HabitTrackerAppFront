@@ -148,14 +148,6 @@ const App = () => {
           </>
         )}
       </View>
-      {/* <View style={styles.addButtonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.topButton]}
-          onPress={pauseStopwatch}
-        >
-          <Text style={styles.buttonText}>insights</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };

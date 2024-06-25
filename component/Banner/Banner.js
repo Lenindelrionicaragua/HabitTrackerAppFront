@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   banner: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: black,
+    backgroundColor: white,
     padding: 10,
     position: "absolute",
     bottom: 0,
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: orange,
+    backgroundColor: white,
     borderRadius: 5
   },
   buttonText: {
-    color: white,
+    color: orange,
     fontSize: 16
   }
 });
