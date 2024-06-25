@@ -1,10 +1,10 @@
 # ZenTimerApp!
 
-Deploy link:
+Deploy link login/signin:
 
 https://6671a67ca79a96009c798e8b--zen-timer-app-front.netlify.app
 
-stopwatch:
+stopwatch in development:
 
 https://zen-timer-app-front.netlify.app/
 
