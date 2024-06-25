@@ -36,7 +36,12 @@ const WelcomeScreen = () => {
   //Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
-  const { name, email, photoUrl } = storedCredentials;
+  const {
+    name = "Zen User",
+    email = "serenity@gmail.com",
+    photoUrl
+  } = storedCredentials || {};
+
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
     : require("./../../assets/logoZenTimer2.png");
