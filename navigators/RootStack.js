@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Colors } from "../styles/AppStyles";
 
@@ -10,11 +9,12 @@ import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
 import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
+import Banner from "../component/Banner/Banner";
 
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
 
-const { grey, lightGrey, black, orange, white } = Colors;
+const { grey, lightGrey, black } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
@@ -65,11 +65,6 @@ const RootStack = () => {
                   component={LinkVerificationScreen}
                   testID="link-verification"
                 />
-                <Stack.Screen
-                  name="WelcomeScreen"
-                  component={WelcomeScreen}
-                  testID="welcome-screen"
-                />
               </>
             )}
           </Stack.Navigator>
@@ -79,57 +74,5 @@ const RootStack = () => {
     </CredentialsContext.Consumer>
   );
 };
-
-const Banner = () => {
-  const navigation = useNavigation();
-
-  return (
-    <View style={styles.banner}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("LoginScreen")}
-      >
-        <Text style={styles.buttonText}>STATS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("StopwatchScreen")}
-      >
-        <Text style={styles.buttonText}>TIMER</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("WelcomeScreen")}
-      >
-        <Text style={styles.buttonText}>SETTINGS</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  banner: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: black,
-    padding: 10,
-    position: "absolute",
-    bottom: 0,
-    width: "100%"
-  },
-  button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: orange,
-    borderRadius: 5
-  },
-  buttonText: {
-    color: white,
-    fontSize: 16
-  }
-});
 
 export default RootStack;
