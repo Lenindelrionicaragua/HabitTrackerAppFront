@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, orange, skyBlue } = Colors;
+const { white, black, orange, lightGrey, yellow } = Colors;
 
 const App = () => {
   const [time, setTime] = useState(0);
@@ -55,29 +55,16 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>ZEN TIMER</Text>
-      <View style={styles.addButtonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.topButton]}
-          onPress={pauseStopwatch}
-        >
-          <Text style={styles.buttonText}>insights</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.topButton]}
-          onPress={startStopwatch}
-        >
-          <Text style={styles.buttonText}>focus</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.line} />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
-          <Rect x="0" y="0" width="360" height="360" fill="black" />
+          <Rect x="0" y="0" width="360" height="360" fill="transparent" />
 
           <Circle
             cx="180"
             cy="180"
             r="150"
-            stroke="white"
+            stroke="yellow"
             strokeWidth="10"
             fill="none"
           />
@@ -85,7 +72,7 @@ const App = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke="orange"
+            stroke="white"
             strokeWidth="10"
             fill="none"
             strokeDasharray={circumference}
@@ -99,14 +86,23 @@ const App = () => {
             textAnchor="middle"
             dy=".3em"
             fontSize="48"
-            fill="white"
+            fill="yellow"
           >
             {formatTime(time)}
           </SvgText>
         </Svg>
       </View>
-      <Text style={styles.subHeader}>track your time</Text>
-      <Text style={styles.subText}>say start or pause</Text>
+      <Text style={styles.subHeader}>Your Focus</Text>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.focusRestButton]}
+          onPress={startStopwatch}
+        >
+          <Text style={styles.buttonText}>focus</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.buttonContainer}>
         {running ? (
           <>
@@ -152,20 +148,14 @@ const App = () => {
           </>
         )}
       </View>
-      <View style={styles.addButtonContainer}>
+      {/* <View style={styles.addButtonContainer}>
         <TouchableOpacity
-          style={[styles.button, styles.addFocusTimeButton]}
+          style={[styles.button, styles.topButton]}
           onPress={pauseStopwatch}
         >
-          <Text style={styles.buttonText}>Add Focus Time</Text>
+          <Text style={styles.buttonText}>insights</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.addBreakTimeButton]}
-          onPress={startStopwatch}
-        >
-          <Text style={styles.buttonText}>Add Break Time</Text>
-        </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -179,16 +169,17 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    color: "white",
+    color: "orange",
     marginBottom: 10
+  },
+  line: {
+    height: 1,
+    width: "70%",
+    backgroundColor: "orange",
+    marginVertical: 10
   },
   subHeader: {
     fontSize: 18,
-    marginBottom: 10,
-    color: "orange"
-  },
-  subText: {
-    fontSize: 12,
     marginBottom: 10,
     color: "orange"
   },
@@ -201,7 +192,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: 20,
+    marginTop: 0,
     width: "80%",
     justifyContent: "space-between"
   },
@@ -219,10 +210,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    minWidth: 100
+    minWidth: 100,
+    width: "40%"
   },
   startButton: {
-    backgroundColor: orange
+    backgroundColor: orange,
+    color: black
   },
   resetButton: {
     backgroundColor: white
@@ -231,19 +224,17 @@ const styles = StyleSheet.create({
     backgroundColor: orange
   },
   resumeButton: {
-    backgroundColor: skyBlue
+    backgroundColor: yellow
   },
-  addBreakTimeButton: {
-    backgroundColor: orange
-  },
+  addBreakTimeButton: {},
   addFocusTimeButton: {
     backgroundColor: orange
   },
-  topButton: {
+  focusRestButton: {
     backgroundColor: orange
   },
   buttonText: {
-    color: black,
+    color: white,
     fontSize: 16
   }
 });
