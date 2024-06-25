@@ -1,6 +1,3 @@
-import styled from "styled-components/native";
-import { View } from "react-native";
-
 export const Colors = {
   white: "#ffe1a8",
   orange: "#ffc500",
@@ -8,5 +5,6 @@ export const Colors = {
   yellow: "#ffc554",
   lightGrey: "#f9f7f3",
   black: "#000000",
+  skyBlue: "#87CEEB",
   lightGreen: `rgba(16, 185, 129, 0.1)`
 };
