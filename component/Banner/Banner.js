@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
   },
   wave: {
     marginTop: 0,
-    width: "100%"
-    // backgroundColor: "blue"
+    width: "100%",
+    backgroundColor: "blue"
   },
   wavePath: {
     backgroundColor: "red"
