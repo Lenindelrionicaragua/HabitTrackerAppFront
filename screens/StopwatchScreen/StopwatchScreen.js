@@ -1,14 +1,7 @@
 import React, { useState, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const { white, black, orange, lightGrey, yellow } = Colors;
 
@@ -60,114 +53,111 @@ const App = () => {
   const circumference = 2 * Math.PI * 150;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.header}>ZEN TIMER</Text>
-        <View style={styles.line} />
-        <View style={styles.svgContainer}>
-          <Svg height="360" width="360" viewBox="0 0 360 360">
-            <Rect x="0" y="0" width="360" height="360" fill="transparent" />
-            <Circle
-              cx="180"
-              cy="180"
-              r="150"
-              stroke="yellow"
-              strokeWidth="10"
-              fill="none"
-            />
-            <Circle
-              cx="180"
-              cy="180"
-              r="150"
-              stroke="white"
-              strokeWidth="10"
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={
-                circumference - (circumference * time) / (MAX_TIME * 100)
-              }
-            />
-            <SvgText
-              x="180"
-              y="180"
-              textAnchor="middle"
-              dy=".3em"
-              fontSize="48"
-              fill="yellow"
-            >
-              {formatTime(time)}
-            </SvgText>
-          </Svg>
-        </View>
-        <Text style={styles.subHeader}>Your Focus</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>ZEN TIMER</Text>
+      <View style={styles.line} />
+      <View style={styles.svgContainer}>
+        <Svg height="360" width="360" viewBox="0 0 360 360">
+          <Rect x="0" y="0" width="360" height="360" fill="transparent" />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.focusRestButton]}
-            onPress={startStopwatch}
+          <Circle
+            cx="180"
+            cy="180"
+            r="150"
+            stroke="yellow"
+            strokeWidth="10"
+            fill="none"
+          />
+          <Circle
+            cx="180"
+            cy="180"
+            r="150"
+            stroke="white"
+            strokeWidth="10"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={
+              circumference - (circumference * time) / (MAX_TIME * 100)
+            }
+          />
+          <SvgText
+            x="180"
+            y="180"
+            textAnchor="middle"
+            dy=".3em"
+            fontSize="48"
+            fill="yellow"
           >
-            <Text style={styles.buttonText}>focus</Text>
-          </TouchableOpacity>
-        </View>
+            {formatTime(time)}
+          </SvgText>
+        </Svg>
+      </View>
+      <Text style={styles.subHeader}>Your Focus</Text>
 
-        <View style={styles.buttonContainer}>
-          {running ? (
-            <>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.focusRestButton]}
+          onPress={startStopwatch}
+        >
+          <Text style={styles.buttonText}>focus</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        {running ? (
+          <>
+            <TouchableOpacity
+              style={[styles.button, styles.pauseButton]}
+              onPress={pauseStopwatch}
+            >
+              <Text style={styles.buttonText}>Pause</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.resetButton]}
+              onPress={resetStopwatch}
+            >
+              <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            {!running && time === 0 && (
               <TouchableOpacity
-                style={[styles.button, styles.pauseButton]}
-                onPress={pauseStopwatch}
+                style={[styles.button, styles.startButton]}
+                onPress={startStopwatch}
               >
-                <Text style={styles.buttonText}>Pause</Text>
+                <Text style={styles.buttonText}>Start</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.resetButton]}
-                onPress={resetStopwatch}
-              >
-                <Text style={styles.buttonText}>Reset</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-              {!running && time === 0 && (
-                <TouchableOpacity
-                  style={[styles.button, styles.startButton]}
-                  onPress={startStopwatch}
-                >
-                  <Text style={styles.buttonText}>Start</Text>
-                </TouchableOpacity>
-              )}
-            </>
-          )}
-          {!running && time > 0 && (
-            <>
-              <TouchableOpacity
-                style={[styles.button, styles.resumeButton]}
-                onPress={resumeStopwatch}
-              >
-                <Text style={styles.buttonText}>Resume</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.resetButton]}
-                onPress={resetStopwatch}
-              >
-                <Text style={styles.buttonText}>Reset</Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            )}
+          </>
+        )}
+        {!running && time > 0 && (
+          <>
+            <TouchableOpacity
+              style={[styles.button, styles.resumeButton]}
+              onPress={resumeStopwatch}
+            >
+              <Text style={styles.buttonText}>Resume</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.resetButton]}
+              onPress={resetStopwatch}
+            >
+              <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
-  },
-  scrollViewContent: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "black"
   },
   header: {
     fontSize: 30,
@@ -227,6 +217,10 @@ const styles = StyleSheet.create({
   },
   resumeButton: {
     backgroundColor: yellow
+  },
+  addBreakTimeButton: {},
+  addFocusTimeButton: {
+    backgroundColor: orange
   },
   focusRestButton: {
     backgroundColor: orange
