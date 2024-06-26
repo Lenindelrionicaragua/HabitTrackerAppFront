@@ -1,11 +1,18 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  Dimensions
+} from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 
 const { white, black, orange, lightGrey, yellow } = Colors;
 
-const App = () => {
+const StopwatchScreen = () => {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
@@ -52,8 +59,14 @@ const App = () => {
 
   const circumference = 2 * Math.PI * 150;
 
+  const isNotMobile = !(Platform.OS === "ios" || Platform.OS === "android");
+
+  const screenHeight = Dimensions.get("window").height;
+
+  const paddingBottom = isNotMobile ? screenHeight * 0 : 0;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom }]}>
       <Text style={styles.header}>ZEN TIMER</Text>
       <View style={styles.line} />
       <View style={styles.svgContainer}>
@@ -178,17 +191,7 @@ const styles = StyleSheet.create({
   svgContainer: {
     marginVertical: 20
   },
-  timeText: {
-    fontSize: 48,
-    color: "white"
-  },
   buttonContainer: {
-    flexDirection: "row",
-    marginTop: 0,
-    width: "80%",
-    justifyContent: "space-between"
-  },
-  addButtonContainer: {
     flexDirection: "row",
     marginTop: 20,
     width: "80%",
@@ -207,7 +210,8 @@ const styles = StyleSheet.create({
   },
   startButton: {
     backgroundColor: orange,
-    color: black
+    color: black,
+    marginBottom: 20
   },
   resetButton: {
     backgroundColor: white
@@ -218,10 +222,6 @@ const styles = StyleSheet.create({
   resumeButton: {
     backgroundColor: yellow
   },
-  addBreakTimeButton: {},
-  addFocusTimeButton: {
-    backgroundColor: orange
-  },
   focusRestButton: {
     backgroundColor: orange
   },
@@ -231,4 +231,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default StopwatchScreen;
