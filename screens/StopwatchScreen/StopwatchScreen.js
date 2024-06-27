@@ -8,7 +8,6 @@ import {
   Line,
   SubTitle,
   StyledButton,
-  ButtonContainer,
   ButtonText,
   RowContainer
 } from "./StopwatchScreenStyles";
