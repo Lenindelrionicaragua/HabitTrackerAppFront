@@ -1,22 +1,26 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import {
   StyledContainer,
   PageTitle,
   Line,
-  SubTitle
+  SubTitle,
+  StyledButton,
+  ButtonContainer,
+  ButtonText,
+  RowContainer
 } from "./StopwatchScreenStyles";
 
-const { white, black, orange, lightGrey, yellow } = Colors;
+const { white, black, orange, grey } = Colors;
+const MAX_TIME = 60;
 
-const App = () => {
+const StopwatchScreen = () => {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
-  const MAX_TIME = 60;
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -92,7 +96,8 @@ const App = () => {
             textAnchor="middle"
             dy=".3em"
             fontSize="48"
-            fill="black"
+            fontWeight="bold"
+            fill={grey}
           >
             {formatTime(time)}
           </SvgText>
@@ -100,57 +105,39 @@ const App = () => {
       </View>
       <SubTitle>Your Focus</SubTitle>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.focusRestButton]}
-          onPress={startStopwatch}
-        >
-          <Text style={styles.buttonText}>focus</Text>
-        </TouchableOpacity>
-      </View>
+      <ButtonContainer>
+        <StyledButton onPress={pauseStopwatch}>
+          <ButtonText>Focus</ButtonText>
+        </StyledButton>
+      </ButtonContainer>
 
-      <View style={styles.buttonContainer}>
+      <View>
         {running ? (
           <>
-            <TouchableOpacity
-              style={[styles.button, styles.pauseButton]}
-              onPress={pauseStopwatch}
-            >
-              <Text style={styles.buttonText}>Pause</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.resetButton]}
-              onPress={resetStopwatch}
-            >
-              <Text style={styles.buttonText}>Reset</Text>
-            </TouchableOpacity>
+            <StyledButton onPress={pauseStopwatch}>
+              <ButtonText>Pause</ButtonText>
+            </StyledButton>
+            <StyledButton onPress={resetStopwatch}>
+              <ButtonText>Reset</ButtonText>
+            </StyledButton>
           </>
         ) : (
           <>
             {!running && time === 0 && (
-              <TouchableOpacity
-                style={[styles.button, styles.startButton]}
-                onPress={startStopwatch}
-              >
-                <Text style={styles.buttonText}>Start</Text>
-              </TouchableOpacity>
+              <StyledButton onPress={startStopwatch}>
+                <ButtonText>Start</ButtonText>
+              </StyledButton>
             )}
           </>
         )}
         {!running && time > 0 && (
           <>
-            <TouchableOpacity
-              style={[styles.button, styles.resumeButton]}
-              onPress={resumeStopwatch}
-            >
-              <Text style={styles.buttonText}>Resume</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.resetButton]}
-              onPress={resetStopwatch}
-            >
-              <Text style={styles.buttonText}>Reset</Text>
-            </TouchableOpacity>
+            <StyledButton onPress={resumeStopwatch}>
+              <ButtonText>Resume</ButtonText>
+            </StyledButton>
+            <StyledButton onPress={resetStopwatch}>
+              <ButtonText>Reset</ButtonText>
+            </StyledButton>
           </>
         )}
       </View>
@@ -161,58 +148,7 @@ const App = () => {
 const styles = StyleSheet.create({
   svgContainer: {
     marginVertical: 20
-  },
-  timeText: {
-    fontSize: 48,
-    color: "white"
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    marginTop: 0,
-    width: "80%",
-    justifyContent: "space-between"
-  },
-  addButtonContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    width: "80%",
-    justifyContent: "space-between"
-  },
-  button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginHorizontal: 5,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: 100,
-    width: "40%"
-  },
-  startButton: {
-    backgroundColor: orange,
-    color: black
-  },
-  resetButton: {
-    backgroundColor: white
-  },
-  pauseButton: {
-    backgroundColor: orange
-  },
-  resumeButton: {
-    backgroundColor: yellow
-  },
-  addBreakTimeButton: {},
-  addFocusTimeButton: {
-    backgroundColor: orange
-  },
-  focusRestButton: {
-    backgroundColor: orange
-  },
-  buttonText: {
-    color: white,
-    fontSize: 16
   }
 });
 
-export default App;
+export default StopwatchScreen;

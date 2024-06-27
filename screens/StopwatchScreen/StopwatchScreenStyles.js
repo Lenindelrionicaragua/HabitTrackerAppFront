@@ -40,6 +40,27 @@ export const Line = styled(View)`
   margin-vertical: 10px;
 `;
 
-export const StyledFormArea = styled(View)`
-  width: 90%;
+export const ButtonContainer = styled(View)`
+  flex-direction: row;
+  margin-top: 0px;
+  width: 80%;
+  justify-content: space-between;
+`;
+
+export const StyledButton = styled(Pressable)`
+  flex-direction: row;
+  padding: 15px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 60px;
+  width: 80%;
+  background-color: orange;
+`;
+
+export const ButtonText = styled(Text)`
+  color: white;
+  font-size: 16px;
 `;
