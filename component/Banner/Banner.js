@@ -45,14 +45,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    overflow: "hidden",
-    backgroundColor: "transparent"
+    overflow: "hidden"
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: orange,
-    paddingTop: 0,
+    backgroundColor: black,
     padding: 10
   },
   button: {
