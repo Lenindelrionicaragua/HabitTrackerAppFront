@@ -31,6 +31,7 @@ export const SubTitle = styled(Text)`
   letter-spacing: 1px;
   font-weight: bold;
   color: ${grey};
+  background-color: ${orange};
 `;
 
 export const Line = styled(View)`
@@ -38,6 +39,11 @@ export const Line = styled(View)`
   width: 70%;
   background-color: ${orange};
   margin-vertical: 10px;
+`;
+
+export const SwapButton = styled(Pressable)`
+  margin-top: 20px;
+  align-items: center;
 `;
 
 export const ButtonContainer = styled(View)`
