@@ -48,7 +48,6 @@ export const ButtonContainer = styled(View)`
 `;
 
 export const StyledButton = styled(Pressable)`
-  flex-direction: row;
   padding: 15px;
   justify-content: space-between;
   align-items: center;
@@ -63,4 +62,10 @@ export const StyledButton = styled(Pressable)`
 export const ButtonText = styled(Text)`
   color: white;
   font-size: 16px;
+`;
+
+export const RowContainer = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
 `;
