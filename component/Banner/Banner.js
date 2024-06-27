@@ -1,57 +1,36 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../styles/AppStyles";
-
-const { black, orange, white } = Colors;
+import {
+  BannerContainer,
+  ButtonContainer,
+  Button,
+  ButtonText
+} from "./BannerStyles";
 
 const Banner = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.banner}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("LoginScreen")}
-      >
-        <Text style={styles.buttonText}>STATS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("StopwatchScreen")}
-      >
-        <Text style={styles.buttonText}>TIMER</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("SignupScreen")}
-      >
-        <Text style={styles.buttonText}>SETTINGS</Text>
-      </TouchableOpacity>
-    </View>
+    <BannerContainer>
+      <ButtonContainer>
+        <Button onPress={() => navigation.navigate("LoginScreen")}>
+          <Ionicons name="stats-chart" size={24} color="white" />
+          <ButtonText>Metrics</ButtonText>
+        </Button>
+        <Button onPress={() => navigation.navigate("StopwatchScreen")}>
+          <MaterialIcons name="timer" size={24} color="white" />
+          <ButtonText>Timer</ButtonText>
+        </Button>
+        <Button onPress={() => navigation.navigate("SignupScreen")}>
+          <FontAwesome name="home" size={24} color="white" />
+          <ButtonText>Home</ButtonText>
+        </Button>
+      </ButtonContainer>
+    </BannerContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  banner: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: black,
-    padding: 10,
-    position: "absolute",
-    bottom: 0,
-    width: "100%"
-  },
-  button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: orange,
-    borderRadius: 5
-  },
-  buttonText: {
-    color: white,
-    fontSize: 16
-  }
-});
 
 export default Banner;
