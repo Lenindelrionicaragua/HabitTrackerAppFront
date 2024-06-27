@@ -104,22 +104,20 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <SubTitle>Your Focus</SubTitle>
-
-      <ButtonContainer>
-        <StyledButton onPress={pauseStopwatch}>
-          <ButtonText>Focus</ButtonText>
-        </StyledButton>
-      </ButtonContainer>
-
+      <StyledButton onPress={pauseStopwatch}>
+        <ButtonText>Focus</ButtonText>
+      </StyledButton>
       <View>
         {running ? (
           <>
-            <StyledButton onPress={pauseStopwatch}>
-              <ButtonText>Pause</ButtonText>
-            </StyledButton>
-            <StyledButton onPress={resetStopwatch}>
-              <ButtonText>Reset</ButtonText>
-            </StyledButton>
+            <RowContainer>
+              <StyledButton onPress={pauseStopwatch}>
+                <ButtonText>Pause</ButtonText>
+              </StyledButton>
+              <StyledButton onPress={resetStopwatch}>
+                <ButtonText>Reset</ButtonText>
+              </StyledButton>
+            </RowContainer>
           </>
         ) : (
           <>
@@ -132,12 +130,14 @@ const StopwatchScreen = () => {
         )}
         {!running && time > 0 && (
           <>
-            <StyledButton onPress={resumeStopwatch}>
-              <ButtonText>Resume</ButtonText>
-            </StyledButton>
-            <StyledButton onPress={resetStopwatch}>
-              <ButtonText>Reset</ButtonText>
-            </StyledButton>
+            <RowContainer>
+              <StyledButton onPress={resumeStopwatch}>
+                <ButtonText>Resume</ButtonText>
+              </StyledButton>
+              <StyledButton onPress={resetStopwatch}>
+                <ButtonText>Reset</ButtonText>
+              </StyledButton>
+            </RowContainer>
           </>
         )}
       </View>
