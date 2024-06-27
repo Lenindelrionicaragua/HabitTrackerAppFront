@@ -46,6 +46,10 @@ export const SubTitle = styled(Text)`
   color: ${grey};
 `;
 
+export const StyledFormArea = styled(View)`
+  width: 90%;
+`;
+
 export const StyledTextInput = styled(TextInput)`
   background-color: ${orange};
   padding: 15px;
