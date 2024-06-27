@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../styles/AppStyles";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const { black, orange, white } = Colors;
 
@@ -15,19 +18,22 @@ const Banner = () => {
           style={styles.button}
           onPress={() => navigation.navigate("LoginScreen")}
         >
-          <Text style={styles.buttonText}>STATS</Text>
+          <Ionicons name="stats-chart" size={24} color="white" />
+          <Text style={styles.buttonText}>Metrics</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("StopwatchScreen")}
         >
-          <Text style={styles.buttonText}>TIMER</Text>
+          <MaterialIcons name="timer" size={24} color="white" />
+          <Text style={styles.buttonText}>Timer</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("SignupScreen")}
         >
-          <Text style={styles.buttonText}>SETTINGS</Text>
+          <FontAwesome name="home" size={24} color="white" />
+          <Text style={styles.buttonText}>Home</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -52,12 +58,13 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: orange,
+    alignItems: "center",
     borderRadius: 5
   },
   buttonText: {
     color: white,
-    fontSize: 16
+
+    fontSize: 12
   }
 });
 
