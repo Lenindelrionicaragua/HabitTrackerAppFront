@@ -2,6 +2,12 @@ import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import {
+  StyledContainer,
+  PageTitle,
+  Line,
+  SubTitle
+} from "./StopwatchScreenStyles";
 
 const { white, black, orange, lightGrey, yellow } = Colors;
 
@@ -53,9 +59,9 @@ const App = () => {
   const circumference = 2 * Math.PI * 150;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>ZEN TIMER</Text>
-      <View style={styles.line} />
+    <StyledContainer>
+      <PageTitle>ZenTimer</PageTitle>
+      <Line />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
@@ -64,7 +70,7 @@ const App = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke="yellow"
+            stroke={black}
             strokeWidth="10"
             fill="none"
           />
@@ -72,7 +78,7 @@ const App = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke="white"
+            stroke={white}
             strokeWidth="10"
             fill="none"
             strokeDasharray={circumference}
@@ -86,13 +92,13 @@ const App = () => {
             textAnchor="middle"
             dy=".3em"
             fontSize="48"
-            fill="yellow"
+            fill="black"
           >
             {formatTime(time)}
           </SvgText>
         </Svg>
       </View>
-      <Text style={styles.subHeader}>Your Focus</Text>
+      <SubTitle>Your Focus</SubTitle>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -148,33 +154,11 @@ const App = () => {
           </>
         )}
       </View>
-    </View>
+    </StyledContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "black"
-  },
-  header: {
-    fontSize: 30,
-    color: "orange",
-    marginBottom: 10
-  },
-  line: {
-    height: 1,
-    width: "70%",
-    backgroundColor: "orange",
-    marginVertical: 10
-  },
-  subHeader: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: "orange"
-  },
   svgContainer: {
     marginVertical: 20
   },
