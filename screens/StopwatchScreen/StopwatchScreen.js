@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import {
   StyledContainer,
   PageTitle,
@@ -9,7 +11,8 @@ import {
   SubTitle,
   StyledButton,
   ButtonText,
-  RowContainer
+  RowContainer,
+  SwapButton
 } from "./StopwatchScreenStyles";
 
 const { white, black, orange, grey } = Colors;
@@ -20,6 +23,7 @@ const StopwatchScreen = () => {
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
+  const [label, setLabel] = useState("FOCUS");
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -57,6 +61,10 @@ const StopwatchScreen = () => {
       setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
     }, 10);
     setRunning(true);
+  };
+
+  const handlePress = () => {
+    setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
   };
 
   const circumference = 2 * Math.PI * 150;
@@ -102,10 +110,15 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
-      <SubTitle>Your Focus</SubTitle>
-      <StyledButton onPress={pauseStopwatch}>
-        <ButtonText>Focus</ButtonText>
-      </StyledButton>
+      <SubTitle>{label}</SubTitle>
+      <SwapButton onPress={handlePress}>
+        <MaterialCommunityIcons
+          name="swap-horizontal-circle-outline"
+          size={34}
+          color="black"
+        />
+      </SwapButton>
+
       <View>
         {running ? (
           <>
