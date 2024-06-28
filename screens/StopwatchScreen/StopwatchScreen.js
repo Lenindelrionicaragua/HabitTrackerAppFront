@@ -2,13 +2,13 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   StyledContainer,
   PageTitle,
   Line,
-  SubTitle,
+  FocusTitle,
   StyledButton,
   ButtonText,
   RowContainer,
@@ -109,16 +109,12 @@ const StopwatchScreen = () => {
             {formatTime(time)}
           </SvgText>
         </Svg>
+        <SwapButton onPress={handlePress}>
+          <FocusTitle>{label}</FocusTitle>
+          <Ionicons name="swap-horizontal" size={24} color="black" />
+        </SwapButton>
       </View>
-      <SubTitle>{label}</SubTitle>
-      <SwapButton onPress={handlePress}>
-        <MaterialCommunityIcons
-          name="swap-horizontal-circle-outline"
-          size={34}
-          color="black"
-        />
-      </SwapButton>
-
+      <Line />
       <View>
         {running ? (
           <>
@@ -134,9 +130,11 @@ const StopwatchScreen = () => {
         ) : (
           <>
             {!running && time === 0 && (
-              <StyledButton onPress={startStopwatch}>
-                <ButtonText>Start</ButtonText>
-              </StyledButton>
+              <RowContainer>
+                <StyledButton onPress={startStopwatch}>
+                  <ButtonText>Start</ButtonText>
+                </StyledButton>
+              </RowContainer>
             )}
           </>
         )}
@@ -159,7 +157,7 @@ const StopwatchScreen = () => {
 
 const styles = StyleSheet.create({
   svgContainer: {
-    marginVertical: 20
+    marginVertical: 0
   }
 });
 
