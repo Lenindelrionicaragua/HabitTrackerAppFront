@@ -2,14 +2,20 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import {
   StyledContainer,
   PageTitle,
   Line,
-  SubTitle,
+  FocusTitle,
   StyledButton,
-  ButtonText,
-  RowContainer
+  StyledStartButton,
+  ButtonsContainer,
+  RowContainer,
+  SwapButton
 } from "./StopwatchScreenStyles";
 
 const { white, black, orange, grey } = Colors;
@@ -20,6 +26,7 @@ const StopwatchScreen = () => {
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
+  const [label, setLabel] = useState("FOCUS");
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -57,6 +64,10 @@ const StopwatchScreen = () => {
       setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
     }, 10);
     setRunning(true);
+  };
+
+  const handlePress = () => {
+    setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
   };
 
   const circumference = 2 * Math.PI * 150;
@@ -101,52 +112,32 @@ const StopwatchScreen = () => {
             {formatTime(time)}
           </SvgText>
         </Svg>
+        <SwapButton onPress={handlePress}>
+          <FocusTitle>{label}</FocusTitle>
+          <Ionicons name="swap-horizontal" size={24} color="black" />
+        </SwapButton>
       </View>
-      <SubTitle>Your Focus</SubTitle>
-      <StyledButton onPress={pauseStopwatch}>
-        <ButtonText>Focus</ButtonText>
-      </StyledButton>
-      <View>
-        {running ? (
-          <>
-            <RowContainer>
-              <StyledButton onPress={pauseStopwatch}>
-                <ButtonText>Pause</ButtonText>
-              </StyledButton>
-              <StyledButton onPress={resetStopwatch}>
-                <ButtonText>Reset</ButtonText>
-              </StyledButton>
-            </RowContainer>
-          </>
-        ) : (
-          <>
-            {!running && time === 0 && (
-              <StyledButton onPress={startStopwatch}>
-                <ButtonText>Start</ButtonText>
-              </StyledButton>
-            )}
-          </>
-        )}
-        {!running && time > 0 && (
-          <>
-            <RowContainer>
-              <StyledButton onPress={resumeStopwatch}>
-                <ButtonText>Resume</ButtonText>
-              </StyledButton>
-              <StyledButton onPress={resetStopwatch}>
-                <ButtonText>Reset</ButtonText>
-              </StyledButton>
-            </RowContainer>
-          </>
-        )}
-      </View>
+      <Line />
+      <ButtonsContainer>
+        <RowContainer>
+          <StyledButton onPress={pauseStopwatch}>
+            <AntDesign name="pause" size={44} color="white" />
+          </StyledButton>
+          <StyledStartButton onPress={startStopwatch}>
+            <AntDesign name="playcircleo" size={74} color="white" />
+          </StyledStartButton>
+          <StyledButton onPress={resetStopwatch}>
+            <MaterialCommunityIcons name="restart" size={44} color="white" />
+          </StyledButton>
+        </RowContainer>
+      </ButtonsContainer>
     </StyledContainer>
   );
 };
 
 const styles = StyleSheet.create({
   svgContainer: {
-    marginVertical: 20
+    marginVertical: 0
   }
 });
 

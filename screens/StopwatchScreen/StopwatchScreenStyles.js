@@ -12,8 +12,9 @@ export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${lightGrey};
   width: 100%;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
+  padding: 10%;
 `;
 
 export const PageTitle = styled(Text)`
@@ -21,51 +22,65 @@ export const PageTitle = styled(Text)`
   text-align: center;
   font-weight: bold;
   color: ${black};
-  padding: 10px;
-  margin-bottom: 10px;
+
+  padding-bottom: 0%;
+  margin-bottom: 0%;
 `;
 
-export const SubTitle = styled(Text)`
-  font-size: 10px;
-  margin-bottom: 20px;
+export const FocusTitle = styled(Text)`
+  font-size: 18px;
+  margin-bottom: 0px;
   letter-spacing: 1px;
   font-weight: bold;
   color: ${grey};
+`;
+
+export const SwapButton = styled(Pressable)`
+  flex-direction: columns;
+  padding-vertical: 0px;
+  padding-horizontal: 0px;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${orange};
 `;
 
 export const Line = styled(View)`
   height: 1px;
   width: 70%;
   background-color: ${orange};
-  margin-vertical: 10px;
+  margin-vertical: 5 %;
+  padding-vertical: 0px;
 `;
 
-export const ButtonContainer = styled(View)`
-  flex-direction: row;
-  margin-top: 0px;
-  width: 80%;
-  justify-content: space-between;
+export const ButtonsContainer = styled(View)`
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  padding: 0%;
+  margin-bottom: 15%;
 `;
 
 export const StyledButton = styled(Pressable)`
-  padding: 15px;
-  justify-content: space-between;
+  padding: 1% 8% 1% 8%;
+  background-color: ${black};
+  justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 60px;
-  width: 80%;
-  background-color: orange;
-`;
-
-export const ButtonText = styled(Text)`
-  color: white;
-  font-size: 16px;
 `;
 
 export const RowContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
+`;
+
+export const StyledStartButton = styled(Pressable)`
+  padding: 1% 8% 1% 8%;
+  background-color: ${black};
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 `;
