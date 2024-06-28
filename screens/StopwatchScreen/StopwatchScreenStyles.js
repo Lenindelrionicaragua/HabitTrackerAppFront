@@ -83,4 +83,5 @@ export const StyledStartButton = styled(Pressable)`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  transform: scale(1.5);
 `;
