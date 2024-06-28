@@ -58,7 +58,6 @@ export const ButtonsContainer = styled(View)`
   align-items: center;
   justify-content: center;
   width: 100%;
-
   padding: 0%;
   margin-bottom: 15%;
 `;
