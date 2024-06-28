@@ -3,7 +3,6 @@ import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { Ionicons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -13,6 +12,7 @@ import {
   Line,
   FocusTitle,
   StyledButton,
+  StyledStartButton,
   ButtonsContainer,
   RowContainer,
   SwapButton
@@ -119,48 +119,17 @@ const StopwatchScreen = () => {
       </View>
       <Line />
       <ButtonsContainer>
-        {running ? (
-          <>
-            <RowContainer>
-              <StyledButton onPress={pauseStopwatch}>
-                <AntDesign name="pause" size={44} color="white" />
-              </StyledButton>
-              <StyledButton onPress={resetStopwatch}>
-                <MaterialCommunityIcons
-                  name="restart"
-                  size={44}
-                  color="white"
-                />
-              </StyledButton>
-            </RowContainer>
-          </>
-        ) : (
-          <>
-            {!running && time === 0 && (
-              <RowContainer>
-                <StyledButton onPress={startStopwatch}>
-                  <AntDesign name="playcircleo" size={44} color="white" />
-                </StyledButton>
-              </RowContainer>
-            )}
-          </>
-        )}
-        {!running && time > 0 && (
-          <>
-            <RowContainer>
-              <StyledButton onPress={resumeStopwatch}>
-                <AntDesign name="playcircleo" size={44} color="white" />
-              </StyledButton>
-              <StyledButton onPress={resetStopwatch}>
-                <MaterialCommunityIcons
-                  name="restart"
-                  size={44}
-                  color="white"
-                />
-              </StyledButton>
-            </RowContainer>
-          </>
-        )}
+        <RowContainer>
+          <StyledButton onPress={pauseStopwatch}>
+            <AntDesign name="pause" size={44} color="white" />
+          </StyledButton>
+          <StyledStartButton onPress={startStopwatch}>
+            <AntDesign name="playcircleo" size={74} color="white" />
+          </StyledStartButton>
+          <StyledButton onPress={resetStopwatch}>
+            <MaterialCommunityIcons name="restart" size={44} color="white" />
+          </StyledButton>
+        </RowContainer>
       </ButtonsContainer>
     </StyledContainer>
   );
