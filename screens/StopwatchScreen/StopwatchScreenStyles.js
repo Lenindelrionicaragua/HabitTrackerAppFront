@@ -36,9 +36,9 @@ export const FocusTitle = styled(Text)`
 
 export const Line = styled(View)`
   height: 1px;
-  width: 90%;
+  width: 70%;
   background-color: ${orange};
-  margin-vertical: 3%;
+  margin-vertical: 5 %;
   padding-vertical: 0px;
 `;
 
@@ -57,17 +57,7 @@ export const ButtonContainer = styled(View)`
   justify-content: space-between;
 `;
 
-export const StyledButton = styled(Pressable)`
-  padding: 15px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 60px;
-  width: 80%;
-  background-color: ${black};
-`;
+export const StyledButton = styled(Pressable)``;
 
 export const ButtonText = styled(Text)`
   color: white;
@@ -75,7 +65,6 @@ export const ButtonText = styled(Text)`
 `;
 
 export const RowContainer = styled(View)`
-  margin-top: 10%;
   flex-direction: row;
   justify-content: space-between;
   width: 60%;
