@@ -22,8 +22,9 @@ export const PageTitle = styled(Text)`
   text-align: center;
   font-weight: bold;
   color: ${black};
-  padding: 10px;
-  margin-bottom: 10px;
+
+  padding-bottom: 0%;
+  margin-bottom: 0%;
 `;
 
 export const FocusTitle = styled(Text)`
@@ -34,6 +35,15 @@ export const FocusTitle = styled(Text)`
   color: ${grey};
 `;
 
+export const SwapButton = styled(Pressable)`
+  flex-direction: columns;
+  padding-vertical: 0px;
+  padding-horizontal: 0px;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${orange};
+`;
+
 export const Line = styled(View)`
   height: 1px;
   width: 70%;
@@ -42,31 +52,24 @@ export const Line = styled(View)`
   padding-vertical: 0px;
 `;
 
-export const SwapButton = styled(Pressable)`
-  flex-direction: columns;
-  padding-vertical: 0px;
-  padding-horizontal: 0px;
+export const ButtonsContainer = styled(View)`
+  flex: 1;
+  flex-direction: column;
   align-items: center;
-  border-radius: 5px;
-`;
-
-export const ButtonContainer = styled(View)`
-  flex-direction: row;
-  margin-top: 10%;
-  width: 80%;
-  justify-content: space-between;
-`;
-
-export const StyledButton = styled(Pressable)``;
-
-export const ButtonText = styled(Text)`
-  color: white;
-  font-size: 16px;
+  justify-content: center;
+  width: 100%;
+  background-color: ${green};
+  padding: 0%;
+  margin-bottom: 15%;
 `;
 
 export const RowContainer = styled(View)`
   flex-direction: row;
-  justify-content: space-between;
-  width: 60%;
+  justify-content: center;
+  width: 100%;
   background-color: ${black};
+`;
+
+export const StyledButton = styled(Pressable)`
+  background-color: ${orange};
 `;
