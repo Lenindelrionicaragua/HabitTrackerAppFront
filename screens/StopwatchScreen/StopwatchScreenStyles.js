@@ -58,18 +58,29 @@ export const ButtonsContainer = styled(View)`
   align-items: center;
   justify-content: center;
   width: 100%;
-  background-color: ${green};
+
   padding: 0%;
   margin-bottom: 15%;
 `;
 
-export const RowContainer = styled(View)`
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+export const StyledButton = styled(Pressable)`
+  padding: 1% 8% 1% 8%;
   background-color: ${black};
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 `;
 
-export const StyledButton = styled(Pressable)`
-  background-color: ${orange};
+export const RowContainer = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const StyledStartButton = styled(Pressable)`
+  padding: 1% 8% 1% 8%;
+  background-color: ${black};
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 `;
