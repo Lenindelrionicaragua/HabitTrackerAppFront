@@ -29,6 +29,8 @@ export const PageTitle = styled(Text)`
 
 export const FocusTitle = styled(Text)`
   font-size: 18px;
+  text-align: center;
+  align-self: center;
   margin-bottom: 0px;
   letter-spacing: 1px;
   font-weight: bold;
@@ -77,9 +79,10 @@ export const RowContainer = styled(View)`
 `;
 
 export const StyledStartButton = styled(Pressable)`
-  padding: 1% 8% 1% 8%;
+  padding: 1% 1% 1% 1%;
   background-color: ${black};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  transform: scale(1.5);
 `;

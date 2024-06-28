@@ -112,12 +112,12 @@ const StopwatchScreen = () => {
             {formatTime(time)}
           </SvgText>
         </Svg>
+        <FocusTitle>{label}</FocusTitle>
         <SwapButton onPress={handlePress}>
-          <FocusTitle>{label}</FocusTitle>
           <Ionicons name="swap-horizontal" size={24} color="black" />
         </SwapButton>
       </View>
-      <Line />
+      {/* <Line /> */}
       <ButtonsContainer>
         <RowContainer>
           <StyledButton onPress={pauseStopwatch}>
