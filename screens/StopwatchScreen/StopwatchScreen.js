@@ -5,7 +5,8 @@ import { Colors } from "../../styles/AppStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import {
   StyledContainer,
@@ -122,7 +123,7 @@ const StopwatchScreen = () => {
       <ButtonsContainer>
         <RowContainer>
           <StyledButton onPress={pauseStopwatch}>
-            <FontAwesome name="stack-exchange" size={44} color="white" />
+            <FontAwesome5 name="list-ul" size={44} color="white" />
           </StyledButton>
           {running ? (
             <StyledStartButton onPress={pauseStopwatch}>
@@ -134,7 +135,7 @@ const StopwatchScreen = () => {
             </StyledStartButton>
           )}
           <StyledButton onPress={resetStopwatch}>
-            <MaterialCommunityIcons name="restart" size={44} color="white" />
+            <MaterialIcons name="data-saver-on" size={44} color="white" />
           </StyledButton>
         </RowContainer>
       </ButtonsContainer>
