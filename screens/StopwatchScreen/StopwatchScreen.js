@@ -2,11 +2,12 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  AntDesign,
+  FontAwesome5,
+  Ionicons
+} from "@expo/vector-icons";
 
 import {
   StyledContainer,
@@ -23,12 +24,21 @@ import {
 const { white, black, orange, grey } = Colors;
 const MAX_TIME = 60;
 
+const activities = [
+  "Study",
+  "Rest",
+  "Exercise",
+  "Family time",
+  "Screen-free time"
+];
+
 const StopwatchScreen = () => {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
   const [label, setLabel] = useState("FOCUS");
+  const [activityIndex, setActivityIndex] = useState(null);
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -51,6 +61,7 @@ const StopwatchScreen = () => {
     clearInterval(intervalRef.current);
     setTime(0);
     setRunning(false);
+    setActivityIndex(null);
   };
 
   const formatTime = totalMilliseconds => {
@@ -60,23 +71,21 @@ const StopwatchScreen = () => {
     return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
   };
 
-  const resumeStopwatch = () => {
-    startTimeRef.current = Date.now() - time * 10;
-    intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
-    }, 10);
-    setRunning(true);
+  const swapFocus = () => {
+    setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
   };
 
-  const handlePress = () => {
-    setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
+  const handleActivityChange = () => {
+    setActivityIndex(prevIndex => (prevIndex + 1) % activities.length);
   };
 
   const circumference = 2 * Math.PI * 150;
 
   return (
     <StyledContainer>
-      <PageTitle>ZenTimer</PageTitle>
+      <PageTitle>
+        {activityIndex === null ? "ZenTimer" : activities[activityIndex]}
+      </PageTitle>
       <Line />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
@@ -115,14 +124,14 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
         <FocusTitle>{label}</FocusTitle>
-        <SwapButton onPress={handlePress}>
+        <SwapButton onPress={swapFocus}>
           <Ionicons name="swap-horizontal" size={24} color="black" />
         </SwapButton>
       </View>
       {/* <Line /> */}
       <ButtonsContainer>
         <RowContainer>
-          <StyledButton onPress={pauseStopwatch}>
+          <StyledButton onPress={handleActivityChange}>
             <FontAwesome5 name="list-ul" size={44} color="white" />
           </StyledButton>
           {running ? (
