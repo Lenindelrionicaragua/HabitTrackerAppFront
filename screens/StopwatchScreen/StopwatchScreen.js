@@ -5,6 +5,7 @@ import { Colors } from "../../styles/AppStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import {
   StyledContainer,
@@ -121,11 +122,17 @@ const StopwatchScreen = () => {
       <ButtonsContainer>
         <RowContainer>
           <StyledButton onPress={pauseStopwatch}>
-            <AntDesign name="pause" size={44} color="white" />
+            <FontAwesome name="stack-exchange" size={44} color="white" />
           </StyledButton>
-          <StyledStartButton onPress={startStopwatch}>
-            <AntDesign name="playcircleo" size={74} color="white" />
-          </StyledStartButton>
+          {running ? (
+            <StyledStartButton onPress={pauseStopwatch}>
+              <AntDesign name="pause" size={74} color="white" />
+            </StyledStartButton>
+          ) : (
+            <StyledStartButton onPress={startStopwatch}>
+              <AntDesign name="playcircleo" size={74} color="white" />
+            </StyledStartButton>
+          )}
           <StyledButton onPress={resetStopwatch}>
             <MaterialCommunityIcons name="restart" size={44} color="white" />
           </StyledButton>
