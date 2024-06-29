@@ -70,6 +70,8 @@ export const ButtonText = styled(Text)`
 `;
 
 export const StyledButton = styled(Pressable)`
+  width: 100px;
+  height: 100px;
   padding: 1% 8% 1% 8%;
   background-color: ${black};
   justify-content: center;
