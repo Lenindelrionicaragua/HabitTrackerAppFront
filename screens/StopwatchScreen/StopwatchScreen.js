@@ -73,6 +73,7 @@ const StopwatchScreen = () => {
 
   const swapFocus = () => {
     setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
+    if (activityIndex === 1 ? setActivityIndex(1) : setActivityIndex(0));
   };
 
   const handleActivityChange = () => {
