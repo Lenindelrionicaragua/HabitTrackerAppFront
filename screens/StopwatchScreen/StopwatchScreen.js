@@ -18,7 +18,8 @@ import {
   StyledStartButton,
   ButtonsContainer,
   RowContainer,
-  SwapButton
+  SwapButton,
+  ButtonText
 } from "./StopwatchScreenStyles";
 
 const { white, black, orange, grey } = Colors;
@@ -142,6 +143,7 @@ const StopwatchScreen = () => {
         <RowContainer>
           <StyledButton onPress={handleActivityChange}>
             <FontAwesome5 name="list-ul" size={44} color="white" />
+            <ButtonText>activities</ButtonText>
           </StyledButton>
           {running ? (
             <StyledStartButton onPress={pauseStopwatch}>
@@ -154,6 +156,7 @@ const StopwatchScreen = () => {
           )}
           <StyledButton onPress={resetStopwatch}>
             <MaterialIcons name="data-saver-on" size={44} color="white" />
+            <ButtonText>save-data</ButtonText>
           </StyledButton>
         </RowContainer>
       </ButtonsContainer>
