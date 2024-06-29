@@ -64,6 +64,11 @@ export const ButtonsContainer = styled(View)`
   margin-bottom: 15%;
 `;
 
+export const ButtonText = styled(Text)`
+  color: ${white};
+  font-size: 10px;
+`;
+
 export const StyledButton = styled(Pressable)`
   padding: 1% 8% 1% 8%;
   background-color: ${black};
