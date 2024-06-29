@@ -44,7 +44,7 @@ const StopwatchScreen = () => {
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
   const [labelResetButton, setLabelResetButton] = useState("save-data");
-  const [infoLabel, setInfoLabel] = useState(null);
+  const [infoText, setInfoText] = useState(null);
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -52,7 +52,12 @@ const StopwatchScreen = () => {
 
   const startStopwatch = () => {
     if (activityIndex === null) {
-      setInfoLabel("Select your focus activity");
+      setInfoText("Select your focus activity");
+
+      // Clear infoText after 3 seconds
+      setTimeout(() => {
+        setInfoText("");
+      }, 5000);
       return;
     }
 
@@ -76,8 +81,11 @@ const StopwatchScreen = () => {
     }
 
     if (resetClicks === 0) {
-      setInfoLabel("time-saved");
-      setLabelResetButton("clear-all");
+      setInfoText("time-saved");
+      setLabelResetButton("reset-all");
+      setTimeout(() => {
+        setInfoText("");
+      }, 5000);
       clearInterval(intervalRef.current);
     } else if (resetClicks >= 1) {
       clearInterval(intervalRef.current);
@@ -86,6 +94,7 @@ const StopwatchScreen = () => {
       setActivityIndex(null);
       setLabelResetButton("save-data");
       setResetClicks(0);
+      setInfoText(null);
     }
   };
 
@@ -93,7 +102,7 @@ const StopwatchScreen = () => {
     setPrevActivityIndex(activityIndex);
     clearInterval(intervalRef.current);
     setRunning(false);
-    setInfoLabel(null);
+    setInfoText(null);
     setActivityIndex(prevIndex =>
       prevIndex === 3 ? 0 : (prevIndex + 1) % (activities.length - 1)
     );
@@ -168,7 +177,7 @@ const StopwatchScreen = () => {
             fontSize="24"
             fill={orange}
           >
-            {infoLabel}
+            {infoText}
           </SvgText>
         </Svg>
         <FocusTitle>{label}</FocusTitle>
