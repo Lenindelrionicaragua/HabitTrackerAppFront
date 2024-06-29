@@ -27,10 +27,10 @@ const MAX_TIME = 60;
 
 const activities = [
   "Study",
-  "Rest",
   "Exercise",
   "Family time",
-  "Screen-free time"
+  "Screen-free time",
+  "Rest"
 ];
 
 const StopwatchScreen = () => {
@@ -40,12 +40,22 @@ const StopwatchScreen = () => {
   const startTimeRef = useRef(0);
   const [label, setLabel] = useState("FOCUS");
   const [activityIndex, setActivityIndex] = useState(null);
+  const [prevActivityIndex, setPrevActivityIndex] = useState(null);
+  const [resetClicks, setResetClicks] = useState(0);
+  const resetTimeoutRef = useRef(null);
+  const [labelResetButton, setLabelResetButton] = useState("save-data");
+  const [infoLabel, setInfoLabel] = useState(null);
 
   const pad = num => {
     return num.toString().padStart(2, "0");
   };
 
   const startStopwatch = () => {
+    if (activityIndex === null) {
+      setInfoLabel("Select your focus activity");
+      return;
+    }
+
     startTimeRef.current = Date.now() - time * 10;
     intervalRef.current = setInterval(() => {
       setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
@@ -59,10 +69,34 @@ const StopwatchScreen = () => {
   };
 
   const resetStopwatch = () => {
+    setResetClicks(prevClicks => prevClicks + 1);
+
+    if (resetTimeoutRef.current !== null) {
+      clearTimeout(resetTimeoutRef.current);
+    }
+
+    if (resetClicks === 0) {
+      setInfoLabel("time-saved");
+      setLabelResetButton("clear-all");
+      clearInterval(intervalRef.current);
+    } else if (resetClicks >= 1) {
+      clearInterval(intervalRef.current);
+      setTime(0);
+      setRunning(false);
+      setActivityIndex(null);
+      setLabelResetButton("save-data");
+      setResetClicks(0);
+    }
+  };
+
+  const handleActivityChange = () => {
+    setPrevActivityIndex(activityIndex);
     clearInterval(intervalRef.current);
-    setTime(0);
     setRunning(false);
-    setActivityIndex(null);
+    setInfoLabel(null);
+    setActivityIndex(prevIndex =>
+      prevIndex === 3 ? 0 : (prevIndex + 1) % (activities.length - 1)
+    );
   };
 
   const formatTime = totalMilliseconds => {
@@ -75,18 +109,13 @@ const StopwatchScreen = () => {
   const swapFocus = () => {
     setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
     setActivityIndex(prevIndex => {
-      if (prevIndex === null) {
-        return 1; //rest
-      } else if (prevIndex === 1) {
-        return null;
+      if (prevIndex === null || prevIndex !== 4) {
+        setPrevActivityIndex(prevIndex);
+        return 4;
       } else {
-        return 1;
+        return prevActivityIndex;
       }
     });
-  };
-
-  const handleActivityChange = () => {
-    setActivityIndex(prevIndex => (prevIndex + 1) % activities.length);
   };
 
   const circumference = 2 * Math.PI * 150;
@@ -132,13 +161,21 @@ const StopwatchScreen = () => {
           >
             {formatTime(time)}
           </SvgText>
+          <SvgText
+            x="180"
+            y="230"
+            textAnchor="middle"
+            fontSize="24"
+            fill={orange}
+          >
+            {infoLabel}
+          </SvgText>
         </Svg>
         <FocusTitle>{label}</FocusTitle>
         <SwapButton onPress={swapFocus}>
           <Ionicons name="swap-horizontal" size={24} color="black" />
         </SwapButton>
       </View>
-      {/* <Line /> */}
       <ButtonsContainer>
         <RowContainer>
           <StyledButton onPress={handleActivityChange}>
@@ -156,7 +193,7 @@ const StopwatchScreen = () => {
           )}
           <StyledButton onPress={resetStopwatch}>
             <MaterialIcons name="data-saver-on" size={44} color="white" />
-            <ButtonText>save-data</ButtonText>
+            <ButtonText>{labelResetButton}</ButtonText>
           </StyledButton>
         </RowContainer>
       </ButtonsContainer>
