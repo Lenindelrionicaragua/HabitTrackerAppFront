@@ -95,6 +95,7 @@ const StopwatchScreen = () => {
       setLabelResetButton("save-data");
       setResetClicks(0);
       setInfoText(null);
+      setLabel("FOCUS");
     }
   };
 
@@ -121,7 +122,7 @@ const StopwatchScreen = () => {
       if (prevIndex === null || prevIndex !== 4) {
         setPrevActivityIndex(prevIndex);
         return 4;
-      } else {
+      } else if (prevIndex !== null || prevIndex !== 4) {
         return prevActivityIndex;
       }
     });
