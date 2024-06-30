@@ -61,6 +61,12 @@ const StopwatchScreen = () => {
       return;
     }
 
+    if (resetClicks >= 1) {
+      setTime(0);
+      setRunning(false);
+      setResetClicks(0);
+    }
+
     startTimeRef.current = Date.now() - time * 10;
     intervalRef.current = setInterval(() => {
       setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
@@ -80,21 +86,32 @@ const StopwatchScreen = () => {
       clearTimeout(resetTimeoutRef.current);
     }
 
-    if (resetClicks === 0) {
+    if (time === 0) {
+      setInfoText(null);
+      setLabelResetButton("save-data");
+      setInfoText("hello");
+      setTimeout(() => {
+        setInfoText("");
+      }, 2000);
+      return;
+    }
+
+    if (resetClicks === 0 && setTime !== 0) {
       setInfoText("time-saved");
       setLabelResetButton("reset-all");
+      setRunning(false);
       setTimeout(() => {
         setInfoText("");
       }, 5000);
       clearInterval(intervalRef.current);
-    } else if (resetClicks >= 1) {
+    } else if (resetClicks >= 1 && setTime !== 0) {
       clearInterval(intervalRef.current);
       setTime(0);
-      setRunning(false);
-      setActivityIndex(null);
-      setLabelResetButton("save-data");
       setResetClicks(0);
-      setInfoText(null);
+      setActivityIndex(null);
+      setRunning(false);
+      setLabelResetButton("save-data");
+      setInfoText("clear");
       setLabel("FOCUS");
     }
   };
@@ -190,6 +207,7 @@ const StopwatchScreen = () => {
         <RowContainer>
           <StyledButton onPress={handleActivityChange}>
             <FontAwesome5 name="list-ul" size={44} color="white" />
+
             <ButtonText>activities</ButtonText>
           </StyledButton>
           {running ? (
