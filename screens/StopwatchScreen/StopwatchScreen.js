@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
@@ -43,8 +43,17 @@ const StopwatchScreen = () => {
   const [prevActivityIndex, setPrevActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [labelResetButton, setLabelResetButton] = useState("save-data");
-  const [infoText, setInfoText] = useState(null);
+  const [labelResetButton, setLabelResetButton] = useState("Complete");
+  const [infoText, setInfoText] = useState("select your focus");
+
+  useEffect(() => {
+    if (infoText) {
+      const timer = setTimeout(() => {
+        setInfoText("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [infoText]);
 
   const pad = num => {
     return num.toString().padStart(2, "0");
@@ -52,7 +61,7 @@ const StopwatchScreen = () => {
 
   const startStopwatch = () => {
     if (activityIndex === null) {
-      setInfoText("Select your focus activity");
+      setInfoText("select your focus");
 
       // Clear infoText after 3 seconds
       setTimeout(() => {
@@ -89,10 +98,10 @@ const StopwatchScreen = () => {
     if (time === 0) {
       setInfoText(null);
       setLabelResetButton("save-data");
-      setInfoText("hello");
+      setInfoText("㊑");
       setTimeout(() => {
         setInfoText("");
-      }, 2000);
+      }, 1000);
       return;
     }
 
@@ -110,7 +119,7 @@ const StopwatchScreen = () => {
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
-      setLabelResetButton("save-data");
+      setLabelResetButton("remember");
       setInfoText("clear");
       setLabel("FOCUS");
     }
@@ -208,7 +217,7 @@ const StopwatchScreen = () => {
           <StyledButton onPress={handleActivityChange}>
             <FontAwesome5 name="list-ul" size={44} color="white" />
 
-            <ButtonText>activities</ButtonText>
+            <ButtonText>Focus</ButtonText>
           </StyledButton>
           {running ? (
             <StyledStartButton onPress={pauseStopwatch}>
