@@ -179,7 +179,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={white}
+            stroke={orange}
             strokeWidth="10"
             fill="none"
             strokeDasharray={circumference}
@@ -208,8 +208,9 @@ const StopwatchScreen = () => {
             {infoText}
           </SvgText>
         </Svg>
-        <FocusTitle>{label}</FocusTitle>
+
         <SwapButton onPress={swapFocus}>
+          {/* <FocusTitle>{label}</FocusTitle> */}
           <Ionicons name="swap-horizontal" size={24} color="black" />
         </SwapButton>
       </View>
@@ -222,11 +223,11 @@ const StopwatchScreen = () => {
           </StyledButtonLeft>
           {running ? (
             <StyledStartButton onPress={pauseStopwatch}>
-              <AntDesign name="pause" size={74} color="black" />
+              <AntDesign name="pause" size={54} color="black" />
             </StyledStartButton>
           ) : (
             <StyledStartButton onPress={startStopwatch}>
-              <AntDesign name="playcircleo" size={74} color="black" />
+              <MaterialIcons name="play-arrow" size={54} color="black" />
             </StyledStartButton>
           )}
           <StyledButtonRight onPress={resetStopwatch}>

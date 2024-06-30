@@ -43,12 +43,14 @@ export const SwapButton = styled(Pressable)`
   padding-horizontal: 0px;
   align-items: center;
   border-radius: 5px;
+  border-width: 1px;
+  border-color: ${black};
   background-color: ${orange};
 `;
 
 export const Line = styled(View)`
   height: 1px;
-  width: 70%;
+  width: 100%;
   background-color: ${orange};
   margin-vertical: 5 %;
   padding-vertical: 0px;
@@ -73,7 +75,7 @@ export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
   height: 100px;
   padding: 10px;
-  /*  background-color: ${black}; */
+  /* background-color: ${black}; */
   justify-content: center;
   align-items: center;
   border-top-left-radius: 50px;
@@ -86,7 +88,6 @@ export const StyledButtonRight = styled(Pressable)`
   width: 100px;
   height: 100px;
   padding: 10px;
-  /*  background-color: ${black}; */
   justify-content: center;
   align-items: center;
   border-top-left-radius: 0px;
@@ -105,9 +106,10 @@ export const StyledStartButton = styled(Pressable)`
   width: 100px;
   height: 100px;
   padding: 10px;
-  /*  background-color: ${black}; */
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 50px;
   transform: scale(1.5);
+  border-width: 1px;
+  border-color: ${black};
 `;
