@@ -29,6 +29,8 @@ export const PageTitle = styled(Text)`
 
 export const FocusTitle = styled(Text)`
   font-size: 18px;
+  text-align: center;
+  align-self: center;
   margin-bottom: 0px;
   letter-spacing: 1px;
   font-weight: bold;
@@ -41,12 +43,14 @@ export const SwapButton = styled(Pressable)`
   padding-horizontal: 0px;
   align-items: center;
   border-radius: 5px;
+  border-width: 1px;
+  border-color: ${black};
   background-color: ${orange};
 `;
 
 export const Line = styled(View)`
   height: 1px;
-  width: 70%;
+  width: 100%;
   background-color: ${orange};
   margin-vertical: 5 %;
   padding-vertical: 0px;
@@ -58,17 +62,38 @@ export const ButtonsContainer = styled(View)`
   align-items: center;
   justify-content: center;
   width: 100%;
-
   padding: 0%;
   margin-bottom: 15%;
 `;
 
-export const StyledButton = styled(Pressable)`
-  padding: 1% 8% 1% 8%;
-  background-color: ${black};
+export const ButtonText = styled(Text)`
+  color: ${black};
+  font-size: 10px;
+`;
+
+export const StyledButtonLeft = styled(Pressable)`
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  /* background-color: ${black}; */
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+`;
+
+export const StyledButtonRight = styled(Pressable)`
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
 `;
 
 export const RowContainer = styled(View)`
@@ -78,9 +103,13 @@ export const RowContainer = styled(View)`
 `;
 
 export const StyledStartButton = styled(Pressable)`
-  padding: 1% 8% 1% 8%;
-  background-color: ${black};
+  width: 100px;
+  height: 100px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 50px;
+  transform: scale(1.5);
+  border-width: 1px;
+  border-color: ${black};
 `;
