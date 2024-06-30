@@ -14,7 +14,8 @@ import {
   PageTitle,
   Line,
   FocusTitle,
-  StyledButton,
+  StyledButtonLeft,
+  StyledButtonRight,
   StyledStartButton,
   ButtonsContainer,
   RowContainer,
@@ -214,24 +215,24 @@ const StopwatchScreen = () => {
       </View>
       <ButtonsContainer>
         <RowContainer>
-          <StyledButton onPress={handleActivityChange}>
-            <FontAwesome5 name="list-ul" size={44} color="white" />
+          <StyledButtonLeft onPress={handleActivityChange}>
+            <FontAwesome5 name="list-ul" size={44} color="black" />
 
             <ButtonText>Focus</ButtonText>
-          </StyledButton>
+          </StyledButtonLeft>
           {running ? (
             <StyledStartButton onPress={pauseStopwatch}>
-              <AntDesign name="pause" size={74} color="white" />
+              <AntDesign name="pause" size={74} color="black" />
             </StyledStartButton>
           ) : (
             <StyledStartButton onPress={startStopwatch}>
-              <AntDesign name="playcircleo" size={74} color="white" />
+              <AntDesign name="playcircleo" size={74} color="black" />
             </StyledStartButton>
           )}
-          <StyledButton onPress={resetStopwatch}>
-            <MaterialIcons name="data-saver-on" size={44} color="white" />
+          <StyledButtonRight onPress={resetStopwatch}>
+            <MaterialIcons name="data-saver-on" size={44} color="black" />
             <ButtonText>{labelResetButton}</ButtonText>
-          </StyledButton>
+          </StyledButtonRight>
         </RowContainer>
       </ButtonsContainer>
     </StyledContainer>

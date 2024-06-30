@@ -65,18 +65,34 @@ export const ButtonsContainer = styled(View)`
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${white};
+  color: ${black};
   font-size: 10px;
 `;
 
-export const StyledButton = styled(Pressable)`
+export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
   height: 100px;
-  padding: 1% 8% 1% 8%;
-  background-color: ${black};
+  padding: 10px;
+  /*  background-color: ${black}; */
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+`;
+
+export const StyledButtonRight = styled(Pressable)`
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  /*  background-color: ${black}; */
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
 `;
 
 export const RowContainer = styled(View)`
@@ -86,8 +102,10 @@ export const RowContainer = styled(View)`
 `;
 
 export const StyledStartButton = styled(Pressable)`
-  padding: 1% 1% 1% 1%;
-  background-color: ${black};
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  /*  background-color: ${black}; */
   justify-content: center;
   align-items: center;
   border-radius: 5px;
