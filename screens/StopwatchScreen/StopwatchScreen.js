@@ -19,9 +19,8 @@ import {
   ButtonsContainer,
   RowContainer,
   SelectorTimerContainer,
-  HourSelector,
-  MinuteSelector,
-  SecondSelector,
+  TimeSelector,
+  TimeSeparator,
   ButtonText
 } from "./StopwatchScreenStyles";
 
@@ -211,9 +210,11 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
         <SelectorTimerContainer>
-          <HourSelector></HourSelector>
-          <MinuteSelector></MinuteSelector>
-          <SecondSelecetor></SecondSelecetor>
+          <TimeSelector>00</TimeSelector>
+          <TimeSeparator>:</TimeSeparator>
+          <TimeSelector>00</TimeSelector>
+          <TimeSeparator>:</TimeSeparator>
+          <TimeSelector>00</TimeSelector>
         </SelectorTimerContainer>
       </View>
       <ButtonsContainer>
