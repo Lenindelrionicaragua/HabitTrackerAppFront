@@ -14,7 +14,7 @@ export const StyledContainer = styled(SafeAreaView)`
   width: 100%;
   justify-content: left;
   align-items: center;
-  padding: 10%;
+  padding: 2%;
 `;
 
 export const PageTitle = styled(Text)`
@@ -22,7 +22,7 @@ export const PageTitle = styled(Text)`
   text-align: center;
   font-weight: bold;
   color: ${black};
-
+  margin-top: 0px;
   padding-bottom: 0%;
   margin-bottom: 0%;
 `;
@@ -63,19 +63,19 @@ export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${orange};
-  margin-vertical: 5 %;
+  margin-vertical: 5px;
   padding-vertical: 0px;
 `;
 
-export const ButtonsContainer = styled(View)`
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0%;
-  margin-bottom: 15%;
-`;
+// export const ButtonsContainer = styled(View)`
+//   flex: 1;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   padding: 0%;
+//   margin-bottom: 15%;
+// `;
 
 export const ButtonText = styled(Text)`
   color: ${black};
@@ -109,8 +109,12 @@ export const StyledButtonRight = styled(Pressable)`
 
 export const RowContainer = styled(View)`
   flex-direction: row;
+
   justify-content: space-between;
+  margin-top: 2%;
+  padding: 5px;
   width: 100%;
+  background-color: ${orange};
 `;
 
 export const StyledStartButton = styled(Pressable)`
@@ -119,8 +123,11 @@ export const StyledStartButton = styled(Pressable)`
   padding: 10px;
   justify-content: center;
   align-items: center;
-  border-radius: 50px;
+
   transform: scale(1.5);
+  /* 
+  border-radius: 50px; 
   border-width: 1px;
   border-color: ${black};
+  */
 `;
