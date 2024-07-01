@@ -13,13 +13,15 @@ import {
   StyledContainer,
   PageTitle,
   Line,
-  FocusTitle,
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
   ButtonsContainer,
   RowContainer,
-  SwapButton,
+  SelectorTimerContainer,
+  HourSelector,
+  MinuteSelector,
+  SecondSelector,
   ButtonText
 } from "./StopwatchScreenStyles";
 
@@ -208,12 +210,11 @@ const StopwatchScreen = () => {
             {infoText}
           </SvgText>
         </Svg>
-        <ButtonsContainer>
-          <SwapButton onPress={swapFocus}>
-            {/* <FocusTitle>{label}</FocusTitle> */}
-            <Ionicons name="swap-horizontal" size={24} color="black" />
-          </SwapButton>
-        </ButtonsContainer>
+        <SelectorTimerContainer>
+          <HourSelector></HourSelector>
+          <MinuteSelector></MinuteSelector>
+          <SecondSelecetor></SecondSelecetor>
+        </SelectorTimerContainer>
       </View>
       <ButtonsContainer>
         <RowContainer>
