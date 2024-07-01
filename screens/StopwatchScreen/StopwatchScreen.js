@@ -165,7 +165,7 @@ const StopwatchScreen = () => {
       <Line />
       <View style={styles.svgContainer}>
         <IncreaseTime>
-          <AntDesign name="plussquareo" size={24} color="black" />
+          <AntDesign name="plussquareo" size={44} color="black" />
         </IncreaseTime>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
@@ -212,7 +212,7 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
         <DecreaseTime>
-          <AntDesign name="minussquareo" size={24} color="black" />
+          <AntDesign name="minussquareo" size={44} color="black" />
         </DecreaseTime>
       </View>
 
