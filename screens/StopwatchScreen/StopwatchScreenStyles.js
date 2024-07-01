@@ -37,7 +37,39 @@ export const FocusTitle = styled(Text)`
   color: ${grey};
 `;
 
-export const SwapButton = styled(Pressable)`
+export const SelectorTimerContainer = styled(View)`
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0%;
+  margin-bottom: 15%;
+`;
+
+export const HourSelector = styled(Pressable)`
+  flex-direction: columns;
+  padding-vertical: 0px;
+  padding-horizontal: 0px;
+  align-items: center;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: ${black};
+  background-color: ${orange};
+`;
+
+export const MinuteSelector = styled(Pressable)`
+  flex-direction: columns;
+  padding-vertical: 0px;
+  padding-horizontal: 0px;
+  align-items: center;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: ${black};
+  background-color: ${orange};
+`;
+
+export const SecondSelector = styled(Pressable)`
   flex-direction: columns;
   padding-vertical: 0px;
   padding-horizontal: 0px;
