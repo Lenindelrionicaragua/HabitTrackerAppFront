@@ -143,17 +143,17 @@ const StopwatchScreen = () => {
     return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
   };
 
-  const swapFocus = () => {
-    setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
-    setActivityIndex(prevIndex => {
-      if (prevIndex === null || prevIndex !== 4) {
-        setPrevActivityIndex(prevIndex);
-        return 4;
-      } else if (prevIndex !== null || prevIndex !== 4) {
-        return prevActivityIndex;
-      }
-    });
-  };
+  // const swapFocus = () => {
+  //   setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
+  //   setActivityIndex(prevIndex => {
+  //     if (prevIndex === null || prevIndex !== 4) {
+  //       setPrevActivityIndex(prevIndex);
+  //       return 4;
+  //     } else if (prevIndex !== null || prevIndex !== 4) {
+  //       return prevActivityIndex;
+  //     }
+  //   });
+  // };
 
   const circumference = 2 * Math.PI * 150;
 
@@ -216,36 +216,35 @@ const StopwatchScreen = () => {
         </DecreaseTime>
       </View>
 
-      <ButtonsContainer>
-        <RowContainer>
-          <StyledButtonLeft onPress={handleActivityChange}>
-            <FontAwesome5 name="list-ul" size={44} color="black" />
+      {/* <ButtonsContainer> */}
+      <RowContainer>
+        <StyledButtonLeft onPress={handleActivityChange}>
+          <FontAwesome5 name="list-ul" size={44} color="black" />
 
-            <ButtonText>Focus</ButtonText>
-          </StyledButtonLeft>
-          {running ? (
-            <StyledStartButton onPress={pauseStopwatch}>
-              <AntDesign name="pause" size={54} color="black" />
-            </StyledStartButton>
-          ) : (
-            <StyledStartButton onPress={startStopwatch}>
-              <MaterialIcons name="play-arrow" size={54} color="black" />
-            </StyledStartButton>
-          )}
-          <StyledButtonRight onPress={resetStopwatch}>
-            <MaterialIcons name="data-saver-on" size={44} color="black" />
-            <ButtonText>{labelResetButton}</ButtonText>
-          </StyledButtonRight>
-        </RowContainer>
-      </ButtonsContainer>
+          <ButtonText>Focus</ButtonText>
+        </StyledButtonLeft>
+        {running ? (
+          <StyledStartButton onPress={pauseStopwatch}>
+            <AntDesign name="pause" size={54} color="black" />
+          </StyledStartButton>
+        ) : (
+          <StyledStartButton onPress={startStopwatch}>
+            <MaterialIcons name="play-arrow" size={54} color="black" />
+          </StyledStartButton>
+        )}
+        <StyledButtonRight onPress={resetStopwatch}>
+          <MaterialIcons name="data-saver-on" size={44} color="black" />
+          <ButtonText>{labelResetButton}</ButtonText>
+        </StyledButtonRight>
+      </RowContainer>
+      {/* </ButtonsContainer> */}
     </StyledContainer>
   );
 };
 
 const styles = StyleSheet.create({
   svgContainer: {
-    flexDirection: "row",
-    marginVertical: 0
+    flexDirection: "row"
   }
 });
 
