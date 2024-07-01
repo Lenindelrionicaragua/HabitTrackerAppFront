@@ -18,9 +18,8 @@ import {
   StyledStartButton,
   ButtonsContainer,
   RowContainer,
-  SelectorTimerContainer,
-  TimeSelector,
-  TimeSeparator,
+  IncreaseTime,
+  DecreaseTime,
   ButtonText
 } from "./StopwatchScreenStyles";
 
@@ -165,6 +164,9 @@ const StopwatchScreen = () => {
       </PageTitle>
       <Line />
       <View style={styles.svgContainer}>
+        <IncreaseTime>
+          <AntDesign name="plussquareo" size={24} color="black" />
+        </IncreaseTime>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
 
@@ -209,14 +211,11 @@ const StopwatchScreen = () => {
             {infoText}
           </SvgText>
         </Svg>
-        <SelectorTimerContainer>
-          <TimeSelector>00</TimeSelector>
-          <TimeSeparator>:</TimeSeparator>
-          <TimeSelector>00</TimeSelector>
-          <TimeSeparator>:</TimeSeparator>
-          <TimeSelector>00</TimeSelector>
-        </SelectorTimerContainer>
+        <DecreaseTime>
+          <AntDesign name="minussquareo" size={24} color="black" />
+        </DecreaseTime>
       </View>
+
       <ButtonsContainer>
         <RowContainer>
           <StyledButtonLeft onPress={handleActivityChange}>
@@ -245,6 +244,7 @@ const StopwatchScreen = () => {
 
 const styles = StyleSheet.create({
   svgContainer: {
+    flexDirection: "row",
     marginVertical: 0
   }
 });
