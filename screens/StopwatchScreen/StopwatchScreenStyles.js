@@ -37,32 +37,26 @@ export const FocusTitle = styled(Text)`
   color: ${grey};
 `;
 
-export const SelectorTimerContainer = styled(View)`
-  flex: 1;
+// export const SelectorTimerContainer = styled(View)`
+//   flex: 1;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   padding: 0%;
+//   margin-bottom: 15%;
+// `;
+
+export const DecreaseTime = styled(Pressable)`
   flex-direction: row;
+  padding: 10px;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0%;
-  margin-bottom: 15%;
-  border-width: 1px;
-  border-color: ${black};
 `;
 
-export const TimeSelector = styled(Pressable)`
-  flex-direction: columns;
-  padding-vertical: 0px;
-  padding-horizontal: 0px;
+export const IncreaseTime = styled(Pressable)`
+  flex-direction: row;
+  padding: 10px;
   align-items: center;
-  border-radius: 5px;
-`;
-
-export const TimeSeparator = styled(Pressable)`
-  flex-direction: columns;
-  padding-vertical: 0px;
-  padding-horizontal: 0px;
-  align-items: center;
-  border-radius: 5px;
 `;
 
 export const Line = styled(View)`
