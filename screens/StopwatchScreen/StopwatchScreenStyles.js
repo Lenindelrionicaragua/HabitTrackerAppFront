@@ -39,45 +39,30 @@ export const FocusTitle = styled(Text)`
 
 export const SelectorTimerContainer = styled(View)`
   flex: 1;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 0%;
   margin-bottom: 15%;
+  border-width: 1px;
+  border-color: ${black};
 `;
 
-export const HourSelector = styled(Pressable)`
+export const TimeSelector = styled(Pressable)`
   flex-direction: columns;
   padding-vertical: 0px;
   padding-horizontal: 0px;
   align-items: center;
   border-radius: 5px;
-  border-width: 1px;
-  border-color: ${black};
-  background-color: ${orange};
 `;
 
-export const MinuteSelector = styled(Pressable)`
+export const TimeSeparator = styled(Pressable)`
   flex-direction: columns;
   padding-vertical: 0px;
   padding-horizontal: 0px;
   align-items: center;
   border-radius: 5px;
-  border-width: 1px;
-  border-color: ${black};
-  background-color: ${orange};
-`;
-
-export const SecondSelector = styled(Pressable)`
-  flex-direction: columns;
-  padding-vertical: 0px;
-  padding-horizontal: 0px;
-  align-items: center;
-  border-radius: 5px;
-  border-width: 1px;
-  border-color: ${black};
-  background-color: ${orange};
 `;
 
 export const Line = styled(View)`
