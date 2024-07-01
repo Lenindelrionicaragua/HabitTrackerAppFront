@@ -208,11 +208,12 @@ const StopwatchScreen = () => {
             {infoText}
           </SvgText>
         </Svg>
-
-        <SwapButton onPress={swapFocus}>
-          {/* <FocusTitle>{label}</FocusTitle> */}
-          <Ionicons name="swap-horizontal" size={24} color="black" />
-        </SwapButton>
+        <ButtonsContainer>
+          <SwapButton onPress={swapFocus}>
+            {/* <FocusTitle>{label}</FocusTitle> */}
+            <Ionicons name="swap-horizontal" size={24} color="black" />
+          </SwapButton>
+        </ButtonsContainer>
       </View>
       <ButtonsContainer>
         <RowContainer>
