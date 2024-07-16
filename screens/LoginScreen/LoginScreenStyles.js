@@ -1,5 +1,12 @@
 import styled from "styled-components/native";
-import { View, Image, Text, TextInput, Pressable } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  Pressable,
+  Platform
+} from "react-native";
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 
@@ -8,10 +15,18 @@ const { white, orange, grey, yellow, lightGrey, black } = Colors;
 const green = "#00ff00";
 const red = "#ff0000";
 
+const paddingTop = Platform.OS === "web" ? "7%" : "0%";
+const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
+const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${lightGrey};
   width: 100%;
+  padding: 15px;
+  height: ${containerHeight};
+  margin-top: ${paddingTop};
+  margin-bottom: ${paddingBottom};
 `;
 
 export const InnerContainer = styled(View)`
