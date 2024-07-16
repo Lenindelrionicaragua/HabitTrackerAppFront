@@ -22,7 +22,8 @@ import {
 } from "./StopwatchScreenStyles";
 
 const { black, orange, grey } = Colors;
-const MAX_TIME = 359999; // max time in seconds
+const MAX_TIME_HOURS = 99; // max time in hours
+const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
 const activities = [
   "Study",
@@ -120,8 +121,19 @@ const StopwatchScreen = () => {
   };
 
   const handleTimeIncrement = increment => {
-    setTimeIncrements(increment);
-    setCurrentTime(currentTime + increment);
+    // Limitar el tiempo mostrado a 99 horas (359999 segundos)
+    if (currentTime + increment > MAX_TIME_SECONDS) {
+      setCurrentTime(MAX_TIME_SECONDS);
+    } else {
+      setCurrentTime(currentTime + increment);
+    }
+
+    // Limitar el tiempo total a rastrear a 99 horas (359999 segundos)
+    if (timeIncrements + increment > MAX_TIME_SECONDS) {
+      setTimeIncrements(MAX_TIME_SECONDS);
+    } else {
+      setTimeIncrements(timeIncrements + increment);
+    }
   };
 
   const formatTime = totalSeconds => {
@@ -132,8 +144,7 @@ const StopwatchScreen = () => {
   };
 
   const calculateCircleParams = () => {
-    const totalTrackingTime = timeIncrements;
-    const percentage = (currentTime / totalTrackingTime) * 100;
+    const percentage = (currentTime / MAX_TIME_SECONDS) * 100;
     const strokeDasharray = `${percentage}, 100`;
     return { strokeDasharray };
   };
