@@ -56,7 +56,7 @@ export const DotTimeButton = styled(Pressable)`
   margin: 5px;
   align-items: center;
   justify-content: center;
-  background-color: ${red};
+  background-color: ${white};
   border-radius: 5px;
 `;
 
