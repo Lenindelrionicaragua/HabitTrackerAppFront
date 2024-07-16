@@ -37,28 +37,6 @@ export const FocusTitle = styled(Text)`
   color: ${grey};
 `;
 
-// export const SelectorTimerContainer = styled(View)`
-//   flex: 1;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   padding: 0%;
-//   margin-bottom: 15%;
-// `;
-
-export const DecreaseTime = styled(Pressable)`
-  flex-direction: row;
-  padding: 10px;
-  align-items: center;
-`;
-
-export const IncreaseTime = styled(Pressable)`
-  flex-direction: row;
-  padding: 10px;
-  align-items: center;
-`;
-
 export const Line = styled(View)`
   height: 1px;
   width: 100%;
@@ -67,15 +45,25 @@ export const Line = styled(View)`
   padding-vertical: 0px;
 `;
 
-// export const ButtonsContainer = styled(View)`
-//   flex: 1;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   padding: 0%;
-//   margin-bottom: 15%;
-// `;
+export const DotTimeButton = styled(Pressable)`
+  flex: 1;
+  flex-direction: row;
+  padding: 5px 30px 5px 30px;
+  margin: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${red};
+  border-radius: 5px;
+`;
+
+export const DotTimeButtonsContainer = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0%;
+  background-color: ${black};
+`;
 
 export const ButtonText = styled(Text)`
   color: ${black};
@@ -86,7 +74,7 @@ export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
   height: 100px;
   padding: 10px;
-  /* background-color: ${black}; */
+
   justify-content: center;
   align-items: center;
   border-top-left-radius: 50px;
@@ -109,7 +97,6 @@ export const StyledButtonRight = styled(Pressable)`
 
 export const RowContainer = styled(View)`
   flex-direction: row;
-
   justify-content: space-between;
   margin-top: 2%;
   padding: 5px;
@@ -123,11 +110,5 @@ export const StyledStartButton = styled(Pressable)`
   padding: 10px;
   justify-content: center;
   align-items: center;
-
   transform: scale(1.5);
-  /* 
-  border-radius: 50px; 
-  border-width: 1px;
-  border-color: ${black};
-  */
 `;
