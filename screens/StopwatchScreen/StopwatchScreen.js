@@ -22,7 +22,7 @@ import {
 } from "./StopwatchScreenStyles";
 
 const { black, orange, grey } = Colors;
-const MAX_TIME = 60;
+const MAX_TIME = 359999; // max time in seconds
 
 const activities = [
   "Study",
@@ -33,15 +33,16 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [time, setTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [labelResetButton, setLabelResetButton] = useState("Complete");
+  const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
+  const [timeIncrements, setTimeIncrements] = useState(0);
 
   useEffect(() => {
     if (infoText) {
@@ -62,15 +63,15 @@ const StopwatchScreen = () => {
     }
 
     if (resetClicks >= 1) {
-      setTime(0);
+      setCurrentTime(0);
       setRunning(false);
       setResetClicks(0);
     }
 
-    startTimeRef.current = Date.now() - time * 10;
+    startTimeRef.current = Date.now() + currentTime * 1000;
     intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
-    }, 10);
+      setCurrentTime(prevTime => Math.max(0, prevTime - 1));
+    }, 1000);
     setRunning(true);
   };
 
@@ -85,7 +86,7 @@ const StopwatchScreen = () => {
       clearTimeout(resetTimeoutRef.current);
     }
 
-    if (time === 0) {
+    if (currentTime === 0) {
       setInfoText("㊑");
       setLabelResetButton("save-data");
       setTimeout(() => setInfoText(""), 1000);
@@ -100,7 +101,7 @@ const StopwatchScreen = () => {
       clearInterval(intervalRef.current);
     } else if (resetClicks >= 1) {
       clearInterval(intervalRef.current);
-      setTime(0);
+      setCurrentTime(0);
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
@@ -118,14 +119,26 @@ const StopwatchScreen = () => {
     );
   };
 
-  const formatTime = totalMilliseconds => {
-    const minutes = Math.floor((totalMilliseconds / (100 * 60)) % 60);
-    const seconds = Math.floor((totalMilliseconds / 100) % 60);
-    const milliseconds = Math.floor((totalMilliseconds % 100) / 1);
-    return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
+  const handleTimeIncrement = increment => {
+    setTimeIncrements(increment);
+    setCurrentTime(currentTime + increment);
   };
 
-  const circumference = 2 * Math.PI * 150;
+  const formatTime = totalSeconds => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  };
+
+  const calculateCircleParams = () => {
+    const totalTrackingTime = timeIncrements;
+    const percentage = (currentTime / totalTrackingTime) * 100;
+    const strokeDasharray = `${percentage}, 100`;
+    return { strokeDasharray };
+  };
+
+  const { strokeDasharray } = calculateCircleParams();
 
   return (
     <StyledContainer>
@@ -151,10 +164,7 @@ const StopwatchScreen = () => {
             stroke={orange}
             strokeWidth="10"
             fill="none"
-            strokeDasharray={circumference}
-            strokeDashoffset={
-              circumference - (circumference * time) / (MAX_TIME * 100)
-            }
+            strokeDasharray={strokeDasharray}
           />
           <SvgText
             x="180"
@@ -165,7 +175,7 @@ const StopwatchScreen = () => {
             fontWeight="bold"
             fill={grey}
           >
-            {formatTime(time)}
+            {formatTime(currentTime)}
           </SvgText>
           <SvgText
             x="180"
@@ -179,16 +189,16 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <DotTimeButtonsContainer>
-        <DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(5 * 60)}>
           <Octicons name="dot-fill" size={44} color="black" />
         </DotTimeButton>
-        <DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(10 * 60)}>
           <Octicons name="dot-fill" size={44} color="black" />
         </DotTimeButton>
-        <DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(30 * 60)}>
           <Octicons name="dot-fill" size={44} color="black" />
         </DotTimeButton>
-        <DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(45 * 60)}>
           <Octicons name="dot-fill" size={44} color="black" />
         </DotTimeButton>
       </DotTimeButtonsContainer>
