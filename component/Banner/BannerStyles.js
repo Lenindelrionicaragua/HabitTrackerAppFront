@@ -9,6 +9,7 @@ export const BannerContainer = styled(View)`
   bottom: 0;
   width: 100%;
   overflow: hidden;
+  z-index: 10;
 `;
 
 export const ButtonContainer = styled(View)`
