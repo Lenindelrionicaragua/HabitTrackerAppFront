@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
@@ -12,7 +12,7 @@ export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${lightGrey};
   width: 100%;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   padding: 2%;
 `;
@@ -59,7 +59,7 @@ export const DotTimeButton = styled(Pressable)`
 export const DotTimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   padding: 0%;
   background-color: ${black};
