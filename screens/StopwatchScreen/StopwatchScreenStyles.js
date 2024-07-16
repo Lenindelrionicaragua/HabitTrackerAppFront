@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
@@ -8,6 +8,9 @@ const { white, orange, grey, yellow, lightGrey, black } = Colors;
 const green = "#00ff00";
 const red = "#ff0000";
 
+const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
+const marginTop = Platform.OS === "web" ? "1%" : "2%";
+
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${lightGrey};
@@ -15,6 +18,7 @@ export const StyledContainer = styled(SafeAreaView)`
   justify-content: center;
   align-items: center;
   padding: 2%;
+  padding-bottom: ${paddingBottom};
 `;
 
 export const PageTitle = styled(Text)`
@@ -98,7 +102,7 @@ export const StyledButtonRight = styled(Pressable)`
 export const RowContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2%;
+  margin-top: ${marginTop};
   padding: 5px;
   width: 100%;
   background-color: ${orange};
