@@ -133,20 +133,24 @@ const StopwatchScreen = () => {
   };
 
   const handleTimeIncrement = increment => {
-    const newTime = currentTime + increment;
-    if (newTime > MAX_TIME_SECONDS) {
-      setCurrentTime(MAX_TIME_SECONDS);
-      setInitialTime(MAX_TIME_SECONDS);
-    } else {
-      setCurrentTime(newTime);
-      if (!running) {
-        setInitialTime(newTime);
-      } else if (currentTime > 0) {
+    const prevInitialTime = initialTime;
+
+    const newInitialTime = prevInitialTime + increment;
+
+    if (newInitialTime <= MAX_TIME_SECONDS) {
+      setInitialTime(newInitialTime);
+
+      if (running && currentTime > 0) {
         setRunning(false);
         clearInterval(intervalRef.current);
-        setCurrentTime(newTime);
+        setCurrentTime(newInitialTime);
         setElapsedTime(0);
+      } else {
+        setCurrentTime(newInitialTime);
       }
+    } else {
+      setCurrentTime(MAX_TIME_SECONDS);
+      setInitialTime(MAX_TIME_SECONDS);
     }
   };
 
@@ -160,8 +164,18 @@ const StopwatchScreen = () => {
   const calculateCircleParams = () => {
     const radius = 150;
     const circumference = 2 * Math.PI * radius;
-    const timeFraction = elapsedTime / initialTime;
-    const strokeDashoffset = circumference * (1 - timeFraction);
+
+    const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
+    const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
+
+    const timeFraction = effectiveElapsedTime / effectiveInitialTime;
+
+    let strokeDashoffset = circumference * (1 - timeFraction);
+
+    if (isNaN(strokeDashoffset)) {
+      strokeDashoffset = 0;
+    }
+
     return { circumference, strokeDashoffset };
   };
 
