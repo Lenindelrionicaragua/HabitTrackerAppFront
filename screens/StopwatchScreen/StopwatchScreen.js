@@ -2,12 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import {
-  MaterialIcons,
-  AntDesign,
-  FontAwesome5,
-  Octicons
-} from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyledContainer,
   PageTitle,
@@ -28,6 +23,7 @@ const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
 const activities = [
   "Study",
+  "Work",
   "Exercise",
   "Family time",
   "Screen-free time",
@@ -62,7 +58,13 @@ const StopwatchScreen = () => {
 
   const startStopwatch = () => {
     if (activityIndex === null) {
-      setInfoText("select your focus");
+      setInfoText("choose your focus");
+      setTimeout(() => setInfoText(""), 5000);
+      return;
+    }
+
+    if (currentTime === 0) {
+      setInfoText("select time");
       setTimeout(() => setInfoText(""), 5000);
       return;
     }
@@ -192,7 +194,9 @@ const StopwatchScreen = () => {
   return (
     <StyledContainer>
       <PageTitle>
-        {activityIndex === null ? "ZenTimer" : activities[activityIndex]}
+        {activityIndex === null
+          ? "Choose your focus"
+          : activities[activityIndex]}
       </PageTitle>
       <Line />
       <View style={styles.svgContainer}>
