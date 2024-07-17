@@ -2,12 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import {
-  MaterialIcons,
-  AntDesign,
-  FontAwesome5,
-  Octicons
-} from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyledContainer,
   PageTitle,
@@ -15,9 +10,10 @@ import {
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
-  DotTimeButtonsContainer,
-  DotTimeButton,
+  TimeButtonsContainer,
+  TimeButton,
   RowContainer,
+  ButtonTimeText,
   ButtonText
 } from "./StopwatchScreenStyles";
 
@@ -27,6 +23,7 @@ const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
 const activities = [
   "Study",
+  "Work",
   "Exercise",
   "Family time",
   "Screen-free time",
@@ -46,6 +43,8 @@ const StopwatchScreen = () => {
   const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
 
+  const [activeButtons, setActiveButtons] = useState({});
+
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
@@ -59,7 +58,13 @@ const StopwatchScreen = () => {
 
   const startStopwatch = () => {
     if (activityIndex === null) {
-      setInfoText("select your focus");
+      setInfoText("choose your focus");
+      setTimeout(() => setInfoText(""), 5000);
+      return;
+    }
+
+    if (currentTime === 0) {
+      setInfoText("select time");
       setTimeout(() => setInfoText(""), 5000);
       return;
     }
@@ -132,10 +137,8 @@ const StopwatchScreen = () => {
     );
   };
 
-  const handleTimeIncrement = increment => {
-    const prevInitialTime = initialTime;
-
-    const newInitialTime = prevInitialTime + increment;
+  const handleTimeSelection = selectedTime => {
+    const newInitialTime = selectedTime;
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
@@ -181,10 +184,19 @@ const StopwatchScreen = () => {
 
   const { circumference, strokeDashoffset } = calculateCircleParams();
 
+  const handleButtonPress = buttonId => {
+    setActiveButtons(prevState => ({ ...prevState, [buttonId]: true }));
+    setTimeout(() => {
+      setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
+    }, 1000);
+  };
+
   return (
     <StyledContainer>
       <PageTitle>
-        {activityIndex === null ? "ZenTimer" : activities[activityIndex]}
+        {activityIndex === null
+          ? "Choose your focus"
+          : activities[activityIndex]}
       </PageTitle>
       <Line />
       <View style={styles.svgContainer}>
@@ -230,20 +242,54 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
-      <DotTimeButtonsContainer>
-        <DotTimeButton onPress={() => handleTimeIncrement(5 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(10 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(30 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(45 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
-        </DotTimeButton>
-      </DotTimeButtonsContainer>
+      <TimeButtonsContainer>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(5 * 60);
+            handleButtonPress(1);
+          }}
+          style={{ backgroundColor: activeButtons[1] ? orange : "transparent" }}
+        >
+          <ButtonTimeText>05</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(15 * 60);
+            handleButtonPress(2);
+          }}
+          style={{ backgroundColor: activeButtons[2] ? orange : "transparent" }}
+        >
+          <ButtonTimeText>15</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(30 * 60);
+            handleButtonPress(3);
+          }}
+          style={{ backgroundColor: activeButtons[3] ? orange : "transparent" }}
+        >
+          <ButtonTimeText>30</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(45 * 60);
+            handleButtonPress(4);
+          }}
+          style={{ backgroundColor: activeButtons[4] ? orange : "transparent" }}
+        >
+          <ButtonTimeText>45</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(55 * 60);
+            handleButtonPress(5);
+          }}
+          style={{ backgroundColor: activeButtons[5] ? orange : "transparent" }}
+        >
+          <ButtonTimeText>55</ButtonTimeText>
+        </TimeButton>
+      </TimeButtonsContainer>
+
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
           <FontAwesome5 name="list-ul" size={44} color="black" />
