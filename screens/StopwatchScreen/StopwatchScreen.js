@@ -47,6 +47,8 @@ const StopwatchScreen = () => {
   const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
 
+  const [activeButtons, setActiveButtons] = useState({});
+
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
@@ -180,6 +182,13 @@ const StopwatchScreen = () => {
 
   const { circumference, strokeDashoffset } = calculateCircleParams();
 
+  const handleButtonPress = buttonId => {
+    setActiveButtons(prevState => ({ ...prevState, [buttonId]: true }));
+    setTimeout(() => {
+      setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
+    }, 1000);
+  };
+
   return (
     <StyledContainer>
       <PageTitle>
@@ -230,22 +239,53 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <TimeButtonsContainer>
-        <TimeButton onPress={() => handleTimeSelection(5 * 60)}>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(5 * 60);
+            handleButtonPress(1);
+          }}
+          style={{ backgroundColor: activeButtons[1] ? orange : "transparent" }}
+        >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
-        <TimeButton onPress={() => handleTimeSelection(15 * 60)}>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(15 * 60);
+            handleButtonPress(2);
+          }}
+          style={{ backgroundColor: activeButtons[2] ? orange : "transparent" }}
+        >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
-        <TimeButton onPress={() => handleTimeSelection(30 * 60)}>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(30 * 60);
+            handleButtonPress(3);
+          }}
+          style={{ backgroundColor: activeButtons[3] ? orange : "transparent" }}
+        >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
-        <TimeButton onPress={() => handleTimeSelection(45 * 60)}>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(45 * 60);
+            handleButtonPress(4);
+          }}
+          style={{ backgroundColor: activeButtons[4] ? orange : "transparent" }}
+        >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
-        <TimeButton onPress={() => handleTimeSelection(55 * 60)}>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(55 * 60);
+            handleButtonPress(5);
+          }}
+          style={{ backgroundColor: activeButtons[5] ? orange : "transparent" }}
+        >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
+
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
           <FontAwesome5 name="list-ul" size={44} color="black" />

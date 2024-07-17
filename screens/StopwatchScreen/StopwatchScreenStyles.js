@@ -68,6 +68,7 @@ export const TimeButton = styled(Pressable)`
   border-radius: 3px;
   border-color: ${orange};
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
+  background-color: ${({ active }) => (active ? orange : "transparent")};
 `;
 
 export const ButtonTimeText = styled(Text)`
