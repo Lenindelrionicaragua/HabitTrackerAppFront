@@ -15,9 +15,10 @@ import {
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
-  DotTimeButtonsContainer,
-  DotTimeButton,
+  TimeButtonsContainer,
+  TimeButton,
   RowContainer,
+  ButtonTimeText,
   ButtonText
 } from "./StopwatchScreenStyles";
 
@@ -228,23 +229,23 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
-      <DotTimeButtonsContainer>
-        <DotTimeButton onPress={() => handleTimeSelection(5 * 60)}>
-          05
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeSelection(15 * 60)}>
-          15
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeSelection(30 * 60)}>
-          30
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeSelection(45 * 60)}>
-          45
-        </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeSelection(55 * 60)}>
-          55
-        </DotTimeButton>
-      </DotTimeButtonsContainer>
+      <TimeButtonsContainer>
+        <TimeButton onPress={() => handleTimeSelection(5 * 60)}>
+          <ButtonTimeText>05</ButtonTimeText>
+        </TimeButton>
+        <TimeButton onPress={() => handleTimeSelection(15 * 60)}>
+          <ButtonTimeText>15</ButtonTimeText>
+        </TimeButton>
+        <TimeButton onPress={() => handleTimeSelection(30 * 60)}>
+          <ButtonTimeText>30</ButtonTimeText>
+        </TimeButton>
+        <TimeButton onPress={() => handleTimeSelection(45 * 60)}>
+          <ButtonTimeText>45</ButtonTimeText>
+        </TimeButton>
+        <TimeButton onPress={() => handleTimeSelection(55 * 60)}>
+          <ButtonTimeText>55</ButtonTimeText>
+        </TimeButton>
+      </TimeButtonsContainer>
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
           <FontAwesome5 name="list-ul" size={44} color="black" />
