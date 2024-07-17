@@ -132,10 +132,8 @@ const StopwatchScreen = () => {
     );
   };
 
-  const handleTimeIncrement = increment => {
-    const prevInitialTime = initialTime;
-
-    const newInitialTime = prevInitialTime + increment;
+  const handleTimeSelection = selectedTime => {
+    const newInitialTime = selectedTime;
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
@@ -231,17 +229,20 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <DotTimeButtonsContainer>
-        <DotTimeButton onPress={() => handleTimeIncrement(5 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
+        <DotTimeButton onPress={() => handleTimeSelection(5 * 60)}>
+          05
         </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(10 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
+        <DotTimeButton onPress={() => handleTimeSelection(15 * 60)}>
+          15
         </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(30 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
+        <DotTimeButton onPress={() => handleTimeSelection(30 * 60)}>
+          30
         </DotTimeButton>
-        <DotTimeButton onPress={() => handleTimeIncrement(45 * 60)}>
-          <Octicons name="dot-fill" size={44} color="black" />
+        <DotTimeButton onPress={() => handleTimeSelection(45 * 60)}>
+          45
+        </DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeSelection(55 * 60)}>
+          55
         </DotTimeButton>
       </DotTimeButtonsContainer>
       <RowContainer>
