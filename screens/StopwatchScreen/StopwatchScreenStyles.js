@@ -6,7 +6,7 @@ import { Colors } from "../../styles/AppStyles";
 const { white, orange, grey, yellow, lightGrey, black } = Colors;
 
 const green = "#00ff00";
-const red = "#ff0000";
+const red = "#BF4F74;";
 
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
@@ -49,24 +49,32 @@ export const Line = styled(View)`
   padding-vertical: 0px;
 `;
 
-export const DotTimeButton = styled(Pressable)`
-  flex: 1;
-  flex-direction: row;
-  padding: 5px 30px 5px 30px;
-  margin: 5px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${white};
-  border-radius: 5px;
-`;
-
-export const DotTimeButtonsContainer = styled(View)`
+export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0%;
-  background-color: ${black};
+  padding-bottom: 1%;
+`;
+
+export const TimeButton = styled(Pressable)`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: ${orange};
+  margin: 0px;
+  border-width: 2px;
+  border-radius: 3px;
+  border-color: ${orange};
+  box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
+  background-color: ${({ active }) => (active ? orange : "transparent")};
+`;
+
+export const ButtonTimeText = styled(Text)`
+  color: ${black};
+  font-size: 20px;
 `;
 
 export const ButtonText = styled(Text)`
