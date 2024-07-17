@@ -55,6 +55,7 @@ export const TimeButtonsContainer = styled(View)`
   justify-content: space-between;
   width: 100%;
   padding: 0%;
+  padding-bottom: 1%;
 `;
 
 export const TimeButton = styled(Pressable)`
