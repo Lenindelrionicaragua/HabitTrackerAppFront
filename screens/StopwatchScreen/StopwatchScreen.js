@@ -35,6 +35,8 @@ const activities = [
 
 const StopwatchScreen = () => {
   const [currentTime, setCurrentTime] = useState(0);
+  const [initialTime, setInitialTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -43,7 +45,6 @@ const StopwatchScreen = () => {
   const resetTimeoutRef = useRef(null);
   const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
-  const [timeIncrements, setTimeIncrements] = useState(0);
 
   useEffect(() => {
     if (infoText) {
@@ -67,11 +68,21 @@ const StopwatchScreen = () => {
       setCurrentTime(0);
       setRunning(false);
       setResetClicks(0);
+      setInitialTime(0);
+    }
+
+    if (currentTime > 0 && !running) {
+      setInitialTime(currentTime);
+      setElapsedTime(0);
     }
 
     startTimeRef.current = Date.now() + currentTime * 1000;
     intervalRef.current = setInterval(() => {
-      setCurrentTime(prevTime => Math.max(0, prevTime - 1));
+      setCurrentTime(prevTime => {
+        const newTime = Math.max(0, prevTime - 1);
+        setElapsedTime(initialTime - newTime);
+        return newTime;
+      });
     }, 1000);
     setRunning(true);
   };
@@ -103,6 +114,7 @@ const StopwatchScreen = () => {
     } else if (resetClicks >= 1) {
       clearInterval(intervalRef.current);
       setCurrentTime(0);
+      setInitialTime(0);
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
@@ -121,18 +133,20 @@ const StopwatchScreen = () => {
   };
 
   const handleTimeIncrement = increment => {
-    // Limitar el tiempo mostrado a 99 horas (359999 segundos)
-    if (currentTime + increment > MAX_TIME_SECONDS) {
+    const newTime = currentTime + increment;
+    if (newTime > MAX_TIME_SECONDS) {
       setCurrentTime(MAX_TIME_SECONDS);
+      setInitialTime(MAX_TIME_SECONDS);
     } else {
-      setCurrentTime(currentTime + increment);
-    }
-
-    // Limitar el tiempo total a rastrear a 99 horas (359999 segundos)
-    if (timeIncrements + increment > MAX_TIME_SECONDS) {
-      setTimeIncrements(MAX_TIME_SECONDS);
-    } else {
-      setTimeIncrements(timeIncrements + increment);
+      setCurrentTime(newTime);
+      if (!running) {
+        setInitialTime(newTime);
+      } else if (currentTime > 0) {
+        setRunning(false);
+        clearInterval(intervalRef.current);
+        setCurrentTime(newTime);
+        setElapsedTime(0);
+      }
     }
   };
 
@@ -144,12 +158,14 @@ const StopwatchScreen = () => {
   };
 
   const calculateCircleParams = () => {
-    const percentage = (currentTime / MAX_TIME_SECONDS) * 100;
-    const strokeDasharray = `${percentage}, 100`;
-    return { strokeDasharray };
+    const radius = 150;
+    const circumference = 2 * Math.PI * radius;
+    const timeFraction = elapsedTime / initialTime;
+    const strokeDashoffset = circumference * (1 - timeFraction);
+    return { circumference, strokeDashoffset };
   };
 
-  const { strokeDasharray } = calculateCircleParams();
+  const { circumference, strokeDashoffset } = calculateCircleParams();
 
   return (
     <StyledContainer>
@@ -164,7 +180,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={black}
+            stroke={orange}
             strokeWidth="10"
             fill="none"
           />
@@ -172,10 +188,11 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={orange}
+            stroke={black}
             strokeWidth="10"
             fill="none"
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
           />
           <SvgText
             x="180"
