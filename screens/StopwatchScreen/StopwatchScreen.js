@@ -6,9 +6,8 @@ import {
   MaterialIcons,
   AntDesign,
   FontAwesome5,
-  Ionicons
+  Octicons
 } from "@expo/vector-icons";
-
 import {
   StyledContainer,
   PageTitle,
@@ -16,15 +15,15 @@ import {
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
-  ButtonsContainer,
+  DotTimeButtonsContainer,
+  DotTimeButton,
   RowContainer,
-  IncreaseTime,
-  DecreaseTime,
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { white, black, orange, grey } = Colors;
-const MAX_TIME = 60;
+const { black, orange, grey } = Colors;
+const MAX_TIME_HOURS = 99; // max time in hours
+const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
 const activities = [
   "Study",
@@ -35,16 +34,16 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [time, setTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [initialTime, setInitialTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
   const [running, setRunning] = useState(false);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
-  const [label, setLabel] = useState("FOCUS");
   const [activityIndex, setActivityIndex] = useState(null);
-  const [prevActivityIndex, setPrevActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [labelResetButton, setLabelResetButton] = useState("Complete");
+  const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
 
   useEffect(() => {
@@ -56,31 +55,35 @@ const StopwatchScreen = () => {
     }
   }, [infoText]);
 
-  const pad = num => {
-    return num.toString().padStart(2, "0");
-  };
+  const pad = num => num.toString().padStart(2, "0");
 
   const startStopwatch = () => {
     if (activityIndex === null) {
       setInfoText("select your focus");
-
-      // Clear infoText after 3 seconds
-      setTimeout(() => {
-        setInfoText("");
-      }, 5000);
+      setTimeout(() => setInfoText(""), 5000);
       return;
     }
 
     if (resetClicks >= 1) {
-      setTime(0);
+      setCurrentTime(0);
       setRunning(false);
       setResetClicks(0);
+      setInitialTime(0);
     }
 
-    startTimeRef.current = Date.now() - time * 10;
+    if (currentTime > 0 && !running) {
+      setInitialTime(currentTime);
+      setElapsedTime(0);
+    }
+
+    startTimeRef.current = Date.now() + currentTime * 1000;
     intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 10));
-    }, 10);
+      setCurrentTime(prevTime => {
+        const newTime = Math.max(0, prevTime - 1);
+        setElapsedTime(initialTime - newTime);
+        return newTime;
+      });
+    }, 1000);
     setRunning(true);
   };
 
@@ -91,71 +94,92 @@ const StopwatchScreen = () => {
 
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
-
     if (resetTimeoutRef.current !== null) {
       clearTimeout(resetTimeoutRef.current);
     }
 
-    if (time === 0) {
-      setInfoText(null);
-      setLabelResetButton("save-data");
+    if (currentTime === 0) {
       setInfoText("㊑");
-      setTimeout(() => {
-        setInfoText("");
-      }, 1000);
+      setLabelResetButton("save-data");
+      setTimeout(() => setInfoText(""), 1000);
       return;
     }
 
-    if (resetClicks === 0 && setTime !== 0) {
+    if (resetClicks === 0) {
       setInfoText("time-saved");
       setLabelResetButton("reset-all");
       setRunning(false);
-      setTimeout(() => {
-        setInfoText("");
-      }, 5000);
+      setTimeout(() => setInfoText(""), 5000);
       clearInterval(intervalRef.current);
-    } else if (resetClicks >= 1 && setTime !== 0) {
+    } else if (resetClicks >= 1) {
       clearInterval(intervalRef.current);
-      setTime(0);
+      setCurrentTime(0);
+      setInitialTime(0);
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
       setLabelResetButton("remember");
       setInfoText("clear");
-      setLabel("FOCUS");
     }
   };
 
   const handleActivityChange = () => {
-    setPrevActivityIndex(activityIndex);
     clearInterval(intervalRef.current);
     setRunning(false);
     setInfoText(null);
     setActivityIndex(prevIndex =>
-      prevIndex === 3 ? 0 : (prevIndex + 1) % (activities.length - 1)
+      prevIndex === activities.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const formatTime = totalMilliseconds => {
-    const minutes = Math.floor((totalMilliseconds / (100 * 60)) % 60);
-    const seconds = Math.floor((totalMilliseconds / 100) % 60);
-    const milliseconds = Math.floor((totalMilliseconds % 100) / 1);
-    return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
+  const handleTimeIncrement = increment => {
+    const prevInitialTime = initialTime;
+
+    const newInitialTime = prevInitialTime + increment;
+
+    if (newInitialTime <= MAX_TIME_SECONDS) {
+      setInitialTime(newInitialTime);
+
+      if (running && currentTime > 0) {
+        setRunning(false);
+        clearInterval(intervalRef.current);
+        setCurrentTime(newInitialTime);
+        setElapsedTime(0);
+      } else {
+        setCurrentTime(newInitialTime);
+      }
+    } else {
+      setCurrentTime(MAX_TIME_SECONDS);
+      setInitialTime(MAX_TIME_SECONDS);
+    }
   };
 
-  // const swapFocus = () => {
-  //   setLabel(prevLabel => (prevLabel === "FOCUS" ? "REST" : "FOCUS"));
-  //   setActivityIndex(prevIndex => {
-  //     if (prevIndex === null || prevIndex !== 4) {
-  //       setPrevActivityIndex(prevIndex);
-  //       return 4;
-  //     } else if (prevIndex !== null || prevIndex !== 4) {
-  //       return prevActivityIndex;
-  //     }
-  //   });
-  // };
+  const formatTime = totalSeconds => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  };
 
-  const circumference = 2 * Math.PI * 150;
+  const calculateCircleParams = () => {
+    const radius = 150;
+    const circumference = 2 * Math.PI * radius;
+
+    const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
+    const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
+
+    const timeFraction = effectiveElapsedTime / effectiveInitialTime;
+
+    let strokeDashoffset = circumference * (1 - timeFraction);
+
+    if (isNaN(strokeDashoffset)) {
+      strokeDashoffset = 0;
+    }
+
+    return { circumference, strokeDashoffset };
+  };
+
+  const { circumference, strokeDashoffset } = calculateCircleParams();
 
   return (
     <StyledContainer>
@@ -164,20 +188,8 @@ const StopwatchScreen = () => {
       </PageTitle>
       <Line />
       <View style={styles.svgContainer}>
-        <IncreaseTime>
-          <AntDesign name="plussquareo" size={44} color="black" />
-        </IncreaseTime>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
-
-          <Circle
-            cx="180"
-            cy="180"
-            r="150"
-            stroke={black}
-            strokeWidth="10"
-            fill="none"
-          />
           <Circle
             cx="180"
             cy="180"
@@ -185,10 +197,16 @@ const StopwatchScreen = () => {
             stroke={orange}
             strokeWidth="10"
             fill="none"
+          />
+          <Circle
+            cx="180"
+            cy="180"
+            r="150"
+            stroke={black}
+            strokeWidth="10"
+            fill="none"
             strokeDasharray={circumference}
-            strokeDashoffset={
-              circumference - (circumference * time) / (MAX_TIME * 100)
-            }
+            strokeDashoffset={strokeDashoffset}
           />
           <SvgText
             x="180"
@@ -199,7 +217,7 @@ const StopwatchScreen = () => {
             fontWeight="bold"
             fill={grey}
           >
-            {formatTime(time)}
+            {formatTime(currentTime)}
           </SvgText>
           <SvgText
             x="180"
@@ -211,16 +229,24 @@ const StopwatchScreen = () => {
             {infoText}
           </SvgText>
         </Svg>
-        <DecreaseTime>
-          <AntDesign name="minussquareo" size={44} color="black" />
-        </DecreaseTime>
       </View>
-
-      {/* <ButtonsContainer> */}
+      <DotTimeButtonsContainer>
+        <DotTimeButton onPress={() => handleTimeIncrement(5 * 60)}>
+          <Octicons name="dot-fill" size={44} color="black" />
+        </DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(10 * 60)}>
+          <Octicons name="dot-fill" size={44} color="black" />
+        </DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(30 * 60)}>
+          <Octicons name="dot-fill" size={44} color="black" />
+        </DotTimeButton>
+        <DotTimeButton onPress={() => handleTimeIncrement(45 * 60)}>
+          <Octicons name="dot-fill" size={44} color="black" />
+        </DotTimeButton>
+      </DotTimeButtonsContainer>
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
           <FontAwesome5 name="list-ul" size={44} color="black" />
-
           <ButtonText>Focus</ButtonText>
         </StyledButtonLeft>
         {running ? (
@@ -237,14 +263,15 @@ const StopwatchScreen = () => {
           <ButtonText>{labelResetButton}</ButtonText>
         </StyledButtonRight>
       </RowContainer>
-      {/* </ButtonsContainer> */}
     </StyledContainer>
   );
 };
 
 const styles = StyleSheet.create({
   svgContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
