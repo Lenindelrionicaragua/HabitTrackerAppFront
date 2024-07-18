@@ -41,7 +41,6 @@ const StopwatchScreen = () => {
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
 
   const [activeButtons, setActiveButtons] = useState({});
@@ -106,14 +105,14 @@ const StopwatchScreen = () => {
 
     if (currentTime === 0) {
       setInfoText("㊑");
-      setLabelResetButton("save-data");
+
       setTimeout(() => setInfoText(""), 1000);
       return;
     }
 
     if (resetClicks === 0) {
       setInfoText("time-saved");
-      setLabelResetButton("reset-all");
+
       setRunning(false);
       setTimeout(() => setInfoText(""), 5000);
       clearInterval(intervalRef.current);
@@ -124,7 +123,6 @@ const StopwatchScreen = () => {
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
-      setLabelResetButton("remember");
       setInfoText("clear");
     }
   };
@@ -303,8 +301,8 @@ const StopwatchScreen = () => {
 
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
-          <FontAwesome5 name="list-ul" size={44} color="black" />
-          <ButtonText>Focus</ButtonText>
+          <MaterialIcons name="restart-alt" size={44} color="black" />
+          <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton onPress={pauseStopwatch}>
@@ -316,8 +314,8 @@ const StopwatchScreen = () => {
           </StyledStartButton>
         )}
         <StyledButtonRight onPress={resetStopwatch}>
-          <MaterialIcons name="data-saver-on" size={44} color="black" />
-          <ButtonText>{labelResetButton}</ButtonText>
+          <MaterialIcons name="track-changes" size={24} color="black" />
+          <ButtonText>TRACK</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>
