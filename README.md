@@ -6,7 +6,7 @@ https://6671a67ca79a96009c798e8b--zen-timer-app-front.netlify.app
 
 stopwatch in development:
 
-[https://deploy-preview-33--zen-timer-app-front.netlify.app/](https://deploy-preview-34--zen-timer-app-front.netlify.app/)
+https://zen-timer-app-front.netlify.app/
 
 Zen Timer: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
