@@ -2,13 +2,13 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { grey, yellow } = Colors;
+const { infoWhite, lightPink } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
 
 export const InfoText = styled(Text)`
-  color: ${grey};
+  color: ${infoWhite};
   font-size: 15px;
   text-align: center;
 `;
@@ -31,7 +31,7 @@ export const TextLink = styled(TouchableOpacity)`
 `;
 
 export const TextLinkContent = styled(Text)`
-  color: ${yellow};
+  color: ${lightPink};
   font-size: 15px;
 
   ${props => {
