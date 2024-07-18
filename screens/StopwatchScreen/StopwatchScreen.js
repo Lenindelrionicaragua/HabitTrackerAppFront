@@ -5,7 +5,7 @@ import { Colors } from "../../styles/AppStyles";
 import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyledContainer,
-  PageTitle,
+  FocusTitle,
   Line,
   StyledButtonLeft,
   StyledButtonRight,
@@ -17,7 +17,8 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { black, orange, grey } = Colors;
+const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
+  Colors;
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
@@ -40,7 +41,6 @@ const StopwatchScreen = () => {
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [labelResetButton, setLabelResetButton] = useState("save-data");
   const [infoText, setInfoText] = useState("select your focus");
 
   const [activeButtons, setActiveButtons] = useState({});
@@ -105,14 +105,14 @@ const StopwatchScreen = () => {
 
     if (currentTime === 0) {
       setInfoText("㊑");
-      setLabelResetButton("save-data");
+
       setTimeout(() => setInfoText(""), 1000);
       return;
     }
 
     if (resetClicks === 0) {
       setInfoText("time-saved");
-      setLabelResetButton("reset-all");
+
       setRunning(false);
       setTimeout(() => setInfoText(""), 5000);
       clearInterval(intervalRef.current);
@@ -123,7 +123,6 @@ const StopwatchScreen = () => {
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
-      setLabelResetButton("remember");
       setInfoText("clear");
     }
   };
@@ -193,11 +192,11 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <PageTitle>
+      <FocusTitle onPress={handleActivityChange}>
         {activityIndex === null
           ? "Choose your focus"
           : activities[activityIndex]}
-      </PageTitle>
+      </FocusTitle>
       <Line />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
@@ -206,7 +205,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={orange}
+            stroke={white}
             strokeWidth="10"
             fill="none"
           />
@@ -227,7 +226,7 @@ const StopwatchScreen = () => {
             dy=".3em"
             fontSize="48"
             fontWeight="bold"
-            fill={grey}
+            fill={infoWhite}
           >
             {formatTime(currentTime)}
           </SvgText>
@@ -236,7 +235,7 @@ const StopwatchScreen = () => {
             y="230"
             textAnchor="middle"
             fontSize="24"
-            fill={orange}
+            fill={white}
           >
             {infoText}
           </SvgText>
@@ -248,7 +247,9 @@ const StopwatchScreen = () => {
             handleTimeSelection(5 * 60);
             handleButtonPress(1);
           }}
-          style={{ backgroundColor: activeButtons[1] ? orange : "transparent" }}
+          style={{
+            backgroundColor: activeButtons[1] ? seaGreen : black
+          }}
         >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
@@ -257,7 +258,9 @@ const StopwatchScreen = () => {
             handleTimeSelection(15 * 60);
             handleButtonPress(2);
           }}
-          style={{ backgroundColor: activeButtons[2] ? orange : "transparent" }}
+          style={{
+            backgroundColor: activeButtons[2] ? seaGreen : black
+          }}
         >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
@@ -266,7 +269,9 @@ const StopwatchScreen = () => {
             handleTimeSelection(30 * 60);
             handleButtonPress(3);
           }}
-          style={{ backgroundColor: activeButtons[3] ? orange : "transparent" }}
+          style={{
+            backgroundColor: activeButtons[3] ? seaGreen : black
+          }}
         >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
@@ -275,7 +280,9 @@ const StopwatchScreen = () => {
             handleTimeSelection(45 * 60);
             handleButtonPress(4);
           }}
-          style={{ backgroundColor: activeButtons[4] ? orange : "transparent" }}
+          style={{
+            backgroundColor: activeButtons[4] ? seaGreen : black
+          }}
         >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
@@ -284,7 +291,9 @@ const StopwatchScreen = () => {
             handleTimeSelection(55 * 60);
             handleButtonPress(5);
           }}
-          style={{ backgroundColor: activeButtons[5] ? orange : "transparent" }}
+          style={{
+            backgroundColor: activeButtons[5] ? seaGreen : black
+          }}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
@@ -292,8 +301,8 @@ const StopwatchScreen = () => {
 
       <RowContainer>
         <StyledButtonLeft onPress={handleActivityChange}>
-          <FontAwesome5 name="list-ul" size={44} color="black" />
-          <ButtonText>Focus</ButtonText>
+          <MaterialIcons name="restart-alt" size={44} color="black" />
+          <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton onPress={pauseStopwatch}>
@@ -305,8 +314,8 @@ const StopwatchScreen = () => {
           </StyledStartButton>
         )}
         <StyledButtonRight onPress={resetStopwatch}>
-          <MaterialIcons name="data-saver-on" size={44} color="black" />
-          <ButtonText>{labelResetButton}</ButtonText>
+          <MaterialIcons name="track-changes" size={24} color="black" />
+          <ButtonText>TRACK</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>

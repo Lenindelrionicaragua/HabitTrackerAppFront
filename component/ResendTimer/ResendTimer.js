@@ -9,7 +9,7 @@ import {
 } from "./ResendTimerStyles";
 import { Colors } from "./../../styles/AppStyles";
 
-const { lightGrey } = Colors;
+const { darkGrey } = Colors;
 
 const ResendTimer = ({
   activeResend,
@@ -47,7 +47,7 @@ const ResendTimer = ({
               resendStatus={resendStatus}
               style={{ textDecorationLine: "underline" }}
             >
-              <ActivityIndicator color={lightGrey} />
+              <ActivityIndicator color={darkGrey} />
             </TextLinkContent>
           </TextLink>
         )}

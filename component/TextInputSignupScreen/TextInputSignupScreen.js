@@ -9,7 +9,7 @@ import {
 } from "../../screens/SignupScreen/SignupScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const { lightGrey, black } = Colors;
+const { darkGrey, black } = Colors;
 
 const TextInputSignupScreen = props => {
   const {
@@ -51,7 +51,7 @@ const TextInputSignupScreen = props => {
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
             size={25}
-            color={lightGrey}
+            color={darkGrey}
           />
         </RightIcon>
       )}
