@@ -3,11 +3,11 @@ import { View, Image, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, orange, grey, yellow, lightGrey, black } = Colors;
+const { seaGreen, white, infoWhite, lightPink, darkGrey, black } = Colors;
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   width: 100%;
 `;
 
@@ -30,7 +30,7 @@ export const Avatar = styled(Image)`
   margin: auto;
   border-radius: 50px;
   border-width: 2px;
-  border-color: ${yellow};
+  border-color: ${lightPink};
   margin-bottom: 10px;
   margin-top: 10px;
 `;
@@ -59,7 +59,7 @@ export const SubTitle = styled(Text)`
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${grey};
+  color: ${infoWhite};
 
   ${props =>
     props.welcome &&
@@ -85,14 +85,14 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${orange};
+    background-color: ${white};
     flex-direction: row;
     justify-content: center;
   `}
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${white};
+  color: ${seaGreen};
   font-size: 16px;
 
   ${props =>
@@ -106,6 +106,6 @@ export const ButtonText = styled(Text)`
 export const Line = styled(View)`
   height: 1px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${white};
   margin-vertical: 10px;
 `;

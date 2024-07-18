@@ -3,7 +3,16 @@ import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 
-const { white, orange, grey, yellow, lightGrey, black, lightGreen } = Colors;
+const {
+  seaGreen,
+  white,
+  infoWhite,
+  lightPink,
+  lightGrey,
+  black,
+  skyBlue,
+  lightGreen
+} = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
@@ -39,12 +48,12 @@ export const PageTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  color: ${orange};
+  color: ${white};
   padding: 10px;
 `;
 
 export const InfoText = styled(Text)`
-  color: ${grey};
+  color: ${infoWhite};
   font-size: 15px;
   text-align: center;
 `;
@@ -66,14 +75,14 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${orange};
+    background-color: ${white};
     flex-direction: row;
     justify-content: center;
   `}
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${white};
+  color: ${seaGreen};
   font-size: 16px;
 
   ${props =>
@@ -97,7 +106,7 @@ export const TextLink = styled(TouchableOpacity)`
 `;
 
 export const TextLinkContent = styled(Text)`
-  color: ${yellow};
+  color: ${lightPink};
   font-size: 15px;
 
   ${props => {

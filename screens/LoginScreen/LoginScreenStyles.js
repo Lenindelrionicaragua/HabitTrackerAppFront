@@ -10,7 +10,16 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 
-const { white, orange, grey, yellow, lightGrey, black } = Colors;
+const {
+  seaGreen,
+  white,
+  infoGrey,
+  lightPink,
+  darkGrey,
+  black,
+  skyBlue,
+  lightGreen
+} = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
@@ -21,7 +30,7 @@ const containerHeight = Platform.OS === "web" ? "80%" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   width: 100%;
   padding: 15px;
   height: ${containerHeight};
@@ -32,7 +41,7 @@ export const StyledContainer = styled(SafeAreaView)`
 `;
 
 export const InnerContainer = styled(View)`
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   flex: 1;
   padding-top: 15px;
   width: 100%;
@@ -60,7 +69,7 @@ export const SubTitle = styled(Text)`
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${grey};
+  color: ${infoGrey};
 `;
 
 export const StyledFormArea = styled(View)`
@@ -68,7 +77,7 @@ export const StyledFormArea = styled(View)`
 `;
 
 export const StyledTextInput = styled(TextInput)`
-  background-color: ${orange};
+  background-color: ${white};
   padding: 15px;
   padding-left: 55px;
   padding-right: 55px;
@@ -77,11 +86,11 @@ export const StyledTextInput = styled(TextInput)`
   height: 60px;
   margin-vertical: 3px;
   margin-bottom: 10px;
-  color: ${grey};
+  color: ${infoGrey};
 `;
 
 export const StyledInputLabel = styled(Text)`
-  color: ${grey};
+  color: ${infoGrey};
   font-size: 13px;
   text-align: left;
 `;
@@ -112,14 +121,14 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${orange};
+    background-color: ${white};
     flex-direction: row;
     justify-content: center;
   `}
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${props => (props.google ? black : white)};
+  color: ${props => (props.google ? black : seaGreen)};
   font-size: 16px;
 
   ${props =>
@@ -138,7 +147,7 @@ export const MsgBox = styled(Text)`
 export const Line = styled(View)`
   height: 1px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${white};
   margin-vertical: 10px;
 `;
 
@@ -152,7 +161,7 @@ export const FooterView = styled(View)`
 export const FooterText = styled(Text)`
   justify-content: center;
   align-content: center;
-  color: ${grey};
+  color: ${infoGrey};
   font-size: 15px;
 `;
 
@@ -162,6 +171,6 @@ export const SignupLink = styled(Pressable)`
 `;
 
 export const SignupLinkContent = styled(Text)`
-  color: ${yellow};
+  color: ${lightPink};
   font-size: 15px;
 `;
