@@ -34,21 +34,21 @@ export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  background-color: ${white};
-  color: ${black};
+  background-color: ${lightGreen};
+  color: ${white};
   align-items: center;
   justify-items: center;
-  border-width: 4px;
+  border-width: 2px;
   border-radius: 3px;
-  border-color: ${red};
+  border-color: ${black};
   padding: 2%;
   width: 100%;
 `;
 
 export const Line = styled(View)`
-  height: 1px;
+  height: 2px;
   width: 100%;
-  background-color: ${white};
+  background-color: ${black};
   margin-vertical: 5px;
   padding-vertical: 0px;
 `;
@@ -69,15 +69,14 @@ export const TimeButton = styled(Pressable)`
   justify-content: center;
   color: ${white};
   margin: 0px;
-  border-width: 2px;
+  border-width: 0.5px;
   border-radius: 3px;
-  border-color: ${white};
+
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
-  background-color: ${({ active }) => (active ? white : "transparent")};
 `;
 
 export const ButtonTimeText = styled(Text)`
-  color: ${black};
+  color: ${white};
   font-size: 20px;
 `;
 
@@ -117,7 +116,10 @@ export const RowContainer = styled(View)`
   margin-top: ${marginTop};
   padding: 5px;
   width: 100%;
-  background-color: ${white};
+  background-color: ${lightPink};
+  border-width: 2px;
+  border-radius: 3px;
+  border-color: ${black};
 `;
 
 export const StyledStartButton = styled(Pressable)`
