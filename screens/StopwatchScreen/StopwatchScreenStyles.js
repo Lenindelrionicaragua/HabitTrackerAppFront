@@ -21,24 +21,18 @@ export const StyledContainer = styled(SafeAreaView)`
   padding-bottom: ${paddingBottom};
 `;
 
-export const PageTitle = styled(Text)`
+export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
   color: ${black};
+  background-color: ${orange};
   margin-top: 0px;
-  padding-bottom: 0%;
-  margin-bottom: 0%;
-`;
 
-export const FocusTitle = styled(Text)`
-  font-size: 18px;
-  text-align: center;
-  align-self: center;
-  margin-bottom: 0px;
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: ${grey};
+  margin-bottom: 0%;
+  border-width: 2px;
+  border-radius: 3px;
+  border-color: ${orange};
 `;
 
 export const Line = styled(View)`
