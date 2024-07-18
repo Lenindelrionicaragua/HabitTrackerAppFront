@@ -3,7 +3,16 @@ import { View, Text, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, orange, grey, yellow, lightGrey, black } = Colors;
+const {
+  seaGreen,
+  white,
+  infoWhite,
+  lightPink,
+  darkGrey,
+  black,
+  skyBlue,
+  lightGreen
+} = Colors;
 
 const green = "#00ff00";
 const red = "#3cbc9c";
@@ -13,7 +22,7 @@ const marginTop = Platform.OS === "web" ? "1%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -25,7 +34,7 @@ export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  background-color: ${orange};
+  background-color: ${white};
   color: ${black};
   align-items: center;
   justify-items: center;
@@ -39,7 +48,7 @@ export const FocusTitle = styled(Text)`
 export const Line = styled(View)`
   height: 1px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${white};
   margin-vertical: 5px;
   padding-vertical: 0px;
 `;
@@ -58,13 +67,13 @@ export const TimeButton = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: ${orange};
+  color: ${white};
   margin: 0px;
   border-width: 2px;
   border-radius: 3px;
-  border-color: ${orange};
+  border-color: ${white};
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
-  background-color: ${({ active }) => (active ? orange : "transparent")};
+  background-color: ${({ active }) => (active ? white : "transparent")};
 `;
 
 export const ButtonTimeText = styled(Text)`
@@ -108,7 +117,7 @@ export const RowContainer = styled(View)`
   margin-top: ${marginTop};
   padding: 5px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${white};
 `;
 
 export const StyledStartButton = styled(Pressable)`
