@@ -6,7 +6,7 @@ import { Colors } from "../../styles/AppStyles";
 const { white, orange, grey, yellow, lightGrey, black } = Colors;
 
 const green = "#00ff00";
-const red = "#BF4F74;";
+const red = "#3cbc9c";
 
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
@@ -25,14 +25,15 @@ export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  color: ${black};
   background-color: ${orange};
-  margin-top: 0px;
-
-  margin-bottom: 0%;
-  border-width: 2px;
+  color: ${black};
+  align-items: center;
+  justify-items: center;
+  border-width: 4px;
   border-radius: 3px;
-  border-color: ${orange};
+  border-color: ${red};
+  padding: 2%;
+  width: 100%;
 `;
 
 export const Line = styled(View)`

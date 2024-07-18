@@ -18,8 +18,10 @@ export const StyledContainer = styled(SafeAreaView)`
   background-color: ${lightGrey};
   width: 100%;
   height: ${containerHeight};
+  /**
   margin-top: ${paddingTop};
   margin-bottom: ${paddingBottom};
+  **/
 `;
 
 export const InnerContainer = styled(View)`
