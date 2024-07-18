@@ -5,7 +5,7 @@ import { Colors } from "../../styles/AppStyles";
 import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyledContainer,
-  PageTitle,
+  FocusTitle,
   Line,
   StyledButtonLeft,
   StyledButtonRight,
@@ -193,11 +193,11 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <PageTitle>
+      <FocusTitle onPress={handleActivityChange}>
         {activityIndex === null
           ? "Choose your focus"
           : activities[activityIndex]}
-      </PageTitle>
+      </FocusTitle>
       <Line />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
