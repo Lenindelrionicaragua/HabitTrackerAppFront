@@ -43,7 +43,7 @@ import {
 
 WebBrowser.maybeCompleteAuthSession();
 
-const { white, grey, lightGrey } = Colors;
+const { seaGreen, infoGrey, darkGrey } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -235,7 +235,7 @@ const LoginScreen = ({ navigation, route }) => {
                   label="Email Address"
                   icon="mail"
                   placeholder="serenity@gmail.com"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={darkGrey}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
@@ -246,7 +246,7 @@ const LoginScreen = ({ navigation, route }) => {
                   label="Password"
                   icon="lock"
                   placeholder="* * * * * * *"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={darkGrey}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
@@ -270,7 +270,7 @@ const LoginScreen = ({ navigation, route }) => {
 
                 {isSubmitting && (
                   <StyledButton disabled={true} testID="login-styled-button">
-                    <ActivityIndicator size="large" color={white} />
+                    <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
                 )}
 
@@ -288,7 +288,7 @@ const LoginScreen = ({ navigation, route }) => {
                   >
                     <Fontisto
                       name="google"
-                      color={grey}
+                      color={infoGrey}
                       size={20}
                       testID="google-icon"
                     />
@@ -304,7 +304,7 @@ const LoginScreen = ({ navigation, route }) => {
                     disabled={true}
                     testID="google-styled-button"
                   >
-                    <ActivityIndicator size="large" color={white} />
+                    <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
                 )}
                 <FooterView testID="footer-view">

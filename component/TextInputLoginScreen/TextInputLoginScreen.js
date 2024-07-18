@@ -9,7 +9,7 @@ import {
 } from "../../screens/LoginScreen/LoginScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const { lightGrey, black } = Colors;
+const { darkGrey, black } = Colors;
 
 const TextInputLoginScreen = props => {
   const {
@@ -39,7 +39,7 @@ const TextInputLoginScreen = props => {
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
             size={25}
-            color={lightGrey}
+            color={darkGrey}
             onPress={() => setHidePassword(!hidePassword)}
             testID="feather-icon"
           />
