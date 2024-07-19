@@ -19,6 +19,7 @@ import {
 
 const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
   Colors;
+
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
@@ -304,20 +305,52 @@ const StopwatchScreen = () => {
       </TimeButtonsContainer>
 
       <RowContainer>
-        <StyledButtonLeft onPress={resetStopwatch}>
+        <StyledButtonLeft
+          onPress={() => {
+            resetStopwatch();
+            handleButtonPress(6);
+          }}
+          style={{
+            backgroundColor: activeButtons[6] ? seaGreen : lightPink
+          }}
+        >
           <AntDesign name="rest" size={44} color="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
-          <StyledStartButton onPress={pauseStopwatch}>
+          <StyledStartButton
+            onPress={() => {
+              pauseStopwatch();
+              handleButtonPress(7);
+            }}
+            style={{
+              backgroundColor: activeButtons[7] ? seaGreen : lightPink
+            }}
+          >
             <AntDesign name="pause" size={84} color="black" />
           </StyledStartButton>
         ) : (
-          <StyledStartButton onPress={startStopwatch}>
+          <StyledStartButton
+            onPress={() => {
+              startStopwatch();
+              handleButtonPress(8);
+            }}
+            style={{
+              backgroundColor: activeButtons[8] ? seaGreen : lightPink
+            }}
+          >
             <MaterialIcons name="play-arrow" size={84} color="black" />
           </StyledStartButton>
         )}
-        <StyledButtonRight onPress={fetchTimeRecords}>
+        <StyledButtonRight
+          onPress={() => {
+            resetStopwatch();
+            handleButtonPress(9);
+          }}
+          style={{
+            backgroundColor: activeButtons[9] ? seaGreen : lightPink
+          }}
+        >
           <Foundation name="record" size={44} color="black" />
           <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
