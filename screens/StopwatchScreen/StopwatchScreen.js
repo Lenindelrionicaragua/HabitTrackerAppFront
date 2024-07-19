@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, Foundation } from "@expo/vector-icons";
 import {
   StyledContainer,
   FocusTitle,
@@ -95,6 +95,10 @@ const StopwatchScreen = () => {
   const pauseStopwatch = () => {
     clearInterval(intervalRef.current);
     setRunning(false);
+  };
+
+  const fetchTimeRecords = () => {
+    console.log(Saved);
   };
 
   const resetStopwatch = () => {
@@ -300,22 +304,22 @@ const StopwatchScreen = () => {
       </TimeButtonsContainer>
 
       <RowContainer>
-        <StyledButtonLeft onPress={handleActivityChange}>
-          <MaterialIcons name="restart-alt" size={44} color="black" />
+        <StyledButtonLeft onPress={resetStopwatch}>
+          <AntDesign name="rest" size={44} color="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton onPress={pauseStopwatch}>
-            <AntDesign name="pause" size={54} color="black" />
+            <AntDesign name="pause" size={84} color="black" />
           </StyledStartButton>
         ) : (
           <StyledStartButton onPress={startStopwatch}>
-            <MaterialIcons name="play-arrow" size={54} color="black" />
+            <MaterialIcons name="play-arrow" size={84} color="black" />
           </StyledStartButton>
         )}
-        <StyledButtonRight onPress={resetStopwatch}>
-          <MaterialIcons name="track-changes" size={24} color="black" />
-          <ButtonText>TRACK</ButtonText>
+        <StyledButtonRight onPress={fetchTimeRecords}>
+          <Foundation name="record" size={44} color="black" />
+          <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>
