@@ -30,54 +30,6 @@ export const StyledContainer = styled(SafeAreaView)`
   padding-bottom: ${paddingBottom};
 `;
 
-/**
-
-.button-30 {
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
-}
-
-.button-30:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-.button-30:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-2px);
-}
-
-.button-30:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(2px);
-}
- */
-
 export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
@@ -149,6 +101,11 @@ export const StyledButtonLeft = styled(Pressable)`
   border-bottom-left-radius: 50px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84px;
+  elevation: 5;
 `;
 
 export const StyledButtonRight = styled(Pressable)`
@@ -161,6 +118,11 @@ export const StyledButtonRight = styled(Pressable)`
   border-bottom-left-radius: 0px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84px;
+  elevation: 5;
 `;
 
 export const RowContainer = styled(View)`
@@ -173,13 +135,20 @@ export const RowContainer = styled(View)`
   border-width: 2px;
   border-radius: 3px;
   border-color: ${black};
+  overflow: hidden;
 `;
 
 export const StyledStartButton = styled(Pressable)`
+  flex: 1;
   width: 100px;
   height: 100px;
   padding: 10px;
   justify-content: center;
   align-items: center;
-  transform: scale(1.5);
+  transform: scale(1.01);
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 4.84px;
+  elevation: 5;
 `;
