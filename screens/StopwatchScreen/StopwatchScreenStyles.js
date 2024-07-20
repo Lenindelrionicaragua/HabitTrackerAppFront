@@ -28,6 +28,10 @@ export const StyledContainer = styled(SafeAreaView)`
 `;
 
 export const FocusTitle = styled(Text)`
+  flex-direction: columns;
+  align-items: center;
+  justify-content: center;
+
   font-size: 30px;
   text-align: center;
   font-weight: bold;
@@ -45,6 +49,7 @@ export const FocusTitle = styled(Text)`
   shadow-opacity: 0.25;
   shadow-radius: 3.84px;
   elevation: 5;
+  flex-direction: column;
 `;
 
 export const Line = styled(View)`

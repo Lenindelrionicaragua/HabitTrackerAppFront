@@ -1,8 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { MaterialIcons, AntDesign, Foundation } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  AntDesign,
+  Foundation,
+  FontAwesome5
+} from "@expo/vector-icons";
 import RefreshIcon from "../../assets/noun-reset-5647757.svg";
 
 import {
@@ -44,7 +49,9 @@ const StopwatchScreen = () => {
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [infoText, setInfoText] = useState("select your focus");
+  const [infoText, setInfoText] = useState(
+    "Choose your task\nand adjust the time\n to start the timer."
+  );
 
   const [activeButtons, setActiveButtons] = useState({});
 
@@ -58,19 +65,6 @@ const StopwatchScreen = () => {
   }, [infoText]);
 
   const pad = num => num.toString().padStart(2, "0");
-
-  // Debounce function
-  const debounce = (func, wait) => {
-    let timeout;
-    return (...args) => {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  };
 
   const startStopwatch = () => {
     if (activityIndex === null) {
@@ -210,24 +204,12 @@ const StopwatchScreen = () => {
     }, 1000);
   };
 
-  const debouncedStartStopwatch = useCallback(
-    debounce(startStopwatch, 1000),
-    []
-  );
-  const debouncedPauseStopwatch = useCallback(
-    debounce(pauseStopwatch, 1000),
-    []
-  );
-  const debouncedResetStopwatch = useCallback(
-    debounce(resetStopwatch, 1000),
-    []
-  );
-
   return (
     <StyledContainer>
       <FocusTitle onPress={handleActivityChange}>
+        <FontAwesome5 name="tasks" size={24} color="white" />
         {activityIndex === null
-          ? "Choose your focus"
+          ? "Choose your focus "
           : activities[activityIndex]}
       </FocusTitle>
       <Line />
@@ -259,7 +241,7 @@ const StopwatchScreen = () => {
             dy=".3em"
             fontSize="48"
             fontWeight="bold"
-            fill={infoWhite}
+            fill={black}
           >
             {formatTime(currentTime)}
           </SvgText>
@@ -267,7 +249,7 @@ const StopwatchScreen = () => {
             x="180"
             y="230"
             textAnchor="middle"
-            fontSize="24"
+            fontSize="10"
             fill={white}
           >
             {infoText}
@@ -348,7 +330,7 @@ const StopwatchScreen = () => {
         {running ? (
           <StyledStartButton
             onPress={() => {
-              debouncedPauseStopwatch();
+              pauseStopwatch();
               handleButtonPress(7);
             }}
             style={{
@@ -360,7 +342,7 @@ const StopwatchScreen = () => {
         ) : (
           <StyledStartButton
             onPress={() => {
-              debouncedStartStopwatch();
+              startStopwatch();
               handleButtonPress(8);
             }}
             style={{
@@ -372,7 +354,7 @@ const StopwatchScreen = () => {
         )}
         <StyledButtonRight
           onPress={() => {
-            debouncedResetStopwatch();
+            resetStopwatch();
             handleButtonPress(9);
           }}
           style={{
