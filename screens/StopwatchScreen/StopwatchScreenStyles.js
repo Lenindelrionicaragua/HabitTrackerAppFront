@@ -14,18 +14,15 @@ const {
   lightGreen
 } = Colors;
 
-const green = "#00ff00";
-const red = "#3cbc9c";
-
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${darkGrey};
-  width: 100%;
   justify-content: center;
   align-items: center;
+  width: 100%;
   padding: 2%;
   padding-bottom: ${paddingBottom};
 `;
@@ -39,14 +36,14 @@ export const FocusTitle = styled(Text)`
   align-items: center;
   justify-items: center;
   border-width: 2px;
-  border-radius: 3px;
+  border-radius: 5px;
   border-color: ${black};
   padding: 2%;
   width: 100%;
-  shadow-color: #2d2342;
-  shadow-offset: 0px 4px;
-  shadow-opacity: 0.4;
-  shadow-radius: 8px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84px;
   elevation: 5;
 `;
 
@@ -62,9 +59,9 @@ export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   padding: 0%;
-  padding-bottom: 1%;
 `;
 
 export const TimeButton = styled(Pressable)`
@@ -73,9 +70,9 @@ export const TimeButton = styled(Pressable)`
   align-items: center;
   justify-content: center;
   color: ${white};
-  margin: 0px;
+  margin: 0.2%;
   border-width: 0.5px;
-  border-radius: 3px;
+  border-radius: 5px;
 
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
 `;
@@ -94,17 +91,16 @@ export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
   height: 100px;
   padding: 10px;
-
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   shadow-color: #000;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
-  shadow-radius: 3.84px;
+  shadow-radius: 5px;
   elevation: 5;
 `;
 
@@ -116,12 +112,12 @@ export const StyledButtonRight = styled(Pressable)`
   align-items: center;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   shadow-color: #000;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
-  shadow-radius: 3.84px;
+  shadow-radius: 5px;
   elevation: 5;
 `;
 
@@ -133,7 +129,7 @@ export const RowContainer = styled(View)`
   width: 100%;
   background-color: ${lightPink};
   border-width: 2px;
-  border-radius: 3px;
+  border-radius: 5px;
   border-color: ${black};
   overflow: hidden;
 `;
@@ -146,9 +142,11 @@ export const StyledStartButton = styled(Pressable)`
   justify-content: center;
   align-items: center;
   transform: scale(1.01);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   shadow-color: #000;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
-  shadow-radius: 4.84px;
+  shadow-radius: 5px;
   elevation: 5;
 `;
