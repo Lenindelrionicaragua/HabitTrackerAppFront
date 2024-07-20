@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { MaterialIcons, AntDesign, Foundation } from "@expo/vector-icons";
+import RefreshIcon from "../../assets/noun-reset-5647757.svg";
+
 import {
   StyledContainer,
   FocusTitle,
@@ -57,6 +59,19 @@ const StopwatchScreen = () => {
 
   const pad = num => num.toString().padStart(2, "0");
 
+  // Debounce function
+  const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
   const startStopwatch = () => {
     if (activityIndex === null) {
       setInfoText("choose your focus");
@@ -99,7 +114,7 @@ const StopwatchScreen = () => {
   };
 
   const fetchTimeRecords = () => {
-    console.log(Saved);
+    console.log("Saved records: ", savedRecords);
   };
 
   const resetStopwatch = () => {
@@ -194,6 +209,19 @@ const StopwatchScreen = () => {
       setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
     }, 1000);
   };
+
+  const debouncedStartStopwatch = useCallback(
+    debounce(startStopwatch, 1000),
+    []
+  );
+  const debouncedPauseStopwatch = useCallback(
+    debounce(pauseStopwatch, 1000),
+    []
+  );
+  const debouncedResetStopwatch = useCallback(
+    debounce(resetStopwatch, 1000),
+    []
+  );
 
   return (
     <StyledContainer>
@@ -314,13 +342,13 @@ const StopwatchScreen = () => {
             backgroundColor: activeButtons[6] ? seaGreen : lightPink
           }}
         >
-          <AntDesign name="rest" size={44} color="black" />
+          <RefreshIcon width={44} height={44} fill="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton
             onPress={() => {
-              pauseStopwatch();
+              debouncedPauseStopwatch();
               handleButtonPress(7);
             }}
             style={{
@@ -332,7 +360,7 @@ const StopwatchScreen = () => {
         ) : (
           <StyledStartButton
             onPress={() => {
-              startStopwatch();
+              debouncedStartStopwatch();
               handleButtonPress(8);
             }}
             style={{
@@ -344,7 +372,7 @@ const StopwatchScreen = () => {
         )}
         <StyledButtonRight
           onPress={() => {
-            resetStopwatch();
+            debouncedResetStopwatch();
             handleButtonPress(9);
           }}
           style={{
