@@ -23,32 +23,34 @@ export const StyledContainer = styled(SafeAreaView)`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 2%;
+  padding: 5%;
   padding-bottom: ${paddingBottom};
+`;
+
+export const ScreenTitle = styled(Text)`
+  color: ${black};
+  font-weight: bold;
+  font-size: 20px;
+  width: 100%;
+  align-items: flex-start;
 `;
 
 export const FocusTitle = styled(Text)`
   flex-direction: columns;
   align-items: center;
   justify-content: center;
-
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
   font-weight: bold;
-
-  color: ${white};
+  color: ${black};
   align-items: center;
   justify-items: center;
   border-width: 2px;
   border-radius: 5px;
-  border-color: ${black};
-  padding: 2%;
+  border-color: ${white};
+
   width: 100%;
-  shadow-color: #000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.25;
-  shadow-radius: 3.84px;
-  elevation: 5;
+
   flex-direction: column;
 `;
 
@@ -80,7 +82,6 @@ export const TimeButton = styled(Pressable)`
   justify-content: center;
   margin: 0.6%;
   border-radius: 7px;
-  box-shadow: 2px 8px 8px ${lightPink};
 `;
 
 export const ButtonTimeText = styled(Text)`
@@ -130,8 +131,7 @@ export const StyledButtonRight = styled(Pressable)`
 export const RowContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: ${marginTop};
-  padding: 5px;
+
   width: 100%;
   background-color: ${lightPink};
   border-width: 2px;
@@ -144,10 +144,10 @@ export const StyledStartButton = styled(Pressable)`
   flex: 1;
   width: 100px;
   height: 100px;
-  padding: 10px;
+
   justify-content: center;
   align-items: center;
-  transform: scale(1.01);
+
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   shadow-color: #000;
