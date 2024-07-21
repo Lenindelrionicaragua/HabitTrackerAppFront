@@ -220,7 +220,7 @@ const StopwatchScreen = () => {
             handleButtonPress(1);
           }}
           style={{
-            backgroundColor: activeButtons[1] ? seaGreen : lightPink
+            backgroundColor: activeButtons[1] ? seaGreen : white
           }}
         >
           <ButtonTimeText>05</ButtonTimeText>
@@ -231,7 +231,7 @@ const StopwatchScreen = () => {
             handleButtonPress(2);
           }}
           style={{
-            backgroundColor: activeButtons[2] ? seaGreen : lightPink
+            backgroundColor: activeButtons[2] ? seaGreen : white
           }}
         >
           <ButtonTimeText>15</ButtonTimeText>
@@ -242,7 +242,7 @@ const StopwatchScreen = () => {
             handleButtonPress(3);
           }}
           style={{
-            backgroundColor: activeButtons[3] ? seaGreen : lightPink
+            backgroundColor: activeButtons[3] ? seaGreen : white
           }}
         >
           <ButtonTimeText>30</ButtonTimeText>
@@ -253,7 +253,7 @@ const StopwatchScreen = () => {
             handleButtonPress(4);
           }}
           style={{
-            backgroundColor: activeButtons[4] ? seaGreen : lightPink
+            backgroundColor: activeButtons[4] ? seaGreen : white
           }}
         >
           <ButtonTimeText>45</ButtonTimeText>
@@ -264,7 +264,7 @@ const StopwatchScreen = () => {
             handleButtonPress(5);
           }}
           style={{
-            backgroundColor: activeButtons[5] ? seaGreen : lightPink
+            backgroundColor: activeButtons[5] ? seaGreen : white
           }}
         >
           <ButtonTimeText>55</ButtonTimeText>
