@@ -14,6 +14,7 @@ import RefreshIcon from "../../assets/noun-reset-5647757.svg";
 import {
   StyledContainer,
   FocusTitle,
+  ScreenTitle,
   Line,
   StyledButtonLeft,
   StyledButtonRight,
@@ -207,12 +208,7 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <FocusTitle onPress={handleActivityChange}>
-        <FontAwesome5 name="tasks" size={24} color="white" />
-        {activityIndex === null
-          ? "Choose your focus "
-          : activities[activityIndex]}
-      </FocusTitle>
+      <ScreenTitle>ZenTimer</ScreenTitle>
       <TimeButtonsContainer>
         <TimeButton
           onPress={() => {
@@ -220,7 +216,9 @@ const StopwatchScreen = () => {
             handleButtonPress(1);
           }}
           style={{
-            backgroundColor: activeButtons[1] ? seaGreen : white
+            borderColor: activeButtons[1] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>05</ButtonTimeText>
@@ -231,7 +229,9 @@ const StopwatchScreen = () => {
             handleButtonPress(2);
           }}
           style={{
-            backgroundColor: activeButtons[2] ? seaGreen : white
+            borderColor: activeButtons[2] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>15</ButtonTimeText>
@@ -242,7 +242,9 @@ const StopwatchScreen = () => {
             handleButtonPress(3);
           }}
           style={{
-            backgroundColor: activeButtons[3] ? seaGreen : white
+            borderColor: activeButtons[3] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>30</ButtonTimeText>
@@ -253,7 +255,9 @@ const StopwatchScreen = () => {
             handleButtonPress(4);
           }}
           style={{
-            backgroundColor: activeButtons[4] ? seaGreen : white
+            borderColor: activeButtons[4] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>45</ButtonTimeText>
@@ -264,7 +268,9 @@ const StopwatchScreen = () => {
             handleButtonPress(5);
           }}
           style={{
-            backgroundColor: activeButtons[5] ? seaGreen : white
+            borderColor: activeButtons[5] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>55</ButtonTimeText>
@@ -310,13 +316,17 @@ const StopwatchScreen = () => {
             y="230"
             textAnchor="middle"
             fontSize="10"
-            fill={white}
+            fill={lightPink}
           >
             {infoText}
           </SvgText>
         </Svg>
       </View>
-
+      <FocusTitle onPress={handleActivityChange}>
+        {activityIndex === null
+          ? "Choose your focus "
+          : activities[activityIndex]}
+      </FocusTitle>
       <RowContainer>
         <StyledButtonLeft
           onPress={() => {
