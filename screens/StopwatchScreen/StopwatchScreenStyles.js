@@ -19,7 +19,7 @@ const marginTop = Platform.OS === "web" ? "1%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${white};
+  background-color: ${lightPink};
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -64,9 +64,13 @@ export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  margin: 10px;
+  padding: 50px;
   width: 100%;
   padding: 0%;
+
+  border-radius: 7px;
+  background-color: ${white};
 `;
 
 export const TimeButton = styled(Pressable)`
@@ -74,14 +78,13 @@ export const TimeButton = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0.2%;
-  border-width: 0.5px;
-  border-radius: 5px;
-  box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
+  margin: 0.6%;
+  border-radius: 7px;
+  box-shadow: 2px 8px 8px ${lightPink};
 `;
 
 export const ButtonTimeText = styled(Text)`
-  color: ${white};
+  color: ${black};
   font-size: 20px;
 `;
 
