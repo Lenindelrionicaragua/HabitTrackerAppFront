@@ -212,6 +212,63 @@ const StopwatchScreen = () => {
           ? "Choose your focus "
           : activities[activityIndex]}
       </FocusTitle>
+      <TimeButtonsContainer>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(5 * 60);
+            handleButtonPress(1);
+          }}
+          style={{
+            backgroundColor: activeButtons[1] ? seaGreen : lightPink
+          }}
+        >
+          <ButtonTimeText>05</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(15 * 60);
+            handleButtonPress(2);
+          }}
+          style={{
+            backgroundColor: activeButtons[2] ? seaGreen : lightPink
+          }}
+        >
+          <ButtonTimeText>15</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(30 * 60);
+            handleButtonPress(3);
+          }}
+          style={{
+            backgroundColor: activeButtons[3] ? seaGreen : lightPink
+          }}
+        >
+          <ButtonTimeText>30</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(45 * 60);
+            handleButtonPress(4);
+          }}
+          style={{
+            backgroundColor: activeButtons[4] ? seaGreen : lightPink
+          }}
+        >
+          <ButtonTimeText>45</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(55 * 60);
+            handleButtonPress(5);
+          }}
+          style={{
+            backgroundColor: activeButtons[5] ? seaGreen : lightPink
+          }}
+        >
+          <ButtonTimeText>55</ButtonTimeText>
+        </TimeButton>
+      </TimeButtonsContainer>
       <Line />
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
@@ -256,63 +313,6 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
-      <TimeButtonsContainer>
-        <TimeButton
-          onPress={() => {
-            handleTimeSelection(5 * 60);
-            handleButtonPress(1);
-          }}
-          style={{
-            backgroundColor: activeButtons[1] ? seaGreen : black
-          }}
-        >
-          <ButtonTimeText>05</ButtonTimeText>
-        </TimeButton>
-        <TimeButton
-          onPress={() => {
-            handleTimeSelection(15 * 60);
-            handleButtonPress(2);
-          }}
-          style={{
-            backgroundColor: activeButtons[2] ? seaGreen : black
-          }}
-        >
-          <ButtonTimeText>15</ButtonTimeText>
-        </TimeButton>
-        <TimeButton
-          onPress={() => {
-            handleTimeSelection(30 * 60);
-            handleButtonPress(3);
-          }}
-          style={{
-            backgroundColor: activeButtons[3] ? seaGreen : black
-          }}
-        >
-          <ButtonTimeText>30</ButtonTimeText>
-        </TimeButton>
-        <TimeButton
-          onPress={() => {
-            handleTimeSelection(45 * 60);
-            handleButtonPress(4);
-          }}
-          style={{
-            backgroundColor: activeButtons[4] ? seaGreen : black
-          }}
-        >
-          <ButtonTimeText>45</ButtonTimeText>
-        </TimeButton>
-        <TimeButton
-          onPress={() => {
-            handleTimeSelection(55 * 60);
-            handleButtonPress(5);
-          }}
-          style={{
-            backgroundColor: activeButtons[5] ? seaGreen : black
-          }}
-        >
-          <ButtonTimeText>55</ButtonTimeText>
-        </TimeButton>
-      </TimeButtonsContainer>
 
       <RowContainer>
         <StyledButtonLeft
