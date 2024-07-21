@@ -64,7 +64,7 @@ export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  background-color: ${black};
   width: 100%;
   padding: 0%;
 `;
@@ -74,6 +74,7 @@ export const TimeButton = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   color: ${white};
   margin: 0.2%;
   border-width: 0.5px;
