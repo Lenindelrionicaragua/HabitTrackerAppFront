@@ -48,16 +48,17 @@ export const FocusTitle = styled(Text)`
   border-width: 2px;
   border-radius: 5px;
   border-color: ${white};
-
+  padding: 10px;
+  margin-top: 20px;
   width: 100%;
 
   flex-direction: column;
 `;
 
 export const Line = styled(View)`
-  height: 2px;
+  height: 0.5px;
   width: 100%;
-  background-color: ${black};
+  background-color: ${white};
   margin-vertical: 5px;
   padding-vertical: 0px;
 `;
@@ -131,12 +132,13 @@ export const StyledButtonRight = styled(Pressable)`
 export const RowContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-
+  margin-top: 3%;
+  margin-bottom: 20%;
   width: 100%;
   background-color: ${lightPink};
-  border-width: 2px;
+  border-width: 0.1px;
   border-radius: 5px;
-  border-color: ${black};
+  border-color: "${white}";
   overflow: hidden;
 `;
 
