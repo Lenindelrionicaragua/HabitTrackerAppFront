@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import { View, Text, Pressable, Platform } from "react-native";
-import { SafeAreaView } from "react-native";
+import { View, Text, Pressable, Platform, SafeAreaView } from "react-native";
+
 import { Colors } from "../../styles/AppStyles";
 
 const {
@@ -19,7 +19,7 @@ const marginTop = Platform.OS === "web" ? "1%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${darkGrey};
+  background-color: ${white};
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -35,7 +35,7 @@ export const FocusTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  background-color: ${black};
+
   color: ${white};
   align-items: center;
   justify-items: center;
@@ -64,7 +64,7 @@ export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${black};
+
   width: 100%;
   padding: 0%;
 `;
@@ -74,12 +74,9 @@ export const TimeButton = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  color: ${white};
   margin: 0.2%;
   border-width: 0.5px;
   border-radius: 5px;
-
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
 `;
 

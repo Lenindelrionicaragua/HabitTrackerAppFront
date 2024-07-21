@@ -278,7 +278,7 @@ const StopwatchScreen = () => {
             cy="180"
             r="150"
             stroke={white}
-            strokeWidth="10"
+            strokeWidth="25"
             fill="none"
           />
           <Circle
@@ -286,11 +286,13 @@ const StopwatchScreen = () => {
             cy="180"
             r="150"
             stroke={black}
-            strokeWidth="10"
+            strokeWidth="25"
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
+            strokeLinecap="butt"
           />
+
           <SvgText
             x="180"
             y="180"
