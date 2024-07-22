@@ -83,28 +83,30 @@ export const InfoText = styled(Text)`
   margin: 0px;
 `;
 
-export const FocusTitle = styled(Text)`
-  flex-direction: columns;
+export const FocusTitleContainer = styled(View)`
+  flex-direction: row;
   align-items: center;
-  justify-items: center;
   justify-content: center;
-  font-size: 25px;
-  text-align: center;
-  font-weight: bold;
-  color: ${black};
+  width: 100%;
+  padding: 2px;
+  margin-top: 5px;
   border-width: 0.5px;
   border-radius: 5px;
   border-color: ${white};
-  padding: 2px;
-  margin-top: 5px;
-  width: 100%;
+  position: relative;
+`;
 
-  flex-direction: column;
+export const FocusTitleText = styled(Text)`
+  font-size: 25px;
+  font-weight: bold;
+  color: ${black};
+  text-align: center;
 `;
 
 export const IconContainer = styled(Pressable)`
   padding: 5px;
   margin: 5px;
+  align-items: end;
 `;
 
 export const ButtonText = styled(Text)`
@@ -116,14 +118,16 @@ export const RowContainer = styled(SafeAreaView)`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 5px;
-  margin-bottom: 7%;
+  margin-bottom: 8%;
   width: 100%;
   background-color: ${lightPink};
   border-width: 0.1px;
   border-radius: 5px;
   border-color: "${white}";
   overflow: hidden;
+  align-items: center;
 `;
+
 export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
   height: 70px;
@@ -161,7 +165,7 @@ export const StyledButtonRight = styled(Pressable)`
 export const StyledStartButton = styled(Pressable)`
   flex: 1;
   width: 100px;
-  height: 80px;
+  height: 70px;
 
   justify-content: center;
   align-items: center;
