@@ -6,14 +6,14 @@ import { Colors } from "../../styles/AppStyles";
 import {
   MaterialIcons,
   AntDesign,
-  Foundation,
-  FontAwesome5
+  MaterialCommunityIcons,
+  Feather
 } from "@expo/vector-icons";
-import RefreshIcon from "../../assets/noun-reset-5647757.svg";
 
 import {
   StyledContainer,
   FocusTitle,
+  InfoText,
   ScreenTitle,
   Line,
   StyledButtonLeft,
@@ -322,6 +322,7 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
+      <InfoText>Im Focusing on</InfoText>
       <FocusTitle onPress={handleActivityChange}>
         {activityIndex === null
           ? "Choose your focus "
@@ -337,7 +338,7 @@ const StopwatchScreen = () => {
             backgroundColor: activeButtons[6] ? seaGreen : lightPink
           }}
         >
-          <RefreshIcon width={44} height={44} fill="black" />
+          <MaterialCommunityIcons name="restart" size={44} color="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
@@ -350,7 +351,7 @@ const StopwatchScreen = () => {
               backgroundColor: activeButtons[7] ? seaGreen : lightPink
             }}
           >
-            <AntDesign name="pause" size={84} color="black" />
+            <AntDesign name="pause" size={44} color="black" />
           </StyledStartButton>
         ) : (
           <StyledStartButton
@@ -362,7 +363,7 @@ const StopwatchScreen = () => {
               backgroundColor: activeButtons[8] ? seaGreen : lightPink
             }}
           >
-            <MaterialIcons name="play-arrow" size={84} color="black" />
+            <MaterialIcons name="play-arrow" size={44} color="black" />
           </StyledStartButton>
         )}
         <StyledButtonRight
@@ -374,7 +375,7 @@ const StopwatchScreen = () => {
             backgroundColor: activeButtons[9] ? seaGreen : lightPink
           }}
         >
-          <Foundation name="record" size={44} color="black" />
+          <Feather name="save" size={44} color="black" />
           <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
       </RowContainer>

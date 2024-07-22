@@ -35,6 +35,17 @@ export const ScreenTitle = styled(Text)`
   align-items: flex-start;
 `;
 
+export const InfoText = styled(Text)`
+  color: ${black};
+  font-weight: light;
+  font-size: 15px;
+  width: 100%;
+  justify-items: center;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+`;
+
 export const FocusTitle = styled(Text)`
   flex-direction: columns;
   align-items: center;
@@ -49,7 +60,7 @@ export const FocusTitle = styled(Text)`
   border-radius: 5px;
   border-color: ${white};
   padding: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
   width: 100%;
 
   flex-direction: column;
@@ -132,7 +143,7 @@ export const StyledButtonRight = styled(Pressable)`
 export const RowContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 3%;
+  margin-top: 10%;
   margin-bottom: 20%;
   width: 100%;
   background-color: ${lightPink};
