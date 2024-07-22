@@ -90,17 +90,26 @@ export const FocusTitleContainer = styled(View)`
   width: 100%;
   padding: 2px;
   margin-top: 5px;
+  /*
   border-width: 0.5px;
   border-radius: 5px;
   border-color: ${white};
+  */
   position: relative;
 `;
 
 export const FocusTitleText = styled(Text)`
-  font-size: 25px;
+  font-size: 20px;
+  width: 70%;
   font-weight: bold;
-  color: ${black};
+  color: ${white};
   text-align: center;
+
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: ${white};
+
+  padding: 0px 15px 0px 15px;
 `;
 
 export const IconContainer = styled(Pressable)`
@@ -122,9 +131,11 @@ export const RowContainer = styled(SafeAreaView)`
   margin-bottom: 8%;
   width: 100%;
   background-color: ${lightPink};
+  /*  
   border-width: 0.1px;
   border-radius: 5px;
   border-color: "${white}";
+  */
   overflow: hidden;
   align-items: center;
 `;
@@ -135,6 +146,7 @@ export const StyledButtonLeft = styled(Pressable)`
   padding: 5px;
   justify-content: center;
   align-items: center;
+  /*
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-right-radius: 0px;
@@ -143,6 +155,7 @@ export const StyledButtonLeft = styled(Pressable)`
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
   shadow-radius: 5px;
+  */
   elevation: 5;
 `;
 
@@ -152,6 +165,7 @@ export const StyledButtonRight = styled(Pressable)`
   padding: 5px;
   justify-content: center;
   align-items: center;
+  /*
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-right-radius: 5px;
@@ -161,6 +175,7 @@ export const StyledButtonRight = styled(Pressable)`
   shadow-opacity: 0.25;
   shadow-radius: 5px;
   elevation: 5;
+  */
 `;
 
 export const StyledStartButton = styled(Pressable)`
@@ -170,7 +185,7 @@ export const StyledStartButton = styled(Pressable)`
 
   justify-content: center;
   align-items: center;
-
+  /*
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   shadow-color: #000;
@@ -178,4 +193,5 @@ export const StyledStartButton = styled(Pressable)`
   shadow-opacity: 0.25;
   shadow-radius: 5px;
   elevation: 5;
+  */
 `;
