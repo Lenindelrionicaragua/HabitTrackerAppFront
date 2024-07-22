@@ -42,7 +42,7 @@ export const TimeButtonsContainer = styled(View)`
   align-items: center;
   justify-content: space-between;
   margin: 10px;
-  padding: 50px;
+  padding: 20px;
   width: 100%;
   padding: 0%;
 
@@ -68,7 +68,7 @@ export const Line = styled(View)`
   height: 0.5px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 5px;
+  margin-vertical: 2px;
   padding-vertical: 0px;
 `;
 
@@ -95,7 +95,7 @@ export const FocusTitle = styled(Text)`
   border-width: 0.5px;
   border-radius: 5px;
   border-color: ${white};
-  padding: 5px;
+  padding: 2px;
   margin-top: 5px;
   width: 100%;
 
@@ -125,8 +125,8 @@ export const RowContainer = styled(SafeAreaView)`
   overflow: hidden;
 `;
 export const StyledButtonLeft = styled(Pressable)`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 70px;
   padding: 5px;
   justify-content: center;
   align-items: center;
@@ -142,8 +142,8 @@ export const StyledButtonLeft = styled(Pressable)`
 `;
 
 export const StyledButtonRight = styled(Pressable)`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 70px;
   padding: 5px;
   justify-content: center;
   align-items: center;
@@ -160,7 +160,7 @@ export const StyledButtonRight = styled(Pressable)`
 
 export const StyledStartButton = styled(Pressable)`
   flex: 1;
-  width: 80px;
+  width: 100px;
   height: 80px;
 
   justify-content: center;
