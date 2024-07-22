@@ -277,7 +277,7 @@ const StopwatchScreen = () => {
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
-      <Line />
+      {/* <Line /> */}
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
@@ -286,7 +286,7 @@ const StopwatchScreen = () => {
             cy="180"
             r="150"
             stroke={white}
-            strokeWidth="25"
+            strokeWidth="20"
             fill="none"
           />
           <Circle
@@ -294,7 +294,7 @@ const StopwatchScreen = () => {
             cy="180"
             r="150"
             stroke={black}
-            strokeWidth="25"
+            strokeWidth="20"
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
