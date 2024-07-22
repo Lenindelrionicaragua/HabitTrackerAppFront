@@ -16,6 +16,7 @@ const {
 
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
+const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
@@ -33,45 +34,7 @@ export const ScreenTitle = styled(Text)`
   font-size: 20px;
   width: 100%;
   align-items: flex-start;
-`;
-
-export const InfoText = styled(Text)`
-  color: ${black};
-  font-weight: light;
-  font-size: 15px;
-  width: 100%;
-  justify-items: center;
-  text-align: center;
-  padding: 0px;
-  margin: 0px;
-`;
-
-export const FocusTitle = styled(Text)`
-  flex-direction: columns;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  text-align: center;
-  font-weight: bold;
-  color: ${black};
-  align-items: center;
-  justify-items: center;
-  border-width: 2px;
-  border-radius: 5px;
-  border-color: ${white};
-  padding: 10px;
-  margin-top: 5px;
-  width: 100%;
-
-  flex-direction: column;
-`;
-
-export const Line = styled(View)`
-  height: 0.5px;
-  width: 100%;
-  background-color: ${white};
-  margin-vertical: 5px;
-  padding-vertical: 0px;
+  margin-top: ${ScreenTitleMarginTop};
 `;
 
 export const TimeButtonsContainer = styled(View)`
@@ -101,15 +64,70 @@ export const ButtonTimeText = styled(Text)`
   font-size: 20px;
 `;
 
+export const Line = styled(View)`
+  height: 0.5px;
+  width: 100%;
+  background-color: ${white};
+  margin-vertical: 5px;
+  padding-vertical: 0px;
+`;
+
+export const InfoText = styled(Text)`
+  color: ${black};
+  font-weight: light;
+  font-size: 15px;
+  width: 100%;
+  justify-items: center;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+`;
+
+export const FocusTitle = styled(Text)`
+  flex-direction: columns;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+  color: ${black};
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: ${white};
+  padding: 5px;
+  margin-top: 5px;
+  width: 100%;
+
+  flex-direction: column;
+`;
+
+export const IconContainer = styled(Pressable)`
+  padding: 5px;
+  margin: 5px;
+`;
+
 export const ButtonText = styled(Text)`
   color: ${black};
   font-size: 10px;
 `;
 
+export const RowContainer = styled(SafeAreaView)`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 7%;
+  width: 100%;
+  background-color: ${lightPink};
+  border-width: 0.1px;
+  border-radius: 5px;
+  border-color: "${white}";
+  overflow: hidden;
+`;
 export const StyledButtonLeft = styled(Pressable)`
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  width: 80px;
+  height: 80px;
+  padding: 5px;
   justify-content: center;
   align-items: center;
   border-top-left-radius: 5px;
@@ -124,9 +142,9 @@ export const StyledButtonLeft = styled(Pressable)`
 `;
 
 export const StyledButtonRight = styled(Pressable)`
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  width: 80px;
+  height: 80px;
+  padding: 5px;
   justify-content: center;
   align-items: center;
   border-top-left-radius: 0px;
@@ -140,23 +158,10 @@ export const StyledButtonRight = styled(Pressable)`
   elevation: 5;
 `;
 
-export const RowContainer = styled(View)`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10%;
-  margin-bottom: 20%;
-  width: 100%;
-  background-color: ${lightPink};
-  border-width: 0.1px;
-  border-radius: 5px;
-  border-color: "${white}";
-  overflow: hidden;
-`;
-
 export const StyledStartButton = styled(Pressable)`
   flex: 1;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 
   justify-content: center;
   align-items: center;

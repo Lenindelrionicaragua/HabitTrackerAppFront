@@ -13,6 +13,7 @@ import {
 import {
   StyledContainer,
   FocusTitle,
+  IconContainer,
   InfoText,
   ScreenTitle,
   Line,
@@ -327,7 +328,11 @@ const StopwatchScreen = () => {
         {activityIndex === null
           ? "Choose your focus "
           : activities[activityIndex]}
+        <IconContainer>
+          <AntDesign name="edit" size={24} color="black" margin="20px" />
+        </IconContainer>
       </FocusTitle>
+
       <RowContainer>
         <StyledButtonLeft
           onPress={() => {
