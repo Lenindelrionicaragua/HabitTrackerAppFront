@@ -326,7 +326,15 @@ const StopwatchScreen = () => {
       </View>
       <InfoText>Im Focusing on</InfoText>
       <FocusTitleContainer>
-        <FocusTitleText onPress={handleActivityChange}>
+        <FocusTitleText
+          onPress={() => {
+            handleActivityChange();
+            handleButtonPress(10);
+          }}
+          style={{
+            boxShadow: activeButtons[10] ? 1.2 : 0.8
+          }}
+        >
           {activityIndex === null
             ? "Choose your focus "
             : activities[activityIndex]}
