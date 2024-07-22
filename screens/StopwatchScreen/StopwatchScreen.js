@@ -12,7 +12,8 @@ import {
 
 import {
   StyledContainer,
-  FocusTitle,
+  FocusTitleContainer,
+  FocusTitleText,
   IconContainer,
   InfoText,
   ScreenTitle,
@@ -324,14 +325,21 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <InfoText>Im Focusing on</InfoText>
-      <FocusTitle onPress={handleActivityChange}>
-        {activityIndex === null
-          ? "Choose your focus "
-          : activities[activityIndex]}
+      <FocusTitleContainer>
+        <FocusTitleText onPress={handleActivityChange}>
+          {activityIndex === null
+            ? "Choose your focus "
+            : activities[activityIndex]}
+        </FocusTitleText>
         <IconContainer>
-          <AntDesign name="edit" size={24} color="black" margin="20px" />
+          <AntDesign
+            name="edit"
+            size={24}
+            color="black"
+            style={{ marginRight: 10 }}
+          />
         </IconContainer>
-      </FocusTitle>
+      </FocusTitleContainer>
 
       <RowContainer>
         <StyledButtonLeft
@@ -343,7 +351,7 @@ const StopwatchScreen = () => {
             backgroundColor: activeButtons[6] ? seaGreen : lightPink
           }}
         >
-          <MaterialCommunityIcons name="restart" size={44} color="black" />
+          <MaterialCommunityIcons name="restart" size={34} color="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
@@ -380,7 +388,7 @@ const StopwatchScreen = () => {
             backgroundColor: activeButtons[9] ? seaGreen : lightPink
           }}
         >
-          <Feather name="save" size={44} color="black" />
+          <Feather name="save" size={34} color="black" />
           <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
       </RowContainer>
