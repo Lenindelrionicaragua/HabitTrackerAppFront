@@ -106,7 +106,8 @@ export const FocusTitleText = styled(Text)`
 export const IconContainer = styled(Pressable)`
   padding: 5px;
   margin: 5px;
-  align-items: end;
+  position: absolute;
+  right: 0;
 `;
 
 export const ButtonText = styled(Text)`
