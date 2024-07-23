@@ -6,7 +6,7 @@ https://6671a67ca79a96009c798e8b--zen-timer-app-front.netlify.app
 
 stopwatch in development:
 
-https://zen-timer-app-front.netlify.app/
+[https://zen-timer-app-front.netlify.app/](https://main--zen-timer-app-front.netlify.app/)
 
 ![1](https://github.com/user-attachments/assets/8e313129-fb5b-4c3f-8048-dbf32b443a34)
 
