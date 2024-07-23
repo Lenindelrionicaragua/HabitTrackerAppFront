@@ -54,7 +54,7 @@ const StopwatchScreen = () => {
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
   const [infoText, setInfoText] = useState(
-    "Choose your task\nand adjust the time\n to start the timer."
+    "Choose your task\nand adjust the time\n to start the tracker."
   );
 
   const [activeButtons, setActiveButtons] = useState({});
@@ -210,7 +210,7 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <ScreenTitle>ZenTimer</ScreenTitle>
+      <ScreenTitle>Habit Tracker</ScreenTitle>
       <TimeButtonsContainer>
         <TimeButton
           onPress={() => {
@@ -336,17 +336,17 @@ const StopwatchScreen = () => {
           }}
         >
           {activityIndex === null
-            ? "Choose your focus "
+            ? "Click to choose your focus "
             : activities[activityIndex]}
         </FocusTitleText>
-        <IconContainer>
+        {/* <IconContainer>
           <AntDesign
             name="edit"
             size={24}
             color="black"
             style={{ marginRight: 10 }}
           />
-        </IconContainer>
+        </IconContainer> */}
       </FocusTitleContainer>
 
       <RowContainer>
@@ -356,10 +356,14 @@ const StopwatchScreen = () => {
             handleButtonPress(6);
           }}
           style={{
-            backgroundColor: activeButtons[6] ? skyBlue : darkGrey
+            backgroundColor: activeButtons[6] ? darkGrey : darkGrey
           }}
         >
-          <MaterialCommunityIcons name="restart" size={34} color="black" />
+          <MaterialCommunityIcons
+            name="restart"
+            size={34}
+            color={activeButtons[6] ? Colors.skyBlue : Colors.black}
+          />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
@@ -369,10 +373,14 @@ const StopwatchScreen = () => {
               handleButtonPress(7);
             }}
             style={{
-              backgroundColor: activeButtons[7] ? skyBlue : darkGrey
+              backgroundColor: activeButtons[7] ? darkGrey : darkGrey
             }}
           >
-            <AntDesign name="pause" size={44} color="black" />
+            <AntDesign
+              name="pause"
+              size={44}
+              color={activeButtons[7] ? Colors.skyBlue : Colors.black}
+            />
           </StyledStartButton>
         ) : (
           <StyledStartButton
@@ -381,10 +389,14 @@ const StopwatchScreen = () => {
               handleButtonPress(8);
             }}
             style={{
-              backgroundColor: activeButtons[8] ? skyBlue : darkGrey
+              backgroundColor: activeButtons[8] ? darkGrey : darkGrey
             }}
           >
-            <MaterialIcons name="play-arrow" size={44} color="black" />
+            <MaterialIcons
+              name="play-arrow"
+              size={44}
+              color={activeButtons[8] ? Colors.skyBlue : Colors.black}
+            />
           </StyledStartButton>
         )}
         <StyledButtonRight
@@ -393,10 +405,14 @@ const StopwatchScreen = () => {
             handleButtonPress(9);
           }}
           style={{
-            backgroundColor: activeButtons[9] ? skyBlue : darkGrey
+            backgroundColor: activeButtons[9] ? darkGrey : darkGrey
           }}
         >
-          <Feather name="save" size={34} color="black" />
+          <Feather
+            name="save"
+            size={34}
+            color={activeButtons[9] ? Colors.skyBlue : Colors.black}
+          />
           <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
       </RowContainer>

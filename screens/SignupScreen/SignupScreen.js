@@ -132,7 +132,7 @@ const SignupScreen = ({ navigation }) => {
       <StyledContainer testID="signup-styled-container">
         <StatusBar style="dark" />
         <InnerContainer testID="inner-container">
-          <PageTitle testID="signup-page-title">ZenTimer</PageTitle>
+          <PageTitle testID="signup-page-title">Habit Tracker</PageTitle>
           <SubTitle testID="signup-page-sub-title">Account Sign Up</SubTitle>
 
           {show && (

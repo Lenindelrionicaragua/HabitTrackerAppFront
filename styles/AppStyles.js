@@ -6,5 +6,5 @@ export const Colors = {
   darkGrey: "#fffff" /* background app */,
   black: "#040c0c",
   skyBlue: "#5cbcfc",
-  lightGreen: `#1854fc`
+  lightGreen: `#6c747c`
 };
