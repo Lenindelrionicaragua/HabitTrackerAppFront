@@ -335,9 +335,7 @@ const StopwatchScreen = () => {
             boxShadow: activeButtons[10] ? 1.2 : 0.8
           }}
         >
-          {activityIndex === null
-            ? "Click to choose your focus "
-            : activities[activityIndex]}
+          {activityIndex === null ? "Click Here " : activities[activityIndex]}
         </FocusTitleText>
         {/* <IconContainer>
           <AntDesign
