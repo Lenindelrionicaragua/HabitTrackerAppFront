@@ -104,11 +104,11 @@ export const FocusTitleText = styled(Text)`
   font-weight: bold;
   color: ${black};
   text-align: center;
-
+  /*
   border-width: 0.5px;
   border-radius: 5px;
   border-color: ${white};
-
+*/
   padding: 0px 15px 0px 15px;
 `;
 
