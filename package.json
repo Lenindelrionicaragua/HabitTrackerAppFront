@@ -20,6 +20,7 @@
     "expo-contacts": "~13.0.3",
     "expo-crypto": "~13.0.2",
     "expo-dev-client": "~4.0.14",
+    "expo-linear-gradient": "^13.0.2",
     "expo-sensors": "~13.0.7",
     "expo-splash-screen": "~0.27.4",
     "expo-status-bar": "~1.12.1",
@@ -39,8 +40,9 @@
     "react-native-screens": "~3.31.1",
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.11",
+    "react-native-web-linear-gradient": "^1.1.2",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.12"
   },
   "resolutions": {
     "@expo/config-plugins": "8.0.4"
