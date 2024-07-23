@@ -203,7 +203,7 @@ const LoginScreen = ({ navigation, route }) => {
             source={require("./../../assets/logoZenTimer.png")}
             testID="page-logo"
           />
-          <PageTitle testID="page-title">ZenTimer</PageTitle>
+          <PageTitle testID="page-title">Habit Tracker</PageTitle>
           <SubTitle testID="sub-title">Account Login</SubTitle>
 
           <Formik
