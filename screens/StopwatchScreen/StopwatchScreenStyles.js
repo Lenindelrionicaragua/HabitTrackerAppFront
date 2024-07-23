@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { View, Text, Pressable, Platform, SafeAreaView } from "react-native";
-
+import { LinearGradient } from "react-native-web-linear-gradient";
 import { Colors } from "../../styles/AppStyles";
 
 const {
@@ -17,6 +17,19 @@ const {
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
 const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
+
+export const GradientContainer = styled(LinearGradient).attrs({
+  colors: [Colors.skyBlue, Colors.white],
+  start: { x: 0, y: 0 },
+  end: { x: 1, y: 1 }
+})`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5%;
+  padding-bottom: ${paddingBottom};
+`;
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
@@ -102,7 +115,7 @@ export const FocusTitleText = styled(Text)`
   font-size: 20px;
   width: 70%;
   font-weight: bold;
-  color: ${white};
+  color: ${black};
   text-align: center;
 
   border-width: 0.5px;
