@@ -1,4 +1,4 @@
-# ZenTimerApp!
+# Habit Traker!
 
 Deploy link login/signin:
 
