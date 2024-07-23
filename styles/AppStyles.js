@@ -1,10 +1,10 @@
 export const Colors = {
-  seaGreen: "#3cbc9c",
+  seaGreen: "#5cbcfc",
   white: "#ffffff" /* inputs background */,
-  infoWhite: "#ffffff" /* info letter */,
-  linkPink: "#ecc4d4",
-  darkGrey: "#6c6c8c" /* background app */,
+  infoWhite: "#bbcbde" /* info letter */,
+  lightPink: "#012382",
+  darkGrey: "#fffff" /* background app */,
   black: "#040c0c",
-  skyBlue: "#87CEEB",
-  lightGreen: `rgba(16, 185, 129, 0.1)`
+  skyBlue: "#5cbcfc",
+  lightGreen: `#1854fc`
 };

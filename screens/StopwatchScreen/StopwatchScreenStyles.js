@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import { View, Text, Pressable, Platform } from "react-native";
-import { SafeAreaView } from "react-native";
+import { View, Text, Pressable, Platform, SafeAreaView } from "react-native";
+
 import { Colors } from "../../styles/AppStyles";
 
 const {
@@ -14,105 +14,40 @@ const {
   lightGreen
 } = Colors;
 
-const green = "#00ff00";
-const red = "#3cbc9c";
-
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
+const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${darkGrey};
-  width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 2%;
+  width: 100%;
+  padding: 5%;
   padding-bottom: ${paddingBottom};
 `;
 
-/**
-
-.button-30 {
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
-}
-
-.button-30:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-.button-30:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-2px);
-}
-
-.button-30:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(2px);
-}
- */
-
-export const FocusTitle = styled(Text)`
-  font-size: 30px;
-  text-align: center;
+export const ScreenTitle = styled(Text)`
+  color: ${black};
   font-weight: bold;
-  background-color: ${black};
-  color: ${white};
-  align-items: center;
-  justify-items: center;
-  border-width: 2px;
-  border-radius: 3px;
-  border-color: ${black};
-  padding: 2%;
+  font-size: 20px;
   width: 100%;
-  shadow-color: #2d2342;
-  shadow-offset: 0px 4px;
-  shadow-opacity: 0.4;
-  shadow-radius: 8px;
-  elevation: 5;
-`;
-
-export const Line = styled(View)`
-  height: 2px;
-  width: 100%;
-  background-color: ${black};
-  margin-vertical: 5px;
-  padding-vertical: 0px;
+  align-items: flex-start;
+  margin-top: ${ScreenTitleMarginTop};
 `;
 
 export const TimeButtonsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin: 10px;
+  padding: 20px;
   width: 100%;
   padding: 0%;
-  padding-bottom: 1%;
+
+  border-radius: 7px;
+  background-color: ${white};
 `;
 
 export const TimeButton = styled(Pressable)`
@@ -120,17 +55,68 @@ export const TimeButton = styled(Pressable)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: ${white};
-  margin: 0px;
-  border-width: 0.5px;
-  border-radius: 3px;
-
-  box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.3);
+  margin: 0.6%;
+  border-radius: 7px;
 `;
 
 export const ButtonTimeText = styled(Text)`
-  color: ${white};
+  color: ${black};
   font-size: 20px;
+`;
+
+export const Line = styled(View)`
+  height: 0.5px;
+  width: 100%;
+  background-color: ${white};
+  margin-vertical: 2px;
+  padding-vertical: 0px;
+`;
+
+export const InfoText = styled(Text)`
+  color: ${black};
+  font-weight: light;
+  font-size: 15px;
+  width: 100%;
+  justify-items: center;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+`;
+
+export const FocusTitleContainer = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2px;
+  margin-top: 5px;
+  /*
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: ${white};
+  */
+  position: relative;
+`;
+
+export const FocusTitleText = styled(Text)`
+  font-size: 20px;
+  width: 70%;
+  font-weight: bold;
+  color: ${black};
+  text-align: center;
+
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: ${white};
+
+  padding: 0px 15px 0px 15px;
+`;
+
+export const IconContainer = styled(Pressable)`
+  padding: 5px;
+  margin: 5px;
+  position: absolute;
+  right: 0;
 `;
 
 export const ButtonText = styled(Text)`
@@ -138,48 +124,74 @@ export const ButtonText = styled(Text)`
   font-size: 10px;
 `;
 
+export const RowContainer = styled(SafeAreaView)`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 8%;
+  width: 100%;
+
+  /*  
+  border-width: 0.1px;
+  border-radius: 5px;
+  border-color: "${white}";
+  */
+  overflow: hidden;
+  align-items: center;
+`;
+
 export const StyledButtonLeft = styled(Pressable)`
   width: 100px;
-  height: 100px;
-  padding: 10px;
-
+  height: 70px;
+  padding: 5px;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  /*
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 5px;
+  */
+  elevation: 5;
 `;
 
 export const StyledButtonRight = styled(Pressable)`
   width: 100px;
-  height: 100px;
-  padding: 10px;
+  height: 70px;
+  padding: 5px;
   justify-content: center;
   align-items: center;
+  /*
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-`;
-
-export const RowContainer = styled(View)`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: ${marginTop};
-  padding: 5px;
-  width: 100%;
-  background-color: ${lightPink};
-  border-width: 2px;
-  border-radius: 3px;
-  border-color: ${black};
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 5px;
+  elevation: 5;
+  */
 `;
 
 export const StyledStartButton = styled(Pressable)`
+  flex: 1;
   width: 100px;
-  height: 100px;
-  padding: 10px;
+  height: 70px;
+
   justify-content: center;
   align-items: center;
-  transform: scale(1.5);
+  /*
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 5px;
+  elevation: 5;
+  */
 `;

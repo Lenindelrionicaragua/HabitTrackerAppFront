@@ -2,10 +2,21 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { MaterialIcons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
+
+import {
+  MaterialIcons,
+  AntDesign,
+  MaterialCommunityIcons,
+  Feather
+} from "@expo/vector-icons";
+
 import {
   StyledContainer,
-  FocusTitle,
+  FocusTitleContainer,
+  FocusTitleText,
+  IconContainer,
+  InfoText,
+  ScreenTitle,
   Line,
   StyledButtonLeft,
   StyledButtonRight,
@@ -19,6 +30,7 @@ import {
 
 const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
   Colors;
+
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
 
@@ -41,7 +53,9 @@ const StopwatchScreen = () => {
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
-  const [infoText, setInfoText] = useState("select your focus");
+  const [infoText, setInfoText] = useState(
+    "Choose your task\nand adjust the time\n to start the timer."
+  );
 
   const [activeButtons, setActiveButtons] = useState({});
 
@@ -95,6 +109,10 @@ const StopwatchScreen = () => {
   const pauseStopwatch = () => {
     clearInterval(intervalRef.current);
     setRunning(false);
+  };
+
+  const fetchTimeRecords = () => {
+    console.log("Saved records: ", savedRecords);
   };
 
   const resetStopwatch = () => {
@@ -192,55 +210,7 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <FocusTitle onPress={handleActivityChange}>
-        {activityIndex === null
-          ? "Choose your focus"
-          : activities[activityIndex]}
-      </FocusTitle>
-      <Line />
-      <View style={styles.svgContainer}>
-        <Svg height="360" width="360" viewBox="0 0 360 360">
-          <Rect x="0" y="0" width="360" height="360" fill="transparent" />
-          <Circle
-            cx="180"
-            cy="180"
-            r="150"
-            stroke={white}
-            strokeWidth="10"
-            fill="none"
-          />
-          <Circle
-            cx="180"
-            cy="180"
-            r="150"
-            stroke={black}
-            strokeWidth="10"
-            fill="none"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-          />
-          <SvgText
-            x="180"
-            y="180"
-            textAnchor="middle"
-            dy=".3em"
-            fontSize="48"
-            fontWeight="bold"
-            fill={infoWhite}
-          >
-            {formatTime(currentTime)}
-          </SvgText>
-          <SvgText
-            x="180"
-            y="230"
-            textAnchor="middle"
-            fontSize="24"
-            fill={white}
-          >
-            {infoText}
-          </SvgText>
-        </Svg>
-      </View>
+      <ScreenTitle>ZenTimer</ScreenTitle>
       <TimeButtonsContainer>
         <TimeButton
           onPress={() => {
@@ -248,7 +218,9 @@ const StopwatchScreen = () => {
             handleButtonPress(1);
           }}
           style={{
-            backgroundColor: activeButtons[1] ? seaGreen : black
+            borderColor: activeButtons[1] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>05</ButtonTimeText>
@@ -259,7 +231,9 @@ const StopwatchScreen = () => {
             handleButtonPress(2);
           }}
           style={{
-            backgroundColor: activeButtons[2] ? seaGreen : black
+            borderColor: activeButtons[2] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>15</ButtonTimeText>
@@ -270,7 +244,9 @@ const StopwatchScreen = () => {
             handleButtonPress(3);
           }}
           style={{
-            backgroundColor: activeButtons[3] ? seaGreen : black
+            borderColor: activeButtons[3] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>30</ButtonTimeText>
@@ -281,7 +257,9 @@ const StopwatchScreen = () => {
             handleButtonPress(4);
           }}
           style={{
-            backgroundColor: activeButtons[4] ? seaGreen : black
+            borderColor: activeButtons[4] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>45</ButtonTimeText>
@@ -292,30 +270,134 @@ const StopwatchScreen = () => {
             handleButtonPress(5);
           }}
           style={{
-            backgroundColor: activeButtons[5] ? seaGreen : black
+            borderColor: activeButtons[5] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
           }}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
+      {/* <Line /> */}
+      <View style={styles.svgContainer}>
+        <Svg height="360" width="360" viewBox="0 0 360 360">
+          <Rect x="0" y="0" width="360" height="360" fill="transparent" />
+          <Circle
+            cx="180"
+            cy="180"
+            r="150"
+            stroke={skyBlue}
+            strokeWidth="20"
+            fill="none"
+          />
+          <Circle
+            cx="180"
+            cy="180"
+            r="150"
+            stroke={white}
+            strokeWidth="20"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="butt"
+          />
+
+          <SvgText
+            x="180"
+            y="180"
+            textAnchor="middle"
+            dy=".3em"
+            fontSize="48"
+            fontWeight="bold"
+            fill={black}
+          >
+            {formatTime(currentTime)}
+          </SvgText>
+          <SvgText
+            x="180"
+            y="230"
+            textAnchor="middle"
+            fontSize="10"
+            fill={black}
+          >
+            {infoText}
+          </SvgText>
+        </Svg>
+      </View>
+      <InfoText>Im Focusing on</InfoText>
+      <FocusTitleContainer>
+        <FocusTitleText
+          onPress={() => {
+            handleActivityChange();
+            handleButtonPress(10);
+          }}
+          style={{
+            boxShadow: activeButtons[10] ? 1.2 : 0.8
+          }}
+        >
+          {activityIndex === null
+            ? "Choose your focus "
+            : activities[activityIndex]}
+        </FocusTitleText>
+        <IconContainer>
+          <AntDesign
+            name="edit"
+            size={24}
+            color="black"
+            style={{ marginRight: 10 }}
+          />
+        </IconContainer>
+      </FocusTitleContainer>
 
       <RowContainer>
-        <StyledButtonLeft onPress={handleActivityChange}>
-          <MaterialIcons name="restart-alt" size={44} color="black" />
+        <StyledButtonLeft
+          onPress={() => {
+            resetStopwatch();
+            handleButtonPress(6);
+          }}
+          style={{
+            backgroundColor: activeButtons[6] ? skyBlue : darkGrey
+          }}
+        >
+          <MaterialCommunityIcons name="restart" size={34} color="black" />
           <ButtonText>RESET</ButtonText>
         </StyledButtonLeft>
         {running ? (
-          <StyledStartButton onPress={pauseStopwatch}>
-            <AntDesign name="pause" size={54} color="black" />
+          <StyledStartButton
+            onPress={() => {
+              pauseStopwatch();
+              handleButtonPress(7);
+            }}
+            style={{
+              backgroundColor: activeButtons[7] ? skyBlue : darkGrey
+            }}
+          >
+            <AntDesign name="pause" size={44} color="black" />
           </StyledStartButton>
         ) : (
-          <StyledStartButton onPress={startStopwatch}>
-            <MaterialIcons name="play-arrow" size={54} color="black" />
+          <StyledStartButton
+            onPress={() => {
+              startStopwatch();
+              handleButtonPress(8);
+            }}
+            style={{
+              backgroundColor: activeButtons[8] ? skyBlue : darkGrey
+            }}
+          >
+            <MaterialIcons name="play-arrow" size={44} color="black" />
           </StyledStartButton>
         )}
-        <StyledButtonRight onPress={resetStopwatch}>
-          <MaterialIcons name="track-changes" size={24} color="black" />
-          <ButtonText>TRACK</ButtonText>
+        <StyledButtonRight
+          onPress={() => {
+            resetStopwatch();
+            handleButtonPress(9);
+          }}
+          style={{
+            backgroundColor: activeButtons[9] ? skyBlue : darkGrey
+          }}
+        >
+          <Feather name="save" size={34} color="black" />
+          <ButtonText>SAVE TIME</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>
