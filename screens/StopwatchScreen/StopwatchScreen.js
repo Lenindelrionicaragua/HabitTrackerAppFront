@@ -54,7 +54,7 @@ const StopwatchScreen = () => {
   const [resetClicks, setResetClicks] = useState(0);
   const resetTimeoutRef = useRef(null);
   const [infoText, setInfoText] = useState(
-    "Choose your task\nand adjust the time\n to start the timer."
+    "Choose your task\nand adjust the time\n to start the tracker."
   );
 
   const [activeButtons, setActiveButtons] = useState({});
@@ -210,7 +210,7 @@ const StopwatchScreen = () => {
 
   return (
     <StyledContainer>
-      <ScreenTitle>ZenTimer</ScreenTitle>
+      <ScreenTitle>Habit Tracker</ScreenTitle>
       <TimeButtonsContainer>
         <TimeButton
           onPress={() => {
@@ -318,8 +318,7 @@ const StopwatchScreen = () => {
             y="230"
             textAnchor="middle"
             fontSize="10"
-            fill={skyBlue}
-            backgroundColor={black}
+            fill={black}
           >
             {infoText}
           </SvgText>
@@ -337,17 +336,17 @@ const StopwatchScreen = () => {
           }}
         >
           {activityIndex === null
-            ? "Choose your focus "
+            ? "Click to choose your focus "
             : activities[activityIndex]}
         </FocusTitleText>
-        <IconContainer>
+        {/* <IconContainer>
           <AntDesign
             name="edit"
             size={24}
             color="black"
             style={{ marginRight: 10 }}
           />
-        </IconContainer>
+        </IconContainer> */}
       </FocusTitleContainer>
 
       <RowContainer>
