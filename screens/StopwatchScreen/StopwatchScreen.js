@@ -166,11 +166,11 @@ const StopwatchScreen = () => {
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
 
-      if (running && currentTime > 0) {
-        setRunning(false);
+      if (currentTime > 0) {
         clearInterval(intervalRef.current);
         setCurrentTime(newInitialTime);
         setElapsedTime(0);
+        setRunning(false);
       } else {
         setCurrentTime(newInitialTime);
       }
