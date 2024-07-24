@@ -33,6 +33,7 @@ const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
 
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
+const MIN_TIME_MINUTES = 0; // min time allowed
 
 const activities = [
   "Study",
@@ -157,6 +158,10 @@ const StopwatchScreen = () => {
   const handleTimeSelection = selectedTime => {
     const newInitialTime = selectedTime;
 
+    if (newInitialTime < MIN_TIME_MINUTES) {
+      return;
+    }
+
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
 
@@ -212,6 +217,19 @@ const StopwatchScreen = () => {
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
       <TimeButtonsContainer>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(currentTime - 60);
+            handleButtonPress(10);
+          }}
+          style={{
+            borderColor: activeButtons[10] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
+          }}
+        >
+          <ButtonTimeText>-</ButtonTimeText>
+        </TimeButton>
         <TimeButton
           onPress={() => {
             handleTimeSelection(5 * 60);
@@ -276,6 +294,19 @@ const StopwatchScreen = () => {
           }}
         >
           <ButtonTimeText>55</ButtonTimeText>
+        </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(currentTime + 60);
+            handleButtonPress(11);
+          }}
+          style={{
+            borderColor: activeButtons[11] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
+          }}
+        >
+          <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
       {/* <Line /> */}
