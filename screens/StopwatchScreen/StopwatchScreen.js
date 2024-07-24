@@ -93,10 +93,14 @@ const StopwatchScreen = () => {
       setInitialTime(currentTime);
     }
 
-    startTimeRef.current = Date.now() + currentTime * 1000;
+    const now = Date.now();
+    startTimeRef.current = now - (initialTime - currentTime) * 1000;
     intervalRef.current = setInterval(() => {
       setCurrentTime(prevTime => {
-        const newTime = Math.max(0, prevTime - 1);
+        const newTime = Math.max(
+          0,
+          initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
+        );
         setElapsedTime(initialTime - newTime);
         return newTime;
       });
