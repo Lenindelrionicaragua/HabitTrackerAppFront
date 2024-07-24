@@ -14,10 +14,8 @@ import {
   StyledContainer,
   FocusTitleContainer,
   FocusTitleText,
-  IconContainer,
   InfoText,
   ScreenTitle,
-  Line,
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
@@ -93,7 +91,6 @@ const StopwatchScreen = () => {
 
     if (currentTime > 0 && !running) {
       setInitialTime(currentTime);
-      setElapsedTime(0);
     }
 
     startTimeRef.current = Date.now() + currentTime * 1000;
@@ -220,10 +217,10 @@ const StopwatchScreen = () => {
         <TimeButton
           onPress={() => {
             handleTimeSelection(currentTime - 60);
-            handleButtonPress(10);
+            handleButtonPress(12);
           }}
           style={{
-            borderColor: activeButtons[10] ? Colors.seaGreen : Colors.white,
+            borderColor: activeButtons[12] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
             borderStyle: "solid"
           }}
@@ -366,9 +363,7 @@ const StopwatchScreen = () => {
             boxShadow: activeButtons[10] ? 1.2 : 0.8
           }}
         >
-          {activityIndex === null
-            ? "Click to choose your focus "
-            : activities[activityIndex]}
+          {activityIndex === null ? "Click here" : activities[activityIndex]}
         </FocusTitleText>
         {/* <IconContainer>
           <AntDesign
