@@ -55,7 +55,8 @@ const StopwatchScreen = () => {
   const [infoText, setInfoText] = useState(
     "Choose your task\nand adjust the time\n to start the tracker."
   );
-
+  const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
+  const [resetTimeouts, setResetTimeouts] = useState([]);
   const [activeButtons, setActiveButtons] = useState({});
 
   useEffect(() => {
@@ -118,11 +119,74 @@ const StopwatchScreen = () => {
   };
 
   const resetStopwatch = () => {
-    if (currentTime === 0) {
-      setInfoText("Hello");
-      setTimeout(() => setInfoText(""), 1000);
+    setResetClicks(prevClicks => prevClicks + 1);
+
+    // Clear any existing timeouts
+    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    setResetTimeouts([]);
+    setInfoText("");
+
+    const scheduleResetCancellation = () => {
+      const timeout1 = setTimeout(() => {
+        setResetButtonLabel("RESET");
+        setResetClicks(0);
+        setInfoText("Reset cancelled.");
+      }, 10000);
+
+      const timeout2 = setTimeout(() => setInfoText(""), 12000);
+
+      // Store the new timeout IDs
+      setResetTimeouts([timeout1, timeout2]);
+    };
+
+    const scheduleInfoTextClear = () => {
+      const timeout = setTimeout(() => setInfoText(""), 2000);
+      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeout]);
+    };
+
+    if (currentTime === 0 && resetClicks === 0) {
+      setResetButtonLabel("CONFIRM RESET");
+      setInfoText("Are you sure you want to reset the stopwatch?");
+      scheduleResetCancellation();
       return;
-    } else {
+    }
+
+    if (currentTime === 0 && resetClicks >= 1) {
+      setResetButtonLabel("RESET");
+      setResetClicks(0);
+      scheduleResetCancellation();
+      scheduleInfoTextClear();
+
+      return;
+    }
+
+    if (currentTime !== 0 && running && resetClicks === 0) {
+      setRunning(false);
+      setResetButtonLabel("CONFIRM RESET");
+      setInfoText("Are you sure you want to reset the stopwatch?");
+      clearInterval(intervalRef.current);
+      scheduleInfoTextClear();
+      return;
+    }
+
+    if (currentTime !== 0 && !running && resetClicks === 0) {
+      setResetButtonLabel("CONFIRM RESET");
+      setInfoText("Are you sure you want to reset the stopwatch?");
+      scheduleInfoTextClear();
+      scheduleResetCancellation();
+      return;
+    }
+
+    if (currentTime === 0 && resetClicks >= 1) {
+      setRunning(false);
+      setResetButtonLabel("CONFIRM RESET");
+      setInfoText("Are you sure you want to reset the stopwatch?");
+      scheduleResetCancellation();
+      return;
+    }
+
+    if (currentTime !== 0 && resetClicks >= 1) {
+      setResetButtonLabel("RESET");
       clearInterval(intervalRef.current);
       setCurrentTime(0);
       setInitialTime(0);
@@ -130,7 +194,8 @@ const StopwatchScreen = () => {
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
-      setInfoText("clear");
+      setInfoText("Stopwatch has been reset.");
+      scheduleInfoTextClear();
     }
   };
 
@@ -381,7 +446,7 @@ const StopwatchScreen = () => {
             size={34}
             color={activeButtons[6] ? Colors.skyBlue : Colors.black}
           />
-          <ButtonText>RESET</ButtonText>
+          <ButtonText>{resetButtonLabel}</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton
