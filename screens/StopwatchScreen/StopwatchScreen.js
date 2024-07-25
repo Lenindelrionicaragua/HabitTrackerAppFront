@@ -126,66 +126,80 @@ const StopwatchScreen = () => {
     setResetTimeouts([]);
     setInfoText("");
 
-    const scheduleResetCancellation = () => {
-      const timeout1 = setTimeout(() => {
-        setResetButtonLabel("RESET");
-        setResetClicks(0);
-        setInfoText("Reset cancelled.");
-      }, 10000);
-
-      const timeout2 = setTimeout(() => setInfoText(""), 12000);
-
-      // Store the new timeout IDs
-      setResetTimeouts([timeout1, timeout2]);
+    // Utility function to clear info text after a delay
+    const clearInfoTextAfter = delay => {
+      const timeoutId = setTimeout(() => setInfoText(""), delay);
+      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
     };
 
-    const scheduleInfoTextClear = () => {
-      const timeout = setTimeout(() => setInfoText(""), 2000);
-      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeout]);
+    // Utility function to update button label and info text
+    const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
+      setResetButtonLabel(label);
+      setInfoText(infoText);
+      if (cancelAfter) {
+        const timeoutId = setTimeout(() => {
+          setResetButtonLabel("RESET");
+          setResetClicks(0);
+          setInfoText("Reset cancelled.");
+        }, cancelAfter);
+        setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+      }
     };
 
     if (currentTime === 0 && resetClicks === 0) {
-      setResetButtonLabel("CONFIRM RESET");
-      setInfoText("Are you sure you want to reset the stopwatch?");
-      scheduleResetCancellation();
+      setRunning(false);
+      updateButtonAndInfoText(
+        "CONFIRM RESET",
+        "Are you sure you want to reset the stopwatch?",
+        10000
+      );
+      clearInfoTextAfter(12000);
       return;
     }
 
-    if (currentTime === 0 && resetClicks >= 1) {
-      setResetButtonLabel("RESET");
-      setResetClicks(0);
-      scheduleResetCancellation();
-      scheduleInfoTextClear();
+    if (currentTime === 0 && resetClicks === 1) {
+      setRunning(false);
+      updateButtonAndInfoText("RESET", "Stopwatch has been reset.");
+      clearInfoTextAfter(12000);
+      return;
+    }
 
+    if (currentTime === 0 && resetClicks >= 2) {
+      setRunning(false);
+      updateButtonAndInfoText(
+        "RESET",
+        "The stopwatch is already reset.",
+        10000
+      );
+      setResetClicks(0);
+      clearInfoTextAfter(12000);
       return;
     }
 
     if (currentTime !== 0 && running && resetClicks === 0) {
       setRunning(false);
-      setResetButtonLabel("CONFIRM RESET");
-      setInfoText("Are you sure you want to reset the stopwatch?");
       clearInterval(intervalRef.current);
-      scheduleInfoTextClear();
+      updateButtonAndInfoText(
+        "CONFIRM RESET",
+        "Are you sure you want to reset the stopwatch?",
+        10000
+      );
+      clearInfoTextAfter(2000);
       return;
     }
 
     if (currentTime !== 0 && !running && resetClicks === 0) {
-      setResetButtonLabel("CONFIRM RESET");
-      setInfoText("Are you sure you want to reset the stopwatch?");
-      scheduleInfoTextClear();
-      scheduleResetCancellation();
-      return;
-    }
-
-    if (currentTime === 0 && resetClicks >= 1) {
       setRunning(false);
-      setResetButtonLabel("CONFIRM RESET");
-      setInfoText("Are you sure you want to reset the stopwatch?");
-      scheduleResetCancellation();
+      updateButtonAndInfoText(
+        "CONFIRM RESET",
+        "Are you sure you want to reset the stopwatch?",
+        10000
+      );
+      clearInfoTextAfter(2000);
       return;
     }
 
-    if (currentTime !== 0 && resetClicks >= 1) {
+    if (currentTime !== 0 && resetClicks === 1) {
       setResetButtonLabel("RESET");
       clearInterval(intervalRef.current);
       setCurrentTime(0);
@@ -195,7 +209,7 @@ const StopwatchScreen = () => {
       setActivityIndex(null);
       setRunning(false);
       setInfoText("Stopwatch has been reset.");
-      scheduleInfoTextClear();
+      clearInfoTextAfter(2000);
     }
   };
 
@@ -258,12 +272,23 @@ const StopwatchScreen = () => {
   };
 
   const { circumference, strokeDashoffset } = calculateCircleParams();
-
   const handleButtonPress = buttonId => {
-    setActiveButtons(prevState => ({ ...prevState, [buttonId]: true }));
+    // clean the active state of all the buttons
+    setActiveButtons(prevState => {
+      const newState = Object.keys(prevState).reduce((acc, key) => {
+        acc[key] = false;
+        return acc;
+      }, {});
+
+      // Active the clicked button
+      newState[buttonId] = true;
+      return newState;
+    });
+
+    // Disable the button after one second
     setTimeout(() => {
       setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
-    }, 1000);
+    }, 2000);
   };
 
   return (
