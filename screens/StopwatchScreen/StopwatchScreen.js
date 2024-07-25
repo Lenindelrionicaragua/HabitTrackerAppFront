@@ -58,6 +58,8 @@ const StopwatchScreen = () => {
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [activeButtons, setActiveButtons] = useState({});
+  const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
+  const [defaultTime, setDefaultTime] = useState(300); // time in seconds
 
   useEffect(() => {
     if (infoText) {
@@ -70,43 +72,89 @@ const StopwatchScreen = () => {
 
   const pad = num => num.toString().padStart(2, "0");
 
+  // Start button
   const startStopwatch = () => {
-    if (activityIndex === null) {
-      setInfoText("choose your focus");
-      setTimeout(() => setInfoText(""), 5000);
-      return;
-    }
+    setResetClicks(prevClicks => prevClicks + 1);
 
-    if (currentTime === 0) {
-      setInfoText("select time");
-      setTimeout(() => setInfoText(""), 5000);
-      return;
-    }
+    // Clear any existing timeouts
+    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    setResetTimeouts([]);
+    setInfoText("");
 
-    if (resetClicks >= 1) {
-      setCurrentTime(0);
-      setRunning(false);
-      setResetClicks(0);
-      setInitialTime(0);
-    }
+    const clearInfoTextAfter = delay => {
+      const timeoutId = setTimeout(() => setInfoText(""), delay);
+      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+    };
 
-    if (currentTime > 0 && !running) {
-      setInitialTime(currentTime);
-    }
+    const startTimer = initialTime => {
+      startTimeRef.current = Date.now();
+      intervalRef.current = setInterval(() => {
+        setCurrentTime(prevTime => {
+          const newTime = Math.max(
+            0,
+            initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
+          );
+          setElapsedTime(initialTime - newTime);
+          return newTime;
+        });
+      }, 1000);
+    };
 
-    const now = Date.now();
-    startTimeRef.current = now - (initialTime - currentTime) * 1000;
-    intervalRef.current = setInterval(() => {
-      setCurrentTime(prevTime => {
-        const newTime = Math.max(
-          0,
-          initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
+    const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
+      setActivityIndex(activityIdx);
+      handleTimeSelection(time);
+      setInfoText(infoText);
+
+      setInitialTime(time);
+      setCurrentTime(time);
+      setElapsedTime(0);
+
+      startTimer(time);
+      setRunning(true);
+      clearInfoTextAfter(5000);
+    };
+
+    if (!running) {
+      // Case 1: No activity and no time set
+      if (activityIndex === null && currentTime === 0) {
+        setDefaultsAndStartTimer(
+          defaultActivityIndex,
+          defaultTime,
+          "Timer started with a default time and activity."
         );
-        setElapsedTime(initialTime - newTime);
-        return newTime;
-      });
-    }, 1000);
-    setRunning(true);
+        return;
+      }
+
+      // Case 2: Activity set but no time set
+      if (activityIndex !== null && currentTime === 0) {
+        setDefaultsAndStartTimer(
+          activityIndex,
+          defaultTime,
+          "Timer started with the selected activity and a default time."
+        );
+        return;
+      }
+
+      // Case 3: No activity but time set
+      if (activityIndex === null && currentTime > 0) {
+        setDefaultsAndStartTimer(
+          defaultActivityIndex,
+          currentTime,
+          "Timer started with a default activity."
+        );
+        return;
+      }
+
+      // Case 4: Activity and time set but paused
+      if (activityIndex !== null && currentTime > 0) {
+        setDefaultsAndStartTimer(
+          activityIndex,
+          currentTime,
+          "Timer resumed with the selected activity."
+        );
+        return;
+      }
+    }
   };
 
   const pauseStopwatch = () => {
@@ -117,6 +165,8 @@ const StopwatchScreen = () => {
   const fetchTimeRecords = () => {
     console.log("Saved records: ", savedRecords);
   };
+
+  // Reset Button
 
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
