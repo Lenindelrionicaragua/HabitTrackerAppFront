@@ -118,28 +118,15 @@ const StopwatchScreen = () => {
   };
 
   const resetStopwatch = () => {
-    setResetClicks(prevClicks => prevClicks + 1);
-    if (resetTimeoutRef.current !== null) {
-      clearTimeout(resetTimeoutRef.current);
-    }
-
     if (currentTime === 0) {
-      setInfoText("㊑");
-
+      setInfoText("Hello");
       setTimeout(() => setInfoText(""), 1000);
       return;
-    }
-
-    if (resetClicks === 0) {
-      setInfoText("time-saved");
-
-      setRunning(false);
-      setTimeout(() => setInfoText(""), 5000);
-      clearInterval(intervalRef.current);
-    } else if (resetClicks >= 1) {
+    } else {
       clearInterval(intervalRef.current);
       setCurrentTime(0);
       setInitialTime(0);
+      setElapsedTime(0);
       setResetClicks(0);
       setActivityIndex(null);
       setRunning(false);
