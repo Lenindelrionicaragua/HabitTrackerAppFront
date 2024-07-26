@@ -47,11 +47,11 @@ const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [running, setRunning] = useState(false);
+  const [firstRun, setFirstRun] = useState(true);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
-  const resetTimeoutRef = useRef(null);
   const [infoText, setInfoText] = useState(
     "Choose your task\nand adjust the time\n to start the tracker."
   );
@@ -74,8 +74,6 @@ const StopwatchScreen = () => {
 
   // Start button
   const startStopwatch = () => {
-    setResetClicks(prevClicks => prevClicks + 1);
-
     // Clear any existing timeouts
     resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     setResetTimeouts([]);
@@ -94,7 +92,15 @@ const StopwatchScreen = () => {
             0,
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
-          setElapsedTime(initialTime - newTime);
+
+          if (initialTime === 0) {
+            setElapsedTime(initialTime - newTime);
+          } else {
+            setElapsedTime(
+              prevElapsedTime => prevElapsedTime + (initialTime - newTime)
+            );
+          }
+
           return newTime;
         });
       }, 1000);
@@ -107,7 +113,6 @@ const StopwatchScreen = () => {
 
       setInitialTime(time);
       setCurrentTime(time);
-      setElapsedTime(0);
 
       startTimer(time);
       setRunning(true);
@@ -120,8 +125,11 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           defaultActivityIndex,
           defaultTime,
-          "Timer started with a default time and activity."
+          firstRun
+            ? "Timer started with a default time and activity."
+            : "Timer restarted with a default time and activity."
         );
+        setFirstRun(false);
         return;
       }
 
@@ -130,8 +138,11 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           activityIndex,
           defaultTime,
-          "Timer started with the selected activity and a default time."
+          firstRun
+            ? "Timer started with the selected activity and a default time."
+            : "Timer restarted with the selected activity and a default time."
         );
+        setFirstRun(false);
         return;
       }
 
@@ -140,8 +151,11 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           defaultActivityIndex,
           currentTime,
-          "Timer started with a default activity."
+          firstRun
+            ? "Timer started with a default activity."
+            : "Timer restarted with a default activity."
         );
+        setFirstRun(false);
         return;
       }
 
@@ -150,8 +164,11 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           activityIndex,
           currentTime,
-          "Timer resumed with the selected activity."
+          firstRun
+            ? "Timer resumed with the selected activity."
+            : "Timer restarted with the selected activity."
         );
+        setFirstRun(false);
         return;
       }
     }
@@ -170,6 +187,7 @@ const StopwatchScreen = () => {
 
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
+    setFirstRun(true);
 
     // Clear any existing timeouts
     resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
