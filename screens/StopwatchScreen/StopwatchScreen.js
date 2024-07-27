@@ -104,11 +104,7 @@ const StopwatchScreen = () => {
     };
 
     const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
-      if (activityIndex !== null) {
-      } else {
-        setActivityIndex(defaultActivityIndex);
-      }
-
+      setActivityIndex(defaultActivityIndex);
       handleTimeSelection(time);
       setInfoText(infoText);
 
@@ -124,6 +120,7 @@ const StopwatchScreen = () => {
       // Case 1: No activity and no time set
       if (activityIndex === null && currentTime === 0) {
         setDefaultsAndStartTimer(
+          defaultActivityIndex,
           defaultTime,
           firstRun
             ? "Timer started with a default time and activity."
@@ -148,6 +145,7 @@ const StopwatchScreen = () => {
       // Case 3: No activity but time set
       if (activityIndex === null && currentTime > 0) {
         setDefaultsAndStartTimer(
+          defaultActivityIndex,
           currentTime,
           firstRun
             ? "Timer started with a default activity."
@@ -176,9 +174,6 @@ const StopwatchScreen = () => {
   const pauseStopwatch = () => {
     clearInterval(intervalRef.current);
     setRunning(false);
-    setElapsedTime(
-      prevElapsedTime => prevElapsedTime + (initialTime - currentTime)
-    );
   };
 
   const fetchTimeRecords = () => {
@@ -317,6 +312,10 @@ const StopwatchScreen = () => {
   };
 
   const formatTime = totalSeconds => {
+    if (isNaN(totalSeconds) || totalSeconds < 0) {
+      return "00:00:00";
+    }
+
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
