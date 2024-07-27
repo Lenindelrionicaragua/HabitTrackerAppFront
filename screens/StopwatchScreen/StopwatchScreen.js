@@ -101,6 +101,7 @@ const StopwatchScreen = () => {
             setRunning(false);
             setElapsedTime(0);
             setInitialTime(0);
+            setFirstRun(true);
           }
 
           return newTime;
@@ -184,7 +185,13 @@ const StopwatchScreen = () => {
     }
   };
 
+  // Pause button
   const pauseStopwatch = () => {
+    // Clear any existing timeouts
+    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    setResetTimeouts([]);
+    setInfoText("");
+
     clearInterval(intervalRef.current);
     setRunning(false);
   };
