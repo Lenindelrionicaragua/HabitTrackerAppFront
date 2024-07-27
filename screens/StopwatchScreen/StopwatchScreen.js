@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 
 import {
   MaterialIcons,
@@ -77,15 +78,7 @@ const StopwatchScreen = () => {
 
   // Start button
   const startStopwatch = () => {
-    // Clear any existing timeouts
-    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    setResetTimeouts([]);
-    setInfoText("");
-
-    const clearInfoTextAfter = delay => {
-      const timeoutId = setTimeout(() => setInfoText(""), delay);
-      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
-    };
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     const startTimer = initialTime => {
       startTimeRef.current = Date.now();
@@ -126,7 +119,7 @@ const StopwatchScreen = () => {
 
       startTimer(time);
       setRunning(true);
-      clearInfoTextAfter(5000);
+      clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
     };
 
     if (!running) {
@@ -187,17 +180,17 @@ const StopwatchScreen = () => {
 
   // Pause button
   const pauseStopwatch = () => {
-    // Clear any existing timeouts
-    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    setResetTimeouts([]);
-    setInfoText("");
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     clearInterval(intervalRef.current);
     setRunning(false);
   };
 
   const fetchTimeRecords = () => {
-    console.log("Saved records: ", savedRecords);
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+
+    setInfoText("");
+    console.log("Saved records");
   };
 
   // Reset Button
@@ -206,16 +199,7 @@ const StopwatchScreen = () => {
     setResetClicks(prevClicks => prevClicks + 1);
     setFirstRun(true);
 
-    // Clear any existing timeouts
-    resetTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    setResetTimeouts([]);
-    setInfoText("");
-
-    // Utility function to clear info text after a delay
-    const clearInfoTextAfter = delay => {
-      const timeoutId = setTimeout(() => setInfoText(""), delay);
-      setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
-    };
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     // Utility function to update button label and info text
     const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
@@ -238,14 +222,14 @@ const StopwatchScreen = () => {
         "Are you sure you want to reset the stopwatch?",
         10000
       );
-      clearInfoTextAfter(12000);
+      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
     if (currentTime === 0 && resetClicks === 1) {
       setRunning(false);
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.");
-      clearInfoTextAfter(12000);
+      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
@@ -280,7 +264,7 @@ const StopwatchScreen = () => {
         "Are you sure you want to reset the stopwatch?",
         10000
       );
-      clearInfoTextAfter(2000);
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
@@ -294,7 +278,7 @@ const StopwatchScreen = () => {
       setActivityIndex(null);
       setRunning(false);
       setInfoText("Stopwatch has been reset.");
-      clearInfoTextAfter(2000);
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
     }
   };
 
@@ -597,7 +581,7 @@ const StopwatchScreen = () => {
         )}
         <StyledButtonRight
           onPress={() => {
-            resetStopwatch();
+            fetchTimeRecords();
             handleButtonPress(9);
           }}
           style={{
