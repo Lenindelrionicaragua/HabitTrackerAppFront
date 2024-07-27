@@ -43,13 +43,16 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [currentTime, setCurrentTime] = useState(0);
   const [initialTime, setInitialTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [running, setRunning] = useState(false);
+
   const [firstRun, setFirstRun] = useState(true);
+  const [running, setRunning] = useState(false);
+
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
+
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
   const [infoText, setInfoText] = useState(
@@ -93,16 +96,10 @@ const StopwatchScreen = () => {
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
 
-          if (initialTime === 0) {
-            setElapsedTime(initialTime - newTime);
-          } else {
-            setElapsedTime(
-              prevElapsedTime => prevElapsedTime + (initialTime - newTime)
-            );
-          }
-
           return newTime;
         });
+
+        setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
       }, 1000);
     };
 
@@ -161,14 +158,15 @@ const StopwatchScreen = () => {
 
       // Case 4: Activity and time set but paused
       if (activityIndex !== null && currentTime > 0) {
-        setDefaultsAndStartTimer(
-          activityIndex,
-          currentTime,
+        startTimer(currentTime);
+        setRunning(true);
+        setInfoText(
           firstRun
             ? "Timer resumed with the selected activity."
             : "Timer restarted with the selected activity."
         );
         setFirstRun(false);
+        clearInfoTextAfter(5000);
         return;
       }
     }
@@ -177,6 +175,9 @@ const StopwatchScreen = () => {
   const pauseStopwatch = () => {
     clearInterval(intervalRef.current);
     setRunning(false);
+    setElapsedTime(
+      prevElapsedTime => prevElapsedTime + (initialTime - currentTime)
+    );
   };
 
   const fetchTimeRecords = () => {
