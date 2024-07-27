@@ -95,6 +95,17 @@ const StopwatchScreen = () => {
             setElapsedTime(0);
             setInitialTime(0);
             setFirstRun(true);
+            setResetClicks(0);
+            fetchTimeRecords();
+            setInfoText(
+              "Time saved successfully! Your activity has been recorded."
+            );
+            clearInfoTextAfter(
+              2000,
+              setInfoText,
+              setResetTimeouts,
+              resetTimeouts
+            );
           }
 
           return newTime;
@@ -186,13 +197,6 @@ const StopwatchScreen = () => {
     setRunning(false);
   };
 
-  const fetchTimeRecords = () => {
-    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-
-    setInfoText("");
-    console.log("Saved records");
-  };
-
   // Reset Button
 
   const resetStopwatch = () => {
@@ -279,6 +283,23 @@ const StopwatchScreen = () => {
       setRunning(false);
       setInfoText("Stopwatch has been reset.");
       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+    }
+  };
+
+  // Save Time Button
+  const fetchTimeRecords = () => {
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+
+    if (currentTime === 0) {
+      setInfoText(" Please set a time before saving.");
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+      console.log("Saved records");
+    }
+
+    if (currentTime !== 0) {
+      setInfoText("Time saved successfully! Your activity has been recorded.");
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+      console.log("Saved records");
     }
   };
 
