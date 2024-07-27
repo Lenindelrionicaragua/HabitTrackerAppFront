@@ -104,7 +104,11 @@ const StopwatchScreen = () => {
     };
 
     const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
-      setActivityIndex(activityIdx);
+      if (activityIndex !== null) {
+      } else {
+        setActivityIndex(defaultActivityIndex);
+      }
+
       handleTimeSelection(time);
       setInfoText(infoText);
 
@@ -120,7 +124,6 @@ const StopwatchScreen = () => {
       // Case 1: No activity and no time set
       if (activityIndex === null && currentTime === 0) {
         setDefaultsAndStartTimer(
-          defaultActivityIndex,
           defaultTime,
           firstRun
             ? "Timer started with a default time and activity."
@@ -133,7 +136,6 @@ const StopwatchScreen = () => {
       // Case 2: Activity set but no time set
       if (activityIndex !== null && currentTime === 0) {
         setDefaultsAndStartTimer(
-          activityIndex,
           defaultTime,
           firstRun
             ? "Timer started with the selected activity and a default time."
@@ -146,7 +148,6 @@ const StopwatchScreen = () => {
       // Case 3: No activity but time set
       if (activityIndex === null && currentTime > 0) {
         setDefaultsAndStartTimer(
-          defaultActivityIndex,
           currentTime,
           firstRun
             ? "Timer started with a default activity."
