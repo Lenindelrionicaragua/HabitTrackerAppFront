@@ -133,6 +133,7 @@ const StopwatchScreen = () => {
       // Case 2: Activity set but no time set
       if (activityIndex !== null && currentTime === 0) {
         setDefaultsAndStartTimer(
+          activityIndex,
           defaultTime,
           firstRun
             ? "Timer started with the selected activity and a default time."
