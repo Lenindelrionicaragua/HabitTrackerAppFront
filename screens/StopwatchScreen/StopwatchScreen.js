@@ -96,10 +96,22 @@ const StopwatchScreen = () => {
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
 
+          if (newTime === 0) {
+            clearInterval(intervalRef.current);
+            setRunning(false);
+            setElapsedTime(0);
+            setInitialTime(0);
+          }
+
           return newTime;
         });
 
-        setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
+        setElapsedTime(prevElapsedTime => {
+          if (currentTime === 0) {
+            return 0;
+          }
+          return prevElapsedTime + 1;
+        });
       }, 1000);
     };
 
