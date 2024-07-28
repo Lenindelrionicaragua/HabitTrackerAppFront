@@ -113,14 +113,14 @@ const StopwatchScreen = () => {
               setCurrentTime(0);
               setInitialTime(0);
               setElapsedTime(0);
-            }, 2000);
+            }, 3000);
             setFirstRun(true);
             setResetClicks(0);
             setInfoText(
               "Time saved successfully! Your activity has been recorded."
             );
             clearInfoTextAfter(
-              2000,
+              3000,
               setInfoText,
               setResetTimeouts,
               resetTimeouts
@@ -143,13 +143,6 @@ const StopwatchScreen = () => {
       setActivityIndex(defaultActivityIndex);
       handleTimeSelection(time);
       setInfoText(infoText);
-
-      setShouldShowGreen(false);
-      setInitialTime(time);
-      setCurrentTime(time);
-
-      startTimer(time);
-      setRunning(true);
       clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
     };
 
@@ -159,11 +152,9 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           defaultActivityIndex,
           defaultTime,
-          firstRun
-            ? "Timer started with a default time and activity."
-            : "Timer restarted with a default time and activity."
+          "Default time and activity selected."
         );
-        setFirstRun(false);
+        setFirstRun(true);
         return;
       }
 
@@ -172,11 +163,9 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           activityIndex,
           defaultTime,
-          firstRun
-            ? "Timer started with the selected activity and a default time."
-            : "Timer restarted with the selected activity and a default time."
+          "Default time selected."
         );
-        setFirstRun(false);
+        setFirstRun(true);
         return;
       }
 
@@ -185,11 +174,9 @@ const StopwatchScreen = () => {
         setDefaultsAndStartTimer(
           defaultActivityIndex,
           currentTime,
-          firstRun
-            ? "Timer started with a default activity."
-            : "Timer restarted with a default activity."
+          "Default activity selected."
         );
-        setFirstRun(false);
+        setFirstRun(true);
         return;
       }
 
@@ -199,8 +186,8 @@ const StopwatchScreen = () => {
         setRunning(true);
         setInfoText(
           firstRun
-            ? "Timer resumed with the selected activity."
-            : "Timer restarted with the selected activity."
+            ? "Timer start with the selected activity."
+            : "Timer resume with the selected activity."
         );
         setFirstRun(false);
         clearInfoTextAfter(5000);
@@ -252,9 +239,26 @@ const StopwatchScreen = () => {
       return;
     }
 
-    if (currentTime === 0 && resetClicks === 1) {
+    if (currentTime === 0 && resetClicks >= 1) {
       setRunning(false);
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.");
+      setResetClicks(0);
+      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+      return;
+    }
+
+    if (
+      currentTime !== 0 &&
+      !running &&
+      resetClicks === 0 &&
+      firstRun === true
+    ) {
+      setRunning(false);
+      updateButtonAndInfoText(
+        "RESET",
+        "The stopwatch is already reset.",
+        10000
+      );
       clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
@@ -283,6 +287,33 @@ const StopwatchScreen = () => {
       return;
     }
 
+    if (currentTime !== 0 && running && resetClicks !== 0) {
+      setRunning(false);
+      clearInterval(intervalRef.current);
+      updateButtonAndInfoText(
+        "CONFIRM RESET",
+        "Are you sure you want to reset the stopwatch?",
+        10000
+      );
+      setResetClicks(0);
+      clearInfoTextAfter(2000);
+      return;
+    }
+
+    if (currentTime !== 0 && !running && resetClicks >= 1) {
+      setResetButtonLabel("RESET");
+      clearInterval(intervalRef.current);
+      setCurrentTime(0);
+      setInitialTime(0);
+      setElapsedTime(0);
+      setCurrentTime(0);
+      setActivityIndex(null);
+      setRunning(false);
+      setResetClicks(0);
+      setInfoText("Stopwatch has been reset.");
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+    }
+
     if (currentTime !== 0 && !running && resetClicks === 0) {
       setRunning(false);
       updateButtonAndInfoText(
@@ -294,7 +325,7 @@ const StopwatchScreen = () => {
       return;
     }
 
-    if (currentTime !== 0 && resetClicks === 1) {
+    if (currentTime !== 0 && running && resetClicks >= 1) {
       setResetButtonLabel("RESET");
       clearInterval(intervalRef.current);
       setCurrentTime(0);
@@ -303,6 +334,7 @@ const StopwatchScreen = () => {
       setCurrentTime(0);
       setActivityIndex(null);
       setRunning(false);
+      setResetClicks(0);
       setInfoText("Stopwatch has been reset.");
       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
     }
@@ -320,7 +352,7 @@ const StopwatchScreen = () => {
     }
 
     if (currentTime !== 0 && !running) {
-      setCircleColor("green");
+      setCircleColor(green);
       setSaveTimeButtonLabel("SAVING");
       setResetButtonLabel("RESET");
       setResetClicks(0);
@@ -343,7 +375,7 @@ const StopwatchScreen = () => {
     }
 
     if (currentTime !== 0 && running) {
-      setCircleColor("green");
+      setCircleColor(green);
       setSaveTimeButtonLabel("SAVING");
       setResetButtonLabel("RESET");
       setResetClicks(0);
