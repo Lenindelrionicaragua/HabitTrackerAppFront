@@ -27,8 +27,17 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
-  Colors;
+const {
+  black,
+  white,
+  infoWhite,
+  lightPink,
+  darkGrey,
+  seaGreen,
+  skyBlue,
+  lightGreen,
+  green
+} = Colors;
 
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
@@ -60,10 +69,13 @@ const StopwatchScreen = () => {
     "Choose your task\nand adjust the time\n to start the tracker."
   );
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
+  const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [activeButtons, setActiveButtons] = useState({});
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
   const [defaultTime, setDefaultTime] = useState(300); // time in seconds
+  const [innerCircleColor, setInnerCircleColor] = useState(white);
+  const [circleColor, setCircleColor] = useState(skyBlue);
 
   useEffect(() => {
     if (infoText) {
@@ -81,6 +93,7 @@ const StopwatchScreen = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     const startTimer = initialTime => {
+      setCircleColor(skyBlue);
       startTimeRef.current = Date.now();
       intervalRef.current = setInterval(() => {
         setCurrentTime(prevTime => {
@@ -89,14 +102,20 @@ const StopwatchScreen = () => {
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
 
-          if (newTime === 0) {
+          if (newTime === 0 && !running) {
+            fetchTimeRecords();
+            setResetButtonLabel("RESET");
             clearInterval(intervalRef.current);
             setRunning(false);
-            setElapsedTime(0);
-            setInitialTime(0);
+            setInnerCircleColor(green);
+            setTimeout(() => {
+              setInnerCircleColor(white);
+              setCurrentTime(0);
+              setInitialTime(0);
+              setElapsedTime(0);
+            }, 2000);
             setFirstRun(true);
             setResetClicks(0);
-            fetchTimeRecords();
             setInfoText(
               "Time saved successfully! Your activity has been recorded."
             );
@@ -125,6 +144,7 @@ const StopwatchScreen = () => {
       handleTimeSelection(time);
       setInfoText(infoText);
 
+      setShouldShowGreen(false);
       setInitialTime(time);
       setCurrentTime(time);
 
@@ -202,12 +222,14 @@ const StopwatchScreen = () => {
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
     setFirstRun(true);
+    setCircleColor(skyBlue);
 
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     // Utility function to update button label and info text
     const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
       setResetButtonLabel(label);
+
       setInfoText(infoText);
       if (cancelAfter) {
         const timeoutId = setTimeout(() => {
@@ -278,7 +300,7 @@ const StopwatchScreen = () => {
       setCurrentTime(0);
       setInitialTime(0);
       setElapsedTime(0);
-      setResetClicks(0);
+      setCurrentTime(0);
       setActivityIndex(null);
       setRunning(false);
       setInfoText("Stopwatch has been reset.");
@@ -290,16 +312,57 @@ const StopwatchScreen = () => {
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
-    if (currentTime === 0) {
+    if (currentTime === 0 && !running) {
       setInfoText(" Please set a time before saving.");
       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
       console.log("Saved records");
+      return;
     }
 
-    if (currentTime !== 0) {
+    if (currentTime !== 0 && !running) {
+      setCircleColor("green");
+      setSaveTimeButtonLabel("SAVING");
+      setResetButtonLabel("RESET");
+      setResetClicks(0);
+      setRunning(false);
+
+      setTimeout(() => {
+        setCircleColor(skyBlue);
+        setSaveTimeButtonLabel("SAVE TIME");
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+      }, 2000);
+
+      clearInterval(intervalRef.current);
+
       setInfoText("Time saved successfully! Your activity has been recorded.");
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+      clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
       console.log("Saved records");
+      return;
+    }
+
+    if (currentTime !== 0 && running) {
+      setCircleColor("green");
+      setSaveTimeButtonLabel("SAVING");
+      setResetButtonLabel("RESET");
+      setResetClicks(0);
+      setRunning(false);
+
+      setTimeout(() => {
+        setSaveTimeButtonLabel("SAVE TIME");
+        setCircleColor(skyBlue);
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+      }, 2000);
+
+      clearInterval(intervalRef.current);
+
+      setInfoText("Time saved successfully! Your activity has been recorded.");
+      clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
+      console.log("Saved records");
+      return;
     }
   };
 
@@ -489,7 +552,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={skyBlue}
+            stroke={circleColor}
             strokeWidth="20"
             fill="none"
           />
@@ -497,7 +560,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={white}
+            stroke={innerCircleColor}
             strokeWidth="20"
             fill="none"
             strokeDasharray={circumference}
@@ -614,7 +677,7 @@ const StopwatchScreen = () => {
             size={34}
             color={activeButtons[9] ? Colors.skyBlue : Colors.black}
           />
-          <ButtonText>SAVE TIME</ButtonText>
+          <ButtonText>{saveTimeButtonLabel}</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>
