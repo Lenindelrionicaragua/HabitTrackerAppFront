@@ -216,7 +216,6 @@ const StopwatchScreen = () => {
     // Utility function to update button label and info text
     const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
       setResetButtonLabel(label);
-
       setInfoText(infoText);
       if (cancelAfter) {
         const timeoutId = setTimeout(() => {
@@ -228,115 +227,60 @@ const StopwatchScreen = () => {
       }
     };
 
-    if (currentTime === 0 && resetClicks === 0) {
-      setRunning(false);
-      updateButtonAndInfoText(
-        "CONFIRM RESET",
-        "Are you sure you want to reset the stopwatch?",
-        10000
-      );
-      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
-      return;
+    if (resetClicks === 0) {
+      if (currentTime === 0) {
+        updateButtonAndInfoText(
+          "RESET",
+          "The timer is already at zero. Do you want to reset it?",
+          10000
+        );
+        clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      } else {
+        updateButtonAndInfoText(
+          "CONFIRM RESET",
+          "Are you sure you want to reset the stopwatch?",
+          10000
+        );
+        clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
     }
 
-    if (currentTime === 0 && resetClicks >= 1) {
-      setRunning(false);
-      updateButtonAndInfoText("RESET", "Stopwatch has been reset.");
-      setResetClicks(0);
-      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
-      return;
+    if (resetClicks === 1) {
+      // Confirm the reset and perform the reset
+      if (currentTime !== 0) {
+        clearInterval(intervalRef.current);
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+        setActivityIndex(null);
+        setRunning(false);
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
     }
 
-    if (
-      currentTime !== 0 &&
-      !running &&
-      resetClicks === 0 &&
-      firstRun === true
-    ) {
-      setRunning(false);
-      updateButtonAndInfoText(
-        "RESET",
-        "The stopwatch is already reset.",
-        10000
-      );
-      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
-      return;
-    }
-
-    if (currentTime === 0 && resetClicks >= 2) {
-      setRunning(false);
-      updateButtonAndInfoText(
-        "RESET",
-        "The stopwatch is already reset.",
-        10000
-      );
-      setResetClicks(0);
-      clearInfoTextAfter(12000);
-      return;
-    }
-
-    if (currentTime !== 0 && running && resetClicks === 0) {
-      setRunning(false);
-      clearInterval(intervalRef.current);
-      updateButtonAndInfoText(
-        "CONFIRM RESET",
-        "Are you sure you want to reset the stopwatch?",
-        10000
-      );
-      clearInfoTextAfter(2000);
-      return;
-    }
-
-    if (currentTime !== 0 && running && resetClicks !== 0) {
-      setRunning(false);
-      clearInterval(intervalRef.current);
-      updateButtonAndInfoText(
-        "CONFIRM RESET",
-        "Are you sure you want to reset the stopwatch?",
-        10000
-      );
-      setResetClicks(0);
-      clearInfoTextAfter(2000);
-      return;
-    }
-
-    if (currentTime !== 0 && !running && resetClicks >= 1) {
-      setResetButtonLabel("RESET");
-      clearInterval(intervalRef.current);
-      setCurrentTime(0);
-      setInitialTime(0);
-      setElapsedTime(0);
-      setCurrentTime(0);
-      setActivityIndex(null);
-      setRunning(false);
-      setResetClicks(0);
-      setInfoText("Stopwatch has been reset.");
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-    }
-
-    if (currentTime !== 0 && !running && resetClicks === 0) {
-      setRunning(false);
-      updateButtonAndInfoText(
-        "CONFIRM RESET",
-        "Are you sure you want to reset the stopwatch?",
-        10000
-      );
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-      return;
-    }
-
-    if (currentTime !== 0 && running && resetClicks >= 1) {
-      setResetButtonLabel("RESET");
-      clearInterval(intervalRef.current);
-      setCurrentTime(0);
-      setInitialTime(0);
-      setElapsedTime(0);
-      setCurrentTime(0);
-      setActivityIndex(null);
-      setRunning(false);
-      setResetClicks(0);
-      setInfoText("Stopwatch has been reset.");
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+    if (resetClicks >= 2) {
+      if (currentTime === 0) {
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      } else {
+        clearInterval(intervalRef.current);
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+        setActivityIndex(null);
+        setRunning(false);
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
     }
   };
 
