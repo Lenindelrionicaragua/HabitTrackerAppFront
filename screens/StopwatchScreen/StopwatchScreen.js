@@ -153,7 +153,7 @@ const StopwatchScreen = () => {
       clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
     };
 
-    if (!running) {
+    if (firstRun === true) {
       // Case 1: No activity and no time set
       if (activityIndex === null && currentTime === 0) {
         setDefaultsAndStartTimer(
@@ -161,7 +161,7 @@ const StopwatchScreen = () => {
           defaultTime,
           "Default time and activity selected."
         );
-        setFirstRun(true);
+        setFirstRun(false);
         return;
       }
 
@@ -172,7 +172,7 @@ const StopwatchScreen = () => {
           defaultTime,
           "Default time selected."
         );
-        setFirstRun(true);
+        setFirstRun(false);
         return;
       }
 
@@ -183,20 +183,25 @@ const StopwatchScreen = () => {
           currentTime,
           "Default activity selected."
         );
-        setFirstRun(true);
+        setFirstRun(false);
         return;
       }
 
-      // Case 4: Activity and time set but paused
+      // Case 4: Activity and time set
       if (activityIndex !== null && currentTime > 0) {
         startTimer(currentTime);
-        setRunning(true);
-        setInfoText(
-          firstRun ? "Timer start with the selected activity." : "Timer resume."
-        );
+        setInfoText("Timer start with the selected activity.");
         setFirstRun(false);
         clearInfoTextAfter(5000);
         return;
+      } else {
+        // Case 5: Activity and time set but paused
+        if (activityIndex !== null && currentTime > 0) {
+          startTimer(currentTime);
+          setInfoText("Timer resume.");
+          clearInfoTextAfter(5000);
+          return;
+        }
       }
     }
   };
