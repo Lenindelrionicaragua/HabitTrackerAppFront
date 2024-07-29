@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 
 import {
   MaterialIcons,
@@ -14,10 +15,8 @@ import {
   StyledContainer,
   FocusTitleContainer,
   FocusTitleText,
-  IconContainer,
   InfoText,
   ScreenTitle,
-  Line,
   StyledButtonLeft,
   StyledButtonRight,
   StyledStartButton,
@@ -28,11 +27,21 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { black, white, infoWhite, lightPink, darkGrey, seaGreen, skyBlue } =
-  Colors;
+const {
+  black,
+  white,
+  infoWhite,
+  lightPink,
+  darkGrey,
+  seaGreen,
+  skyBlue,
+  lightGreen,
+  green
+} = Colors;
 
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
+const MIN_TIME_MINUTES = 0; // min time allowed
 
 const activities = [
   "Study",
@@ -44,20 +53,29 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [currentTime, setCurrentTime] = useState(0);
   const [initialTime, setInitialTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+
+  const [startClicks, setStartClicks] = useState(0);
   const [running, setRunning] = useState(false);
+
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
+
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
-  const resetTimeoutRef = useRef(null);
   const [infoText, setInfoText] = useState(
     "Choose your task\nand adjust the time\n to start the tracker."
   );
-
+  const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
+  const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
+  const [resetTimeouts, setResetTimeouts] = useState([]);
   const [activeButtons, setActiveButtons] = useState({});
+  const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
+  const [defaultTime, setDefaultTime] = useState(300); // time in seconds
+  const [innerCircleColor, setInnerCircleColor] = useState(white);
+  const [circleColor, setCircleColor] = useState(skyBlue);
 
   useEffect(() => {
     if (infoText) {
@@ -70,78 +88,253 @@ const StopwatchScreen = () => {
 
   const pad = num => num.toString().padStart(2, "0");
 
+  // Start button
   const startStopwatch = () => {
-    if (activityIndex === null) {
-      setInfoText("choose your focus");
-      setTimeout(() => setInfoText(""), 5000);
-      return;
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+    setStartClicks(prevClicks => prevClicks + 1);
+
+    console.log(startClicks);
+
+    const startTimer = initialTime => {
+      setCircleColor(skyBlue);
+      startTimeRef.current = Date.now();
+
+      intervalRef.current = setInterval(() => {
+        setCurrentTime(prevTime => {
+          const newTime = Math.max(
+            0,
+            initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
+          );
+
+          if (newTime === 0 && !running) {
+            fetchTimeRecords();
+            setResetButtonLabel("RESET");
+            setSaveTimeButtonLabel("SAVING");
+
+            clearInterval(intervalRef.current);
+            setRunning(false);
+            setInnerCircleColor(green);
+            setStartClicks(true);
+            setResetClicks(0);
+
+            setTimeout(() => {
+              setInnerCircleColor(white);
+              setCurrentTime(0);
+              setInitialTime(0);
+              setElapsedTime(0);
+              setSaveTimeButtonLabel("SAVE-TIME");
+              setStartClicks(0);
+              setInfoText(
+                "Time saved successfully! Your activity has been recorded."
+              );
+            }, 3000);
+
+            // This helps to ensure no lingering messages or timeouts
+            clearInfoTextAfter(
+              3000,
+              setInfoText,
+              setResetTimeouts,
+              resetTimeouts
+            );
+          }
+
+          return newTime;
+        });
+
+        setElapsedTime(prevElapsedTime => {
+          if (currentTime === 0) {
+            return 0;
+          }
+          return prevElapsedTime + 1;
+        });
+      }, 1000);
+    };
+
+    const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
+      setActivityIndex(defaultActivityIndex);
+      handleTimeSelection(time);
+      setInfoText(infoText);
+      clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
+    };
+
+    if (startClicks === 0) {
+      // Case 1: No activity and no time set
+      if (activityIndex === null && currentTime === 0) {
+        setDefaultsAndStartTimer(
+          defaultActivityIndex,
+          defaultTime,
+          "Default time and activity selected."
+        );
+        return;
+      }
+
+      // Case 2: Activity set but no time set
+      if (activityIndex !== null && currentTime === 0) {
+        setDefaultsAndStartTimer(
+          activityIndex,
+          defaultTime,
+          "Default time selected."
+        );
+
+        return;
+      }
+
+      // Case 3: No activity but time set
+      if (activityIndex === null && currentTime > 0) {
+        setDefaultsAndStartTimer(
+          defaultActivityIndex,
+          currentTime,
+          "Default activity selected."
+        );
+
+        return;
+      }
+
+      // Case 4: Activity and time set
+      if (activityIndex !== null && currentTime > 0) {
+        startTimer(currentTime);
+        setInfoText("Timer start with the selected activity.");
+        clearInfoTextAfter(5000);
+        setRunning(true);
+        return;
+      }
     }
 
-    if (currentTime === 0) {
-      setInfoText("select time");
-      setTimeout(() => setInfoText(""), 5000);
-      return;
+    if (startClicks !== 0) {
+      // Case 5: Activity and time set but paused
+      if (activityIndex !== null && currentTime > 0) {
+        startTimer(currentTime);
+        setRunning(true);
+        setInfoText("Timer resume.");
+        clearInfoTextAfter(5000);
+        return;
+      }
     }
-
-    if (resetClicks >= 1) {
-      setCurrentTime(0);
-      setRunning(false);
-      setResetClicks(0);
-      setInitialTime(0);
-    }
-
-    if (currentTime > 0 && !running) {
-      setInitialTime(currentTime);
-      setElapsedTime(0);
-    }
-
-    startTimeRef.current = Date.now() + currentTime * 1000;
-    intervalRef.current = setInterval(() => {
-      setCurrentTime(prevTime => {
-        const newTime = Math.max(0, prevTime - 1);
-        setElapsedTime(initialTime - newTime);
-        return newTime;
-      });
-    }, 1000);
-    setRunning(true);
   };
 
+  // Pause button
   const pauseStopwatch = () => {
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+
     clearInterval(intervalRef.current);
     setRunning(false);
   };
 
-  const fetchTimeRecords = () => {
-    console.log("Saved records: ", savedRecords);
-  };
+  // Reset Button
 
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
-    if (resetTimeoutRef.current !== null) {
-      clearTimeout(resetTimeoutRef.current);
+    setStartClicks(0);
+    setCircleColor(skyBlue);
+
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+
+    // Utility function to update button label and info text
+    const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
+      setResetButtonLabel(label);
+      setInfoText(infoText);
+      if (cancelAfter) {
+        const timeoutId = setTimeout(() => {
+          setResetButtonLabel("RESET");
+          setResetClicks(0);
+          setInfoText("Reset cancelled.");
+        }, cancelAfter);
+        setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+      }
+    };
+
+    if (resetClicks === 0) {
+      if (currentTime === 0) {
+        updateButtonAndInfoText(
+          "RESET",
+          "The timer is already at zero. Do you want to reset it?",
+          10000
+        );
+        clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      } else {
+        updateButtonAndInfoText(
+          "CONFIRM RESET",
+          "Are you sure you want to reset the stopwatch?",
+          10000
+        );
+        clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
     }
 
-    if (currentTime === 0) {
-      setInfoText("㊑");
+    if (resetClicks === 1) {
+      // Confirm the reset and perform the reset
+      if (currentTime !== 0) {
+        clearInterval(intervalRef.current);
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+        setActivityIndex(null);
+        setRunning(false);
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
+    }
 
-      setTimeout(() => setInfoText(""), 1000);
+    if (resetClicks >= 2) {
+      if (currentTime === 0) {
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      } else {
+        clearInterval(intervalRef.current);
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+        setActivityIndex(null);
+        setRunning(false);
+        setResetClicks(0);
+        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+        return;
+      }
+    }
+  };
+
+  // Save Time Button
+  const fetchTimeRecords = () => {
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+
+    setRunning(false);
+
+    // The timer is stopped or paused.
+    if (!running && currentTime === 0) {
+      setInfoText("Please set a time before saving.");
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+      console.log("Saved records");
       return;
     }
 
-    if (resetClicks === 0) {
-      setInfoText("time-saved");
-
-      setRunning(false);
-      setTimeout(() => setInfoText(""), 5000);
-      clearInterval(intervalRef.current);
-    } else if (resetClicks >= 1) {
-      clearInterval(intervalRef.current);
-      setCurrentTime(0);
-      setInitialTime(0);
+    if (currentTime !== 0) {
+      setCircleColor(green);
+      setSaveTimeButtonLabel("SAVING");
+      setResetButtonLabel("RESET");
       setResetClicks(0);
-      setActivityIndex(null);
       setRunning(false);
-      setInfoText("clear");
+
+      setTimeout(() => {
+        setCircleColor(skyBlue);
+        setSaveTimeButtonLabel("SAVE TIME");
+        setCurrentTime(0);
+        setInitialTime(0);
+        setElapsedTime(0);
+      }, 2000);
+
+      clearInterval(intervalRef.current);
+      setStartClicks(0);
+      setInfoText("Time saved successfully! Your activity has been recorded.");
+      clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
+      console.log("Saved records");
+      return;
     }
   };
 
@@ -157,14 +350,18 @@ const StopwatchScreen = () => {
   const handleTimeSelection = selectedTime => {
     const newInitialTime = selectedTime;
 
+    if (newInitialTime < MIN_TIME_MINUTES) {
+      return;
+    }
+
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
 
-      if (running && currentTime > 0) {
-        setRunning(false);
+      if (currentTime > 0) {
         clearInterval(intervalRef.current);
         setCurrentTime(newInitialTime);
         setElapsedTime(0);
+        setRunning(false);
       } else {
         setCurrentTime(newInitialTime);
       }
@@ -175,6 +372,10 @@ const StopwatchScreen = () => {
   };
 
   const formatTime = totalSeconds => {
+    if (isNaN(totalSeconds) || totalSeconds < 0) {
+      return "00:00:00";
+    }
+
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
@@ -202,16 +403,41 @@ const StopwatchScreen = () => {
   const { circumference, strokeDashoffset } = calculateCircleParams();
 
   const handleButtonPress = buttonId => {
-    setActiveButtons(prevState => ({ ...prevState, [buttonId]: true }));
+    // clean the active state of all the buttons
+    setActiveButtons(prevState => {
+      const newState = Object.keys(prevState).reduce((acc, key) => {
+        acc[key] = false;
+        return acc;
+      }, {});
+
+      // Active the clicked button
+      newState[buttonId] = true;
+      return newState;
+    });
+
+    // Disable the button after one second
     setTimeout(() => {
       setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
-    }, 1000);
+    }, 2000);
   };
 
   return (
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
       <TimeButtonsContainer>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(currentTime - 60);
+            handleButtonPress(12);
+          }}
+          style={{
+            borderColor: activeButtons[12] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
+          }}
+        >
+          <ButtonTimeText>-</ButtonTimeText>
+        </TimeButton>
         <TimeButton
           onPress={() => {
             handleTimeSelection(5 * 60);
@@ -277,6 +503,19 @@ const StopwatchScreen = () => {
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
+        <TimeButton
+          onPress={() => {
+            handleTimeSelection(currentTime + 60);
+            handleButtonPress(11);
+          }}
+          style={{
+            borderColor: activeButtons[11] ? Colors.seaGreen : Colors.white,
+            borderWidth: 2,
+            borderStyle: "solid"
+          }}
+        >
+          <ButtonTimeText>+</ButtonTimeText>
+        </TimeButton>
       </TimeButtonsContainer>
       {/* <Line /> */}
       <View style={styles.svgContainer}>
@@ -286,7 +525,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={skyBlue}
+            stroke={circleColor}
             strokeWidth="20"
             fill="none"
           />
@@ -294,7 +533,7 @@ const StopwatchScreen = () => {
             cx="180"
             cy="180"
             r="150"
-            stroke={white}
+            stroke={innerCircleColor}
             strokeWidth="20"
             fill="none"
             strokeDasharray={circumference}
@@ -335,9 +574,7 @@ const StopwatchScreen = () => {
             boxShadow: activeButtons[10] ? 1.2 : 0.8
           }}
         >
-          {activityIndex === null
-            ? "Click to choose your focus "
-            : activities[activityIndex]}
+          {activityIndex === null ? "Click here" : activities[activityIndex]}
         </FocusTitleText>
         {/* <IconContainer>
           <AntDesign
@@ -364,7 +601,7 @@ const StopwatchScreen = () => {
             size={34}
             color={activeButtons[6] ? Colors.skyBlue : Colors.black}
           />
-          <ButtonText>RESET</ButtonText>
+          <ButtonText>{resetButtonLabel}</ButtonText>
         </StyledButtonLeft>
         {running ? (
           <StyledStartButton
@@ -401,7 +638,7 @@ const StopwatchScreen = () => {
         )}
         <StyledButtonRight
           onPress={() => {
-            resetStopwatch();
+            fetchTimeRecords();
             handleButtonPress(9);
           }}
           style={{
@@ -413,7 +650,7 @@ const StopwatchScreen = () => {
             size={34}
             color={activeButtons[9] ? Colors.skyBlue : Colors.black}
           />
-          <ButtonText>SAVE TIME</ButtonText>
+          <ButtonText>{saveTimeButtonLabel}</ButtonText>
         </StyledButtonRight>
       </RowContainer>
     </StyledContainer>
