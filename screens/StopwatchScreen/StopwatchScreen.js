@@ -95,6 +95,7 @@ const StopwatchScreen = () => {
     const startTimer = initialTime => {
       setCircleColor(skyBlue);
       startTimeRef.current = Date.now();
+
       intervalRef.current = setInterval(() => {
         setCurrentTime(prevTime => {
           const newTime = Math.max(
@@ -105,20 +106,26 @@ const StopwatchScreen = () => {
           if (newTime === 0 && !running) {
             fetchTimeRecords();
             setResetButtonLabel("RESET");
+            setSaveTimeButtonLabel("SAVING");
+
             clearInterval(intervalRef.current);
             setRunning(false);
             setInnerCircleColor(green);
+            setFirstRun(true);
+            setResetClicks(0);
+
             setTimeout(() => {
               setInnerCircleColor(white);
               setCurrentTime(0);
               setInitialTime(0);
               setElapsedTime(0);
+              setSaveTimeButtonLabel("SAVE-TIME");
+              setInfoText(
+                "Time saved successfully! Your activity has been recorded."
+              );
             }, 3000);
-            setFirstRun(true);
-            setResetClicks(0);
-            setInfoText(
-              "Time saved successfully! Your activity has been recorded."
-            );
+
+            // This helps to ensure no lingering messages or timeouts
             clearInfoTextAfter(
               3000,
               setInfoText,
@@ -185,9 +192,7 @@ const StopwatchScreen = () => {
         startTimer(currentTime);
         setRunning(true);
         setInfoText(
-          firstRun
-            ? "Timer start with the selected activity."
-            : "Timer resume with the selected activity."
+          firstRun ? "Timer start with the selected activity." : "Timer resume."
         );
         setFirstRun(false);
         clearInfoTextAfter(5000);
@@ -288,14 +293,15 @@ const StopwatchScreen = () => {
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
-    if (currentTime === 0 && !running) {
-      setInfoText(" Please set a time before saving.");
+    // The timer is stopped or paused.
+    if (!running && currentTime === 0) {
+      setInfoText("Please set a time before saving.");
       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
       console.log("Saved records");
       return;
     }
 
-    if (currentTime !== 0 && !running) {
+    if (currentTime !== 0) {
       setCircleColor(green);
       setSaveTimeButtonLabel("SAVING");
       setResetButtonLabel("RESET");
@@ -305,29 +311,6 @@ const StopwatchScreen = () => {
       setTimeout(() => {
         setCircleColor(skyBlue);
         setSaveTimeButtonLabel("SAVE TIME");
-        setCurrentTime(0);
-        setInitialTime(0);
-        setElapsedTime(0);
-      }, 2000);
-
-      clearInterval(intervalRef.current);
-
-      setInfoText("Time saved successfully! Your activity has been recorded.");
-      clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
-      console.log("Saved records");
-      return;
-    }
-
-    if (currentTime !== 0 && running) {
-      setCircleColor(green);
-      setSaveTimeButtonLabel("SAVING");
-      setResetButtonLabel("RESET");
-      setResetClicks(0);
-      setRunning(false);
-
-      setTimeout(() => {
-        setSaveTimeButtonLabel("SAVE TIME");
-        setCircleColor(skyBlue);
         setCurrentTime(0);
         setInitialTime(0);
         setElapsedTime(0);
