@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "jsEngine": "jsc"
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
