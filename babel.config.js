@@ -1,5 +1,6 @@
 module.exports = function (api) {
   api.cache(true);
+
   return {
     presets: ["babel-preset-expo"],
     plugins: [
@@ -9,7 +10,8 @@ module.exports = function (api) {
           moduleName: "@env",
           path: ".env"
         }
-      ]
+      ],
+      "@babel/plugin-proposal-nullish-coalescing-operator" // Agrega el plugin aquí
     ]
   };
 };
