@@ -306,7 +306,6 @@ const StopwatchScreen = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
     setRunning(false);
-    setButtonsDisabled(true);
 
     // The timer is stopped or paused.
     if (!running && currentTime === 0) {
@@ -316,10 +315,11 @@ const StopwatchScreen = () => {
       setTimeout(() => setButtonsDisabled(false), 2000);
       return;
     }
-    s;
+
     if (currentTime !== 0) {
       setCircleColor(green);
       setSaveTimeButtonLabel("SAVING");
+      setButtonsDisabled(true);
       setResetButtonLabel("RESET");
       setResetClicks(0);
       setRunning(false);
@@ -331,7 +331,7 @@ const StopwatchScreen = () => {
         setInitialTime(0);
         setElapsedTime(0);
 
-        setTimeout(() => setButtonsDisabled(false), 2000);
+        setButtonsDisabled(false);
       }, 2000);
 
       clearInterval(intervalRef.current);
