@@ -11,7 +11,8 @@ module.exports = function (api) {
           path: ".env"
         }
       ],
-      "@babel/plugin-proposal-nullish-coalescing-operator" // Agrega el plugin aquí
+      "@babel/plugin-proposal-nullish-coalescing-operator",
+      "@babel/plugin-proposal-optional-chaining"
     ]
   };
 };
