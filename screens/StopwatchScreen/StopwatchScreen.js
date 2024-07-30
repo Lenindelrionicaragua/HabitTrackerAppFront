@@ -537,7 +537,7 @@ const StopwatchScreen = () => {
             strokeWidth="20"
             fill="none"
             strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
+            strokeDashoffset={isFinite(strokeDashoffset) ? strokeDashoffset : 0}
             strokeLinecap="butt"
           />
 
