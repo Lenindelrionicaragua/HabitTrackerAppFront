@@ -76,6 +76,7 @@ const StopwatchScreen = () => {
   const [defaultTime, setDefaultTime] = useState(300); // time in seconds
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   useEffect(() => {
     if (infoText) {
@@ -311,12 +312,14 @@ const StopwatchScreen = () => {
       setInfoText("Please set a time before saving.");
       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
       console.log("Saved records");
+      setTimeout(() => setButtonsDisabled(false), 2000);
       return;
     }
 
     if (currentTime !== 0) {
       setCircleColor(green);
       setSaveTimeButtonLabel("SAVING");
+      setButtonsDisabled(true);
       setResetButtonLabel("RESET");
       setResetClicks(0);
       setRunning(false);
@@ -327,6 +330,8 @@ const StopwatchScreen = () => {
         setCurrentTime(0);
         setInitialTime(0);
         setElapsedTime(0);
+
+        setButtonsDisabled(false);
       }, 2000);
 
       clearInterval(intervalRef.current);
@@ -435,6 +440,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>-</ButtonTimeText>
         </TimeButton>
@@ -448,6 +454,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
@@ -461,6 +468,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
@@ -474,6 +482,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
@@ -487,6 +496,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
@@ -500,6 +510,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
@@ -513,6 +524,7 @@ const StopwatchScreen = () => {
             borderWidth: 2,
             borderStyle: "solid"
           }}
+          disabled={buttonsDisabled}
         >
           <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
@@ -567,11 +579,15 @@ const StopwatchScreen = () => {
       <FocusTitleContainer>
         <FocusTitleText
           onPress={() => {
-            handleActivityChange();
-            handleButtonPress(10);
+            if (!buttonsDisabled) {
+              handleActivityChange();
+              handleButtonPress(10);
+            }
           }}
           style={{
-            boxShadow: activeButtons[10] ? 1.2 : 0.8
+            boxShadow: activeButtons[10] ? 1.2 : 0.8,
+            opacity: buttonsDisabled ? 0.5 : 1,
+            cursor: buttonsDisabled ? "not-allowed" : "pointer"
           }}
         >
           {activityIndex === null ? "Click here" : activities[activityIndex]}
@@ -595,6 +611,7 @@ const StopwatchScreen = () => {
           style={{
             backgroundColor: activeButtons[6] ? darkGrey : darkGrey
           }}
+          disabled={buttonsDisabled}
         >
           <MaterialCommunityIcons
             name="restart"
@@ -612,6 +629,7 @@ const StopwatchScreen = () => {
             style={{
               backgroundColor: activeButtons[7] ? darkGrey : darkGrey
             }}
+            disabled={buttonsDisabled}
           >
             <AntDesign
               name="pause"
@@ -628,6 +646,7 @@ const StopwatchScreen = () => {
             style={{
               backgroundColor: activeButtons[8] ? darkGrey : darkGrey
             }}
+            disabled={buttonsDisabled}
           >
             <MaterialIcons
               name="play-arrow"
@@ -644,6 +663,7 @@ const StopwatchScreen = () => {
           style={{
             backgroundColor: activeButtons[9] ? darkGrey : darkGrey
           }}
+          disabled={buttonsDisabled}
         >
           <Feather
             name="save"
