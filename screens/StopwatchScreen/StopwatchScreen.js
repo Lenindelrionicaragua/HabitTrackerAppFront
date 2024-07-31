@@ -257,6 +257,8 @@ const StopwatchScreen = () => {
         clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
       } else {
+        setRunning(false);
+        clearInterval(intervalRef.current);
         updateButtonAndInfoText(
           "CONFIRM RESET",
           "Are you sure you want to reset the stopwatch?",
@@ -583,25 +585,7 @@ const StopwatchScreen = () => {
       </View>
       <InfoText>Im Focusing on</InfoText>
 
-      {resetClicks === 0 ? (
-        <FocusTitleContainer>
-          <FocusTitleText
-            onPress={() => {
-              if (!buttonsDisabled) {
-                handleActivityChange();
-                handleButtonPress(10);
-              }
-            }}
-            style={{
-              boxShadow: activeButtons[10] ? 1.2 : 0.8,
-              opacity: buttonsDisabled ? 0.5 : 1,
-              cursor: buttonsDisabled ? "not-allowed" : "pointer"
-            }}
-          >
-            {activityIndex === null ? "Click here" : activities[activityIndex]}
-          </FocusTitleText>
-        </FocusTitleContainer>
-      ) : (
+      {resetClicks >= 1 && currentTime > 0 ? (
         <ResetActivityContainer>
           <ResetActivityText
             onPress={() => {
@@ -619,6 +603,24 @@ const StopwatchScreen = () => {
             {focusButtonLabel}
           </ResetActivityText>
         </ResetActivityContainer>
+      ) : (
+        <FocusTitleContainer>
+          <FocusTitleText
+            onPress={() => {
+              if (!buttonsDisabled) {
+                handleActivityChange();
+                handleButtonPress(10);
+              }
+            }}
+            style={{
+              boxShadow: activeButtons[10] ? 1.2 : 0.8,
+              opacity: buttonsDisabled ? 0.5 : 1,
+              cursor: buttonsDisabled ? "not-allowed" : "pointer"
+            }}
+          >
+            {activityIndex === null ? "Click here" : activities[activityIndex]}
+          </FocusTitleText>
+        </FocusTitleContainer>
       )}
 
       <RowContainer>
