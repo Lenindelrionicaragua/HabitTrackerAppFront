@@ -15,8 +15,6 @@ import {
   StyledContainer,
   FocusTitleContainer,
   FocusTitleText,
-  ResetActivityContainer,
-  ResetActivityText,
   InfoText,
   ScreenTitle,
   StyledButtonLeft,
@@ -58,9 +56,9 @@ const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-
   const [startClicks, setStartClicks] = useState(0);
   const [running, setRunning] = useState(false);
+  const [firstRun, setFirstRun] = useState(false);
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -79,7 +77,6 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const [focusButtonLabel, seFocusButtonLabel] = useState("RESET ACTIVITY");
 
   useEffect(() => {
     if (infoText) {
@@ -96,8 +93,6 @@ const StopwatchScreen = () => {
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
     setStartClicks(prevClicks => prevClicks + 1);
-
-    console.log(startClicks);
 
     const startTimer = initialTime => {
       setCircleColor(skyBlue);
@@ -198,8 +193,9 @@ const StopwatchScreen = () => {
       if (activityIndex !== null && currentTime > 0) {
         startTimer(currentTime);
         setInfoText("Timer start with the selected activity.");
-        clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
+        clearInfoTextAfter(5000);
         setRunning(true);
+        setFirstRun(true);
         return;
       }
     }
@@ -209,6 +205,7 @@ const StopwatchScreen = () => {
       if (activityIndex !== null && currentTime > 0) {
         startTimer(currentTime);
         setRunning(true);
+        setFirstRun(true);
         setInfoText("Timer resume.");
         clearInfoTextAfter(5000);
         return;
@@ -228,7 +225,6 @@ const StopwatchScreen = () => {
 
   const resetStopwatch = () => {
     setResetClicks(prevClicks => prevClicks + 1);
-    setStartClicks(0);
     setCircleColor(skyBlue);
 
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
@@ -237,6 +233,7 @@ const StopwatchScreen = () => {
     const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
       setResetButtonLabel(label);
       setInfoText(infoText);
+
       if (cancelAfter) {
         const timeoutId = setTimeout(() => {
           setResetButtonLabel("RESET");
@@ -257,13 +254,12 @@ const StopwatchScreen = () => {
         clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
       } else {
-        setRunning(false);
-        clearInterval(intervalRef.current);
         updateButtonAndInfoText(
           "CONFIRM RESET",
           "Are you sure you want to reset the stopwatch?",
           10000
         );
+        clearInterval(intervalRef.current);
         clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
       }
@@ -278,7 +274,9 @@ const StopwatchScreen = () => {
         setElapsedTime(0);
         setActivityIndex(null);
         setRunning(false);
+        setFirstRun(false);
         setResetClicks(0);
+        setStartClicks(0);
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -288,6 +286,7 @@ const StopwatchScreen = () => {
     if (resetClicks >= 2) {
       if (currentTime === 0) {
         setResetClicks(0);
+        setStartClicks(0);
         updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -298,7 +297,9 @@ const StopwatchScreen = () => {
         setElapsedTime(0);
         setActivityIndex(null);
         setRunning(false);
+        setFirstRun(false);
         setResetClicks(0);
+        setStartClicks(0);
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -327,6 +328,7 @@ const StopwatchScreen = () => {
       setButtonsDisabled(true);
       setResetButtonLabel("RESET");
       setResetClicks(0);
+
       setRunning(false);
 
       setTimeout(() => {
@@ -348,16 +350,13 @@ const StopwatchScreen = () => {
     }
   };
 
-  // Focus Activity button
-
   const handleActivityChange = () => {
-    if (currentTime > 0) {
-      resetStopwatch();
-    } else {
-      setActivityIndex(prevIndex =>
-        prevIndex === activities.length - 1 ? 0 : prevIndex + 1
-      );
-    }
+    clearInterval(intervalRef.current);
+    setRunning(false);
+    setInfoText(null);
+    setActivityIndex(prevIndex =>
+      prevIndex === activities.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const handleTimeSelection = selectedTime => {
@@ -584,44 +583,25 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <InfoText>Im Focusing on</InfoText>
-
-      {resetClicks >= 1 && currentTime > 0 ? (
-        <ResetActivityContainer>
-          <ResetActivityText
-            onPress={() => {
-              if (!buttonsDisabled) {
-                resetStopwatch();
-                handleButtonPress(13);
-              }
-            }}
-            style={{
-              boxShadow: activeButtons[13] ? 1.2 : 0.8,
-              opacity: buttonsDisabled ? 0.5 : 1,
-              cursor: buttonsDisabled ? "not-allowed" : "pointer"
-            }}
-          >
-            {focusButtonLabel}
-          </ResetActivityText>
-        </ResetActivityContainer>
-      ) : (
-        <FocusTitleContainer>
-          <FocusTitleText
-            onPress={() => {
-              if (!buttonsDisabled) {
-                handleActivityChange();
-                handleButtonPress(10);
-              }
-            }}
-            style={{
-              boxShadow: activeButtons[10] ? 1.2 : 0.8,
-              opacity: buttonsDisabled ? 0.5 : 1,
-              cursor: buttonsDisabled ? "not-allowed" : "pointer"
-            }}
-          >
-            {activityIndex === null ? "Click here" : activities[activityIndex]}
-          </FocusTitleText>
-        </FocusTitleContainer>
-      )}
+      <FocusTitleContainer>
+        <FocusTitleText
+          onPress={() => {
+            if (!buttonsDisabled && !firstRun) {
+              handleActivityChange();
+              handleButtonPress(10);
+            }
+          }}
+          style={{
+            boxShadow: activeButtons[10] ? 1.2 : 0.8,
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
+          }}
+          disabled={buttonsDisabled || startClicks >= 1}
+        >
+          {activityIndex === null ? "Click here" : activities[activityIndex]}
+        </FocusTitleText>
+      </FocusTitleContainer>
 
       <RowContainer>
         <StyledButtonLeft
