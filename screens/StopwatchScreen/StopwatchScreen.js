@@ -438,20 +438,19 @@ const StopwatchScreen = () => {
     borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
     borderWidth: 2,
     borderStyle: "solid",
-    opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+    opacity: buttonsDisabled || startClicks >= 2 ? 0 : 1,
     cursor: buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
   });
 
   return (
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
-      <TimeButtonsContainer>
+      <TimeButtonsContainer style={getButtonStyles(12)}>
         <TimeButton
           onPress={() => {
             handleTimeSelection(currentTime - 60);
             handleButtonPress(12);
           }}
-          style={getButtonStyles(12)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>-</ButtonTimeText>
