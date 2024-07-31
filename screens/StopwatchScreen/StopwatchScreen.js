@@ -433,6 +433,15 @@ const StopwatchScreen = () => {
     }, 2000);
   };
 
+  // Define styles for time increment buttons
+  const getButtonStyles = buttonId => ({
+    borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
+    borderWidth: 2,
+    borderStyle: "solid",
+    opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+    cursor: buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
+  });
+
   return (
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
@@ -442,14 +451,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(currentTime - 60);
             handleButtonPress(12);
           }}
-          style={{
-            borderColor: activeButtons[12] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(12)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>-</ButtonTimeText>
@@ -459,14 +461,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(5 * 60);
             handleButtonPress(1);
           }}
-          style={{
-            borderColor: activeButtons[1] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(1)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>05</ButtonTimeText>
@@ -476,14 +471,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(15 * 60);
             handleButtonPress(2);
           }}
-          style={{
-            borderColor: activeButtons[2] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(2)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>15</ButtonTimeText>
@@ -493,14 +481,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(30 * 60);
             handleButtonPress(3);
           }}
-          style={{
-            borderColor: activeButtons[3] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(3)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>30</ButtonTimeText>
@@ -510,15 +491,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(45 * 60);
             handleButtonPress(4);
           }}
-          style={{
-            borderColor: activeButtons[4] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(4)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>45</ButtonTimeText>
@@ -528,15 +501,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(55 * 60);
             handleButtonPress(5);
           }}
-          style={{
-            borderColor: activeButtons[5] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(5)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>55</ButtonTimeText>
@@ -546,14 +511,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(currentTime + 60);
             handleButtonPress(11);
           }}
-          style={{
-            borderColor: activeButtons[11] ? Colors.seaGreen : Colors.white,
-            borderWidth: 2,
-            borderStyle: "solid",
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
-          }}
+          style={getButtonStyles(11)}
           disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>+</ButtonTimeText>
