@@ -15,6 +15,8 @@ import {
   StyledContainer,
   FocusTitleContainer,
   FocusTitleText,
+  ResetActivityContainer,
+  ResetActivityText,
   InfoText,
   ScreenTitle,
   StyledButtonLeft,
@@ -600,11 +602,11 @@ const StopwatchScreen = () => {
           </FocusTitleText>
         </FocusTitleContainer>
       ) : (
-        <FocusTitleContainer>
-          <FocusTitleText
+        <ResetActivityContainer>
+          <ResetActivityText
             onPress={() => {
               if (!buttonsDisabled) {
-                resetActivity();
+                resetStopwatch();
                 handleButtonPress(13);
               }
             }}
@@ -615,8 +617,8 @@ const StopwatchScreen = () => {
             }}
           >
             {focusButtonLabel}
-          </FocusTitleText>
-        </FocusTitleContainer>
+          </ResetActivityText>
+        </ResetActivityContainer>
       )}
 
       <RowContainer>
