@@ -351,8 +351,8 @@ const StopwatchScreen = () => {
   // Focus Activity button
 
   const handleActivityChange = () => {
-    if (running && currentTime > 0) {
-      setConfirmChangeActivity(true);
+    if (currentTime > 0) {
+      resetStopwatch();
     } else {
       setActivityIndex(prevIndex =>
         prevIndex === activities.length - 1 ? 0 : prevIndex + 1
