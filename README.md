@@ -14,7 +14,7 @@ Test in mobile:
 
 ![Captura de Pantalla 2024-07-31 a la(s) 15 59 55](https://github.com/user-attachments/assets/2dbc5123-359a-4f94-96f3-d67be7f51eb8)
 
-Zen Timer: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
+Habit Traker: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
 ## Features
 - Basic stopwatch functionality with start, stop, and restart buttons.
