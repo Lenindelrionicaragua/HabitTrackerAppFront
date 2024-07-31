@@ -77,6 +77,7 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const [focusButtonLabel, seFocusButtonLabel] = useState("CONFIRM RESET");
 
   useEffect(() => {
     if (infoText) {
@@ -343,13 +344,16 @@ const StopwatchScreen = () => {
     }
   };
 
+  // Focus Activity button
+
   const handleActivityChange = () => {
-    clearInterval(intervalRef.current);
-    setRunning(false);
-    setInfoText(null);
-    setActivityIndex(prevIndex =>
-      prevIndex === activities.length - 1 ? 0 : prevIndex + 1
-    );
+    if (running && currentTime > 0) {
+      setConfirmChangeActivity(true);
+    } else {
+      setActivityIndex(prevIndex =>
+        prevIndex === activities.length - 1 ? 0 : prevIndex + 1
+      );
+    }
   };
 
   const handleTimeSelection = selectedTime => {
@@ -576,31 +580,44 @@ const StopwatchScreen = () => {
         </Svg>
       </View>
       <InfoText>Im Focusing on</InfoText>
-      <FocusTitleContainer>
-        <FocusTitleText
-          onPress={() => {
-            if (!buttonsDisabled) {
-              handleActivityChange();
-              handleButtonPress(10);
-            }
-          }}
-          style={{
-            boxShadow: activeButtons[10] ? 1.2 : 0.8,
-            opacity: buttonsDisabled ? 0.5 : 1,
-            cursor: buttonsDisabled ? "not-allowed" : "pointer"
-          }}
-        >
-          {activityIndex === null ? "Click here" : activities[activityIndex]}
-        </FocusTitleText>
-        {/* <IconContainer>
-          <AntDesign
-            name="edit"
-            size={24}
-            color="black"
-            style={{ marginRight: 10 }}
-          />
-        </IconContainer> */}
-      </FocusTitleContainer>
+
+      {resetClicks === 0 ? (
+        <FocusTitleContainer>
+          <FocusTitleText
+            onPress={() => {
+              if (!buttonsDisabled) {
+                handleActivityChange();
+                handleButtonPress(10);
+              }
+            }}
+            style={{
+              boxShadow: activeButtons[10] ? 1.2 : 0.8,
+              opacity: buttonsDisabled ? 0.5 : 1,
+              cursor: buttonsDisabled ? "not-allowed" : "pointer"
+            }}
+          >
+            {activityIndex === null ? "Click here" : activities[activityIndex]}
+          </FocusTitleText>
+        </FocusTitleContainer>
+      ) : (
+        <FocusTitleContainer>
+          <FocusTitleText
+            onPress={() => {
+              if (!buttonsDisabled) {
+                resetActivity();
+                handleButtonPress(13);
+              }
+            }}
+            style={{
+              boxShadow: activeButtons[13] ? 1.2 : 0.8,
+              opacity: buttonsDisabled ? 0.5 : 1,
+              cursor: buttonsDisabled ? "not-allowed" : "pointer"
+            }}
+          >
+            {focusButtonLabel}
+          </FocusTitleText>
+        </FocusTitleContainer>
+      )}
 
       <RowContainer>
         <StyledButtonLeft
