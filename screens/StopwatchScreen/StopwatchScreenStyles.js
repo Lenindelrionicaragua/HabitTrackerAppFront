@@ -112,35 +112,6 @@ export const FocusTitleText = styled(Text)`
   padding: 0px 15px 0px 15px;
 `;
 
-export const ResetActivityContainer = styled(View)`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 2px;
-  margin-top: 5px;
-  /*
-  border-width: 0.5px;
-  border-radius: 5px;
-  border-color: ${white};
-  */
-  position: relative;
-`;
-
-export const ResetActivityText = styled(Text)`
-  font-size: 20px;
-  width: 70%;
-  font-weight: bold;
-  color: ${black};
-  text-align: center;
-  /*
-  border-width: 0.5px;
-  border-radius: 5px;
-  border-color: ${white};
-*/
-  padding: 0px 15px 0px 15px;
-`;
-
 export const IconContainer = styled(Pressable)`
   padding: 5px;
   margin: 5px;
