@@ -12,8 +12,8 @@ https://zen-timer-app-front.netlify.app/
 
 Test in mobile:
 
-![Captura de Pantalla 2024-07-31 a la(s) 15 55 29](https://github.com/user-attachments/assets/d27473af-9970-47ae-9b60-77f1336b3d2e)
 
+![Captura de Pantalla 2024-07-31 a la(s) 15 57 32](https://github.com/user-attachments/assets/9e00e734-838d-41df-a2cb-9948278daec1)
 
 Zen Timer: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
