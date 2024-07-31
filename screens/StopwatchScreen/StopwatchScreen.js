@@ -79,7 +79,7 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const [focusButtonLabel, seFocusButtonLabel] = useState("CONFIRM RESET");
+  const [focusButtonLabel, seFocusButtonLabel] = useState("RESET ACTIVITY");
 
   useEffect(() => {
     if (infoText) {
@@ -198,7 +198,7 @@ const StopwatchScreen = () => {
       if (activityIndex !== null && currentTime > 0) {
         startTimer(currentTime);
         setInfoText("Timer start with the selected activity.");
-        clearInfoTextAfter(5000);
+        clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
         setRunning(true);
         return;
       }
