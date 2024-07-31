@@ -445,9 +445,12 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[12] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>-</ButtonTimeText>
         </TimeButton>
@@ -459,9 +462,12 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[1] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
@@ -473,9 +479,12 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[2] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
@@ -487,9 +496,12 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[3] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
@@ -501,9 +513,13 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[4] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
@@ -515,9 +531,13 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[5] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
@@ -529,13 +549,17 @@ const StopwatchScreen = () => {
           style={{
             borderColor: activeButtons[11] ? Colors.seaGreen : Colors.white,
             borderWidth: 2,
-            borderStyle: "solid"
+            borderStyle: "solid",
+            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
+            cursor:
+              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || startClicks >= 1}
         >
           <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
+
       {/* <Line /> */}
       <View style={styles.svgContainer}>
         <Svg height="360" width="360" viewBox="0 0 360 360">
