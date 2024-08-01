@@ -45,7 +45,6 @@ export const TimeButtonsContainer = styled(View)`
   padding: 20px;
   width: 100%;
   padding: 0%;
-
   border-radius: 7px;
   background-color: ${white};
 `;
