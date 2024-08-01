@@ -57,8 +57,9 @@ const StopwatchScreen = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startClicks, setStartClicks] = useState(0);
-  const [running, setRunning] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
+  const [running, setRunning] = useState(false);
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -92,7 +93,6 @@ const StopwatchScreen = () => {
   // Start button
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    setStartClicks(prevClicks => prevClicks + 1);
 
     const startTimer = initialTime => {
       setCircleColor(skyBlue);
@@ -107,14 +107,12 @@ const StopwatchScreen = () => {
 
           if (newTime === 0 && !running) {
             fetchTimeRecords();
+            setResetClicks(0);
             setResetButtonLabel("RESET");
             setSaveTimeButtonLabel("SAVING");
-
             clearInterval(intervalRef.current);
             setRunning(false);
             setInnerCircleColor(green);
-            setStartClicks(true);
-            setResetClicks(0);
 
             setTimeout(() => {
               setInnerCircleColor(white);
@@ -122,7 +120,8 @@ const StopwatchScreen = () => {
               setInitialTime(0);
               setElapsedTime(0);
               setSaveTimeButtonLabel("SAVE-TIME");
-              setStartClicks(0);
+              setHasStarted(false);
+              setFirstRun(false);
               setInfoText(
                 "Time saved successfully! Your activity has been recorded."
               );
@@ -156,7 +155,7 @@ const StopwatchScreen = () => {
       clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
     };
 
-    if (startClicks === 0) {
+    if (!hasStarted) {
       // Case 1: No activity and no time set
       if (activityIndex === null && currentTime === 0) {
         setDefaultsAndStartTimer(
@@ -164,6 +163,7 @@ const StopwatchScreen = () => {
           defaultTime,
           "Default time and activity selected."
         );
+        setHasStarted(true);
         return;
       }
 
@@ -200,7 +200,7 @@ const StopwatchScreen = () => {
       }
     }
 
-    if (startClicks !== 0) {
+    if (hasStarted) {
       // Case 5: Activity and time set but paused
       if (activityIndex !== null && currentTime > 0) {
         startTimer(currentTime);
@@ -273,10 +273,10 @@ const StopwatchScreen = () => {
         setInitialTime(0);
         setElapsedTime(0);
         setActivityIndex(null);
+        setHasStarted(false);
         setRunning(false);
         setFirstRun(false);
         setResetClicks(0);
-        setStartClicks(0);
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -286,7 +286,7 @@ const StopwatchScreen = () => {
     if (resetClicks >= 2) {
       if (currentTime === 0) {
         setResetClicks(0);
-        setStartClicks(0);
+        setHasStarted(false);
         updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -296,10 +296,10 @@ const StopwatchScreen = () => {
         setInitialTime(0);
         setElapsedTime(0);
         setActivityIndex(null);
+        setHasStarted(false);
         setRunning(false);
         setFirstRun(false);
         setResetClicks(0);
-        setStartClicks(0);
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -343,6 +343,8 @@ const StopwatchScreen = () => {
 
       clearInterval(intervalRef.current);
       setStartClicks(0);
+      setHasStarted(false);
+      setFirstRun(false);
       setInfoText("Time saved successfully! Your activity has been recorded.");
       clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
       console.log("Saved records");
@@ -438,8 +440,8 @@ const StopwatchScreen = () => {
     borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
     borderWidth: 2,
     borderStyle: "solid",
-    opacity: buttonsDisabled || startClicks >= 2 ? 0 : 1,
-    cursor: buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
+    opacity: running || firstRun ? 0 : 1,
+    cursor: running || firstRun ? "not-allowed" : "pointer"
   });
 
   return (
@@ -451,7 +453,7 @@ const StopwatchScreen = () => {
             handleTimeSelection(currentTime - 60);
             handleButtonPress(12);
           }}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>-</ButtonTimeText>
         </TimeButton>
@@ -461,7 +463,7 @@ const StopwatchScreen = () => {
             handleButtonPress(1);
           }}
           style={getButtonStyles(1)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
@@ -471,7 +473,7 @@ const StopwatchScreen = () => {
             handleButtonPress(2);
           }}
           style={getButtonStyles(2)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
@@ -481,7 +483,7 @@ const StopwatchScreen = () => {
             handleButtonPress(3);
           }}
           style={getButtonStyles(3)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
@@ -491,7 +493,7 @@ const StopwatchScreen = () => {
             handleButtonPress(4);
           }}
           style={getButtonStyles(4)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
@@ -501,7 +503,7 @@ const StopwatchScreen = () => {
             handleButtonPress(5);
           }}
           style={getButtonStyles(5)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
@@ -511,7 +513,7 @@ const StopwatchScreen = () => {
             handleButtonPress(11);
           }}
           style={getButtonStyles(11)}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
@@ -575,10 +577,9 @@ const StopwatchScreen = () => {
           style={{
             boxShadow: activeButtons[10] ? 1.2 : 0.8,
             opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor:
-              buttonsDisabled || startClicks >= 1 ? "not-allowed" : "pointer"
+            cursor: running ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled || startClicks >= 1}
+          disabled={running}
         >
           {activityIndex === null ? "Click here" : activities[activityIndex]}
         </FocusTitleText>
