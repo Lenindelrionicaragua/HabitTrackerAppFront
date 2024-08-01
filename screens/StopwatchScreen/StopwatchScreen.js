@@ -56,7 +56,6 @@ const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [startClicks, setStartClicks] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
@@ -435,6 +434,11 @@ const StopwatchScreen = () => {
     }, 2000);
   };
 
+  const handleTimeButtonPress = (timeChange, buttonId) => {
+    handleTimeSelection(timeChange);
+    handleButtonPress(buttonId);
+  };
+
   // Define styles for time increment buttons
   const getButtonStyles = buttonId => ({
     borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
@@ -447,73 +451,53 @@ const StopwatchScreen = () => {
   return (
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
-      <TimeButtonsContainer style={getButtonStyles(12)}>
+      <TimeButtonsContainer>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(currentTime - 60);
-            handleButtonPress(12);
-          }}
+          onPress={() => handleTimeButtonPress(currentTime - 60, 12)}
+          style={getButtonStyles(12)}
           disabled={running || firstRun}
         >
           <ButtonTimeText>-</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(5 * 60);
-            handleButtonPress(1);
-          }}
+          onPress={() => handleTimeButtonPress(5 * 60, 1)}
           style={getButtonStyles(1)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(15 * 60);
-            handleButtonPress(2);
-          }}
+          onPress={() => handleTimeButtonPress(15 * 60, 2)}
           style={getButtonStyles(2)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(30 * 60);
-            handleButtonPress(3);
-          }}
+          onPress={() => handleTimeButtonPress(30 * 60, 3)}
           style={getButtonStyles(3)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(45 * 60);
-            handleButtonPress(4);
-          }}
+          onPress={() => handleTimeButtonPress(45 * 60, 4)}
           style={getButtonStyles(4)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(55 * 60);
-            handleButtonPress(5);
-          }}
+          onPress={() => handleTimeButtonPress(55 * 60, 5)}
           style={getButtonStyles(5)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => {
-            handleTimeSelection(currentTime + 60);
-            handleButtonPress(11);
-          }}
+          onPress={() => handleTimeButtonPress(currentTime + 60, 11)}
           style={getButtonStyles(11)}
-          disabled={running}
+          disabled={running || firstRun}
         >
           <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
@@ -576,10 +560,10 @@ const StopwatchScreen = () => {
           }}
           style={{
             boxShadow: activeButtons[10] ? 1.2 : 0.8,
-            opacity: buttonsDisabled || startClicks >= 2 ? 0.5 : 1,
-            cursor: running ? "not-allowed" : "pointer"
+            opacity: buttonsDisabled || firstRun ? 0.5 : 1,
+            cursor: buttonsDisabled || firstRun ? "not-allowed" : "pointer"
           }}
-          disabled={running}
+          disabled={buttonsDisabled}
         >
           {activityIndex === null ? "Click here" : activities[activityIndex]}
         </FocusTitleText>
