@@ -71,6 +71,7 @@ const StopwatchScreen = () => {
   );
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
+  const [autoSaveTriggered, setAutoSaveTriggered] = useState(false);
 
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
@@ -92,19 +93,6 @@ const StopwatchScreen = () => {
 
   const pad = num => num.toString().padStart(2, "0");
 
-  //helper
-  const performReset = () => {
-    clearInterval(intervalRef.current);
-    setCurrentTime(0);
-    setInitialTime(0);
-    setElapsedTime(0);
-    setActivityIndex(null);
-    setHasStarted(false);
-    setRunning(false);
-    setFirstRun(false);
-    setResetClicks(0);
-  };
-
   // Start button
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
@@ -123,37 +111,6 @@ const StopwatchScreen = () => {
           if (newTime === 0 && !running) {
             clearInterval(intervalRef.current);
             fetchTimeRecords();
-            setSaveTimeButtonLabel("SAVING");
-            setInfoText("Saving");
-            setButtonsDisabled(true);
-            setInnerCircleColor(green);
-
-            setTimeout(() => {
-              setCurrentTime(0);
-              setInitialTime(0);
-              setElapsedTime(0);
-              setActivityIndex(null);
-              setHasStarted(false);
-              setRunning(false);
-              setFirstRun(false);
-              setResetClicks(0);
-              setResetButtonLabel("RESET");
-              setSaveTimeButtonLabel("SAVE-TIME");
-              setInnerCircleColor(white);
-              setButtonsDisabled(false);
-              setInfoText(
-                "Time saved successfully! Your activity has been recorded."
-              );
-              logInfo("Saved Records");
-            }, 3000);
-
-            // This helps to ensure no lingering messages or timeouts
-            clearInfoTextAfter(
-              3000,
-              setInfoText,
-              setResetTimeouts,
-              resetTimeouts
-            );
           }
 
           return newTime;
@@ -314,6 +271,7 @@ const StopwatchScreen = () => {
   // Save Time Button
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+    setAutoSaveTriggered(true);
     setRunning(false);
 
     if (currentTime === 0 || (currentTime !== 0 && !firstRun)) {
@@ -322,13 +280,14 @@ const StopwatchScreen = () => {
       return;
     }
 
-    if (currentTime !== 0 && firstRun) {
+    if ((currentTime !== 0 && firstRun) || autoSaveTriggered) {
       clearInterval(intervalRef.current);
       setSaveTimeButtonLabel("SAVING");
       setInfoText("Saving");
       setButtonsDisabled(true);
       setCircleColor(green);
       setInnerCircleColor(green);
+      setAutoSaveTriggered(false);
 
       setTimeout(() => {
         performReset();
@@ -340,12 +299,25 @@ const StopwatchScreen = () => {
         setInfoText(
           "Time saved successfully! Your activity has been recorded."
         );
-      }, 2000);
+      }, 4000);
 
-      clearInfoTextAfter(3000, setInfoText, setResetTimeouts, resetTimeouts);
+      clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
       logInfo("Saved records");
       return;
     }
+  };
+
+  // Function to perform reset
+  const performReset = () => {
+    setCurrentTime(0);
+    setInitialTime(0);
+    setElapsedTime(0);
+    setActivityIndex(null);
+    setHasStarted(false);
+    setRunning(false);
+    setFirstRun(false);
+    setResetClicks(0);
+    setButtonsDisabled(false);
   };
 
   const handleActivityChange = () => {
@@ -564,11 +536,10 @@ const StopwatchScreen = () => {
       <RowContainer>
         <StyledButtonLeft
           onPress={() => {
-            resetStopwatch();
-            handleButtonPress(6);
-          }}
-          style={{
-            backgroundColor: activeButtons[6] ? darkGrey : darkGrey
+            if (!buttonsDisabled) {
+              resetStopwatch();
+              handleButtonPress(6);
+            }
           }}
           disabled={buttonsDisabled}
         >
@@ -576,7 +547,9 @@ const StopwatchScreen = () => {
             name="restart"
             size={34}
             color={activeButtons[6] ? Colors.skyBlue : Colors.black}
+            opacity={buttonsDisabled ? 0.5 : 1}
           />
+
           <ButtonText>{resetButtonLabel}</ButtonText>
         </StyledButtonLeft>
         {running ? (
@@ -596,8 +569,10 @@ const StopwatchScreen = () => {
         ) : (
           <StyledStartButton
             onPress={() => {
-              startStopwatch();
-              handleButtonPress(8);
+              if (!buttonsDisabled) {
+                startStopwatch();
+                handleButtonPress(8);
+              }
             }}
             disabled={buttonsDisabled}
           >
@@ -605,13 +580,16 @@ const StopwatchScreen = () => {
               name="play-arrow"
               size={44}
               color={activeButtons[8] ? Colors.skyBlue : Colors.black}
+              opacity={buttonsDisabled ? 0.5 : 1}
             />
           </StyledStartButton>
         )}
         <StyledButtonRight
           onPress={() => {
-            fetchTimeRecords();
-            handleButtonPress(9);
+            if (!buttonsDisabled) {
+              fetchTimeRecords();
+              handleButtonPress(9);
+            }
           }}
           disabled={buttonsDisabled}
         >
@@ -619,6 +597,7 @@ const StopwatchScreen = () => {
             name="save"
             size={34}
             color={activeButtons[9] ? Colors.skyBlue : Colors.black}
+            opacity={buttonsDisabled ? 0.5 : 1}
           />
           <ButtonText>{saveTimeButtonLabel}</ButtonText>
         </StyledButtonRight>
