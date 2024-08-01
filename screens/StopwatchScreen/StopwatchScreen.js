@@ -92,6 +92,19 @@ const StopwatchScreen = () => {
 
   const pad = num => num.toString().padStart(2, "0");
 
+  //helper
+  const performReset = () => {
+    clearInterval(intervalRef.current);
+    setCurrentTime(0);
+    setInitialTime(0);
+    setElapsedTime(0);
+    setActivityIndex(null);
+    setHasStarted(false);
+    setRunning(false);
+    setFirstRun(false);
+    setResetClicks(0);
+  };
+
   // Start button
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
@@ -111,6 +124,7 @@ const StopwatchScreen = () => {
             clearInterval(intervalRef.current);
             fetchTimeRecords();
             setSaveTimeButtonLabel("SAVING");
+            setInfoText("Saving");
             setButtonsDisabled(true);
             setInnerCircleColor(green);
 
@@ -274,15 +288,7 @@ const StopwatchScreen = () => {
     if (resetClicks === 1) {
       // Confirm the reset and perform the reset
       if (currentTime !== 0) {
-        clearInterval(intervalRef.current);
-        setCurrentTime(0);
-        setInitialTime(0);
-        setElapsedTime(0);
-        setActivityIndex(null);
-        setHasStarted(false);
-        setRunning(false);
-        setFirstRun(false);
-        setResetClicks(0);
+        performReset();
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -297,15 +303,7 @@ const StopwatchScreen = () => {
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
       } else {
-        clearInterval(intervalRef.current);
-        setCurrentTime(0);
-        setInitialTime(0);
-        setElapsedTime(0);
-        setActivityIndex(null);
-        setHasStarted(false);
-        setRunning(false);
-        setFirstRun(false);
-        setResetClicks(0);
+        performReset();
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
         return;
@@ -333,14 +331,7 @@ const StopwatchScreen = () => {
       setInnerCircleColor(green);
 
       setTimeout(() => {
-        setCurrentTime(0);
-        setInitialTime(0);
-        setElapsedTime(0);
-        setActivityIndex(null);
-        setHasStarted(false);
-        setRunning(false);
-        setFirstRun(false);
-        setResetClicks(0);
+        performReset();
         setResetButtonLabel("RESET");
         setSaveTimeButtonLabel("SAVE-TIME");
         setCircleColor(skyBlue);
