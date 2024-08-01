@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
+import { logInfo } from "../../util/logging";
 
 import {
   MaterialIcons,
@@ -70,12 +71,14 @@ const StopwatchScreen = () => {
   );
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
+
   const [resetTimeouts, setResetTimeouts] = useState([]);
-  const [activeButtons, setActiveButtons] = useState({});
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
   const [defaultTime, setDefaultTime] = useState(300); // time in seconds
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
+
+  const [activeButtons, setActiveButtons] = useState({});
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   useEffect(() => {
@@ -105,25 +108,29 @@ const StopwatchScreen = () => {
           );
 
           if (newTime === 0 && !running) {
-            fetchTimeRecords();
-            setResetClicks(0);
-            setResetButtonLabel("RESET");
-            setSaveTimeButtonLabel("SAVING");
             clearInterval(intervalRef.current);
-            setRunning(false);
+            fetchTimeRecords();
+            setSaveTimeButtonLabel("SAVING");
+            setButtonsDisabled(true);
             setInnerCircleColor(green);
 
             setTimeout(() => {
-              setInnerCircleColor(white);
               setCurrentTime(0);
               setInitialTime(0);
               setElapsedTime(0);
-              setSaveTimeButtonLabel("SAVE-TIME");
+              setActivityIndex(null);
               setHasStarted(false);
+              setRunning(false);
               setFirstRun(false);
+              setResetClicks(0);
+              setResetButtonLabel("RESET");
+              setSaveTimeButtonLabel("SAVE-TIME");
+              setInnerCircleColor(white);
+              setButtonsDisabled(false);
               setInfoText(
                 "Time saved successfully! Your activity has been recorded."
               );
+              logInfo("Saved Records");
             }, 3000);
 
             // This helps to ensure no lingering messages or timeouts
@@ -309,44 +316,41 @@ const StopwatchScreen = () => {
   // Save Time Button
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-
     setRunning(false);
 
-    // The timer is stopped or paused.
-    if (!running && currentTime === 0) {
-      setInfoText("Please set a time before saving.");
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-      console.log("Saved records");
-      setTimeout(() => setButtonsDisabled(false), 2000);
+    if (currentTime === 0 || (currentTime !== 0 && !firstRun)) {
+      setInfoText("No time recorded. Please start the timer before saving.");
+      clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
-    if (currentTime !== 0) {
-      setCircleColor(green);
+    if (currentTime !== 0 && firstRun) {
+      clearInterval(intervalRef.current);
       setSaveTimeButtonLabel("SAVING");
+      setInfoText("Saving");
       setButtonsDisabled(true);
-      setResetButtonLabel("RESET");
-      setResetClicks(0);
-
-      setRunning(false);
+      setCircleColor(green);
 
       setTimeout(() => {
-        setCircleColor(skyBlue);
-        setSaveTimeButtonLabel("SAVE TIME");
         setCurrentTime(0);
         setInitialTime(0);
         setElapsedTime(0);
-
+        setActivityIndex(null);
+        setHasStarted(false);
+        setRunning(false);
+        setFirstRun(false);
+        setResetClicks(0);
+        setResetButtonLabel("RESET");
+        setSaveTimeButtonLabel("SAVE-TIME");
+        setInnerCircleColor(white);
         setButtonsDisabled(false);
+        setInfoText(
+          "Time saved successfully! Your activity has been recorded."
+        );
       }, 2000);
 
-      clearInterval(intervalRef.current);
-      setStartClicks(0);
-      setHasStarted(false);
-      setFirstRun(false);
-      setInfoText("Time saved successfully! Your activity has been recorded.");
-      clearInfoTextAfter(10000, setInfoText, setResetTimeouts, resetTimeouts);
-      console.log("Saved records");
+      clearInfoTextAfter(3000, setInfoText, setResetTimeouts, resetTimeouts);
+      logInfo("Saved records");
       return;
     }
   };
@@ -416,22 +420,17 @@ const StopwatchScreen = () => {
   const { circumference, strokeDashoffset } = calculateCircleParams();
 
   const handleButtonPress = buttonId => {
-    // clean the active state of all the buttons
-    setActiveButtons(prevState => {
-      const newState = Object.keys(prevState).reduce((acc, key) => {
-        acc[key] = false;
-        return acc;
-      }, {});
+    setActiveButtons(prevState => ({
+      ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])), // Reset all buttons to false
+      [buttonId]: true
+    }));
 
-      // Active the clicked button
-      newState[buttonId] = true;
-      return newState;
-    });
-
-    // Disable the button after one second
     setTimeout(() => {
-      setActiveButtons(prevState => ({ ...prevState, [buttonId]: false }));
-    }, 2000);
+      setActiveButtons(prevState => ({
+        ...prevState,
+        [buttonId]: false
+      }));
+    }, 500);
   };
 
   const handleTimeButtonPress = (timeChange, buttonId) => {
@@ -451,7 +450,7 @@ const StopwatchScreen = () => {
   return (
     <StyledContainer>
       <ScreenTitle>Habit Tracker</ScreenTitle>
-      <TimeButtonsContainer>
+      <TimeButtonsContainer style={getButtonStyles(13)}>
         <TimeButton
           onPress={() => handleTimeButtonPress(currentTime - 60, 12)}
           style={getButtonStyles(12)}
@@ -593,9 +592,6 @@ const StopwatchScreen = () => {
               pauseStopwatch();
               handleButtonPress(7);
             }}
-            style={{
-              backgroundColor: activeButtons[7] ? darkGrey : darkGrey
-            }}
             disabled={buttonsDisabled}
           >
             <AntDesign
@@ -610,9 +606,6 @@ const StopwatchScreen = () => {
               startStopwatch();
               handleButtonPress(8);
             }}
-            style={{
-              backgroundColor: activeButtons[8] ? darkGrey : darkGrey
-            }}
             disabled={buttonsDisabled}
           >
             <MaterialIcons
@@ -626,9 +619,6 @@ const StopwatchScreen = () => {
           onPress={() => {
             fetchTimeRecords();
             handleButtonPress(9);
-          }}
-          style={{
-            backgroundColor: activeButtons[9] ? darkGrey : darkGrey
           }}
           disabled={buttonsDisabled}
         >
