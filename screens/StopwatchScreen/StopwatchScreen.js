@@ -330,6 +330,7 @@ const StopwatchScreen = () => {
       setInfoText("Saving");
       setButtonsDisabled(true);
       setCircleColor(green);
+      setInnerCircleColor(green);
 
       setTimeout(() => {
         setCurrentTime(0);
@@ -342,6 +343,7 @@ const StopwatchScreen = () => {
         setResetClicks(0);
         setResetButtonLabel("RESET");
         setSaveTimeButtonLabel("SAVE-TIME");
+        setCircleColor(skyBlue);
         setInnerCircleColor(white);
         setButtonsDisabled(false);
         setInfoText(
