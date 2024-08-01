@@ -547,7 +547,7 @@ const StopwatchScreen = () => {
             name="restart"
             size={34}
             color={activeButtons[6] ? Colors.skyBlue : Colors.black}
-            opacity={buttonsDisabled ? 0.5 : 1}
+            style={{ opacity: buttonsDisabled ? 0.5 : 1 }}
           />
 
           <ButtonText>{resetButtonLabel}</ButtonText>
@@ -580,7 +580,7 @@ const StopwatchScreen = () => {
               name="play-arrow"
               size={44}
               color={activeButtons[8] ? Colors.skyBlue : Colors.black}
-              opacity={buttonsDisabled ? 0.5 : 1}
+              style={{ opacity: buttonsDisabled ? 0.5 : 1 }}
             />
           </StyledStartButton>
         )}
@@ -597,7 +597,7 @@ const StopwatchScreen = () => {
             name="save"
             size={34}
             color={activeButtons[9] ? Colors.skyBlue : Colors.black}
-            opacity={buttonsDisabled ? 0.5 : 1}
+            style={{ opacity: buttonsDisabled ? 0.5 : 1 }}
           />
           <ButtonText>{saveTimeButtonLabel}</ButtonText>
         </StyledButtonRight>
