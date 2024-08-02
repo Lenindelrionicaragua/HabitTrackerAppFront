@@ -29,6 +29,7 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
 __mocks__/@env.js
 envVariables.js
@@ -46,3 +47,4 @@ ZenTimerAppFront/
 
 # cypress
 cypress.config.jk
+
