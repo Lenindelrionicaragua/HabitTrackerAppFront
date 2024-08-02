@@ -333,26 +333,16 @@ const StopwatchScreen = () => {
   };
 
   const handleTimeSelection = selectedTime => {
-    const newInitialTime = selectedTime;
-
-    if (newInitialTime < MIN_TIME_MINUTES) {
-      return;
-    }
+    const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
-
-      if (currentTime > 0) {
-        clearInterval(intervalRef.current);
-        setCurrentTime(newInitialTime);
-        setElapsedTime(0);
-        setRunning(false);
-      } else {
-        setCurrentTime(newInitialTime);
-      }
+      setCurrentTime(newInitialTime);
+      setElapsedTime(0);
+      setRunning(false);
     } else {
-      setCurrentTime(MAX_TIME_SECONDS);
       setInitialTime(MAX_TIME_SECONDS);
+      setCurrentTime(MAX_TIME_SECONDS);
     }
   };
 
