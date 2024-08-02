@@ -275,33 +275,34 @@ const StopwatchScreen = () => {
     setAutoSaveTriggered(true);
     setRunning(false);
 
-    if (currentTime === 0 || (currentTime !== 0 && !firstRun)) {
+    if (currentTime === 0 || (!firstRun && currentTime !== 0)) {
       setInfoText("No time recorded. Please start the timer before saving.");
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
     if ((currentTime !== 0 && firstRun) || autoSaveTriggered) {
-      clearInterval(intervalRef.current);
-      setSaveTimeButtonLabel("SAVING");
-      setInfoText("Saving");
-      setButtonsDisabled(true);
-      setCircleColor(green);
-      setInnerCircleColor(green);
-      setAutoSaveTriggered(false);
-
-      setTimeout(() => {
-        performReset();
-
-        setInfoText(
-          "Time saved successfully! Your activity has been recorded."
-        );
-      }, 4000);
-
-      clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
-      logInfo("Saved records");
+      handleSaveProcess();
       return;
     }
+  };
+
+  const handleSaveProcess = () => {
+    clearInterval(intervalRef.current);
+    setSaveTimeButtonLabel("SAVING");
+    setInfoText("Saving");
+    setButtonsDisabled(true);
+    setCircleColor(green);
+    setInnerCircleColor(green);
+    setAutoSaveTriggered(false);
+
+    setTimeout(() => {
+      performReset();
+      setInfoText("Time saved successfully! Your activity has been recorded.");
+    }, 4000);
+
+    clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
+    logInfo("Saved records");
   };
 
   // Function to perform reset
