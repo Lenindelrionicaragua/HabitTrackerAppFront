@@ -357,14 +357,17 @@ const StopwatchScreen = () => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const calculateCircleParams = () => {
+  const calculateCircleParams = (elapsedTime, initialTime) => {
     const radius = 150;
     const circumference = 2 * Math.PI * radius;
 
     const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
     const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
 
-    const timeFraction = effectiveElapsedTime / effectiveInitialTime;
+    const timeFraction =
+      effectiveInitialTime === 0
+        ? 0
+        : Math.min(effectiveElapsedTime / effectiveInitialTime, 1);
 
     let strokeDashoffset = circumference * (1 - timeFraction);
 
