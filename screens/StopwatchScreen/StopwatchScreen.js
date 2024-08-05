@@ -71,7 +71,6 @@ const StopwatchScreen = () => {
   );
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
-  const [autoSaveTriggered, setAutoSaveTriggered] = useState(false);
 
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
@@ -109,9 +108,11 @@ const StopwatchScreen = () => {
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
 
-          if (newTime === 0 && !running) {
+          if (newTime === 0) {
             clearInterval(intervalRef.current);
-            fetchTimeRecords();
+            handleSaveProcess();
+
+            return newTime;
           }
 
           return newTime;
@@ -272,16 +273,15 @@ const StopwatchScreen = () => {
   // Save Time Button
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    setAutoSaveTriggered(true);
     setRunning(false);
 
-    if (currentTime === 0 || (!firstRun && currentTime !== 0)) {
+    if (currentTime === 0 && !firstRun) {
       setInfoText("No time recorded. Please start the timer before saving.");
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
       return;
     }
 
-    if ((currentTime !== 0 && firstRun) || autoSaveTriggered) {
+    if (currentTime !== 0 && firstRun) {
       handleSaveProcess();
       return;
     }
@@ -294,7 +294,6 @@ const StopwatchScreen = () => {
     setButtonsDisabled(true);
     setCircleColor(green);
     setInnerCircleColor(green);
-    setAutoSaveTriggered(false);
 
     setTimeout(() => {
       performReset();
@@ -371,6 +370,9 @@ const StopwatchScreen = () => {
         : 0;
 
     let strokeDashoffset = circumference * (1 - timeFraction);
+
+    // Ensure strokeDashoffset is not negative and round to avoid floating-point issues
+    strokeDashoffset = Math.max(0, Math.round(strokeDashoffset * 1000) / 1000);
 
     if (isNaN(strokeDashoffset) || initialTime <= 0) {
       strokeDashoffset = 0;
