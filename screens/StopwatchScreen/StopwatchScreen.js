@@ -364,15 +364,15 @@ const StopwatchScreen = () => {
     const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
     const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
 
-    // Calculate the fraction of time elapsed
-    const timeFraction = Math.min(
-      effectiveElapsedTime / effectiveInitialTime,
-      1
-    );
+    // Calculate the fraction of time elapsed safely only if initialTime > 0
+    const timeFraction =
+      effectiveInitialTime > 0
+        ? Math.min(effectiveElapsedTime / effectiveInitialTime, 1)
+        : 0;
 
     let strokeDashoffset = circumference * (1 - timeFraction);
 
-    if (isNaN(strokeDashoffset)) {
+    if (isNaN(strokeDashoffset) || initialTime <= 0) {
       strokeDashoffset = 0;
     }
 
