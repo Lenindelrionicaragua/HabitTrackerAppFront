@@ -357,17 +357,18 @@ const StopwatchScreen = () => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const calculateCircleParams = (elapsedTime, initialTime) => {
+  const calculateCircleParams = () => {
     const radius = 150;
     const circumference = 2 * Math.PI * radius;
 
     const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
     const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
 
-    const timeFraction =
-      effectiveInitialTime === 0
-        ? 0
-        : Math.min(effectiveElapsedTime / effectiveInitialTime, 1);
+    // Calculate the fraction of time elapsed
+    const timeFraction = Math.min(
+      effectiveElapsedTime / effectiveInitialTime,
+      1
+    );
 
     let strokeDashoffset = circumference * (1 - timeFraction);
 
@@ -485,6 +486,7 @@ const StopwatchScreen = () => {
             strokeDasharray={circumference}
             strokeDashoffset={isFinite(strokeDashoffset) ? strokeDashoffset : 0}
             strokeLinecap="butt"
+            transform="rotate(-90 180 180)"
           />
 
           <SvgText
