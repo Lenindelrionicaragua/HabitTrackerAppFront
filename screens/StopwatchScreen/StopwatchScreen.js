@@ -4,6 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo } from "../../util/logging";
+import Sound from "react-native-sound";
 
 import {
   MaterialIcons,
@@ -95,9 +96,26 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
+      playAlarmSound();
       fetchTimeRecords();
     }
   }, [timeCompleted]);
+
+  const playAlarmSound = () => {
+    const alarm = new Sound("alarm.mp3", Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        logInfo("Failed to load the sound", error);
+        return;
+      }
+      alarm.play(success => {
+        if (success) {
+          logInfo("Successfully finished playing");
+        } else {
+          logInfo("Playback failed due to audio decoding errors");
+        }
+      });
+    });
+  };
 
   // Start button
   const startStopwatch = () => {
