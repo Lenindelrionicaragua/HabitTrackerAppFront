@@ -60,6 +60,7 @@ const StopwatchScreen = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
+  const [timeCompleted, setTimeCompleted] = useState(false);
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -71,7 +72,6 @@ const StopwatchScreen = () => {
   );
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
-  const [autoSaveTriggered, setAutoSaveTriggered] = useState(false);
 
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
@@ -82,6 +82,8 @@ const StopwatchScreen = () => {
   const [activeButtons, setActiveButtons] = useState({});
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  const pad = num => num.toString().padStart(2, "0");
+
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
@@ -91,7 +93,11 @@ const StopwatchScreen = () => {
     }
   }, [infoText]);
 
-  const pad = num => num.toString().padStart(2, "0");
+  useEffect(() => {
+    if (timeCompleted) {
+      fetchTimeRecords();
+    }
+  }, [timeCompleted]);
 
   // Start button
   const startStopwatch = () => {
@@ -109,9 +115,11 @@ const StopwatchScreen = () => {
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
           );
 
-          if (newTime === 0 && !running) {
+          if (newTime === 0) {
             clearInterval(intervalRef.current);
-            fetchTimeRecords();
+            setTimeCompleted(true);
+
+            return newTime;
           }
 
           return newTime;
@@ -272,16 +280,16 @@ const StopwatchScreen = () => {
   // Save Time Button
   const fetchTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    setAutoSaveTriggered(true);
     setRunning(false);
 
-    if (currentTime === 0 || (!firstRun && currentTime !== 0)) {
+    if (currentTime === 0 && !firstRun) {
       setInfoText("No time recorded. Please start the timer before saving.");
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
+
       return;
     }
 
-    if ((currentTime !== 0 && firstRun) || autoSaveTriggered) {
+    if ((currentTime !== 0 && firstRun) || timeCompleted) {
       handleSaveProcess();
       return;
     }
@@ -294,7 +302,6 @@ const StopwatchScreen = () => {
     setButtonsDisabled(true);
     setCircleColor(green);
     setInnerCircleColor(green);
-    setAutoSaveTriggered(false);
 
     setTimeout(() => {
       performReset();
@@ -321,6 +328,7 @@ const StopwatchScreen = () => {
     setCircleColor(skyBlue);
     setInnerCircleColor(white);
     setButtonsDisabled(false);
+    setTimeCompleted(false);
   };
 
   const handleActivityChange = () => {
@@ -364,11 +372,18 @@ const StopwatchScreen = () => {
     const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
     const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
 
-    const timeFraction = effectiveElapsedTime / effectiveInitialTime;
+    // Calculate the fraction of time elapsed safely only if initialTime > 0
+    const timeFraction =
+      effectiveInitialTime > 0
+        ? Math.min(effectiveElapsedTime / effectiveInitialTime, 1)
+        : 0;
 
     let strokeDashoffset = circumference * (1 - timeFraction);
 
-    if (isNaN(strokeDashoffset)) {
+    // Ensure strokeDashoffset is not negative and round to avoid floating-point issues
+    strokeDashoffset = Math.max(0, Math.round(strokeDashoffset * 1000) / 1000);
+
+    if (isNaN(strokeDashoffset) || initialTime <= 0) {
       strokeDashoffset = 0;
     }
 
@@ -482,6 +497,7 @@ const StopwatchScreen = () => {
             strokeDasharray={circumference}
             strokeDashoffset={isFinite(strokeDashoffset) ? strokeDashoffset : 0}
             strokeLinecap="butt"
+            transform="rotate(-90 180 180)"
           />
 
           <SvgText
