@@ -60,6 +60,7 @@ const StopwatchScreen = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
+  const [timeCompleted, setTimeCompleted] = useState(false);
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -81,6 +82,8 @@ const StopwatchScreen = () => {
   const [activeButtons, setActiveButtons] = useState({});
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  const pad = num => num.toString().padStart(2, "0");
+
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
@@ -90,7 +93,11 @@ const StopwatchScreen = () => {
     }
   }, [infoText]);
 
-  const pad = num => num.toString().padStart(2, "0");
+  useEffect(() => {
+    if (timeCompleted) {
+      fetchTimeRecords();
+    }
+  }, [timeCompleted]);
 
   // Start button
   const startStopwatch = () => {
@@ -110,7 +117,7 @@ const StopwatchScreen = () => {
 
           if (newTime === 0) {
             clearInterval(intervalRef.current);
-            handleSaveProcess();
+            setTimeCompleted(true);
 
             return newTime;
           }
@@ -278,10 +285,11 @@ const StopwatchScreen = () => {
     if (currentTime === 0 && !firstRun) {
       setInfoText("No time recorded. Please start the timer before saving.");
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
+
       return;
     }
 
-    if (currentTime !== 0 && firstRun) {
+    if ((currentTime !== 0 && firstRun) || timeCompleted) {
       handleSaveProcess();
       return;
     }
@@ -320,6 +328,7 @@ const StopwatchScreen = () => {
     setCircleColor(skyBlue);
     setInnerCircleColor(white);
     setButtonsDisabled(false);
+    setTimeCompleted(false);
   };
 
   const handleActivityChange = () => {
