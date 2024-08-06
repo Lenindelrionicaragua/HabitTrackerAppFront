@@ -38,12 +38,12 @@
     "react-native-reanimated": "~3.10.1",
     "react-native-safe-area-context": "^4.8.2",
     "react-native-screens": "~3.31.1",
-    "react-native-sound": "^0.11.2",
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.11",
     "react-native-web-linear-gradient": "^1.1.2",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.1.12",
+    "expo-av": "~14.0.6"
   },
   "resolutions": {
     "@expo/config-plugins": "8.0.4"
