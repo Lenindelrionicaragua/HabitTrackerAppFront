@@ -3,7 +3,8 @@ import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
-import { logInfo } from "../../util/logging";
+import { logInfo, logError } from "../../util/logging";
+import { Audio } from "expo-av";
 
 import {
   MaterialIcons,
@@ -61,6 +62,7 @@ const StopwatchScreen = () => {
   const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
   const [timeCompleted, setTimeCompleted] = useState(false);
+  const [alarm, setAlarm] = useState();
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -95,9 +97,37 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
+      playAlarm();
       fetchTimeRecords();
     }
   }, [timeCompleted]);
+
+  // clean up sound when the component is unmounted
+  useEffect(() => {
+    if (alarm) {
+      return () => {
+        alarm.unloadAsync();
+      };
+    }
+  }, [alarm]);
+
+  async function playAlarm() {
+    try {
+      logInfo("Loading Sound");
+      if (alarm) {
+        await alarm.unloadAsync(); // Release the previous sound if it exists
+      }
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../assets/alarm_1.mp3")
+      );
+      setAlarm(sound);
+
+      logInfo("Playing notification Sound");
+      await sound.playAsync();
+    } catch (error) {
+      logError("Error playing the notification sound:", error);
+    }
+  }
 
   // Start button
   const startStopwatch = () => {
