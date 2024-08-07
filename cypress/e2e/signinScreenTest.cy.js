@@ -12,7 +12,7 @@ describe("SigninScreen", () => {
     // Verify that the sign-up page title exists and has the correct text
     cy.get('[data-testId="signup-page-title"]')
       .should("exist")
-      .should("have.text", "ZenTimer");
+      .should("have.text", "Habit Tracker");
 
     // Verify that the sign-up page subtitle exists and has the correct text
     cy.get('[data-testId="signup-page-sub-title"]')
