@@ -577,7 +577,7 @@ const StopwatchScreen = () => {
           </SvgText>
         </Svg>
       </View>
-      <InfoText testID="info-text-stopwatch-screen">Im focusing on</InfoText>
+      <InfoText testID="info-text-stopwatch-screen">I'm focusing on</InfoText>
       <FocusTitleContainer testID="focus-activity-button">
         <FocusTitleText
           onPress={() => {
