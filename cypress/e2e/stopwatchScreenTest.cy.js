@@ -150,6 +150,13 @@ describe("StopwatchScreen", () => {
       cy.wait(500);
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "Saving");
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Time saved successfully! Your activity has been recorded."
+      );
+
+      cy.get('[data-testId="svg-info-text"]').should("contain.text", "");
     });
   });
 });
