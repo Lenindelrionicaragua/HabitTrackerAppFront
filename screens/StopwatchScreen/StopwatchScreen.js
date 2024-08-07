@@ -115,7 +115,8 @@ const StopwatchScreen = () => {
     try {
       logInfo("Loading Sound");
       if (alarm) {
-        await alarm.unloadAsync(); // Release the previous sound if it exists
+        await alarm.unloadAsync();
+        setAlarm(null); // Release the previous sound if it exists
       }
       const { sound } = await Audio.Sound.createAsync(
         require("../../assets/alarm_1.mp3")
@@ -124,6 +125,14 @@ const StopwatchScreen = () => {
 
       logInfo("Playing notification Sound");
       await sound.playAsync();
+
+      sound.setOnPlaybackStatusUpdate(status => {
+        if (status.didJustFinish) {
+          logInfo("Sound has finished playing");
+          // Unload the sound after playing if not needed
+          sound.unloadAsync();
+        }
+      });
     } catch (error) {
       logError("Error playing the notification sound:", error);
     }

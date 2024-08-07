@@ -15,14 +15,19 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zentimer.app"
+      "bundleIdentifier": "com.zentimer.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This application needs access to the microphone to hear user instructions"
+      }
     },
     "android": {
       "package": "com.zentimer.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "jsEngine": "jsc",
+      "permissions": ["AUDIO_RECORDING"]
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
