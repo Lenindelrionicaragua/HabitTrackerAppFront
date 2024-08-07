@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@expo/config-plugins": "~8.0.0",
+    "@expo/metro-config": "^0.18.10",
     "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
@@ -16,6 +17,7 @@
     "cypress-real-events": "^1.13.0",
     "expo": "51.0.8",
     "expo-auth-session": "~5.5.2",
+    "expo-av": "~14.0.6",
     "expo-camera": "~15.0.9",
     "expo-contacts": "~13.0.3",
     "expo-crypto": "~13.0.2",
@@ -42,8 +44,7 @@
     "react-native-web": "~0.19.11",
     "react-native-web-linear-gradient": "^1.1.2",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.12",
-    "expo-av": "~14.0.6"
+    "styled-components": "^6.1.12"
   },
   "resolutions": {
     "@expo/config-plugins": "8.0.4"
@@ -73,7 +74,7 @@
     "istanbul": "^0.4.5",
     "jest": "^29.7.0",
     "prettier": "3.2.5",
-    "react-native-svg-transformer": "^1.4.0"
+    "react-native-svg-transformer": "^1.5.0"
   },
   "private": true
 }
