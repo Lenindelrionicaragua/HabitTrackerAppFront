@@ -12,8 +12,7 @@ https://zen-timer-app-front.netlify.app/
 
 Test in mobile:
 
-![Captura de Pantalla 2024-08-06 a la(s) 19 13 48](https://github.com/user-attachments/assets/f38d5c0d-6f76-4d31-b077-3f2b1ac26c05)
-
+![Captura de Pantalla 2024-08-07 a la(s) 21 31 34](https://github.com/user-attachments/assets/2b711051-41e6-4711-8380-372458a64553)
 
 Habit Traker: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
