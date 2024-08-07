@@ -143,5 +143,9 @@ describe("StopwatchScreen", () => {
       "contain.text",
       "Timer start with the selected activity."
     );
+
+    cy.get('[data-testId="save-button"]').should("exist").click();
+
+    cy.get('[data-testId="svg-info-text"]').should("contain.text", "saving");
   });
 });
