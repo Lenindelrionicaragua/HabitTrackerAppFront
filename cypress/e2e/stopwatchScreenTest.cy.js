@@ -157,6 +157,25 @@ describe("StopwatchScreen", () => {
       );
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "");
+
+      // Change activity and time after only one click on the Start button
+
+      cy.get('[data-testId="start-button"]').click();
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Default time and activity selected"
+      );
+
+      // Select time
+      cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(5).click();
+      cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(6).click();
+
+      // Select activity
+      cy.get('[data-testId="focus-activity-button"]')
+        .should("contain.text", "Study")
+        .click()
+        .should("contain.text", "Work");
     });
   });
 });
