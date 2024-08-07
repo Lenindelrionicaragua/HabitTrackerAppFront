@@ -195,6 +195,7 @@ const StopwatchScreen = () => {
         defaultTime,
         "Default time selected."
       );
+      setHasStarted(true);
     };
 
     const handleNoActivityTime = () => {
@@ -203,6 +204,7 @@ const StopwatchScreen = () => {
         currentTime,
         "Default activity selected."
       );
+      setHasStarted(true);
     };
 
     const handleActivityTime = () => {
@@ -211,6 +213,7 @@ const StopwatchScreen = () => {
       clearInfoTextAfter(5000);
       setRunning(true);
       setFirstRun(true);
+      setHasStarted(true);
     };
 
     const resumeTimer = () => {
@@ -232,8 +235,14 @@ const StopwatchScreen = () => {
       } else if (activityIndex !== null && currentTime > 0) {
         handleActivityTime();
       }
-    } else if (hasStarted && activityIndex !== null && currentTime > 0) {
-      resumeTimer();
+    } else {
+      if (activityIndex !== null && currentTime > 0) {
+        if (!firstRun) {
+          handleActivityTime();
+        } else {
+          resumeTimer();
+        }
+      }
     }
   };
 
@@ -460,9 +469,12 @@ const StopwatchScreen = () => {
   });
 
   return (
-    <StyledContainer>
-      <ScreenTitle>Habit Tracker</ScreenTitle>
-      <TimeButtonsContainer style={getButtonStyles(13)}>
+    <StyledContainer testID="stopwatch-screen-container">
+      <ScreenTitle testID="stopwatch-title">Habit Tracker</ScreenTitle>
+      <TimeButtonsContainer
+        style={getButtonStyles(13)}
+        testID="stopwatch-time-buttons"
+      >
         <TimeButton
           onPress={() => handleTimeButtonPress(currentTime - 60, 12)}
           style={getButtonStyles(12)}
@@ -515,7 +527,7 @@ const StopwatchScreen = () => {
       </TimeButtonsContainer>
 
       {/* <Line /> */}
-      <View style={styles.svgContainer}>
+      <View style={styles.svgContainer} testID="svg-container">
         <Svg height="360" width="360" viewBox="0 0 360 360">
           <Rect x="0" y="0" width="360" height="360" fill="transparent" />
           <Circle
@@ -525,6 +537,7 @@ const StopwatchScreen = () => {
             stroke={circleColor}
             strokeWidth="20"
             fill="none"
+            testID="circle"
           />
           <Circle
             cx="180"
@@ -537,6 +550,7 @@ const StopwatchScreen = () => {
             strokeDashoffset={isFinite(strokeDashoffset) ? strokeDashoffset : 0}
             strokeLinecap="butt"
             transform="rotate(-90 180 180)"
+            testID="inner-circle"
           />
 
           <SvgText
@@ -547,6 +561,7 @@ const StopwatchScreen = () => {
             fontSize="48"
             fontWeight="bold"
             fill={black}
+            testID="svg-time-text"
           >
             {formatTime(currentTime)}
           </SvgText>
@@ -556,13 +571,14 @@ const StopwatchScreen = () => {
             textAnchor="middle"
             fontSize="10"
             fill={black}
+            testID="svg-info-text"
           >
             {infoText}
           </SvgText>
         </Svg>
       </View>
-      <InfoText>Im Focusing on</InfoText>
-      <FocusTitleContainer>
+      <InfoText testID="info-text-stopwatch-screen">Im focusing on</InfoText>
+      <FocusTitleContainer testID="focus-activity-button">
         <FocusTitleText
           onPress={() => {
             if (!buttonsDisabled && !firstRun) {
@@ -590,6 +606,7 @@ const StopwatchScreen = () => {
             }
           }}
           disabled={buttonsDisabled}
+          testID="reset-button"
         >
           <MaterialCommunityIcons
             name="restart"
@@ -607,6 +624,7 @@ const StopwatchScreen = () => {
               handleButtonPress(7);
             }}
             disabled={buttonsDisabled}
+            testID="pause-button"
           >
             <AntDesign
               name="pause"
@@ -623,6 +641,7 @@ const StopwatchScreen = () => {
               }
             }}
             disabled={buttonsDisabled}
+            testID="start-button"
           >
             <MaterialIcons
               name="play-arrow"
@@ -640,6 +659,7 @@ const StopwatchScreen = () => {
             }
           }}
           disabled={buttonsDisabled}
+          testID="save-button"
         >
           <Feather
             name="save"
