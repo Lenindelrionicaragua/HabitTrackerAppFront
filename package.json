@@ -17,7 +17,6 @@
     "cypress-real-events": "^1.13.0",
     "expo": "51.0.8",
     "expo-auth-session": "~5.5.2",
-    "expo-av": "~14.0.6",
     "expo-camera": "~15.0.9",
     "expo-contacts": "~13.0.3",
     "expo-crypto": "~13.0.2",
