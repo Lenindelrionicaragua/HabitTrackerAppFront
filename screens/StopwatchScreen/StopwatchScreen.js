@@ -99,31 +99,46 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
-      playAlarm();
+      scheduleNotification();
       fetchTimeRecords();
     }
   }, [timeCompleted]);
 
+  // notifications
+
   useEffect(() => {
-    async function loadAudio() {
-      try {
-        const asset = Asset.fromModule(require("../../assets/alarm_1.mp3"));
-        await asset.downloadAsync();
-        setAlarm(asset);
-      } catch (error) {
-        logError("Error loading audio asset:", error);
+    const configureNotifications = async () => {
+      if (Device.osName === "iOS") {
+        await Notifications.requestPermissionsAsync();
       }
-    }
 
-    loadAudio();
-
-    // Clean up sound when the component is unmounted
-    return () => {
-      if (alarm) {
-        alarm.unloadAsync();
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C"
+        });
       }
     };
+
+    configureNotifications();
   }, []);
+
+  const scheduleNotification = async () => {
+    try {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          sound: "./assets/alarm_2.mp3"
+        },
+        trigger: {
+          seconds: 1
+        }
+      });
+    } catch (error) {
+      logError("Error with the program notification:", error);
+    }
+  };
 
   async function playAlarm() {
     try {
