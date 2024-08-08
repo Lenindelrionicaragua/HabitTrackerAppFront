@@ -26,14 +26,14 @@
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       },
-      "jsEngine": "hermes",
-      "permissions": ["AUDIO_RECORDING"]
+      "jsEngine": "jsc",
+      "permissions": ["AUDIO_RECORDING"],
+      "notification": {
+        "sound": "./assets/alarm_2.mp3"
+      }
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
-    },
-    "expo-notifications": {
-      "sound": "./assets/alarm_2.mp3"
     },
     "extra": {
       "eas": {
