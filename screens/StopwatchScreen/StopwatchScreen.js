@@ -5,6 +5,7 @@ import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
 import { Audio } from "expo-av";
+import { Asset } from "expo-asset";
 
 import {
   MaterialIcons,
@@ -102,37 +103,47 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  // clean up sound when the component is unmounted
   useEffect(() => {
-    if (alarm) {
-      return () => {
-        alarm.unloadAsync();
-      };
+    async function loadAudio() {
+      try {
+        const asset = Asset.fromModule(require("../../assets/alarm_1.mp3"));
+        await asset.downloadAsync();
+        setAlarm(asset);
+      } catch (error) {
+        logError("Error loading audio asset:", error);
+      }
     }
-  }, [alarm]);
+
+    loadAudio();
+
+    // Clean up sound when the component is unmounted
+    return () => {
+      if (alarm) {
+        alarm.unloadAsync();
+      }
+    };
+  }, []);
 
   async function playAlarm() {
     try {
-      logInfo("Loading Sound");
       if (alarm) {
-        await alarm.unloadAsync();
-        setAlarm(null); // Release the previous sound if it exists
+        const { sound } = await Audio.Sound.createAsync({
+          uri: alarm.localUri
+        });
+        setAlarm(sound);
+
+        logInfo("Playing notification Sound");
+        await sound.playAsync();
+
+        sound.setOnPlaybackStatusUpdate(status => {
+          if (status.didJustFinish) {
+            logInfo("Sound has finished playing");
+            sound.unloadAsync();
+          }
+        });
+      } else {
+        logError("Audio asset is not loaded");
       }
-      const { sound } = await Audio.Sound.createAsync(
-        require("../../assets/alarm_1.mp3")
-      );
-      setAlarm(sound);
-
-      logInfo("Playing notification Sound");
-      await sound.playAsync();
-
-      sound.setOnPlaybackStatusUpdate(status => {
-        if (status.didJustFinish) {
-          logInfo("Sound has finished playing");
-          // Unload the sound after playing if not needed
-          sound.unloadAsync();
-        }
-      });
     } catch (error) {
       logError("Error playing the notification sound:", error);
     }
