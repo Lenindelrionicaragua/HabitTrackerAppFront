@@ -32,6 +32,9 @@
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
     },
+    "expo-notifications": {
+      "sound": "./assets/alarm_2.mp3"
+    },
     "extra": {
       "eas": {
         "projectId": "adc59aa6-8d0c-4ae7-82dc-31d3450b45ed"
