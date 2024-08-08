@@ -44,7 +44,7 @@
     "react-native-web-linear-gradient": "^1.1.2",
     "styled": "^1.0.0",
     "styled-components": "^6.1.12",
-    "expo-notifications": "~0.28.15"
+    "expo-av": "~14.0.6"
   },
   "resolutions": {
     "@expo/config-plugins": "8.0.4"
