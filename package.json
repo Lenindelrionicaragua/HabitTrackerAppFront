@@ -21,6 +21,7 @@
     "expo-contacts": "~13.0.5",
     "expo-crypto": "~13.0.2",
     "expo-dev-client": "~4.0.21",
+    "expo-device": "~6.0.2",
     "expo-linear-gradient": "~13.0.2",
     "expo-notifications": "~0.28.15",
     "expo-random": "~14.0.1",
@@ -31,7 +32,6 @@
     "formik": "^2.4.5",
     "jest-expo": "^51.0.0",
     "jslint": "^0.12.1",
-    "native-notify": "^4.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
@@ -46,8 +46,7 @@
     "react-native-web": "~0.19.10",
     "react-native-web-linear-gradient": "^1.1.2",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.12",
-    "expo-device": "~6.0.2"
+    "styled-components": "^6.1.12"
   },
   "resolutions": {
     "@expo/config-plugins": "8.0.4"
