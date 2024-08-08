@@ -5,10 +5,13 @@ import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
+import registerNNPushToken from "native-notify";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  registerNNPushToken(22942, "zqsru87804DkSscDfE2JsL");
+
   const [appReady, setAppReady] = useState(false);
   const [storedCredentials, setStoredCredentials] = useState("");
 
