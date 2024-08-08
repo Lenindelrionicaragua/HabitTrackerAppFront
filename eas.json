@@ -11,7 +11,10 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "true"
+        }
       }
     },
     "preview": {
