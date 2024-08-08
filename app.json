@@ -26,11 +26,8 @@
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       },
-      "jsEngine": "jsc",
-      "permissions": ["AUDIO_RECORDING"],
-      "notification": {
-        "sound": "./assets/alarm_2.mp3"
-      }
+      "jsEngine": "hermes",
+      "permissions": ["AUDIO_RECORDING"]
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
