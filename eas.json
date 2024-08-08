@@ -28,7 +28,10 @@
         "resourceClass": "m-medium"
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "true"
+        }
       }
     }
   },
