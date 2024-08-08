@@ -27,7 +27,10 @@
         "backgroundColor": "#ffffff"
       },
       "jsEngine": "jsc",
-      "permissions": ["AUDIO_RECORDING"]
+      "permissions": ["AUDIO_RECORDING"],
+      "notification": {
+        "sound": "./assets/alarm_2.mp3"
+      }
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
