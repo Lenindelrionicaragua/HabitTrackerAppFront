@@ -4,7 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
-import * as Notifications from "expo-notifications";
+import { Audio } from "expo-av";
 
 import {
   MaterialIcons,
@@ -97,36 +97,44 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
-      triggerNotification();
+      playAlarm();
       fetchTimeRecords();
     }
   }, [timeCompleted]);
 
-  // Notification permissions
-
+  // clean up sound when the component is unmounted
   useEffect(() => {
-    const requestNotificationPermissions = async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== "granted") {
-        logError("Permission not granted for notifications!");
-      }
-    };
+    if (alarm) {
+      return () => {
+        alarm.unloadAsync();
+      };
+    }
+  }, [alarm]);
 
-    requestNotificationPermissions();
-  }, []);
-
-  async function triggerNotification() {
+  async function playAlarm() {
     try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Time's up!",
-          body: "Your timer has ended.",
-          sound: Platform.OS === "android" ? "default" : "default" // Make sure the sound is set
-        },
-        trigger: null
+      logInfo("Loading Sound");
+      if (alarm) {
+        await alarm.unloadAsync();
+        setAlarm(null); // Release the previous sound if it exists
+      }
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../assets/alarm_1.mp3")
+      );
+      setAlarm(sound);
+
+      logInfo("Playing notification Sound");
+      await sound.playAsync();
+
+      sound.setOnPlaybackStatusUpdate(status => {
+        if (status.didJustFinish) {
+          logInfo("Sound has finished playing");
+          // Unload the sound after playing if not needed
+          sound.unloadAsync();
+        }
       });
     } catch (error) {
-      logError("Error scheduling notification:", error);
+      logError("Error playing the notification sound:", error);
     }
   }
 
