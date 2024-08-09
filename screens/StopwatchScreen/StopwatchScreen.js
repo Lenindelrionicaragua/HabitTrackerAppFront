@@ -4,7 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
-// import { Audio } from "expo-av";
+import Audio from "expo-av";
 
 import {
   MaterialIcons,
@@ -97,56 +97,56 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
-      // playAlarm();
+      playAlarm();
       fetchTimeRecords();
     }
   }, [timeCompleted]);
 
-  // useEffect(() => {
-  //   async function loadAudio() {
-  //     try {
-  //       const asset = Asset.fromModule(require("../../assets/alarm_1.mp3"));
-  //       await asset.downloadAsync();
-  //       setAlarm(asset);
-  //     } catch (error) {
-  //       logError("Error loading audio asset:", error);
-  //     }
-  //   }
+  useEffect(() => {
+    async function loadAudio() {
+      try {
+        const asset = Asset.fromModule(require("../../assets/alarm_1.mp3"));
+        await asset.downloadAsync();
+        setAlarm(asset);
+      } catch (error) {
+        logError("Error loading audio asset:", error);
+      }
+    }
 
-  //   loadAudio();
+    loadAudio();
 
-  //   // Clean up sound when the component is unmounted
-  //   return () => {
-  //     if (alarm) {
-  //       alarm.unloadAsync();
-  //     }
-  //   };
-  // }, []);
+    // Clean up sound when the component is unmounted
+    return () => {
+      if (alarm) {
+        alarm.unloadAsync();
+      }
+    };
+  }, []);
 
-  // async function playAlarm() {
-  //   try {
-  //     if (alarm) {
-  //       const { sound } = await Audio.Sound.createAsync({
-  //         uri: alarm.localUri
-  //       });
-  //       setAlarm(sound);
+  async function playAlarm() {
+    try {
+      if (alarm) {
+        const { sound } = await Audio.Sound.createAsync({
+          uri: alarm.localUri
+        });
+        setAlarm(sound);
 
-  //       logInfo("Playing notification Sound");
-  //       await sound.playAsync();
+        logInfo("Playing notification Sound");
+        await sound.playAsync();
 
-  //       sound.setOnPlaybackStatusUpdate(status => {
-  //         if (status.didJustFinish) {
-  //           logInfo("Sound has finished playing");
-  //           sound.unloadAsync();
-  //         }
-  //       });
-  //     } else {
-  //       logError("Audio asset is not loaded");
-  //     }
-  //   } catch (error) {
-  //     logError("Error playing the notification sound:", error);
-  //   }
-  // }
+        sound.setOnPlaybackStatusUpdate(status => {
+          if (status.didJustFinish) {
+            logInfo("Sound has finished playing");
+            sound.unloadAsync();
+          }
+        });
+      } else {
+        logError("Audio asset is not loaded");
+      }
+    } catch (error) {
+      logError("Error playing the notification sound:", error);
+    }
+  }
 
   // Start button
   const startStopwatch = () => {
