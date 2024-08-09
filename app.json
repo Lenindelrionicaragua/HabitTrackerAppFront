@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ZenTimer",
+    "name": "TimeTracker",
     "slug": "ZenTimer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,10 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zentimer.app",
-      "infoPlist": {
-        "NSMicrophoneUsageDescription": "This application needs access to the microphone to hear user instructions"
-      }
+      "bundleIdentifier": "com.zentimer.app"
     },
     "android": {
       "package": "com.zentimer.app",
