@@ -37,6 +37,14 @@
         "projectId": "adc59aa6-8d0c-4ae7-82dc-31d3450b45ed"
       }
     },
-    "owner": "lenindelrionicaragua"
+    "owner": "lenindelrionicaragua",
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ]
+    ]
   }
 }
