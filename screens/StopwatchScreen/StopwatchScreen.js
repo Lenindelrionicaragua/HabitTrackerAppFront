@@ -102,6 +102,8 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
+  // alarm (working in web)
+
   // clean up sound when the component is unmounted
   useEffect(() => {
     if (alarm) {
@@ -119,7 +121,7 @@ const StopwatchScreen = () => {
         setAlarm(null); // Release the previous sound if it exists
       }
       const { sound } = await Audio.Sound.createAsync(
-        require("../../assets/alarm_1.mp3")
+        require("../../assets/alarm_2.wav")
       );
       setAlarm(sound);
 
