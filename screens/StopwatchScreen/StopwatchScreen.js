@@ -4,6 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
+import { Audio } from "expo-av";
 
 import {
   MaterialIcons,
@@ -101,43 +102,41 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  // Clean up sound when the component is unmounted
-  // useEffect(() => {
-  //   return () => {
-  //     if (alarm) {
-  //       alarm.release();
-  //     }
-  //   };
-  // }, [alarm]);
+  // clean up sound when the component is unmounted
+  useEffect(() => {
+    if (alarm) {
+      return () => {
+        alarm.unloadAsync();
+      };
+    }
+  }, [alarm]);
 
-  // function playAlarm() {
-  //   try {
-  //     logInfo("Loading Sound");
-  //     if (alarm) {
-  //       alarm.stop(() => alarm.release());
-  //       setAlarm(null);
-  //     }
+  async function playAlarm() {
+    try {
+      logInfo("Loading Sound");
+      if (alarm) {
+        await alarm.unloadAsync();
+        setAlarm(null); // Release the previous sound if it exists
+      }
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../assets/alarm_1.mp3")
+      );
+      setAlarm(sound);
 
-  //     const sound = new Sound(require("../../assets/alarm_1.mp3"), error => {
-  //       if (error) {
-  //         logError("Error loading the notification sound:", error);
-  //         return;
-  //       }
-  //       setAlarm(sound);
-  //       logInfo("Playing notification Sound");
-  //       sound.play(success => {
-  //         if (success) {
-  //           logInfo("Sound has finished playing");
-  //         } else {
-  //           logError("Playback failed due to audio decoding errors");
-  //         }
-  //         sound.release();
-  //       });
-  //     });
-  //   } catch (error) {
-  //     logError("Error playing the notification sound:", error);
-  //   }
-  // }
+      logInfo("Playing notification Sound");
+      await sound.playAsync();
+
+      sound.setOnPlaybackStatusUpdate(status => {
+        if (status.didJustFinish) {
+          logInfo("Sound has finished playing");
+          // Unload the sound after playing if not needed
+          sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      logError("Error playing the notification sound:", error);
+    }
+  }
 
   // Start button
   const startStopwatch = () => {
