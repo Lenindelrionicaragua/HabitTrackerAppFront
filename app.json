@@ -15,7 +15,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zentimer.app"
+      "bundleIdentifier": "com.zentimer.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This application needs access to the microphone to hear user instructions"
+      }
     },
     "android": {
       "package": "com.zentimer.app",
@@ -23,11 +26,8 @@
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       },
-      "jsEngine": "jsc",
-      "permissions": ["AUDIO_RECORDING"],
-      "notification": {
-        "sound": "./assets/alarm_2.mp3"
-      }
+      "jsEngine": "hermes",
+      "permissions": ["AUDIO_RECORDING"]
     },
     "web": {
       "favicon": "./assets/logoZenTimer2.png"
@@ -37,14 +37,6 @@
         "projectId": "adc59aa6-8d0c-4ae7-82dc-31d3450b45ed"
       }
     },
-    "owner": "lenindelrionicaragua",
-    "plugins": [
-      [
-        "expo-av",
-        {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
-        }
-      ]
-    ]
+    "owner": "lenindelrionicaragua"
   }
 }
