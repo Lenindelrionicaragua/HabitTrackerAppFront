@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/logoZenTimer2.png",
         "backgroundColor": "#ffffff"
       },
-      "jsEngine": "jsc",
+      "jsEngine": "hermes",
       "permissions": ["AUDIO_RECORDING"]
     },
     "web": {

@@ -11,7 +11,10 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "false"
+        }
       }
     },
     "preview": {
@@ -20,7 +23,10 @@
         "resourceClass": "m-medium"
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "false"
+        }
       }
     },
     "production": {
@@ -28,7 +34,10 @@
         "resourceClass": "m-medium"
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "false"
+        }
       }
     }
   },
