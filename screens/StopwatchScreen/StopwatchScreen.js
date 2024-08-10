@@ -102,7 +102,10 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  // alarm (working in web)
+  // alarm
+
+  // working in web, in the future we have to eject app from expo,
+  // and will work in mobile.
 
   // clean up sound when the component is unmounted
   useEffect(() => {
