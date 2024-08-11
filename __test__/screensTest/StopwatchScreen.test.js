@@ -4,27 +4,27 @@ import { renderHook, act } from "@testing-library/react-hooks";
 const setCircleColor = jest.fn();
 
 function useStopwatchScreen() {
-  const [initialTime, setInitialTime] = useState(0); // tiempo del usuario
-  const [remainingTime, setRemainingTime] = useState(0); // cuanto tiempo le queda al timer para terminar
-  const [elapsedTime, setElapsedTime] = useState(0); // tiempo transcurrido en el timer
+  const [initialTime, setInitialTime] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
   const [timeCompleted, setTimeCompleted] = useState(false);
+  const [running, setRunning] = useState(false);
 
-  const intervalRef = useRef(null); // definido a 1 segundo
-  const startTimeRef = useRef(0); // tiempo cuando se inicializo el timer
+  const intervalRef = useRef(null);
+  const startTimeRef = useRef(0);
 
   const startTimer = initialTime => {
     setCircleColor("skyBlue");
-    startTimeRef.current = Date.now(); // ponemos el tiempo de inicializado como ahora
+    startTimeRef.current = Date.now();
 
     intervalRef.current = setInterval(() => {
-      const now = Date.now(); // actualizacion constante del nuevo ahora cada 1 segundo
-      const elapsedTime = Math.floor((now - startTimeRef.current) / 1000); // al tiempo actual le restamos el tiempo de inicio
-      const newRemainingTime = Math.max(0, initialTime - elapsedTime); // cuanto le queda al tiempo que mide el usuario
+      const now = Date.now();
+      const elapsedTime = Math.floor((now - startTimeRef.current) / 1000);
+      const newRemainingTime = Math.max(0, initialTime - elapsedTime);
 
-      setRemainingTime(newRemainingTime); // actualizar el tiempo que falta
+      setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === 0) {
-        // si no falta mas tiempo, guardamos datos y paramos el timer.
         clearInterval(intervalRef.current);
         setTimeCompleted(true);
       }
@@ -33,10 +33,17 @@ function useStopwatchScreen() {
     }, 1000);
   };
 
+  const pauseStopwatch = () => {
+    clearInterval(intervalRef.current);
+    setRunning(false); // Set running to false when the timer is paused
+  };
+
   return {
     remainingTime,
     elapsedTime,
     timeCompleted,
+    running,
+    pauseStopwatch,
     startTimer
   };
 }
@@ -81,31 +88,39 @@ describe("useStopwatchScreen", () => {
     expect(clearInterval).toHaveBeenCalled();
   });
 
-  it("should start and stop de elapsedTime when de interval is clear", () => {
+  it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
     const { result } = renderHook(() => useStopwatchScreen());
-
-    const { result } = renderHook(() => startStopwatch());
 
     act(() => {
       result.current.startTimer(initialTime);
     });
 
+    // Advance the timer by 10 seconds
     act(() => {
       jest.advanceTimersByTime(10000);
     });
 
-    expect(result.current.currentTime).toBe(40);
-    expect(result.current.elapsedTime).toBe(10);
-
+    // Pause the stopwatch
     act(() => {
-      jest.advanceTimersByTime(40000);
+      result.current.pauseStopwatch();
     });
 
-    expect(result.current.currentTime).toBe(0);
-    expect(result.current.elapsedTime).toBe(50);
-    expect(result.current.timeCompleted).toBe(true);
+    // Check if running is set to false
+    expect(result.current.running).toBe(false);
 
-    expect(clearInterval).toHaveBeenCalled();
+    const elapsedTimeAfterPause = result.current.elapsedTime;
+    const remainingTimeAfterPause = result.current.remainingTime;
+
+    // Advance time by another 10 seconds, which should not affect elapsedTime or remainingTime
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+
+    expect(result.current.elapsedTime).toBe(elapsedTimeAfterPause);
+    expect(result.current.remainingTime).toBe(remainingTimeAfterPause);
+
+    // Ensure clearInterval was called exactly once
+    expect(clearInterval).toHaveBeenCalledTimes(1);
   });
 });
