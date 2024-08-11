@@ -56,7 +56,7 @@ const activities = [
 
 const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
 
   const [hasStarted, setHasStarted] = useState(false);
@@ -163,7 +163,7 @@ const StopwatchScreen = () => {
       }
 
       intervalRef.current = setInterval(() => {
-        setCurrentTime(prevTime => {
+        setRemainingTime(prevTime => {
           const newTime = Math.max(
             0,
             initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
@@ -180,7 +180,7 @@ const StopwatchScreen = () => {
         });
 
         setElapsedTime(prevElapsedTime => {
-          if (currentTime === 0) {
+          if (remainingTime === 0) {
             return 0;
           }
           return prevElapsedTime + 1;
@@ -216,14 +216,14 @@ const StopwatchScreen = () => {
     const handleNoActivityTime = () => {
       setDefaultsAndStartTimer(
         defaultActivityIndex,
-        currentTime,
+        remainingTime,
         "Default activity selected."
       );
       setHasStarted(true);
     };
 
     const handleActivityTime = () => {
-      startTimer(currentTime);
+      startTimer(remainingTime);
       setInfoText("Timer start with the selected activity.");
       clearInfoTextAfter(5000);
       setRunning(true);
@@ -232,7 +232,7 @@ const StopwatchScreen = () => {
     };
 
     const resumeTimer = () => {
-      startTimer(currentTime);
+      startTimer(remainingTime);
       setRunning(true);
       setFirstRun(true);
       setInfoText("Timer resume.");
@@ -241,17 +241,17 @@ const StopwatchScreen = () => {
 
     // Main logic
     if (!hasStarted) {
-      if (activityIndex === null && currentTime === 0) {
+      if (activityIndex === null && remainingTime === 0) {
         handleNoActivityNoTime();
-      } else if (activityIndex !== null && currentTime === 0) {
+      } else if (activityIndex !== null && remainingTime === 0) {
         handleActivityNoTime();
-      } else if (activityIndex === null && currentTime > 0) {
+      } else if (activityIndex === null && remainingTime > 0) {
         handleNoActivityTime();
-      } else if (activityIndex !== null && currentTime > 0) {
+      } else if (activityIndex !== null && remainingTime > 0) {
         handleActivityTime();
       }
     } else {
-      if (activityIndex !== null && currentTime > 0) {
+      if (activityIndex !== null && remainingTime > 0) {
         if (!firstRun) {
           handleActivityTime();
         } else {
@@ -295,7 +295,7 @@ const StopwatchScreen = () => {
     };
 
     const handleResetClicksZero = () => {
-      if (currentTime === 0) {
+      if (remainingTime === 0) {
         updateButtonAndInfoText(
           "RESET",
           "The timer is already at zero. Do you want to reset it?",
@@ -313,7 +313,7 @@ const StopwatchScreen = () => {
     };
 
     const handleResetClicksOne = () => {
-      if (currentTime !== 0) {
+      if (remainingTime !== 0) {
         performReset();
         updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
         clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
@@ -321,7 +321,7 @@ const StopwatchScreen = () => {
     };
 
     const handleResetClicksTwoOrMore = () => {
-      if (currentTime === 0) {
+      if (remainingTime === 0) {
         setResetClicks(0);
         setHasStarted(false);
         updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
@@ -347,14 +347,14 @@ const StopwatchScreen = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
     setRunning(false);
 
-    if (currentTime === 0 && !firstRun) {
+    if (remainingTime === 0 && !firstRun) {
       setInfoText("No time recorded. Please start the timer before saving.");
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
 
       return;
     }
 
-    if ((currentTime !== 0 && firstRun) || timeCompleted) {
+    if ((remainingTime !== 0 && firstRun) || timeCompleted) {
       handleSaveProcess();
       return;
     }
@@ -379,7 +379,7 @@ const StopwatchScreen = () => {
 
   // Function to perform reset
   const performReset = () => {
-    setCurrentTime(0);
+    setRemainingTime(0);
     setInitialTime(0);
     setElapsedTime(0);
     setActivityIndex(null);
@@ -410,12 +410,12 @@ const StopwatchScreen = () => {
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
       setInitialTime(newInitialTime);
-      setCurrentTime(newInitialTime);
+      setRemainingTime(newInitialTime);
       setElapsedTime(0);
       setRunning(false);
     } else {
       setInitialTime(MAX_TIME_SECONDS);
-      setCurrentTime(MAX_TIME_SECONDS);
+      setRemainingTime(MAX_TIME_SECONDS);
     }
   };
 
@@ -493,7 +493,7 @@ const StopwatchScreen = () => {
         testID="stopwatch-time-buttons"
       >
         <TimeButton
-          onPress={() => handleTimeButtonPress(currentTime - 60, 12)}
+          onPress={() => handleTimeButtonPress(remainingTime - 60, 12)}
           style={getButtonStyles(12)}
           disabled={running || firstRun}
         >
@@ -535,7 +535,7 @@ const StopwatchScreen = () => {
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
         <TimeButton
-          onPress={() => handleTimeButtonPress(currentTime + 60, 11)}
+          onPress={() => handleTimeButtonPress(remainingTime + 60, 11)}
           style={getButtonStyles(11)}
           disabled={running || firstRun}
         >
@@ -580,7 +580,7 @@ const StopwatchScreen = () => {
             fill={black}
             testID="svg-time-text"
           >
-            {formatTime(currentTime)}
+            {formatTime(remainingTime)}
           </SvgText>
           <SvgText
             x="180"
