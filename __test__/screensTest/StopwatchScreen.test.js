@@ -1,28 +1,26 @@
 import { useState, useRef } from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 
-const setCircleColor = jest.fn();
-
 function startStopwatch() {
+  const [initialTime, setInitialTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [pausedTimeRef, setPausedTimeRef] = useState(null);
+  const [pausedTime, setPausedTime] = useState(0);
   const [timeCompleted, setTimeCompleted] = useState(false);
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
 
   const startTimer = initialTime => {
-    setCircleColor("skyBlue");
-    setCurrentTime(initialTime);
     startTimeRef.current = Date.now();
 
     intervalRef.current = setInterval(() => {
       const now = Date.now();
-      const totalElapsedTime = Math.floor((now - startTimeRef.current) / 1000);
-      const elapsedTime = totalElapsedTime - pausedTimeRef;
-
+      const totalTime = Math.floor((now - startTimeRef.current) / 1000);
+      const pausedTime =  totalTime - currentTime;
+const elapseTime = 
       const newTime = Math.max(0, initialTime - elapsedTime);
+    
 
       setCurrentTime(newTime);
 
