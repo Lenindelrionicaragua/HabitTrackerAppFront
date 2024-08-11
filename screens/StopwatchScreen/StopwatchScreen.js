@@ -58,6 +58,7 @@ const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [pausedTimeRef, setPausedTimeRef] = useState(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
@@ -153,28 +154,22 @@ const StopwatchScreen = () => {
       startTimeRef.current = Date.now();
 
       intervalRef.current = setInterval(() => {
-        setCurrentTime(prevTime => {
-          const newTime = Math.max(
-            0,
-            initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
-          );
+        const now = Date.now();
+        const totalTimeElapsed = Math.floor(
+          (now - startTimeRef.current) / 1000
+        );
+        const timeElapsed = totalTimeElapsed - pausedTimeRef;
 
-          if (newTime === 0) {
-            clearInterval(intervalRef.current);
-            setTimeCompleted(true);
+        const newTime = Math.max(0, initialTime - timeElapsed);
 
-            return newTime;
-          }
+        setCurrentTime(newTime);
 
-          return newTime;
-        });
+        if (newTime === 0) {
+          clearInterval(intervalRef.current);
+          setTimeCompleted(true);
+        }
 
-        setElapsedTime(prevElapsedTime => {
-          if (currentTime === 0) {
-            return 0;
-          }
-          return prevElapsedTime + 1;
-        });
+        setElapsedTime(timeElapsed);
       }, 1000);
     };
 
@@ -255,6 +250,7 @@ const StopwatchScreen = () => {
   const pauseStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
+    setPausedTimeRef(Date.now());
     clearInterval(intervalRef.current);
     setRunning(false);
   };

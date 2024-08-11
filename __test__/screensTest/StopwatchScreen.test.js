@@ -4,9 +4,9 @@ import { renderHook, act } from "@testing-library/react-hooks";
 const setCircleColor = jest.fn();
 
 function startStopwatch() {
-  const [initialTime, setInitialTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [pausedTimeRef, setPausedTimeRef] = useState(null);
   const [timeCompleted, setTimeCompleted] = useState(false);
 
   const intervalRef = useRef(null);
@@ -14,31 +14,24 @@ function startStopwatch() {
 
   const startTimer = initialTime => {
     setCircleColor("skyBlue");
+    setCurrentTime(initialTime);
     startTimeRef.current = Date.now();
 
     intervalRef.current = setInterval(() => {
-      setCurrentTime(prevTime => {
-        const newTime = Math.max(
-          0,
-          initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
-        );
+      const now = Date.now();
+      const totalElapsedTime = Math.floor((now - startTimeRef.current) / 1000);
+      const elapsedTime = totalElapsedTime - pausedTimeRef;
 
-        if (newTime === 0) {
-          clearInterval(intervalRef.current);
-          setTimeCompleted(true);
+      const newTime = Math.max(0, initialTime - elapsedTime);
 
-          return newTime;
-        }
+      setCurrentTime(newTime);
 
-        return newTime;
-      });
+      if (newTime === 0) {
+        clearInterval(intervalRef.current);
+        setTimeCompleted(true);
+      }
 
-      setElapsedTime(prevElapsedTime => {
-        if (currentTime === 0) {
-          return 0;
-        }
-        return prevElapsedTime + 1;
-      });
+      setElapsedTime(elapsedTime);
     }, 1000);
   };
 
@@ -56,14 +49,16 @@ describe("startTimer", () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.clearAllMocks();
+    jest.spyOn(global, "clearInterval");
   });
 
   afterEach(() => {
     jest.useRealTimers();
+    jest.clearAllMocks();
   });
 
   it("should decrease the time accurately and consistently", () => {
-    const initialTime = 3000;
+    const initialTime = 50;
     const { result } = renderHook(() => startStopwatch());
 
     act(() => {
@@ -71,20 +66,47 @@ describe("startTimer", () => {
     });
 
     act(() => {
-      jest.advanceTimersByTime(590);
+      jest.advanceTimersByTime(10000);
     });
 
-    expect(result.current.currentTime).toBe(2410);
-    expect(result.current.elapsedTime).toBe(590);
+    expect(result.current.currentTime).toBe(40);
+    expect(result.current.elapsedTime).toBe(10);
 
     act(() => {
-      jest.advanceTimersByTime(2410);
+      jest.advanceTimersByTime(40000);
     });
 
     expect(result.current.currentTime).toBe(0);
-    expect(result.current.elapsedTime).toBe(3000);
+    expect(result.current.elapsedTime).toBe(50);
     expect(result.current.timeCompleted).toBe(true);
 
     expect(clearInterval).toHaveBeenCalled();
   });
+
+  //   it("should start and stop de elapsedTime when de interval is cleaar", () => {
+  //     setPauseElapsedTime = 50;
+
+  //     const { result } = renderHook(() => startStopwatch());
+
+  //     act(() => {
+  //       result.current.startTimer(initialTime);
+  //     });
+
+  //     act(() => {
+  //       jest.advanceTimersByTime(10000);
+  //     });
+
+  //     expect(result.current.currentTime).toBe(40);
+  //     expect(result.current.elapsedTime).toBe(10);
+
+  //     act(() => {
+  //       jest.advanceTimersByTime(40000);
+  //     });
+
+  //     expect(result.current.currentTime).toBe(0);
+  //     expect(result.current.elapsedTime).toBe(50);
+  //     expect(result.current.timeCompleted).toBe(true);
+
+  //     expect(clearInterval).toHaveBeenCalled();
+  //   });
 });
