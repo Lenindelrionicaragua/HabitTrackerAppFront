@@ -148,43 +148,24 @@ const StopwatchScreen = () => {
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
-    let pausedTime = 0;
-    let lastPauseStartTime = null;
-
     // Helper functions
     const startTimer = initialTime => {
-      setCircleColor(skyBlue);
+      setCircleColor("skyBlue");
       startTimeRef.current = Date.now();
 
-      if (lastPauseStartTime !== null) {
-        const pauseDuration = Date.now() - lastPauseStartTime;
-        setPausedTime(prevPausedTime => prevPausedTime + pauseDuration);
-        lastPauseStartTime = null;
-      }
-
       intervalRef.current = setInterval(() => {
-        setRemainingTime(prevTime => {
-          const newTime = Math.max(
-            0,
-            initialTime - Math.floor((Date.now() - startTimeRef.current) / 1000)
-          );
+        const now = Date.now();
+        const elapsedTime = Math.floor((now - startTimeRef.current) / 1000);
+        const newRemainingTime = Math.max(0, initialTime - elapsedTime);
 
-          if (newTime === 0) {
-            clearInterval(intervalRef.current);
-            setTimeCompleted(true);
+        setRemainingTime(newRemainingTime);
 
-            return newTime;
-          }
+        if (newRemainingTime === 0) {
+          clearInterval(intervalRef.current);
+          setTimeCompleted(true);
+        }
 
-          return newTime;
-        });
-
-        setElapsedTime(prevElapsedTime => {
-          if (remainingTime === 0) {
-            return 0;
-          }
-          return prevElapsedTime + 1;
-        });
+        setElapsedTime(elapsedTime + 1);
       }, 1000);
     };
 
