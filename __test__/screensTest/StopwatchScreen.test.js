@@ -11,7 +11,6 @@ function useStopwatchScreen() {
   const [timeCompleted, setTimeCompleted] = useState(false);
   const [running, setRunning] = useState(false);
 
-  // const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
@@ -36,25 +35,23 @@ function useStopwatchScreen() {
     }
   };
 
-  useInterval(
-    () => {
-      if (running) {
-        const now = Date.now();
-        const timePaused = totalPausedTimeRef.current;
-        const elapsedTime = (now - startTimeRef.current - timePaused) / 1000;
-        const remainingTime = Math.max(0, initialTime - elapsedTime);
+  const updateTime = () => {
+    if (running) {
+      const now = Date.now();
+      const elapsedTime =
+        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000;
+      const remainingTime = Math.max(0, initialTime - elapsedTime);
+      setElapsedTime(elapsedTime);
+      setRemainingTime(remainingTime);
 
-        setElapsedTime(elapsedTime);
-        setRemainingTime(remainingTime);
-
-        if (remainingTime === 0) {
-          setTimeCompleted(true);
-          setRunning(false);
-        }
+      if (remainingTime === 0) {
+        setTimeCompleted(true);
+        setRunning(false);
       }
-    },
-    running ? 1000 : null
-  );
+    }
+  };
+
+  useInterval(updateTime, running ? 1000 : null);
 
   return {
     remainingTime,
@@ -202,4 +199,21 @@ describe("useStopwatchScreen", () => {
     expect(result.current.remainingTime).toBe(0);
     expect(result.current.elapsedTime).toBe(initialTime);
   });
+
+  // it("should handle edge cases such as starting with 0 time", () => {
+  //   const initialTime = 0;
+  //   const { result } = renderHook(() => useStopwatchScreen());
+
+  //   act(() => {
+  //     result.current.startTimer(initialTime);
+  //   });
+
+  //   act(() => {
+  //     jest.advanceTimersByTime(1000); // Advancing 1 second should have no effect
+  //   });
+
+  //   expect(result.current.elapsedTime).toBe(0);
+  //   expect(result.current.remainingTime).toBe(0);
+  //   expect(result.current.timeCompleted).toBe(true);
+  // });
 });

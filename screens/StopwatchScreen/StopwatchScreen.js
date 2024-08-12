@@ -5,6 +5,7 @@ import { Colors } from "../../styles/AppStyles";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
 import { Audio } from "expo-av";
+import { useInterval } from "../../hooks/useInterval";
 
 import {
   MaterialIcons,
@@ -58,35 +59,31 @@ const StopwatchScreen = () => {
   const [initialTime, setInitialTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-
-  const [hasStarted, setHasStarted] = useState(false);
-  const [firstRun, setFirstRun] = useState(false);
   const [running, setRunning] = useState(false);
+  const [firstRun, setFirstRun] = useState(false);
   const [timeCompleted, setTimeCompleted] = useState(false);
   const [alarm, setAlarm] = useState();
-
-  const intervalRef = useRef(null);
-  const startTimeRef = useRef(0);
-  const pauseTimeRef = useState(0);
-
+  const [hasStarted, setHasStarted] = useState(false);
   const [activityIndex, setActivityIndex] = useState(null);
-  const [resetClicks, setResetClicks] = useState(0);
   const [infoText, setInfoText] = useState(
     "Choose your task\nand adjust the time\n to start the tracker."
   );
+
   const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
-
+  const [resetClicks, setResetClicks] = useState(0);
   const [resetTimeouts, setResetTimeouts] = useState([]);
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
   const [defaultTime, setDefaultTime] = useState(300); // time in seconds
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
-
-  const [activeButtons, setActiveButtons] = useState({});
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const [activeButtons, setActiveButtons] = useState({});
 
-  const pad = num => num.toString().padStart(2, "0");
+  const startTimeRef = useRef(0);
+  const pauseTimeRef = useRef(0);
+  const totalPausedTimeRef = useRef(0);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (infoText) {
@@ -105,11 +102,6 @@ const StopwatchScreen = () => {
   }, [timeCompleted]);
 
   // alarm
-
-  // working in web, in the future we have to eject app from expo,
-  // and will work in mobile.
-
-  // clean up sound when the component is unmounted
   useEffect(() => {
     if (alarm) {
       return () => {
@@ -123,7 +115,7 @@ const StopwatchScreen = () => {
       logInfo("Loading Sound");
       if (alarm) {
         await alarm.unloadAsync();
-        setAlarm(null); // Release the previous sound if it exists
+        setAlarm(null);
       }
       const { sound } = await Audio.Sound.createAsync(
         require("../../assets/alarm_2.wav")
@@ -136,7 +128,6 @@ const StopwatchScreen = () => {
       sound.setOnPlaybackStatusUpdate(status => {
         if (status.didJustFinish) {
           logInfo("Sound has finished playing");
-          // Unload the sound after playing if not needed
           sound.unloadAsync();
         }
       });
@@ -145,6 +136,29 @@ const StopwatchScreen = () => {
     }
   }
 
+  const updateTime = () => {
+    if (running) {
+      const now = Date.now();
+
+      const elapsedTime =
+        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000;
+
+      const remainingTime = Math.max(0, initialTime - elapsedTime);
+      setElapsedTime(elapsedTime);
+      setRemainingTime(remainingTime);
+
+      console.log("Remaining Time in Seconds:", remainingTime);
+      console.log("Formatted Time:", formatTime(remainingTime));
+
+      if (remainingTime === 0) {
+        setTimeCompleted(true);
+        setRunning(false);
+      }
+    }
+  };
+
+  useInterval(updateTime, running ? 1000 : null);
+
   // Start button
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
@@ -152,22 +166,9 @@ const StopwatchScreen = () => {
     // Helper functions
     const startTimer = initialTime => {
       setCircleColor("skyBlue");
+      setInitialTime(initialTime);
       startTimeRef.current = Date.now();
-
-      intervalRef.current = setInterval(() => {
-        const now = Date.now();
-        const elapsedTime = Math.floor((now - startTimeRef.current) / 1000);
-        const newRemainingTime = Math.max(0, initialTime - elapsedTime);
-
-        setRemainingTime(newRemainingTime);
-
-        if (newRemainingTime === 0) {
-          clearInterval(intervalRef.current);
-          setTimeCompleted(true);
-        }
-
-        setElapsedTime(elapsedTime + 1);
-      }, 1000);
+      setRunning(true);
     };
 
     const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
@@ -213,14 +214,6 @@ const StopwatchScreen = () => {
       setHasStarted(true);
     };
 
-    const resumeTimer = () => {
-      startTimer(remainingTime);
-      setRunning(true);
-      setFirstRun(true);
-      setInfoText("Timer resume.");
-      clearInfoTextAfter(5000);
-    };
-
     // Main logic
     if (!hasStarted) {
       if (activityIndex === null && remainingTime === 0) {
@@ -237,7 +230,7 @@ const StopwatchScreen = () => {
         if (!firstRun) {
           handleActivityTime();
         } else {
-          resumeTimer();
+          resumeStopwatch();
         }
       }
     }
@@ -245,13 +238,22 @@ const StopwatchScreen = () => {
 
   // Pause button
   const pauseStopwatch = () => {
-    pauseTimeRef.current = Date.now();
-
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+    pauseTimeRef.current = Date.now();
     clearInterval(intervalRef.current);
     setRunning(false);
+  };
 
-    intervalRef.current = null;
+  // Resume button
+  const resumeStopwatch = () => {
+    if (!running) {
+      const now = Date.now();
+      totalPausedTimeRef.current += now - pauseTimeRef.current;
+      setRunning(true);
+      setFirstRun(true);
+      setInfoText("Timer resume.");
+      clearInfoTextAfter(5000);
+    }
   };
 
   // Reset Button
@@ -402,14 +404,21 @@ const StopwatchScreen = () => {
     }
   };
 
+  const pad = num => num.toString().padStart(2, "0");
+
   const formatTime = totalSeconds => {
     if (isNaN(totalSeconds) || totalSeconds < 0) {
       return "00:00:00";
     }
 
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+    // Redondear segundos a la unidad más cercana
+    const roundedSeconds = Math.round(totalSeconds);
+
+    const hours = Math.floor(roundedSeconds / 3600);
+    const minutes = Math.floor((roundedSeconds % 3600) / 60);
+    const seconds = roundedSeconds % 60;
+
+    // Agregar ceros a la izquierda para mantener el formato HH:MM:SS
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
