@@ -67,6 +67,7 @@ const StopwatchScreen = () => {
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
+  const pauseTimeRef = useState(0);
 
   const [activityIndex, setActivityIndex] = useState(null);
   const [resetClicks, setResetClicks] = useState(0);
@@ -244,12 +245,13 @@ const StopwatchScreen = () => {
 
   // Pause button
   const pauseStopwatch = () => {
+    pauseTimeRef.current = Date.now();
+
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
     clearInterval(intervalRef.current);
     setRunning(false);
 
     intervalRef.current = null;
-    lastPauseStartTime = Date.now();
   };
 
   // Reset Button
