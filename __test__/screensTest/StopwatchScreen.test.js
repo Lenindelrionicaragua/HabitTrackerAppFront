@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
+import { useInterval } from "../../hooks/useInterval";
 
 const setCircleColor = jest.fn();
 
@@ -10,7 +11,7 @@ function useStopwatchScreen() {
   const [timeCompleted, setTimeCompleted] = useState(false);
   const [running, setRunning] = useState(false);
 
-  const intervalRef = useRef(null);
+  // const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
@@ -20,27 +21,10 @@ function useStopwatchScreen() {
     setInitialTime(initialTime);
     startTimeRef.current = Date.now();
     setRunning(true);
-
-    intervalRef.current = setInterval(() => {
-      const now = Date.now();
-      const timePaused = totalPausedTimeRef.current;
-      const elapsedTime = (now - startTimeRef.current - timePaused) / 1000; // Convert ms to seconds
-      const remainingTime = Math.max(0, initialTime - elapsedTime);
-
-      setElapsedTime(elapsedTime);
-      setRemainingTime(remainingTime);
-
-      if (remainingTime === 0) {
-        clearInterval(intervalRef.current);
-        setTimeCompleted(true);
-        setRunning(false);
-      }
-    }, 1000);
   };
 
   const pauseStopwatch = () => {
-    clearInterval(intervalRef.current);
-    pauseTimeRef.current = Date.now(); // Mark the time when paused
+    pauseTimeRef.current = Date.now();
     setRunning(false);
   };
 
@@ -49,24 +33,28 @@ function useStopwatchScreen() {
       const now = Date.now();
       totalPausedTimeRef.current += now - pauseTimeRef.current;
       setRunning(true);
+    }
+  };
 
-      intervalRef.current = setInterval(() => {
+  useInterval(
+    () => {
+      if (running) {
         const now = Date.now();
         const timePaused = totalPausedTimeRef.current;
-        const elapsedTime = (now - startTimeRef.current - timePaused) / 1000; // Convert ms to seconds
+        const elapsedTime = (now - startTimeRef.current - timePaused) / 1000;
         const remainingTime = Math.max(0, initialTime - elapsedTime);
 
         setElapsedTime(elapsedTime);
         setRemainingTime(remainingTime);
 
         if (remainingTime === 0) {
-          clearInterval(intervalRef.current);
           setTimeCompleted(true);
           setRunning(false);
         }
-      }, 1000);
-    }
-  };
+      }
+    },
+    running ? 1000 : null
+  );
 
   return {
     remainingTime,
