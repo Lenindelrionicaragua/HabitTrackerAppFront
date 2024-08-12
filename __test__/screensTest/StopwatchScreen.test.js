@@ -177,4 +177,29 @@ describe("useStopwatchScreen", () => {
     expect(result.current.remainingTime).toBe(30);
     expect(result.current.elapsedTime).toBe(20);
   });
+
+  it("useStopwatchScreen should set timeCompleted to true when the initial time is completed", () => {
+    const initialTime = 50;
+    const { result } = renderHook(() => useStopwatchScreen());
+
+    // Start the timer with the initial time
+    act(() => {
+      result.current.startTimer(initialTime);
+    });
+
+    // Advance the timer by the full duration of the initial time
+    act(() => {
+      jest.advanceTimersByTime(initialTime * 1000); // Convert seconds to milliseconds
+    });
+
+    // Verify that the timer is not running anymore
+    expect(result.current.running).toBe(false);
+
+    // Check if the timer has completed
+    expect(result.current.timeCompleted).toBe(true);
+
+    // Verify that the remaining time is 0 and elapsed time is equal to the initial time
+    expect(result.current.remainingTime).toBe(0);
+    expect(result.current.elapsedTime).toBe(initialTime);
+  });
 });
