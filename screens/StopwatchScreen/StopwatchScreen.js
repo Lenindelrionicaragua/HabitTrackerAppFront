@@ -386,6 +386,8 @@ const StopwatchScreen = () => {
     setInnerCircleColor(white);
     setButtonsDisabled(false);
     setTimeCompleted(false);
+
+    logInfo(`Timer was reset.`);
   };
 
   const handleActivityChange = () => {
@@ -427,27 +429,26 @@ const StopwatchScreen = () => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const calculateCircleParams = () => {
+  const calculateCircleParams = (elapsedTime, initialTime) => {
     const radius = 150;
     const circumference = 2 * Math.PI * radius;
 
-    const effectiveElapsedTime = isNaN(elapsedTime) ? 0 : elapsedTime;
-    const effectiveInitialTime = isNaN(initialTime) ? 0 : initialTime;
+    const effectiveElapsedTime = Number.isFinite(elapsedTime) ? elapsedTime : 0;
+    const effectiveInitialTime = Number.isFinite(initialTime) ? initialTime : 0;
 
-    // Calculate the fraction of time elapsed safely only if initialTime > 0
-    const timeFraction =
-      effectiveInitialTime > 0
-        ? Math.min(effectiveElapsedTime / effectiveInitialTime, 1)
-        : 0;
+    if (effectiveElapsedTime <= 0) {
+      return { circumference, strokeDashoffset: circumference };
+    }
+
+    const timeFraction = Math.min(
+      effectiveElapsedTime / effectiveInitialTime,
+      1
+    );
 
     let strokeDashoffset = circumference * (1 - timeFraction);
 
     // Ensure strokeDashoffset is not negative and round to avoid floating-point issues
     strokeDashoffset = Math.max(0, Math.round(strokeDashoffset * 1000) / 1000);
-
-    if (isNaN(strokeDashoffset) || initialTime <= 0) {
-      strokeDashoffset = 0;
-    }
 
     return { circumference, strokeDashoffset };
   };
