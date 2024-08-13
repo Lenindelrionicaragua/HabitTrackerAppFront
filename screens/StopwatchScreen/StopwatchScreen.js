@@ -97,7 +97,7 @@ const StopwatchScreen = () => {
   useEffect(() => {
     if (timeCompleted) {
       playAlarm();
-      fetchTimeRecords();
+      saveTimeRecords();
     }
   }, [timeCompleted]);
 
@@ -149,7 +149,7 @@ const StopwatchScreen = () => {
       setRemainingTime(remainingTime);
 
       if (remainingTime === 0) {
-        logInfo(`elapsedTime: ${elapsedTime / 60} minutes`);
+        logInfo(`Time completed: ${formatTime(remainingTime)}`);
         setTimeCompleted(true);
         setRunning(false);
       }
@@ -172,8 +172,7 @@ const StopwatchScreen = () => {
     // Helper functions
     const startTimer = initialTime => {
       setCircleColor("skyBlue");
-      setInitialTime(initialTime);
-      logInfo(`initialTime: ${initialTime / 60} minutes`);
+      logInfo(`Initial time: ${formatTime(initialTime)}`);
       startTimeRef.current = Date.now();
       setRunning(true);
     };
@@ -335,7 +334,7 @@ const StopwatchScreen = () => {
   };
 
   // Save Time Button
-  const fetchTimeRecords = () => {
+  const saveTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
     setRunning(false);
 
@@ -347,12 +346,14 @@ const StopwatchScreen = () => {
     }
 
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      handleSaveProcess();
+      logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
+      logInfo(`ElapsedTime time saved: ${formatTime(elapsedTime)}`);
+      processSaveAndUpdateUI();
       return;
     }
   };
 
-  const handleSaveProcess = () => {
+  const processSaveAndUpdateUI = () => {
     clearInterval(intervalRef.current);
     setSaveTimeButtonLabel("SAVING");
     setInfoText("Saving");
@@ -366,7 +367,6 @@ const StopwatchScreen = () => {
     }, 4000);
 
     clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
-    logInfo("Saved records");
   };
 
   // Function to perform reset
@@ -668,7 +668,7 @@ const StopwatchScreen = () => {
         <StyledButtonRight
           onPress={() => {
             if (!buttonsDisabled) {
-              fetchTimeRecords();
+              saveTimeRecords();
               handleButtonPress(9);
             }
           }}
