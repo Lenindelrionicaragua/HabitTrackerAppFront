@@ -140,20 +140,28 @@ const StopwatchScreen = () => {
     if (running) {
       const now = Date.now();
 
-      const elapsedTime =
-        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000;
+      const elapsedTime = Math.floor(
+        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
+      );
 
       const remainingTime = Math.max(0, initialTime - elapsedTime);
       setElapsedTime(elapsedTime);
       setRemainingTime(remainingTime);
 
       if (remainingTime === 0) {
-        logInfo(`elapsedTime:${elapsedTime / 60} minutes`);
+        logInfo(`elapsedTime: ${elapsedTime / 60} minutes`);
         setTimeCompleted(true);
         setRunning(false);
       }
     }
   };
+
+  // Example of setting up an interval to regularly call updateTime
+  useEffect(() => {
+    const intervalId = setInterval(updateTime, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
+  }, []);
 
   useInterval(updateTime, running ? 1000 : null);
 

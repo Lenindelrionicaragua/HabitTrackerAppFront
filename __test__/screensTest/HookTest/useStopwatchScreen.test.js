@@ -38,8 +38,11 @@ function useStopwatchScreen() {
   const updateTime = () => {
     if (running) {
       const now = Date.now();
-      const elapsedTime =
-        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000;
+
+      const elapsedTime = Math.floor(
+        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
+      );
+
       const remainingTime = Math.max(0, initialTime - elapsedTime);
       setElapsedTime(elapsedTime);
       setRemainingTime(remainingTime);
