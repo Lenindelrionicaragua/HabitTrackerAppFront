@@ -147,10 +147,8 @@ const StopwatchScreen = () => {
       setElapsedTime(elapsedTime);
       setRemainingTime(remainingTime);
 
-      console.log("Remaining Time in Seconds:", remainingTime);
-      console.log("Formatted Time:", formatTime(remainingTime));
-
       if (remainingTime === 0) {
+        logInfo(`elapsedTime:${elapsedTime / 66} minutes`);
         setTimeCompleted(true);
         setRunning(false);
       }
@@ -167,6 +165,7 @@ const StopwatchScreen = () => {
     const startTimer = initialTime => {
       setCircleColor("skyBlue");
       setInitialTime(initialTime);
+      logInfo(`initialTime: ${initialTime / 60} minutes`);
       startTimeRef.current = Date.now();
       setRunning(true);
     };
@@ -411,14 +410,12 @@ const StopwatchScreen = () => {
       return "00:00:00";
     }
 
-    // Redondear segundos a la unidad más cercana
     const roundedSeconds = Math.round(totalSeconds);
 
     const hours = Math.floor(roundedSeconds / 3600);
     const minutes = Math.floor((roundedSeconds % 3600) / 60);
     const seconds = roundedSeconds % 60;
 
-    // Agregar ceros a la izquierda para mantener el formato HH:MM:SS
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
