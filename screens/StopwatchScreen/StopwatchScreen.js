@@ -9,6 +9,7 @@ import { useInterval } from "../../hooks/useInterval";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import useStopwatch from "../../hooks/useStopwatch";
+import { formatTime, pad } from "../../util/formatTime";
 
 import {
   MaterialIcons,
@@ -158,13 +159,6 @@ const StopwatchScreen = () => {
       }
     }
   };
-
-  // Example of setting up an interval to regularly call updateTime
-  useEffect(() => {
-    const intervalId = setInterval(updateTime, 1000); // Update every second
-
-    return () => clearInterval(intervalId); // Clean up interval on component unmount
-  }, []);
 
   useInterval(updateTime, running ? 1000 : null);
 
@@ -414,22 +408,6 @@ const StopwatchScreen = () => {
       setInitialTime(MAX_TIME_SECONDS);
       setRemainingTime(MAX_TIME_SECONDS);
     }
-  };
-
-  const pad = num => num.toString().padStart(2, "0");
-
-  const formatTime = totalSeconds => {
-    if (isNaN(totalSeconds) || totalSeconds < 0) {
-      return "00:00:00";
-    }
-
-    const roundedSeconds = Math.round(totalSeconds);
-
-    const hours = Math.floor(roundedSeconds / 3600);
-    const minutes = Math.floor((roundedSeconds % 3600) / 60);
-    const seconds = roundedSeconds % 60;
-
-    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
