@@ -6,6 +6,8 @@ import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 import { logInfo, logError } from "../../util/logging";
 import { Audio } from "expo-av";
 import { useInterval } from "../../hooks/useInterval";
+//hooks
+import useCircleParams from "../../hooks/useCircleParams";
 
 import {
   MaterialIcons,
@@ -429,31 +431,11 @@ const StopwatchScreen = () => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const calculateCircleParams = () => {
-    const radius = 150;
-    const circumference = 2 * Math.PI * radius;
-
-    const effectiveElapsedTime = Number.isFinite(elapsedTime) ? elapsedTime : 0;
-    const effectiveInitialTime = Number.isFinite(initialTime) ? initialTime : 0;
-
-    if (effectiveElapsedTime <= 0) {
-      return { circumference, strokeDashoffset: circumference };
-    }
-
-    const timeFraction = Math.min(
-      effectiveElapsedTime / effectiveInitialTime,
-      1
-    );
-
-    let strokeDashoffset = circumference * (1 - timeFraction);
-
-    // Ensure strokeDashoffset is not negative and round to avoid floating-point issues
-    strokeDashoffset = Math.max(0, Math.round(strokeDashoffset * 1000) / 1000);
-
-    return { circumference, strokeDashoffset };
-  };
-
-  const { circumference, strokeDashoffset } = calculateCircleParams();
+  // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
+  const { circumference, strokeDashoffset } = useCircleParams(
+    elapsedTime,
+    initialTime
+  );
 
   const handleButtonPress = buttonId => {
     setActiveButtons(prevState => ({
