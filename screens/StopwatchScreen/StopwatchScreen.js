@@ -8,6 +8,7 @@ import { Audio } from "expo-av";
 import { useInterval } from "../../hooks/useInterval";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
+import useStopwatch from "../../hooks/useStopwatch";
 
 import {
   MaterialIcons,
