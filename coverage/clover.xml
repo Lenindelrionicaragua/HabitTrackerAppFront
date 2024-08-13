@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1723576685795" clover="3.2.0">
-  <project timestamp="1723576685795" name="All files">
-    <metrics statements="920" coveredstatements="0" conditionals="327" coveredconditionals="0" methods="185" coveredmethods="0" elements="1432" coveredelements="0" complexity="0" loc="920" ncloc="920" packages="65" files="83" classes="83"/>
+<coverage generated="1723577429644" clover="3.2.0">
+  <project timestamp="1723577429645" name="All files">
+    <metrics statements="936" coveredstatements="16" conditionals="333" coveredconditionals="6" methods="188" coveredmethods="3" elements="1457" coveredelements="25" complexity="0" loc="936" ncloc="936" packages="65" files="84" classes="84"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -673,7 +673,26 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <metrics statements="25" coveredstatements="16" conditionals="8" coveredconditionals="6" methods="8" coveredmethods="3"/>
+      <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
+        <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="4" count="16" type="stmt"/>
+        <line num="9" count="16" type="stmt"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
+        <line num="12" count="8" type="stmt"/>
+        <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="30" count="6" type="stmt"/>
+        <line num="32" count="6" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="40" count="8" type="stmt"/>
+        <line num="41" count="8" type="stmt"/>
+        <line num="44" count="16" type="stmt"/>
+      </file>
       <file name="useInterval.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useInterval.js">
         <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
