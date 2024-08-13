@@ -1,5 +1,5 @@
-// utils/formatTime.js
 export const formatTime = totalSeconds => {
+  const pad = num => num.toString().padStart(2, "0");
   if (isNaN(totalSeconds) || totalSeconds < 0) {
     return "00:00:00";
   }
