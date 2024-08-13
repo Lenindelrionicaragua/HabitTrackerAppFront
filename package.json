@@ -10,6 +10,8 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.4.8",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
     "components": "^0.1.0",

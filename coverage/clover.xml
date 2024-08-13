@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1723547920086" clover="3.2.0">
-  <project timestamp="1723547920086" name="All files">
-    <metrics statements="277" coveredstatements="9" conditionals="149" coveredconditionals="2" methods="61" coveredmethods="5" elements="487" coveredelements="16" complexity="0" loc="277" ncloc="277" packages="2" files="2" classes="2"/>
-    <package name="hooks">
-      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
-      <file name="useInterval.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useInterval.js">
-        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
-        <line num="4" count="17" type="stmt"/>
-        <line num="7" count="17" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
-        <line num="12" count="17" type="stmt"/>
-        <line num="14" count="130" type="stmt"/>
-        <line num="16" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="5" type="stmt"/>
-        <line num="18" count="5" type="stmt"/>
-        <line num="19" count="5" type="stmt"/>
+<coverage generated="1723548877582" clover="3.2.0">
+  <project timestamp="1723548877582" name="All files">
+    <metrics statements="269" coveredstatements="0" conditionals="147" coveredconditionals="0" methods="56" coveredmethods="0" elements="472" coveredelements="0" complexity="0" loc="269" ncloc="269" packages="2" files="2" classes="2"/>
+    <package name="ZenTimerAppFront">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="jest.config.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/jest.config.js">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="screens.StopwatchScreen">
+    <package name="ZenTimerAppFront.screens.StopwatchScreen">
       <metrics statements="268" coveredstatements="0" conditionals="147" coveredconditionals="0" methods="56" coveredmethods="0"/>
       <file name="StopwatchScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/StopwatchScreen/StopwatchScreen.js">
         <metrics statements="268" coveredstatements="0" conditionals="147" coveredconditionals="0" methods="56" coveredmethods="0"/>

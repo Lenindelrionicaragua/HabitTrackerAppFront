@@ -1,10 +1,11 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import Constants from "expo-constants";
+import "@testing-library/jest-dom/extend-expect";
 
-// Mock para AsyncStorage
+// Mock for AsyncStorage
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
-// Mock para expo-constants
+// Mock for expo-constants
 jest.mock("expo-constants", () => {
   const actualConstants = jest.requireActual("expo-constants");
   return {
@@ -12,7 +13,6 @@ jest.mock("expo-constants", () => {
     manifest: {
       ...actualConstants.manifest,
       scheme: "zenTimerScheme"
-      // Agrega cualquier otra información necesaria en el manifiesto
     }
   };
 });
