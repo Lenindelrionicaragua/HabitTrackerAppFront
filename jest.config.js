@@ -1,6 +1,5 @@
 module.exports = {
   preset: "jest-expo",
-  testEnvironment: "jsdom",
   collectCoverage: true,
   collectCoverageFrom: [
     "**/*.{js,jsx}",
