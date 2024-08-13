@@ -148,7 +148,7 @@ const StopwatchScreen = () => {
       setRemainingTime(remainingTime);
 
       if (remainingTime === 0) {
-        logInfo(`elapsedTime:${elapsedTime / 66} minutes`);
+        logInfo(`elapsedTime:${elapsedTime / 60} minutes`);
         setTimeCompleted(true);
         setRunning(false);
       }
