@@ -429,7 +429,7 @@ const StopwatchScreen = () => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const calculateCircleParams = (elapsedTime, initialTime) => {
+  const calculateCircleParams = () => {
     const radius = 150;
     const circumference = 2 * Math.PI * radius;
 
