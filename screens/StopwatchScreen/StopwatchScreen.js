@@ -8,7 +8,9 @@ import { Audio } from "expo-av";
 import { useInterval } from "../../hooks/useInterval";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
-import useStopwatch from "../../hooks/useStopwatch";
+import { usePlayAlarm } from "../../hooks/usePlayaAlarm";
+
+// import useStopwatch from "../../hooks/useStopwatch";
 import { formatTime, pad } from "../../util/formatTime";
 
 import {
@@ -89,6 +91,8 @@ const StopwatchScreen = () => {
   const totalPausedTimeRef = useRef(0);
   const intervalRef = useRef(null);
 
+  const { playAlarm } = usePlayAlarm(logInfo, logError);
+
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
@@ -100,45 +104,19 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
-      playAlarm();
+      playAlarm(require("../../assets/alarm_2.wav"));
       saveTimeRecords();
     }
   }, [timeCompleted]);
 
   // alarm
   useEffect(() => {
-    if (alarm) {
-      return () => {
-        alarm.unloadAsync();
-      };
-    }
-  }, [alarm]);
-
-  async function playAlarm() {
-    try {
-      logInfo("Loading Sound");
+    return () => {
       if (alarm) {
-        await alarm.unloadAsync();
-        setAlarm(null);
+        alarm.unloadAsync();
       }
-      const { sound } = await Audio.Sound.createAsync(
-        require("../../assets/alarm_2.wav")
-      );
-      setAlarm(sound);
-
-      logInfo("Playing notification Sound");
-      await sound.playAsync();
-
-      sound.setOnPlaybackStatusUpdate(status => {
-        if (status.didJustFinish) {
-          logInfo("Sound has finished playing");
-          sound.unloadAsync();
-        }
-      });
-    } catch (error) {
-      logError("Error playing the notification sound:", error);
-    }
-  }
+    };
+  }, [alarm]);
 
   const updateTime = () => {
     if (running) {
