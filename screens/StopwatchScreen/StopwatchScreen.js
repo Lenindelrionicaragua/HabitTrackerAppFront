@@ -2,14 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { useInterval } from "../../hooks/useInterval";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayaAlarm";
-// import useStopwatch from "../../hooks/useStopwatch";
+import useStopwatch from "../../hooks/useStopwatch";
 //utils
 import { useButtonHandler } from "../../util/handleButtonPress";
-import { formatTime, pad } from "../../util/formatTime";
+import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
 import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 
@@ -36,17 +35,7 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const {
-  black,
-  white,
-  infoWhite,
-  lightPink,
-  darkGrey,
-  seaGreen,
-  skyBlue,
-  lightGreen,
-  green
-} = Colors;
+const { black, white, skyBlue, green } = Colors;
 
 const MAX_TIME_HOURS = 99; // max time in hours
 const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600; // convert max time to seconds
@@ -62,12 +51,8 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [initialTime, setInitialTime] = useState(0);
-  const [remainingTime, setRemainingTime] = useState(0);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [running, setRunning] = useState(false);
+  // const [initialTime, setInitialTime] = useState(0);
   const [firstRun, setFirstRun] = useState(false);
-  const [timeCompleted, setTimeCompleted] = useState(false);
   const [alarm, setAlarm] = useState();
   const [hasStarted, setHasStarted] = useState(false);
   const [activityIndex, setActivityIndex] = useState(null);
@@ -84,12 +69,27 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-
+  // custom hooks
   const { activeButtons, handleButtonPress } = useButtonHandler();
+  const {
+    initialTime,
+    setInitialTime,
+    remainingTime,
+    setRemainingTime, // Add this line
+    elapsedTime,
+    setElapsedTime,
+    timeCompleted,
+    setTimeCompleted,
+    running,
+    setRunning,
+    pauseStopwatch,
+    resumeStopwatch,
+    startTimer
+  } = useStopwatch();
 
-  const startTimeRef = useRef(0);
-  const pauseTimeRef = useRef(0);
-  const totalPausedTimeRef = useRef(0);
+  // const startTimeRef = useRef(0);
+  // const pauseTimeRef = useRef(0);
+  // const totalPausedTimeRef = useRef(0);
   const intervalRef = useRef(null);
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
@@ -119,39 +119,9 @@ const StopwatchScreen = () => {
     };
   }, [alarm]);
 
-  const updateTime = () => {
-    if (running) {
-      const now = Date.now();
-
-      const elapsedTime = Math.floor(
-        (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
-      );
-
-      const remainingTime = Math.max(0, initialTime - elapsedTime);
-      setElapsedTime(elapsedTime);
-      setRemainingTime(remainingTime);
-
-      if (remainingTime === 0) {
-        logInfo(`Time completed: ${formatTime(remainingTime)}`);
-        setTimeCompleted(true);
-        setRunning(false);
-      }
-    }
-  };
-
-  useInterval(updateTime, running ? 1000 : null);
-
   // Start button
   const startStopwatch = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-
-    // Helper functions
-    const startTimer = initialTime => {
-      setCircleColor("skyBlue");
-      logInfo(`Initial time: ${formatTime(initialTime)}`);
-      startTimeRef.current = Date.now();
-      setRunning(true);
-    };
 
     const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
       setActivityIndex(defaultActivityIndex);
@@ -215,26 +185,6 @@ const StopwatchScreen = () => {
           resumeStopwatch();
         }
       }
-    }
-  };
-
-  // Pause button
-  const pauseStopwatch = () => {
-    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    pauseTimeRef.current = Date.now();
-    clearInterval(intervalRef.current);
-    setRunning(false);
-  };
-
-  // Resume button
-  const resumeStopwatch = () => {
-    if (!running) {
-      const now = Date.now();
-      totalPausedTimeRef.current += now - pauseTimeRef.current;
-      setRunning(true);
-      setFirstRun(true);
-      setInfoText("Timer resume.");
-      clearInfoTextAfter(5000);
     }
   };
 
@@ -394,20 +344,6 @@ const StopwatchScreen = () => {
     elapsedTime,
     initialTime
   );
-
-  // const handleButtonPress = buttonId => {
-  //   setActiveButtons(prevState => ({
-  //     ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])), // Reset all buttons to false
-  //     [buttonId]: true
-  //   }));
-
-  //   setTimeout(() => {
-  //     setActiveButtons(prevState => ({
-  //       ...prevState,
-  //       [buttonId]: false
-  //     }));
-  //   }, 500);
-  // };
 
   const handleTimeButtonPress = (timeChange, buttonId) => {
     handleTimeSelection(timeChange);
