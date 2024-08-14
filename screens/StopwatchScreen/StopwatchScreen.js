@@ -2,16 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
-import { logInfo, logError } from "../../util/logging";
-import { Audio } from "expo-av";
 import { useInterval } from "../../hooks/useInterval";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayaAlarm";
-
 // import useStopwatch from "../../hooks/useStopwatch";
+//utils
+import { useButtonHandler } from "../../util/handleButtonPress";
 import { formatTime, pad } from "../../util/formatTime";
+import { logInfo, logError } from "../../util/logging";
+import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
 
 import {
   MaterialIcons,
@@ -84,7 +84,8 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [circleColor, setCircleColor] = useState(skyBlue);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const [activeButtons, setActiveButtons] = useState({});
+
+  const { activeButtons, handleButtonPress } = useButtonHandler();
 
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
@@ -394,19 +395,19 @@ const StopwatchScreen = () => {
     initialTime
   );
 
-  const handleButtonPress = buttonId => {
-    setActiveButtons(prevState => ({
-      ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])), // Reset all buttons to false
-      [buttonId]: true
-    }));
+  // const handleButtonPress = buttonId => {
+  //   setActiveButtons(prevState => ({
+  //     ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])), // Reset all buttons to false
+  //     [buttonId]: true
+  //   }));
 
-    setTimeout(() => {
-      setActiveButtons(prevState => ({
-        ...prevState,
-        [buttonId]: false
-      }));
-    }, 500);
-  };
+  //   setTimeout(() => {
+  //     setActiveButtons(prevState => ({
+  //       ...prevState,
+  //       [buttonId]: false
+  //     }));
+  //   }, 500);
+  // };
 
   const handleTimeButtonPress = (timeChange, buttonId) => {
     handleTimeSelection(timeChange);
