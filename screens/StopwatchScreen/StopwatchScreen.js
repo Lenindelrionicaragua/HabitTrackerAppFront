@@ -4,7 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
-import { usePlayAlarm } from "../../hooks/usePlayaAlarm";
+import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 //utils
 import { useButtonHandler } from "../../util/handleButtonPress";
