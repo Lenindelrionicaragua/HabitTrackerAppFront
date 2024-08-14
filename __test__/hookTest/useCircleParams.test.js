@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import useCircleParams from "../../../hooks/useCircleParams";
+import useCircleParams from "../../hooks/useCircleParams";
 
 describe("useCircleParams", () => {
   test("returns correct values when elapsedTime and initialTime are both valid", () => {

@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import useStopwatch from "../../../hooks/useStopwatch";
+import useStopwatch from "../../hooks/useStopwatch";
 
 const setCircleColor = jest.fn();
 setCircleColor("skyBlue");
