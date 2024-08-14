@@ -51,7 +51,6 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  // const [initialTime, setInitialTime] = useState(0);
   const [firstRun, setFirstRun] = useState(false);
   const [alarm, setAlarm] = useState();
   const [hasStarted, setHasStarted] = useState(false);
