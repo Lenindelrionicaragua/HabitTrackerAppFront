@@ -50,7 +50,8 @@
     "styled-components": "^6.1.12"
   },
   "resolutions": {
-    "@expo/config-plugins": "8.0.4"
+    "@expo/config-plugins": "8.0.4",
+    "@types/react": "^18.0.0"
   },
   "scripts": {
     "test": "jest --verbose",
