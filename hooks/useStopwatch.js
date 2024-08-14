@@ -53,10 +53,16 @@ function useStopwatch() {
   useInterval(updateTime, running ? 1000 : null);
 
   return {
+    initialTime,
+    setInitialTime,
     remainingTime,
+    setRemainingTime, // Add this line
     elapsedTime,
+    setElapsedTime,
     timeCompleted,
+    setTimeCompleted,
     running,
+    setRunning,
     pauseStopwatch,
     resumeStopwatch,
     startTimer
