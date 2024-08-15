@@ -3,6 +3,8 @@ import { logError } from "./util/logging";
 import RootStack from "./navigators/RootStack";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Provider } from "react-redux";
+import store from "./store/store";
 // Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
 
