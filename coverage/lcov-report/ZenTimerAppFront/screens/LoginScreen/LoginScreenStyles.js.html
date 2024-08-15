@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
@@ -213,7 +213,49 @@
 <a name='L148'></a><a href='#L148'>148</a>
 <a name='L149'></a><a href='#L149'>149</a>
 <a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -224,6 +266,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,23 +416,49 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styled from "styled-components/native";
-import { View, Image, Text, TextInput, Pressable } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  Pressable,
+  Platform
+} from "react-native";
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 &nbsp;
-const { white, orange, grey, yellow, lightGrey, black } = <span class="cstat-no" title="statement not covered" >Colors;</span>
+const {
+  seaGreen,
+  white,
+  infoGrey,
+  lightPink,
+  darkGrey,
+  black,
+  skyBlue,
+  lightGreen
+} = <span class="cstat-no" title="statement not covered" >Colors;</span>
 &nbsp;
 const green = <span class="cstat-no" title="statement not covered" >"#00ff00";</span>
 const red = <span class="cstat-no" title="statement not covered" >"#ff0000";</span>
 &nbsp;
+const paddingTop = <span class="cstat-no" title="statement not covered" >Platform.OS === "web" ? "7%" : "0%";</span>
+const paddingBottom = <span class="cstat-no" title="statement not covered" >Platform.OS === "web" ? "10%" : "10%";</span>
+const containerHeight = <span class="cstat-no" title="statement not covered" >Platform.OS === "web" ? "80%" : "100%";</span>
+&nbsp;
 export const StyledContainer = <span class="cstat-no" title="statement not covered" >styled(SafeAreaView)`</span>
   flex: 1;
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   width: 100%;
+  padding: 15px;
+  height: ${containerHeight};
+  /**
+  margin-top: ${paddingTop};
+  margin-bottom: ${paddingBottom};
+  **/
 `;
 &nbsp;
 export const InnerContainer = <span class="cstat-no" title="statement not covered" >styled(View)`</span>
-  background-color: ${lightGrey};
+  background-color: ${darkGrey};
   flex: 1;
   padding-top: 15px;
   width: 100%;
@@ -408,7 +486,7 @@ export const SubTitle = <span class="cstat-no" title="statement not covered" >st
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${grey};
+  color: ${infoGrey};
 `;
 &nbsp;
 export const StyledFormArea = <span class="cstat-no" title="statement not covered" >styled(View)`</span>
@@ -416,7 +494,7 @@ export const StyledFormArea = <span class="cstat-no" title="statement not covere
 `;
 &nbsp;
 export const StyledTextInput = <span class="cstat-no" title="statement not covered" >styled(TextInput)`</span>
-  background-color: ${orange};
+  background-color: ${white};
   padding: 15px;
   padding-left: 55px;
   padding-right: 55px;
@@ -425,11 +503,11 @@ export const StyledTextInput = <span class="cstat-no" title="statement not cover
   height: 60px;
   margin-vertical: 3px;
   margin-bottom: 10px;
-  color: ${grey};
+  color: ${infoGrey};
 `;
 &nbsp;
 export const StyledInputLabel = <span class="cstat-no" title="statement not covered" >styled(Text)`</span>
-  color: ${grey};
+  color: ${infoGrey};
   font-size: 13px;
   text-align: left;
 `;
@@ -460,14 +538,14 @@ export const StyledButton = <span class="cstat-no" title="statement not covered"
   ${<span class="fstat-no" title="function not covered" >pr</span>ops =&gt;
 <span class="cstat-no" title="statement not covered" >    props.google == true &amp;&amp;</span>
     `
-    background-color: ${orange};
+    background-color: ${white};
     flex-direction: row;
     justify-content: center;
   `}
 `;
 &nbsp;
 export const ButtonText = <span class="cstat-no" title="statement not covered" >styled(Text)`</span>
-  color: ${<span class="fstat-no" title="function not covered" >pr</span>ops =&gt; (<span class="cstat-no" title="statement not covered" >props.google ? black : white)</span>};
+  color: ${<span class="fstat-no" title="function not covered" >pr</span>ops =&gt; (<span class="cstat-no" title="statement not covered" >props.google ? black : seaGreen)</span>};
   font-size: 16px;
 &nbsp;
   ${<span class="fstat-no" title="function not covered" >pr</span>ops =&gt;
@@ -486,7 +564,7 @@ export const MsgBox = <span class="cstat-no" title="statement not covered" >styl
 export const Line = <span class="cstat-no" title="statement not covered" >styled(View)`</span>
   height: 1px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${white};
   margin-vertical: 10px;
 `;
 &nbsp;
@@ -500,7 +578,7 @@ export const FooterView = <span class="cstat-no" title="statement not covered" >
 export const FooterText = <span class="cstat-no" title="statement not covered" >styled(Text)`</span>
   justify-content: center;
   align-content: center;
-  color: ${grey};
+  color: ${infoGrey};
   font-size: 15px;
 `;
 &nbsp;
@@ -510,7 +588,7 @@ export const SignupLink = <span class="cstat-no" title="statement not covered" >
 `;
 &nbsp;
 export const SignupLinkContent = <span class="cstat-no" title="statement not covered" >styled(Text)`</span>
-  color: ${yellow};
+  color: ${lightPink};
   font-size: 15px;
 `;
 &nbsp;</pre></td></tr></table></pre>
@@ -520,7 +598,7 @@ export const SignupLinkContent = <span class="cstat-no" title="statement not cov
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-20T15:16:12.320Z
+                at 2024-08-14T15:38:35.331Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
