@@ -1,8 +1,13 @@
 import { useState, useRef } from "react";
 import { useInterval } from "../hooks/useInterval";
+import { useSelector, useDispatch } from "react-redux";
+import { setTime } from "../actions/counterActions";
 
 function useStopwatch() {
-  const [initialTime, setInitialTime] = useState(0);
+  const initialTime = useSelector(state => state.counter.time);
+
+  const dispatch = useDispatch();
+
   const [remainingTime, setRemainingTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [timeCompleted, setTimeCompleted] = useState(false);
@@ -13,7 +18,7 @@ function useStopwatch() {
   const totalPausedTimeRef = useRef(0);
 
   const startTimer = initialTime => {
-    setInitialTime(initialTime);
+    dispatch(setTime(newInitialTime));
     startTimeRef.current = Date.now();
     setRunning(true);
   };
@@ -54,7 +59,7 @@ function useStopwatch() {
 
   return {
     initialTime,
-    setInitialTime,
+    setInitialTime: newTime => dispatch(setTime(newTime)),
     remainingTime,
     setRemainingTime, // Add this line
     elapsedTime,
