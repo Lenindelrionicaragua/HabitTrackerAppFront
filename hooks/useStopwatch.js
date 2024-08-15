@@ -18,7 +18,7 @@ function useStopwatch() {
   const totalPausedTimeRef = useRef(0);
 
   const startTimer = initialTime => {
-    dispatch(setTime(newInitialTime));
+    dispatch(setTime(initialTime)); // Fix variable name here
     startTimeRef.current = Date.now();
     setRunning(true);
   };
