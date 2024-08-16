@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
+import { useDispatch } from "react-redux";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
@@ -86,6 +87,7 @@ const StopwatchScreen = () => {
     startTimer
   } = useStopwatch();
 
+  const dispatch = useDispatch();
   // const startTimeRef = useRef(0);
   // const pauseTimeRef = useRef(0);
   // const totalPausedTimeRef = useRef(0);
@@ -296,8 +298,8 @@ const StopwatchScreen = () => {
 
   // Function to perform reset
   const performReset = () => {
-    setRemainingTime(0);
-    setInitialTime(0);
+    dispatch(setInitialTime(0));
+    dispatch(setRemainingTime(0));
     setElapsedTime(0);
     setActivityIndex(null);
     setHasStarted(false);
@@ -328,13 +330,14 @@ const StopwatchScreen = () => {
     const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
-      setInitialTime(newInitialTime);
-      setRemainingTime(newInitialTime);
+      // setInitialTime(newInitialTime);
+      dispatch(setInitialTime(newInitialTime));
+      dispatch(setRemainingTime(newInitialTime));
       setElapsedTime(0);
       setRunning(false);
     } else {
-      setInitialTime(MAX_TIME_SECONDS);
-      setRemainingTime(MAX_TIME_SECONDS);
+      dispatch(setInitialTime(MAX_TIME_SECONDS));
+      dispatch(setRemainingTime(MAX_TIME_SECONDS));
     }
   };
 
