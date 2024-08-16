@@ -1,3 +1,4 @@
+import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
@@ -5,7 +6,7 @@ import useStopwatch from "../../hooks/useStopwatch";
 
 const mockStore = configureStore([]);
 const store = mockStore({
-  counter: { time: 300 }
+  counter: { time: 50 }
 });
 
 const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
@@ -53,7 +54,7 @@ describe("useStopwatchScreen", () => {
 
   it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -84,7 +85,7 @@ describe("useStopwatchScreen", () => {
 
   it("should resume the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -114,7 +115,7 @@ describe("useStopwatchScreen", () => {
 
   it("useStopwatchScreen should set timeCompleted to true when the initial time is completed", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
       result.current.startTimer(initialTime);
