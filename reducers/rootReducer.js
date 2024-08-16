@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import counterReducer from "../reducers/counterReducer";
+import initialTimeReducer from "./initialTimeReducer";
+import remainingTimeReducer from "./remainingTimeReducer";
 
 const rootReducer = combineReducers({
-  counter: counterReducer
+  initialTime: initialTimeReducer,
+  remainingTime: remainingTimeReducer
 });
 
 export default rootReducer;
