@@ -1,9 +1,12 @@
-export const SET_TIME = "SET_TIME";
+export const SET_INITIAL_TIME = "SET_INITIAL_TIME";
+export const SET_REMAINING_TIME = "SET_REMAINING_TIME";
 
-export const setTime = newTime => {
-  // console.log("Action creator called with:", newTime);
-  return {
-    type: SET_TIME,
-    payload: newTime
-  };
-};
+export const setInitialTime = newInitialTime => ({
+  type: SET_INITIAL_TIME,
+  payload: newInitialTime
+});
+
+export const setRemainingTime = newRemainingTime => ({
+  type: SET_REMAINING_TIME,
+  payload: newRemainingTime
+});
