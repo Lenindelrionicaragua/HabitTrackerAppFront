@@ -1,5 +1,14 @@
 import { renderHook, act } from "@testing-library/react-hooks";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 import useStopwatch from "../../hooks/useStopwatch";
+
+const mockStore = configureStore([]);
+const store = mockStore({
+  counter: { time: 300 }
+});
+
+const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
 const setCircleColor = jest.fn();
 setCircleColor("skyBlue");
@@ -18,7 +27,7 @@ describe("useStopwatchScreen", () => {
 
   it("should decrease the time accurately and consistently", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
       result.current.startTimer(initialTime);
