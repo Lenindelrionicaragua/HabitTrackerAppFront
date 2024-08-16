@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1723804286750" clover="3.2.0">
-  <project timestamp="1723804286750" name="All files">
-    <metrics statements="938" coveredstatements="3" conditionals="330" coveredconditionals="0" methods="192" coveredmethods="1" elements="1460" coveredelements="4" complexity="0" loc="938" ncloc="938" packages="68" files="92" classes="92"/>
+<coverage generated="1723804846672" clover="3.2.0">
+  <project timestamp="1723804846673" name="All files">
+    <metrics statements="940" coveredstatements="0" conditionals="330" coveredconditionals="0" methods="192" coveredmethods="0" elements="1462" coveredelements="0" complexity="0" loc="940" ncloc="940" packages="68" files="92" classes="92"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -383,11 +383,11 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.actions">
-      <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="counterActions.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/actions/counterActions.js">
-        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
       </file>
     </package>
@@ -682,7 +682,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="77" coveredstatements="1" conditionals="20" coveredconditionals="0" methods="18" coveredmethods="1"/>
+      <metrics statements="77" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="18" coveredmethods="0"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -736,8 +736,8 @@
         <line num="32" count="0" type="stmt"/>
       </file>
       <file name="useStopwatch.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useStopwatch.js">
-        <metrics statements="34" coveredstatements="1" conditionals="8" coveredconditionals="0" methods="7" coveredmethods="1"/>
-        <line num="7" count="4" type="stmt"/>
+        <metrics statements="34" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
@@ -785,12 +785,14 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.reducers">
-      <metrics statements="7" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="9" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="counterReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/counterReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="8" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="12" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
