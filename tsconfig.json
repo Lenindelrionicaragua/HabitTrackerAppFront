@@ -5,6 +5,8 @@
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "strict": true
-    }
+    },
+    "include": ["ZenTimerAppFront/**/*"],
+    "exclude": ["node_modules"]
   }
-  
+

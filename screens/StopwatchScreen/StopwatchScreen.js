@@ -74,7 +74,7 @@ const StopwatchScreen = () => {
     initialTime,
     setInitialTime,
     remainingTime,
-    setRemainingTime, // Add this line
+    setRemainingTime,
     elapsedTime,
     setElapsedTime,
     timeCompleted,

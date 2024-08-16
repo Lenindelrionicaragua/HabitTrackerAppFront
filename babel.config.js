@@ -1,7 +1,11 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ["babel-preset-expo"],
+    presets: [
+      "babel-preset-expo",
+      "@babel/preset-react",
+      "@babel/preset-typescript"
+    ],
     plugins: [
       [
         "module:react-native-dotenv",
@@ -12,9 +16,7 @@ module.exports = function (api) {
       ],
       "@babel/plugin-proposal-nullish-coalescing-operator",
       "@babel/plugin-proposal-optional-chaining",
-      "@babel/plugin-proposal-export-default-from",
-      "@babel/plugin-transform-modules-commonjs",
-      "@babel/plugin-transform-typescript"
+      "@babel/plugin-proposal-export-default-from"
     ]
   };
 };
