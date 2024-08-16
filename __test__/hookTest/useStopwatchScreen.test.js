@@ -51,7 +51,7 @@ describe("useStopwatchScreen", () => {
 
   it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
-    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime });
 
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
@@ -84,7 +84,7 @@ describe("useStopwatchScreen", () => {
 
   it("should resume the stopwatch correctly", () => {
     const initialTime = 50;
-    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime });
 
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
@@ -116,7 +116,7 @@ describe("useStopwatchScreen", () => {
 
   it("useStopwatchScreen should set timeCompleted to true when the initial time is completed", () => {
     const initialTime = 50;
-    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime });
 
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
