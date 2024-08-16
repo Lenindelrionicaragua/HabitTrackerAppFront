@@ -1,18 +1,13 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
+import { createStore } from "redux";
+import rootReducer from "../../reducers/rootReducer";
 import useStopwatch from "../../hooks/useStopwatch";
 
-const mockStore = configureStore([]);
-const store = mockStore({
-  counter: { time: 50 }
-});
+const store = createStore(rootReducer);
 
 const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
-
-const setCircleColor = jest.fn();
-setCircleColor("skyBlue");
 
 describe("useStopwatchScreen", () => {
   beforeEach(() => {
@@ -28,6 +23,8 @@ describe("useStopwatchScreen", () => {
 
   it("should decrease the time accurately and consistently", () => {
     const initialTime = 50;
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime });
+
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
@@ -54,6 +51,8 @@ describe("useStopwatchScreen", () => {
 
   it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
@@ -85,6 +84,8 @@ describe("useStopwatchScreen", () => {
 
   it("should resume the stopwatch correctly", () => {
     const initialTime = 50;
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
@@ -115,6 +116,8 @@ describe("useStopwatchScreen", () => {
 
   it("useStopwatchScreen should set timeCompleted to true when the initial time is completed", () => {
     const initialTime = 50;
+    store.dispatch({ type: "SET_INITIAL_TIME", payload: initialTime }); // Asegúrate de que esta acción exista y funcione
+
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
