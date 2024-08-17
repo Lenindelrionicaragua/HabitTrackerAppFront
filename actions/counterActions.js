@@ -2,6 +2,7 @@ export const SET_INITIAL_TIME = "SET_INITIAL_TIME";
 export const SET_REMAINING_TIME = "SET_REMAINING_TIME";
 export const SET_ELAPSED_TIME = "SET_ELAPSED_TIME";
 export const SET_TIME_COMPLETED = "SET_TIME_COMPLETED";
+export const SET_RUNNING = "SET_RUNNING";
 
 export const setInitialTime = newInitialTime => {
   return {
@@ -28,5 +29,12 @@ export const setTimeCompleted = newTimeCompleted => {
   return {
     type: SET_TIME_COMPLETED,
     payload: newTimeCompleted
+  };
+};
+
+export const setRunning = newRunning => {
+  return {
+    type: SET_RUNNING,
+    payload: newRunning
   };
 };

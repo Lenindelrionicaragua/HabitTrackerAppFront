@@ -162,7 +162,7 @@ const StopwatchScreen = () => {
       startTimer(remainingTime);
       setInfoText("Timer start with the selected activity.");
       clearInfoTextAfter(5000);
-      setRunning(true);
+      dispatch(setRunning(true));
       setFirstRun(true);
       setHasStarted(true);
     };
@@ -263,7 +263,7 @@ const StopwatchScreen = () => {
   // Save Time Button
   const saveTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    setRunning(false);
+    dispatch(setRunning(false));
 
     if (remainingTime === 0 && !firstRun) {
       setInfoText("No time recorded. Please start the timer before saving.");
@@ -303,7 +303,7 @@ const StopwatchScreen = () => {
     dispatch(setElapsedTime(0));
     setActivityIndex(null);
     setHasStarted(false);
-    setRunning(false);
+    dispatch(setRunning(false));
     setFirstRun(false);
     setResetClicks(0);
     setButtonsDisabled(false);
@@ -334,7 +334,7 @@ const StopwatchScreen = () => {
       dispatch(setInitialTime(newInitialTime));
       dispatch(setRemainingTime(newInitialTime));
       dispatch(setElapsedTime(0));
-      setRunning(false);
+      dispatch(setRunning(false));
     } else {
       dispatch(setInitialTime(MAX_TIME_SECONDS));
       dispatch(setRemainingTime(MAX_TIME_SECONDS));
