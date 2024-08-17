@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1723830236327" clover="3.2.0">
-  <project timestamp="1723830236328" name="All files">
-    <metrics statements="948" coveredstatements="344" conditionals="333" coveredconditionals="98" methods="196" coveredmethods="65" elements="1477" coveredelements="507" complexity="0" loc="948" ncloc="948" packages="68" files="93" classes="93"/>
+<coverage generated="1723901852440" clover="3.2.0">
+  <project timestamp="1723901852440" name="All files">
+    <metrics statements="957" coveredstatements="68" conditionals="336" coveredconditionals="17" methods="200" coveredmethods="19" elements="1493" coveredelements="104" complexity="0" loc="957" ncloc="957" packages="68" files="94" classes="94"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -383,65 +383,68 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.actions">
-      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="counterActions.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/actions/counterActions.js">
-        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="4" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="130" type="stmt"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="130" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="130" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.component.Banner">
-      <metrics statements="11" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <metrics statements="11" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="Banner.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/Banner/Banner.js">
-        <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
       </file>
       <file name="BannerStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/Banner/BannerStyles.js">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.component.KeyboardAvoider">
-      <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <metrics statements="4" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="KeyboardAvoider.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/KeyboardAvoider/KeyboardAvoider.js">
-        <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="174" type="stmt"/>
-        <line num="13" count="174" type="cond" truecount="1" falsecount="1"/>
-        <line num="31" count="4" type="stmt"/>
+        <metrics statements="4" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="31" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.component.ResendTimer">
-      <metrics statements="16" coveredstatements="10" conditionals="16" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="16" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="ResendTimer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/ResendTimer/ResendTimer.js">
-        <metrics statements="3" coveredstatements="2" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
+        <metrics statements="3" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
       </file>
       <file name="ResendTimerStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/ResendTimer/ResendTimerStyles.js">
-        <metrics statements="13" coveredstatements="8" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
+        <metrics statements="13" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="40" count="0" type="stmt"/>
@@ -450,43 +453,43 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.component.Shared">
-      <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="SharedUrl.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/Shared/SharedUrl.js">
-        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="4" count="4" type="cond" truecount="0" falsecount="2"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="7" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
+        <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.component.TextInputLoginScreen">
-      <metrics statements="6" coveredstatements="4" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="1"/>
+      <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="TextInputLoginScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/TextInputLoginScreen/TextInputLoginScreen.js">
-        <metrics statements="6" coveredstatements="4" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="1"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="22" count="245" type="stmt"/>
-        <line num="24" count="245" type="stmt"/>
+        <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.component.TextInputSignupScreen">
-      <metrics statements="5" coveredstatements="4" conditionals="8" coveredconditionals="7" methods="2" coveredmethods="1"/>
+      <metrics statements="5" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="TextInputSignupScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/component/TextInputSignupScreen/TextInputSignupScreen.js">
-        <metrics statements="5" coveredstatements="4" conditionals="8" coveredconditionals="7" methods="2" coveredmethods="1"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="24" count="280" type="stmt"/>
-        <line num="26" count="280" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.context">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="credentialsContext.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/context/credentialsContext.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="4" type="stmt"/>
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.cypress.e2e">
@@ -685,31 +688,31 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="78" coveredstatements="75" conditionals="20" coveredconditionals="17" methods="20" coveredmethods="18"/>
+      <metrics statements="79" coveredstatements="42" conditionals="20" coveredconditionals="8" methods="22" coveredmethods="13"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
-        <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
-        <line num="4" count="16" type="stmt"/>
-        <line num="9" count="16" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="11" count="8" type="stmt"/>
-        <line num="12" count="8" type="stmt"/>
-        <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="25" count="6" type="stmt"/>
-        <line num="30" count="6" type="stmt"/>
-        <line num="32" count="6" type="stmt"/>
-        <line num="37" count="6" type="stmt"/>
-        <line num="40" count="8" type="stmt"/>
-        <line num="41" count="8" type="stmt"/>
-        <line num="44" count="16" type="stmt"/>
+        <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
       </file>
       <file name="useInterval.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useInterval.js">
         <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
         <line num="4" count="17" type="stmt"/>
         <line num="7" count="17" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
+        <line num="8" count="16" type="stmt"/>
         <line num="12" count="17" type="stmt"/>
         <line num="14" count="130" type="stmt"/>
         <line num="16" count="13" type="cond" truecount="2" falsecount="0"/>
@@ -718,106 +721,115 @@
         <line num="19" count="5" type="stmt"/>
       </file>
       <file name="usePlayAlarm.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePlayAlarm.js">
-        <metrics statements="18" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="3"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="8" type="stmt"/>
-        <line num="7" count="8" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="10" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="15" count="4" type="stmt"/>
-        <line num="16" count="4" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
-        <line num="19" count="4" type="stmt"/>
-        <line num="21" count="4" type="stmt"/>
-        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
+        <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="32" count="8" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
       </file>
       <file name="useStopwatch.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useStopwatch.js">
-        <metrics statements="35" coveredstatements="33" conditionals="8" coveredconditionals="6" methods="9" coveredmethods="7"/>
-        <line num="7" count="155" type="stmt"/>
-        <line num="8" count="155" type="stmt"/>
-        <line num="10" count="17" type="stmt"/>
-        <line num="12" count="17" type="stmt"/>
-        <line num="13" count="17" type="stmt"/>
-        <line num="14" count="17" type="stmt"/>
-        <line num="16" count="17" type="stmt"/>
+        <metrics statements="36" coveredstatements="33" conditionals="8" coveredconditionals="6" methods="11" coveredmethods="8"/>
+        <line num="11" count="285" type="stmt"/>
+        <line num="12" count="285" type="stmt"/>
+        <line num="13" count="285" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
         <line num="17" count="17" type="stmt"/>
         <line num="18" count="17" type="stmt"/>
         <line num="20" count="17" type="stmt"/>
-        <line num="21" count="4" type="stmt"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="26" count="17" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="31" count="17" type="stmt"/>
-        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="40" count="17" type="stmt"/>
-        <line num="41" count="130" type="cond" truecount="1" falsecount="1"/>
-        <line num="42" count="130" type="stmt"/>
-        <line num="44" count="130" type="stmt"/>
+        <line num="21" count="17" type="stmt"/>
+        <line num="22" count="17" type="stmt"/>
+        <line num="24" count="17" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="30" count="17" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="35" count="17" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="17" type="stmt"/>
+        <line num="45" count="130" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="130" type="stmt"/>
         <line num="48" count="130" type="stmt"/>
-        <line num="49" count="130" type="stmt"/>
-        <line num="50" count="130" type="stmt"/>
-        <line num="52" count="130" type="cond" truecount="2" falsecount="0"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="54" count="2" type="stmt"/>
-        <line num="59" count="17" type="cond" truecount="2" falsecount="0"/>
-        <line num="61" count="17" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
+        <line num="52" count="130" type="stmt"/>
+        <line num="53" count="130" type="stmt"/>
+        <line num="54" count="130" type="stmt"/>
+        <line num="56" count="130" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="63" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="17" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.navigators">
-      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <metrics statements="5" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="RootStack.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/navigators/RootStack.js">
-        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.reducers">
-      <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+      <metrics statements="17" coveredstatements="17" conditionals="9" coveredconditionals="9" methods="3" coveredmethods="3"/>
+      <file name="elapsedTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/elapsedTimeReducer.js">
+        <metrics statements="5" coveredstatements="5" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="271" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="130" type="stmt"/>
+        <line num="13" count="141" type="stmt"/>
+      </file>
       <file name="initialTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/initialTimeReducer.js">
         <metrics statements="5" coveredstatements="5" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="6" count="141" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="271" type="cond" truecount="2" falsecount="0"/>
         <line num="8" count="8" type="stmt"/>
-        <line num="13" count="133" type="stmt"/>
+        <line num="13" count="263" type="stmt"/>
       </file>
       <file name="remainingTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/remainingTimeReducer.js">
         <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="8" count="141" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="271" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="130" type="stmt"/>
-        <line num="15" count="11" type="stmt"/>
+        <line num="15" count="141" type="stmt"/>
       </file>
       <file name="rootReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/rootReducer.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.LinkVerificationScreen">
-      <metrics statements="61" coveredstatements="17" conditionals="11" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <metrics statements="61" coveredstatements="0" conditionals="11" coveredconditionals="0" methods="12" coveredmethods="0"/>
       <file name="LinkVerificationScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LinkVerificationScreen/LinkVerificationScreen.js">
-        <metrics statements="39" coveredstatements="2" conditionals="3" coveredconditionals="0" methods="9" coveredmethods="0"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <metrics statements="39" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
@@ -857,24 +869,24 @@
         <line num="104" count="0" type="stmt"/>
       </file>
       <file name="LinkVerificationStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LinkVerificationScreen/LinkVerificationStyles.js">
-        <metrics statements="22" coveredstatements="15" conditionals="8" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="61" count="1" type="stmt"/>
-        <line num="66" count="1" type="stmt"/>
+        <metrics statements="22" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
         <line num="76" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="84" count="1" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
         <line num="89" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="96" count="1" type="stmt"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="108" count="1" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="108" count="0" type="stmt"/>
         <line num="113" count="0" type="stmt"/>
         <line num="114" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="115" count="0" type="stmt"/>
@@ -883,34 +895,34 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.LoginScreen">
-      <metrics statements="101" coveredstatements="56" conditionals="42" coveredconditionals="20" methods="21" coveredmethods="10"/>
+      <metrics statements="101" coveredstatements="0" conditionals="42" coveredconditionals="0" methods="21" coveredmethods="0"/>
       <file name="LoginScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LoginScreen/LoginScreen.js">
-        <metrics statements="73" coveredstatements="28" conditionals="28" coveredconditionals="10" methods="17" coveredmethods="6"/>
-        <line num="44" count="2" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="174" type="stmt"/>
-        <line num="50" count="174" type="stmt"/>
-        <line num="51" count="174" type="stmt"/>
-        <line num="52" count="174" type="stmt"/>
-        <line num="55" count="174" type="stmt"/>
-        <line num="57" count="174" type="stmt"/>
-        <line num="65" count="174" type="stmt"/>
-        <line num="66" count="116" type="cond" truecount="1" falsecount="1"/>
-        <line num="67" count="116" type="stmt"/>
-        <line num="68" count="116" type="stmt"/>
+        <metrics statements="73" coveredstatements="0" conditionals="28" coveredconditionals="0" methods="17" coveredmethods="0"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
         <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="74" count="174" type="stmt"/>
-        <line num="75" count="116" type="stmt"/>
-        <line num="76" count="116" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
         <line num="80" count="0" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
         <line num="88" count="0" type="stmt"/>
-        <line num="100" count="116" type="stmt"/>
-        <line num="103" count="116" type="stmt"/>
-        <line num="107" count="174" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
         <line num="108" count="0" type="stmt"/>
         <line num="109" count="0" type="stmt"/>
         <line num="110" count="0" type="stmt"/>
@@ -919,13 +931,13 @@
         <line num="116" count="0" type="stmt"/>
         <line num="117" count="0" type="stmt"/>
         <line num="120" count="0" type="stmt"/>
-        <line num="124" count="174" type="stmt"/>
+        <line num="124" count="0" type="stmt"/>
         <line num="125" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="126" count="0" type="stmt"/>
         <line num="127" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="128" count="0" type="stmt"/>
         <line num="130" count="0" type="stmt"/>
-        <line num="134" count="174" type="stmt"/>
+        <line num="134" count="0" type="stmt"/>
         <line num="135" count="0" type="stmt"/>
         <line num="136" count="0" type="stmt"/>
         <line num="138" count="0" type="stmt"/>
@@ -940,79 +952,79 @@
         <line num="162" count="0" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
         <line num="169" count="0" type="stmt"/>
-        <line num="173" count="174" type="stmt"/>
-        <line num="174" count="116" type="stmt"/>
-        <line num="175" count="116" type="stmt"/>
-        <line num="178" count="174" type="stmt"/>
+        <line num="173" count="0" type="stmt"/>
+        <line num="174" count="0" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
         <line num="179" count="0" type="stmt"/>
         <line num="181" count="0" type="stmt"/>
         <line num="185" count="0" type="stmt"/>
         <line num="188" count="0" type="stmt"/>
         <line num="189" count="0" type="stmt"/>
-        <line num="196" count="174" type="stmt"/>
+        <line num="196" count="0" type="stmt"/>
         <line num="213" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="214" count="0" type="stmt"/>
         <line num="215" count="0" type="stmt"/>
         <line num="217" count="0" type="stmt"/>
         <line num="218" count="0" type="stmt"/>
-        <line num="233" count="121" type="stmt"/>
+        <line num="233" count="0" type="stmt"/>
         <line num="284" count="0" type="stmt"/>
         <line num="285" count="0" type="stmt"/>
-        <line num="315" count="1" type="stmt"/>
+        <line num="315" count="0" type="stmt"/>
       </file>
       <file name="LoginScreenStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/LoginScreen/LoginScreenStyles.js">
-        <metrics statements="28" coveredstatements="28" conditionals="14" coveredconditionals="10" methods="4" coveredmethods="4"/>
-        <line num="22" count="3" type="stmt"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="25" count="3" type="stmt"/>
-        <line num="27" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="28" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="29" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="31" count="3" type="stmt"/>
-        <line num="43" count="3" type="stmt"/>
-        <line num="52" count="3" type="stmt"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="67" count="3" type="stmt"/>
-        <line num="75" count="3" type="stmt"/>
-        <line num="79" count="3" type="stmt"/>
-        <line num="92" count="3" type="stmt"/>
-        <line num="98" count="3" type="stmt"/>
-        <line num="105" count="3" type="stmt"/>
-        <line num="112" count="3" type="stmt"/>
-        <line num="122" count="242" type="cond" truecount="2" falsecount="0"/>
-        <line num="130" count="3" type="stmt"/>
-        <line num="131" count="242" type="cond" truecount="2" falsecount="0"/>
-        <line num="135" count="242" type="cond" truecount="2" falsecount="0"/>
-        <line num="141" count="3" type="stmt"/>
-        <line num="144" count="121" type="cond" truecount="1" falsecount="1"/>
-        <line num="147" count="3" type="stmt"/>
-        <line num="154" count="3" type="stmt"/>
-        <line num="161" count="3" type="stmt"/>
-        <line num="168" count="3" type="stmt"/>
-        <line num="173" count="3" type="stmt"/>
+        <metrics statements="28" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="122" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="130" count="0" type="stmt"/>
+        <line num="131" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="135" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="141" count="0" type="stmt"/>
+        <line num="144" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="147" count="0" type="stmt"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="168" count="0" type="stmt"/>
+        <line num="173" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.SignupScreen">
-      <metrics statements="80" coveredstatements="48" conditionals="39" coveredconditionals="15" methods="17" coveredmethods="8"/>
+      <metrics statements="80" coveredstatements="0" conditionals="39" coveredconditionals="0" methods="17" coveredmethods="0"/>
       <file name="SignupScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/SignupScreen/SignupScreen.js">
-        <metrics statements="54" coveredstatements="22" conditionals="27" coveredconditionals="9" methods="14" coveredmethods="5"/>
-        <line num="34" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="37" count="55" type="stmt"/>
-        <line num="38" count="55" type="stmt"/>
-        <line num="39" count="55" type="stmt"/>
-        <line num="40" count="55" type="stmt"/>
-        <line num="42" count="55" type="stmt"/>
-        <line num="43" count="55" type="stmt"/>
-        <line num="47" count="55" type="stmt"/>
-        <line num="49" count="55" type="stmt"/>
-        <line num="50" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="56" count="55" type="stmt"/>
-        <line num="57" count="2" type="stmt"/>
-        <line num="61" count="55" type="stmt"/>
+        <metrics statements="54" coveredstatements="0" conditionals="27" coveredconditionals="0" methods="14" coveredmethods="0"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
@@ -1028,16 +1040,16 @@
         <line num="96" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
-        <line num="107" count="55" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
         <line num="108" count="0" type="stmt"/>
         <line num="109" count="0" type="stmt"/>
-        <line num="112" count="55" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
         <line num="113" count="0" type="stmt"/>
         <line num="115" count="0" type="stmt"/>
         <line num="119" count="0" type="stmt"/>
         <line num="122" count="0" type="stmt"/>
         <line num="123" count="0" type="stmt"/>
-        <line num="130" count="55" type="stmt"/>
+        <line num="130" count="0" type="stmt"/>
         <line num="158" count="0" type="stmt"/>
         <line num="159" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="163" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1048,49 +1060,49 @@
         <line num="174" count="0" type="stmt"/>
         <line num="176" count="0" type="stmt"/>
         <line num="177" count="0" type="stmt"/>
-        <line num="197" count="55" type="stmt"/>
-        <line num="289" count="1" type="stmt"/>
+        <line num="197" count="0" type="stmt"/>
+        <line num="289" count="0" type="stmt"/>
       </file>
       <file name="SignupScreenStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/SignupScreen/SignupScreenStyles.js">
-        <metrics statements="26" coveredstatements="26" conditionals="12" coveredconditionals="6" methods="3" coveredmethods="3"/>
-        <line num="15" count="3" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
-        <line num="18" count="3" type="stmt"/>
-        <line num="20" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="21" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="22" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="36" count="3" type="stmt"/>
-        <line num="43" count="3" type="stmt"/>
-        <line num="51" count="3" type="stmt"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="63" count="3" type="stmt"/>
-        <line num="76" count="3" type="stmt"/>
-        <line num="82" count="3" type="stmt"/>
-        <line num="89" count="3" type="stmt"/>
-        <line num="96" count="3" type="stmt"/>
-        <line num="106" count="55" type="cond" truecount="1" falsecount="1"/>
-        <line num="114" count="3" type="stmt"/>
-        <line num="119" count="55" type="cond" truecount="1" falsecount="1"/>
-        <line num="126" count="3" type="stmt"/>
-        <line num="129" count="55" type="cond" truecount="1" falsecount="1"/>
-        <line num="132" count="3" type="stmt"/>
-        <line num="139" count="3" type="stmt"/>
-        <line num="146" count="3" type="stmt"/>
-        <line num="153" count="3" type="stmt"/>
-        <line num="158" count="3" type="stmt"/>
+        <metrics statements="26" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="119" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="126" count="0" type="stmt"/>
+        <line num="129" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="139" count="0" type="stmt"/>
+        <line num="146" count="0" type="stmt"/>
+        <line num="153" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.StopwatchScreen">
-      <metrics statements="214" coveredstatements="26" conditionals="127" coveredconditionals="3" methods="42" coveredmethods="0"/>
+      <metrics statements="214" coveredstatements="0" conditionals="127" coveredconditionals="0" methods="42" coveredmethods="0"/>
       <file name="StopwatchScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/StopwatchScreen/StopwatchScreen.js">
-        <metrics statements="195" coveredstatements="7" conditionals="121" coveredconditionals="0" methods="42" coveredmethods="0"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="42" count="1" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
+        <metrics statements="195" coveredstatements="0" conditionals="121" coveredconditionals="0" methods="42" coveredmethods="0"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
@@ -1279,41 +1291,41 @@
         <line num="549" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="550" count="0" type="stmt"/>
         <line num="551" count="0" type="stmt"/>
-        <line num="570" count="1" type="stmt"/>
+        <line num="570" count="0" type="stmt"/>
       </file>
       <file name="StopwatchScreenStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/StopwatchScreen/StopwatchScreenStyles.js">
-        <metrics statements="19" coveredstatements="19" conditionals="6" coveredconditionals="3" methods="0" coveredmethods="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="18" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="61" count="1" type="stmt"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="74" count="1" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
-        <line num="114" count="1" type="stmt"/>
-        <line num="121" count="1" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
-        <line num="142" count="1" type="stmt"/>
-        <line num="161" count="1" type="stmt"/>
-        <line num="180" count="1" type="stmt"/>
+        <metrics statements="19" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="126" count="0" type="stmt"/>
+        <line num="142" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="180" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.WelcomeScreen">
-      <metrics statements="37" coveredstatements="23" conditionals="22" coveredconditionals="12" methods="6" coveredmethods="5"/>
+      <metrics statements="37" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="WelcomeScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/WelcomeScreen/WelcomeScreen.js">
-        <metrics statements="21" coveredstatements="7" conditionals="14" coveredconditionals="6" methods="2" coveredmethods="1"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="38" count="19" type="stmt"/>
-        <line num="43" count="19" type="cond" truecount="1" falsecount="1"/>
-        <line num="45" count="19" type="cond" truecount="1" falsecount="1"/>
-        <line num="49" count="19" type="stmt"/>
-        <line num="58" count="19" type="stmt"/>
+        <metrics statements="21" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
         <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
         <line num="62" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1328,26 +1340,26 @@
         <line num="82" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="86" count="0" type="stmt"/>
-        <line num="90" count="19" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
       </file>
       <file name="WelcomeScreenStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/WelcomeScreen/WelcomeScreenStyles.js">
-        <metrics statements="16" coveredstatements="16" conditionals="8" coveredconditionals="6" methods="4" coveredmethods="4"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
-        <line num="51" count="19" type="cond" truecount="2" falsecount="0"/>
-        <line num="57" count="2" type="stmt"/>
-        <line num="65" count="38" type="cond" truecount="2" falsecount="0"/>
-        <line num="72" count="2" type="stmt"/>
-        <line num="76" count="2" type="stmt"/>
-        <line num="86" count="19" type="cond" truecount="1" falsecount="1"/>
-        <line num="94" count="2" type="stmt"/>
-        <line num="99" count="19" type="cond" truecount="1" falsecount="1"/>
-        <line num="106" count="2" type="stmt"/>
+        <metrics statements="16" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="86" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="99" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="106" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.store">
@@ -1358,79 +1370,79 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.styles">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="AppStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/styles/AppStyles.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="6" type="stmt"/>
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.util">
-      <metrics statements="48" coveredstatements="40" conditionals="20" coveredconditionals="12" methods="24" coveredmethods="14"/>
+      <metrics statements="48" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="24" coveredmethods="0"/>
       <file name="formatTime.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/formatTime.js">
-        <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="33" type="stmt"/>
-        <line num="3" count="14" type="cond" truecount="4" falsecount="0"/>
-        <line num="4" count="3" type="stmt"/>
-        <line num="7" count="11" type="stmt"/>
-        <line num="9" count="11" type="stmt"/>
-        <line num="10" count="11" type="stmt"/>
-        <line num="11" count="11" type="stmt"/>
-        <line num="13" count="11" type="stmt"/>
+        <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
       </file>
       <file name="handleButtonPress.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/handleButtonPress.js">
-        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="8" type="stmt"/>
-        <line num="6" count="8" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
       </file>
       <file name="logging.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/logging.js">
-        <metrics statements="14" coveredstatements="11" conditionals="6" coveredconditionals="4" methods="4" coveredmethods="3"/>
-        <line num="11" count="5" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="19" count="5" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
+        <metrics statements="14" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="31" count="0" type="stmt"/>
-        <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="34" count="0" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="43" count="5" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
       </file>
       <file name="utils.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/utils.js">
-        <metrics statements="7" coveredstatements="2" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="0"/>
-        <line num="2" count="1" type="stmt"/>
+        <metrics statements="7" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
       </file>
       <file name="validateAllowedFields.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/validateAllowedFields.js">
-        <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="7" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="12" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="17" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
+        <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
       </file>
       <file name="validationErrorMessage.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/validationErrorMessage.js">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
       </file>
     </package>
   </project>

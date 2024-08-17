@@ -300,7 +300,7 @@ const StopwatchScreen = () => {
   const performReset = () => {
     dispatch(setInitialTime(0));
     dispatch(setRemainingTime(0));
-    setElapsedTime(0);
+    dispatch(setElapsedTime(0));
     setActivityIndex(null);
     setHasStarted(false);
     setRunning(false);
@@ -333,7 +333,7 @@ const StopwatchScreen = () => {
       // setInitialTime(newInitialTime);
       dispatch(setInitialTime(newInitialTime));
       dispatch(setRemainingTime(newInitialTime));
-      setElapsedTime(0);
+      dispatch(setElapsedTime(0));
       setRunning(false);
     } else {
       dispatch(setInitialTime(MAX_TIME_SECONDS));
