@@ -88,10 +88,8 @@ const StopwatchScreen = () => {
   } = useStopwatch();
 
   const dispatch = useDispatch();
-  // const startTimeRef = useRef(0);
-  // const pauseTimeRef = useRef(0);
-  // const totalPausedTimeRef = useRef(0);
-  const intervalRef = useRef(null);
+
+  // const intervalRef = useRef(null);
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 

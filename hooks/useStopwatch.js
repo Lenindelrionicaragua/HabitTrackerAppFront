@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useInterval } from "../hooks/useInterval";
 import { useSelector, useDispatch } from "react-redux";
 import {
