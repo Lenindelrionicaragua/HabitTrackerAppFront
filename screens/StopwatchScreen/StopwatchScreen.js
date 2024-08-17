@@ -312,7 +312,7 @@ const StopwatchScreen = () => {
     setCircleColor(skyBlue);
     setInnerCircleColor(white);
     setButtonsDisabled(false);
-    setTimeCompleted(false);
+    dispatch(setTimeCompleted(true));
 
     logInfo(`Timer was reset.`);
   };
