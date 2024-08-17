@@ -5,7 +5,8 @@ import {
   setRemainingTime,
   setInitialTime,
   setElapsedTime,
-  setTimeCompleted
+  setTimeCompleted,
+  setRunning
 } from "../actions/counterActions";
 
 function useStopwatch() {
@@ -13,10 +14,9 @@ function useStopwatch() {
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
+  const running = useSelector(state => state.running.running);
 
   const dispatch = useDispatch();
-
-  const [running, setRunning] = useState(false);
 
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
@@ -25,12 +25,12 @@ function useStopwatch() {
   const startTimer = initialTime => {
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
-    setRunning(true);
+    dispatch(setRunning(true));
   };
 
   const pauseStopwatch = () => {
     pauseTimeRef.current = Date.now();
-    setRunning(false);
+    dispatch(setRunning(false));
   };
 
   const resumeStopwatch = () => {
@@ -38,7 +38,7 @@ function useStopwatch() {
       const now = Date.now();
       totalPausedTimeRef.current += now - pauseTimeRef.current;
 
-      setRunning(true);
+      dispatch(setRunning(true));
     }
   };
 
@@ -56,7 +56,7 @@ function useStopwatch() {
 
       if (remainingTime === 0) {
         dispatch(setTimeCompleted(true));
-        setRunning(false);
+        dispatch(setRunning(false));
       }
     }
   };
@@ -75,7 +75,7 @@ function useStopwatch() {
     setTimeCompleted: newTimeCompleted =>
       dispatch(setTimeCompleted(newTimeCompleted)),
     running,
-    setRunning,
+    setRunning: newRunning => dispatch(setRunning(newRunning)),
     pauseStopwatch,
     resumeStopwatch,
     startTimer
