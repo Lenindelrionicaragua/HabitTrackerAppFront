@@ -11,7 +11,10 @@ import useStopwatch from "../../hooks/useStopwatch";
 import { useButtonHandler } from "../../util/handleButtonPress";
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
-import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../../util/utils";
+import {
+  clearMessagesAndTimeouts,
+  clearInfoTextAfter
+} from "../../util/messageAndTimeoutHandlers";
 
 import {
   MaterialIcons,
@@ -60,7 +63,7 @@ const StopwatchScreen = () => {
     "Choose your task\nand adjust the time\n to start the tracker."
   );
 
-  const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
+  // const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
   const [resetClicks, setResetClicks] = useState(0);
   const [resetTimeouts, setResetTimeouts] = useState([]);
@@ -89,7 +92,7 @@ const StopwatchScreen = () => {
 
   const dispatch = useDispatch();
 
-  // const intervalRef = useRef(null);
+  const intervalRef = useRef(null);
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
@@ -189,74 +192,74 @@ const StopwatchScreen = () => {
 
   // Reset Button
 
-  const resetStopwatch = () => {
-    setResetClicks(prevClicks => prevClicks + 1);
-    setCircleColor(skyBlue);
+  // const resetStopwatch = () => {
+  //   setResetClicks(prevClicks => prevClicks + 1);
+  //   setCircleColor(skyBlue);
 
-    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+  //   clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
 
-    // Utility function to update button label and info text
-    const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
-      setResetButtonLabel(label);
-      setInfoText(infoText);
+  //   // Utility function to update button label and info text
+  //   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
+  //     setResetButtonLabel(label);
+  //     setInfoText(infoText);
 
-      if (cancelAfter) {
-        const timeoutId = setTimeout(() => {
-          setResetButtonLabel("RESET");
-          setResetClicks(0);
-          setInfoText("Reset cancelled.");
-        }, cancelAfter);
-        setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
-      }
-    };
+  //     if (cancelAfter) {
+  //       const timeoutId = setTimeout(() => {
+  //         setResetButtonLabel("RESET");
+  //         setResetClicks(0);
+  //         setInfoText("Reset cancelled.");
+  //       }, cancelAfter);
+  //       setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+  //     }
+  //   };
 
-    const handleResetClicksZero = () => {
-      if (remainingTime === 0) {
-        updateButtonAndInfoText(
-          "RESET",
-          "The timer is already at zero. Do you want to reset it?",
-          10000
-        );
-      } else {
-        updateButtonAndInfoText(
-          "CONFIRM RESET",
-          "Are you sure you want to reset the stopwatch?",
-          10000
-        );
-        clearInterval(intervalRef.current);
-      }
-      clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
-    };
+  //   const handleResetClicksZero = () => {
+  //     if (remainingTime === 0) {
+  //       updateButtonAndInfoText(
+  //         "RESET",
+  //         "The timer is already at zero. Do you want to reset it?",
+  //         10000
+  //       );
+  //     } else {
+  //       updateButtonAndInfoText(
+  //         "CONFIRM RESET",
+  //         "Are you sure you want to reset the stopwatch?",
+  //         10000
+  //       );
+  //       clearInterval(intervalRef.current);
+  //     }
+  //     clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+  //   };
 
-    const handleResetClicksOne = () => {
-      if (remainingTime !== 0) {
-        performReset();
-        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
-        clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-      }
-    };
+  //   const handleResetClicksOne = () => {
+  //     if (remainingTime !== 0) {
+  //       performReset();
+  //       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+  //       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+  //     }
+  //   };
 
-    const handleResetClicksTwoOrMore = () => {
-      if (remainingTime === 0) {
-        setResetClicks(0);
-        setHasStarted(false);
-        updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
-      } else {
-        performReset();
-        updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
-      }
-      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-    };
+  //   const handleResetClicksTwoOrMore = () => {
+  //     if (remainingTime === 0) {
+  //       setResetClicks(0);
+  //       setHasStarted(false);
+  //       updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
+  //     } else {
+  //       performReset();
+  //       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+  //     }
+  //     clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
+  //   };
 
-    // Main logic
-    if (resetClicks === 0) {
-      handleResetClicksZero();
-    } else if (resetClicks === 1) {
-      handleResetClicksOne();
-    } else if (resetClicks >= 2) {
-      handleResetClicksTwoOrMore();
-    }
-  };
+  //   // Main logic
+  //   if (resetClicks === 0) {
+  //     handleResetClicksZero();
+  //   } else if (resetClicks === 1) {
+  //     handleResetClicksOne();
+  //   } else if (resetClicks >= 2) {
+  //     handleResetClicksTwoOrMore();
+  //   }
+  // };
 
   // Save Time Button
   const saveTimeRecords = () => {
