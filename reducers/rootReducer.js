@@ -7,6 +7,7 @@ import isRunningReducer from "./isRunningReducer";
 import resetButtonLabelReducer from "./resetButtonLabelReducer";
 import infoTextReducer from "./infoTextReducer";
 import resetClicksReducer from "./resetClicksReducer";
+import resetTimeoutsReducer from "./resetTimeoutsReducer";
 
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   isRunning: isRunningReducer,
   resetButtonLabel: resetButtonLabelReducer,
   infoText: infoTextReducer,
-  resetClicks: resetClicksReducer
+  resetClicks: resetClicksReducer,
+  resetTimeouts: resetTimeoutsReducer
 });
 
 export default rootReducer;

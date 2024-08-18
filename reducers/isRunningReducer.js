@@ -1,5 +1,5 @@
 const initialRunningState = {
-  running: false
+  isRunning: false
 };
 
 const SET_RUNNING = "SET_RUNNING";
@@ -9,7 +9,7 @@ const isRunningReducer = (state = initialRunningState, action) => {
     case SET_RUNNING:
       return {
         ...state,
-        running: action.payload
+        isRunning: action.payload
       };
     default:
       return state;
