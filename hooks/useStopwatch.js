@@ -6,7 +6,7 @@ import {
   setInitialTime,
   setElapsedTime,
   setTimeCompleted,
-  setRunning
+  setIsRunning
 } from "../actions/counterActions";
 
 function useStopwatch() {
@@ -14,7 +14,7 @@ function useStopwatch() {
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
-  const running = useSelector(state => state.running.running);
+  const isRunning = useSelector(state => state.isRunning.isRunning);
 
   const dispatch = useDispatch();
 
@@ -25,25 +25,25 @@ function useStopwatch() {
   const startTimer = initialTime => {
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
-    dispatch(setRunning(true));
+    dispatch(setIsRunning(true));
   };
 
   const pauseStopwatch = () => {
     pauseTimeRef.current = Date.now();
-    dispatch(setRunning(false));
+    dispatch(setIsRunning(false));
   };
 
   const resumeStopwatch = () => {
-    if (!running) {
+    if (!isRunning) {
       const now = Date.now();
       totalPausedTimeRef.current += now - pauseTimeRef.current;
 
-      dispatch(setRunning(true));
+      dispatch(setIsRunning(true));
     }
   };
 
   const updateTime = () => {
-    if (running) {
+    if (isRunning) {
       const now = Date.now();
 
       const elapsedTime = Math.floor(
@@ -56,12 +56,12 @@ function useStopwatch() {
 
       if (remainingTime === 0) {
         dispatch(setTimeCompleted(true));
-        dispatch(setRunning(false));
+        dispatch(setIsRunning(false));
       }
     }
   };
 
-  useInterval(updateTime, running ? 1000 : null);
+  useInterval(updateTime, isRunning ? 1000 : null);
 
   return {
     initialTime,
@@ -74,8 +74,8 @@ function useStopwatch() {
     timeCompleted,
     setTimeCompleted: newTimeCompleted =>
       dispatch(setTimeCompleted(newTimeCompleted)),
-    running,
-    setRunning: newRunning => dispatch(setRunning(newRunning)),
+    isRunning,
+    setIsRunning: newIsRunning => dispatch(setIsRunning(newIsRunning)),
     pauseStopwatch,
     resumeStopwatch,
     startTimer
