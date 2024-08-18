@@ -1,8 +1,8 @@
-const initialTime = {
+const initialInitialTime = {
   initialTime: 0
 };
 
-const initialTimeReducer = (state = initialTime, action) => {
+const initialTimeReducer = (state = initialInitialTime, action) => {
   switch (action.type) {
     case "SET_INITIAL_TIME":
       return {
