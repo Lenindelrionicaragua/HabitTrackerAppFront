@@ -14,7 +14,7 @@ function useResetStopwatch() {
   const resetClicks = useSelector(state.resetClicks.resetClicks);
   const resetTimeouts = useSelector(state.resetTimeouts);
   const hasStarted = useSelector(state.hasStarted.hasStarted);
-  const setCircleColor = useSelector(state.setCircleColor.setCircleColor)
+  const setCircleColor = useSelector(state.setCircleColor.setCircleColor);
 
   const dispatch = useDispatch();
 
