@@ -4,7 +4,7 @@ const initialRunningState = {
 
 const SET_RUNNING = "SET_RUNNING";
 
-const runningReducer = (state = initialRunningState, action) => {
+const isRunningReducer = (state = initialRunningState, action) => {
   switch (action.type) {
     case SET_RUNNING:
       return {
@@ -16,4 +16,4 @@ const runningReducer = (state = initialRunningState, action) => {
   }
 };
 
-export default runningReducer;
+export default isRunningReducer;

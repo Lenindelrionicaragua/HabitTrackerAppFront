@@ -1,4 +1,4 @@
-const resetButtonLabel = {
+const initialResetButtonLabel = {
   label: "RESET"
 };
 

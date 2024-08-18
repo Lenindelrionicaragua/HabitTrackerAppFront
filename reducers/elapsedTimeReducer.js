@@ -1,8 +1,8 @@
-const elapsedTime = {
+const initialElapsedTime = {
   elapsedTime: 0
 };
 
-const elapsedTimeReducer = (state = elapsedTime, action) => {
+const elapsedTimeReducer = (state = initialElapsedTime, action) => {
   switch (action.type) {
     case "SET_ELAPSED_TIME":
       return {

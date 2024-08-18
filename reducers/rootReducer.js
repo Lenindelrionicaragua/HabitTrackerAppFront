@@ -3,7 +3,7 @@ import initialTimeReducer from "./initialTimeReducer";
 import remainingTimeReducer from "./remainingTimeReducer";
 import elapsedTimeReducer from "./elapsedTimeReducer";
 import timeCompletedReducer from "./timeCompletedReducer";
-import runningReducer from "./runningReducer";
+import isRunningReducer from "./isRunningReducer";
 import resetButtonLabelReducer from "./resetButtonLabelReducer";
 import infoTextReducer from "./infoTextReducer";
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   remainingTime: remainingTimeReducer,
   elapsedTime: elapsedTimeReducer,
   timeCompleted: timeCompletedReducer,
-  running: runningReducer,
+  isRunning: isRunningReducer,
   resetButtonLabel: resetButtonLabelReducer,
   infoText: infoTextReducer
 });
