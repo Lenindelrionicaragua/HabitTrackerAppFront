@@ -1,28 +1,20 @@
-// messageAndTimeoutHandlers.js
-export const clearMessagesAndTimeouts = (
-  timeouts,
-  setTimeouts,
-  setInfoText
-) => {
+const clearMessagesAndTimeouts = (timeouts, setTimeouts, setInfoText) => {
   if (!Array.isArray(timeouts)) {
     console.error("resetTimeouts should be an array");
-    timeouts = [];
+    return;
   }
   timeouts.forEach(timeout => clearTimeout(timeout));
   setTimeouts([]);
   setInfoText("");
 };
 
+// Function to clear infoText after a delay
 export const clearInfoTextAfter = (
   delay,
-  setInfoText,
-  setResetTimeouts,
-  resetTimeouts
+  setInfoText = () => {},
+  setResetTimeouts = () => {},
+  resetTimeouts = []
 ) => {
-  const timeoutId = setTimeout(() => {
-    setInfoText("");
-    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-  }, delay);
-
+  const timeoutId = setTimeout(() => setInfoText(""), delay);
   setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
 };

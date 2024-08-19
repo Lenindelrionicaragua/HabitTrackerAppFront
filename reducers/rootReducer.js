@@ -7,7 +7,7 @@ import isRunningReducer from "./isRunningReducer";
 import resetButtonLabelReducer from "./resetButtonLabelReducer";
 import infoTextReducer from "./infoTextReducer";
 import resetClicksReducer from "./resetClicksReducer";
-import resetTimeoutsReducer from "./resetTimeoutsReducer";
+import resetTimeoutsIdsReducer from "./resetTimeoutsIdsReducer";
 import hasStartedReducer from "./hasStartedReducer";
 import circleColorReducer from "./circleColorReducer";
 
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   resetButtonLabel: resetButtonLabelReducer,
   infoText: infoTextReducer,
   resetClicks: resetClicksReducer,
-  resetTimeouts: resetTimeoutsReducer,
+  resetTimeoutsIds: resetTimeoutsIdsReducer,
   hasStarted: hasStartedReducer,
   circleColor: circleColorReducer
 });

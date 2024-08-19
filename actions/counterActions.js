@@ -8,7 +8,7 @@ export const SET_START_TIME_REF = "SET_START_TIME_REF";
 export const SET_RESET_BUTTON_LABEL = "SET_RESET_BUTTON_LABEL";
 export const SET_INFO_TEXT = "SET_INFO_TEXT";
 export const SET_RESET_CLICKS = "SET_RESET_CLICKS";
-export const SET_RESET_TIMEOUTS = "SET_RESET_TIMEOUTS";
+export const SET_RESET_TIMEOUTS_IDS = "SET_RESET_TIMEOUTS_IDS";
 export const SET_HAS_STARTED = "SET_HAS_STARTED";
 export const SET_CIRCLE_COLOR = "SET_CIRCLE_COLOR";
 
@@ -70,10 +70,10 @@ export const setResetClicks = newResetClicks => {
   };
 };
 
-export const setResetTimeouts = timeouts => {
+export const setResetTimeoutsIds = timeoutsIds => {
   return {
-    type: SET_RESET_TIMEOUTS,
-    payload: timeouts
+    type: SET_RESET_TIMEOUTS_IDS,
+    payload: timeoutsIds
   };
 };
 
