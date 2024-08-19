@@ -1,5 +1,9 @@
-// Function to clear messages and timeouts in the buttons
-const clearMessagesAndTimeouts = (timeouts, setTimeouts, setInfoText) => {
+// messageAndTimeoutHandlers.js
+export const clearMessagesAndTimeouts = (
+  timeouts,
+  setTimeouts,
+  setInfoText
+) => {
   if (!Array.isArray(timeouts)) {
     console.error("resetTimeouts should be an array");
     timeouts = [];
