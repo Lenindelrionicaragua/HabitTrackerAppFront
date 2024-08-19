@@ -4,7 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
 import { useDispatch, useSelector } from "react-redux";
 // store
-import { setCircleColor } from "../../actions/counterActions";
+import { setCircleColor, hasStarted } from "../../actions/counterActions";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
