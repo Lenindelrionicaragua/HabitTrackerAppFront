@@ -9,6 +9,7 @@ import {
   setCircleColor,
   setIsRunning
 } from "../actions/counterActions";
+import { logInfo, logError } from "../util/logging";
 import { clearInfoTextAfter } from "../util/messageAndTimeoutHandlers";
 import { Colors } from "../styles/AppStyles";
 
@@ -27,17 +28,15 @@ function useResetStopwatch() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setResetClicks(prevClicks => prevClicks + 1));
-    dispatch(setCircleColor(skyBlue));
-  }, [dispatch]);
-
   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
+    logInfo(`Updating button label to: ${label}`);
     dispatch(setResetButtonLabel(label));
+    logInfo(`Updating info text to: ${infoText}`);
     dispatch(setInfoText(infoText));
 
     if (cancelAfter) {
       const timeoutId = setTimeout(() => {
+        logInfo("Timeout reached, resetting button label and clicks");
         dispatch(setResetButtonLabel("RESET"));
         dispatch(setResetClicks(0));
         dispatch(setInfoText("Reset cancelled."));
@@ -47,6 +46,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksZero = () => {
+    logInfo("handleResetClicksZero called");
     if (remainingTime === 0) {
       updateButtonAndInfoText(
         "RESET",
@@ -70,6 +70,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksOne = () => {
+    logInfo("handleResetClicksOne called");
     if (remainingTime !== 0) {
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
       clearInfoTextAfter(
@@ -82,6 +83,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksTwoOrMore = () => {
+    logInfo("handleResetClicksTwoOrMore called");
     if (remainingTime === 0) {
       dispatch(setResetClicks(0));
       dispatch(setHasStarted(false));

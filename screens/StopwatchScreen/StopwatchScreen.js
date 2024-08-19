@@ -210,6 +210,9 @@ const StopwatchScreen = () => {
   // Reset Button
 
   const resetStopwatch = () => {
+    dispatch(setResetClicks(prevClicks => prevClicks + 1));
+    dispatch(setCircleColor(skyBlue));
+
     logInfo("button is calling resetStopwathc");
     // Main logic
     if (resetClicks === 0) {
