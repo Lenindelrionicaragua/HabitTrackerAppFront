@@ -3,7 +3,7 @@ import {
   setResetButtonLabel,
   setInfoText,
   setResetClicks,
-  setResetTimeouts,
+  setResetTimeoutsIds,
   setHasStarted,
   setIsRunning
 } from "../actions/counterActions";
@@ -15,7 +15,9 @@ function useResetStopwatch() {
   );
   const infoText = useSelector(state => state.infoText.infoText);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
-  const resetTimeouts = useSelector(state => state.resetTimeouts);
+  const resetTimeoutsIds = useSelector(
+    state => state.resetTimeoutsIds.resetTimeoutsIds
+  );
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const remainingTime = useSelector(state => state.remainingTime);
 
@@ -31,7 +33,9 @@ function useResetStopwatch() {
         dispatch(setResetClicks(0));
         dispatch(setInfoText("Reset cancelled."));
       }, cancelAfter);
-      dispatch(setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]));
+      dispatch(
+        setResetTimeoutsIds(prevTimeouts => [...prevTimeouts, timeoutId])
+      );
     }
   };
 
@@ -50,23 +54,13 @@ function useResetStopwatch() {
       );
       dispatch(setIsRunning(false));
     }
-    clearInfoTextAfter(
-      12000,
-      text => dispatch(setInfoText(text)),
-      timeouts => dispatch(setResetTimeouts(timeouts)),
-      resetTimeouts
-    );
+    clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
   };
 
   const handleResetClicksOne = () => {
     if (remainingTime !== 0) {
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
-      clearInfoTextAfter(
-        2000,
-        text => dispatch(setInfoText(text)),
-        timeouts => dispatch(setResetTimeouts(timeouts)),
-        resetTimeouts
-      );
+      clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
     }
   };
 
@@ -78,12 +72,7 @@ function useResetStopwatch() {
     } else {
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
     }
-    clearInfoTextAfter(
-      2000,
-      text => dispatch(setInfoText(text)),
-      timeouts => dispatch(setResetTimeouts(timeouts)),
-      resetTimeouts
-    );
+    clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
   };
 
   return {
@@ -95,8 +84,8 @@ function useResetStopwatch() {
     setResetClicks: clicks => dispatch(setResetClicks(clicks)),
     hasStarted,
     setHasStarted: started => dispatch(setHasStarted(started)),
-    resetTimeouts,
-    setResetTimeouts,
+    resetTimeoutsIds,
+    setResetTimeoutsIds,
     handleResetClicksZero,
     handleResetClicksOne,
     handleResetClicksTwoOrMore,
