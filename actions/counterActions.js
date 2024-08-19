@@ -77,7 +77,7 @@ export const setResetTimeouts = timeouts => {
   };
 };
 
-export const setIsStarted = newHasStarted => {
+export const setHasStarted = newHasStarted => {
   return {
     type: SET_HAS_STARTED,
     payload: newHasStarted
