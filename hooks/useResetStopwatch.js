@@ -1,3 +1,4 @@
+import useEffect from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setResetButtonLabel,
@@ -7,13 +8,9 @@ import {
   setHasStarted,
   setCircleColor
 } from "../actions/counterActions";
-import {
-  clearInfoTextAfter,
-  clearMessagesAndTimeouts
-} from "../util/messageAndTimeoutHandlers";
+import { clearInfoTextAfter } from "../util/messageAndTimeoutHandlers";
 import { Colors } from "../styles/AppStyles";
 
-// Desestructura skyBlue del objeto Colors
 const { skyBlue } = Colors;
 
 function useResetStopwatch() {
@@ -28,13 +25,11 @@ function useResetStopwatch() {
 
   const dispatch = useDispatch();
 
-  // Utiliza useEffect para manejar despachos de acciones de manera controlada
   useEffect(() => {
     dispatch(setResetClicks(prevClicks => prevClicks + 1));
     dispatch(setCircleColor(skyBlue));
   }, [dispatch]);
 
-  // Función utilitaria para actualizar el texto del botón y la información
   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
     dispatch(setResetButtonLabel(label));
     dispatch(setInfoText(infoText));
@@ -76,7 +71,7 @@ function useResetStopwatch() {
 
   const handleResetClicksOne = () => {
     if (remainingTime !== 0) {
-      performReset(); // Asegúrate de definir esta función
+      performReset();
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
       clearInfoTextAfter(
         2000,
@@ -93,7 +88,7 @@ function useResetStopwatch() {
       dispatch(setHasStarted(false));
       updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
     } else {
-      performReset(); // Asegúrate de definir esta función
+      performReset();
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
     }
     clearInfoTextAfter(
@@ -104,7 +99,6 @@ function useResetStopwatch() {
     );
   };
 
-  // Lógica principal para manejar los clics en el botón de reinicio
   useEffect(() => {
     if (resetClicks === 0) {
       handleResetClicksZero();

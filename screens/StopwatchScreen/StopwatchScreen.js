@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
+import useResetStopwatch from "../../hooks/useResetStopwatch";
 //utils
 import { useButtonHandler } from "../../util/handleButtonPress";
 import { formatTime } from "../../util/formatTime";
@@ -91,6 +92,19 @@ const StopwatchScreen = () => {
     resumeStopwatch,
     startTimer
   } = useStopwatch();
+
+  const {
+    resetButtonLabel,
+    setResetButtonLabel,
+    infoText,
+    setInfoText,
+    resetClicks,
+    setResetClicks,
+    hasStarted,
+    setHasStarted,
+    circleColor,
+    setCircleColor
+  } = useResetStopwatch();
 
   const dispatch = useDispatch();
 
