@@ -103,19 +103,20 @@ const StopwatchScreen = () => {
     hasStarted,
     setHasStarted,
     circleColor,
-    setCircleColor
+    setCircleColor,
+    handleResetClicksZero,
+    handleResetClicksOne,
+    handleResetClicksTwoOrMore
   } = useResetStopwatch();
 
   const dispatch = useDispatch();
-
-  const intervalRef = useRef(null);
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
-        setInfoText("");
+        dispatch(setInfoText(""));
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -144,7 +145,7 @@ const StopwatchScreen = () => {
     const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
       setActivityIndex(defaultActivityIndex);
       handleTimeSelection(time);
-      setInfoText(infoText);
+      dispatch(setInfoText(infoText));
       clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
     };
 
@@ -154,7 +155,7 @@ const StopwatchScreen = () => {
         defaultTime,
         "Default time and activity selected."
       );
-      setHasStarted(true);
+      dispatch(setHasStarted(true));
     };
 
     const handleActivityNoTime = () => {
@@ -163,7 +164,7 @@ const StopwatchScreen = () => {
         defaultTime,
         "Default time selected."
       );
-      setHasStarted(true);
+      dispatch(setHasStarted(true));
     };
 
     const handleNoActivityTime = () => {
@@ -172,16 +173,16 @@ const StopwatchScreen = () => {
         remainingTime,
         "Default activity selected."
       );
-      setHasStarted(true);
+      dispatch(setHasStarted(true));
     };
 
     const handleActivityTime = () => {
-      startTimer(remainingTime);
-      setInfoText("Timer start with the selected activity.");
+      dispatch(startTimer(remainingTime));
+      dispatch(setInfoText("Timer start with the selected activity."));
       clearInfoTextAfter(5000);
-      dispatch(setRunning(true));
+      dispatch(setIsRunning(true));
       setFirstRun(true);
-      setHasStarted(true);
+      dispatch(setHasStarted(true));
     };
 
     // Main logic
@@ -208,82 +209,27 @@ const StopwatchScreen = () => {
 
   // Reset Button
 
-  // const resetStopwatch = () => {
-  //   setResetClicks(prevClicks => prevClicks + 1);
-  //   setCircleColor(skyBlue);
-
-  //   clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-
-  //   // Utility function to update button label and info text
-  //   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
-  //     setResetButtonLabel(label);
-  //     setInfoText(infoText);
-
-  //     if (cancelAfter) {
-  //       const timeoutId = setTimeout(() => {
-  //         setResetButtonLabel("RESET");
-  //         setResetClicks(0);
-  //         setInfoText("Reset cancelled.");
-  //       }, cancelAfter);
-  //       setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
-  //     }
-  //   };
-
-  //   const handleResetClicksZero = () => {
-  //     if (remainingTime === 0) {
-  //       updateButtonAndInfoText(
-  //         "RESET",
-  //         "The timer is already at zero. Do you want to reset it?",
-  //         10000
-  //       );
-  //     } else {
-  //       updateButtonAndInfoText(
-  //         "CONFIRM RESET",
-  //         "Are you sure you want to reset the stopwatch?",
-  //         10000
-  //       );
-  //       clearInterval(intervalRef.current);
-  //     }
-  //     clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
-  //   };
-
-  //   const handleResetClicksOne = () => {
-  //     if (remainingTime !== 0) {
-  //       performReset();
-  //       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
-  //       clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-  //     }
-  //   };
-
-  //   const handleResetClicksTwoOrMore = () => {
-  //     if (remainingTime === 0) {
-  //       setResetClicks(0);
-  //       setHasStarted(false);
-  //       updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
-  //     } else {
-  //       performReset();
-  //       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
-  //     }
-  //     clearInfoTextAfter(2000, setInfoText, setResetTimeouts, resetTimeouts);
-  //   };
-
-  //   // Main logic
-  //   if (resetClicks === 0) {
-  //     handleResetClicksZero();
-  //   } else if (resetClicks === 1) {
-  //     handleResetClicksOne();
-  //   } else if (resetClicks >= 2) {
-  //     handleResetClicksTwoOrMore();
-  //   }
-  // };
+  const resetStopwatch = () => {
+    logInfo("button is calling resetStopwathc");
+    // Main logic
+    if (resetClicks === 0) {
+      handleResetClicksZero();
+    } else if (resetClicks === 1) {
+      handleResetClicksOne();
+    } else if (resetClicks >= 2) {
+      handleResetClicksTwoOrMore();
+    }
+  };
 
   // Save Time Button
   const saveTimeRecords = () => {
     clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
-    dispatch(setRunning(false));
+    dispatch(setIsRunning(false));
 
     if (remainingTime === 0 && !firstRun) {
-      setInfoText("No time recorded. Please start the timer before saving.");
+      dispatch(
+        setInfoText("No time recorded. Please start the timer before saving.")
+      );
       clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
 
       return;
@@ -298,11 +244,11 @@ const StopwatchScreen = () => {
   };
 
   const processSaveAndUpdateUI = () => {
-    clearInterval(intervalRef.current);
+    dispatch(setIsRunning(false));
     setSaveTimeButtonLabel("SAVING");
-    setInfoText("Saving");
+    dispatch(setInfoText("Saving"));
     setButtonsDisabled(true);
-    setCircleColor(green);
+    dispatch(setCircleColor(green));
     setInnerCircleColor(green);
 
     setTimeout(() => {
@@ -318,15 +264,15 @@ const StopwatchScreen = () => {
     dispatch(setInitialTime(0));
     dispatch(setRemainingTime(0));
     dispatch(setElapsedTime(0));
-    setActivityIndex(null);
-    setHasStarted(false);
     dispatch(setIsRunning(false));
+    setActivityIndex(null);
+    dispatch(setHasStarted(false));
     setFirstRun(false);
-    setResetClicks(0);
+    dispatch(setResetClicks(0));
     setButtonsDisabled(false);
-    setResetButtonLabel("RESET");
+    dispatch(setResetButtonLabel("RESET"));
     setSaveTimeButtonLabel("SAVE-TIME");
-    setCircleColor(skyBlue);
+    dispatch(setCircleColor(skyBlue));
     setInnerCircleColor(white);
     setButtonsDisabled(false);
     dispatch(setTimeCompleted(true));
@@ -335,9 +281,8 @@ const StopwatchScreen = () => {
   };
 
   const handleActivityChange = () => {
-    clearInterval(intervalRef.current);
-    setIsRunning(false);
-    setInfoText(null);
+    dispatch(setIsRunning(false));
+    dispatch(setInfoText(null));
     setActivityIndex(prevIndex =>
       prevIndex === activities.length - 1 ? 0 : prevIndex + 1
     );
@@ -347,7 +292,6 @@ const StopwatchScreen = () => {
     const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
 
     if (newInitialTime <= MAX_TIME_SECONDS) {
-      // setInitialTime(newInitialTime);
       dispatch(setInitialTime(newInitialTime));
       dispatch(setRemainingTime(newInitialTime));
       dispatch(setElapsedTime(0));
