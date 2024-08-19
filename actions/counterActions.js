@@ -70,10 +70,12 @@ export const setResetClicks = newResetClicks => {
   };
 };
 
-export const setResetTimeouts = timeouts => ({
-  type: SET_RESET_TIMEOUTS,
-  payload: timeouts
-});
+export const setResetTimeouts = timeouts => {
+  return {
+    type: SET_RESET_TIMEOUTS,
+    payload: timeouts
+  };
+};
 
 export const setIsStarted = newHasStarted => {
   return {
