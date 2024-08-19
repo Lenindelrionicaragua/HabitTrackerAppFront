@@ -15,6 +15,7 @@ function useStopwatch() {
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
+  const hasStarted = useSelector(state => state.hasStarted.hasStarted);
 
   const dispatch = useDispatch();
 

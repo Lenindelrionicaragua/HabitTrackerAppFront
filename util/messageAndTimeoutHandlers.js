@@ -13,7 +13,6 @@ export const clearMessagesAndTimeouts = (
   setInfoText("");
 };
 
-// Function to clear infoText after a delay
 export const clearInfoTextAfter = (
   delay,
   setInfoText,
