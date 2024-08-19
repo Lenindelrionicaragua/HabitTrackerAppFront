@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { Colors } from "../../styles/AppStyles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// store
+import { setCircleColor } from "../../actions/counterActions";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
@@ -65,6 +67,7 @@ const StopwatchScreen = () => {
   const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  const circleColor = useSelector(state => state.circleColor.circleColor);
   // const [infoText, setInfoText] = useState(
   //   "Choose your task\nand adjust the time\n to start the tracker."
   // );
@@ -102,8 +105,8 @@ const StopwatchScreen = () => {
     setResetClicks,
     hasStarted,
     setHasStarted,
-    circleColor,
-    setCircleColor,
+    resetTimeouts,
+    setResetTimeouts,
     handleResetClicksZero,
     handleResetClicksOne,
     handleResetClicksTwoOrMore
@@ -211,9 +214,6 @@ const StopwatchScreen = () => {
 
   const resetStopwatch = () => {
     dispatch(setResetClicks(prevClicks => prevClicks + 1));
-    dispatch(setCircleColor(skyBlue));
-
-    logInfo("button is calling resetStopwathc");
     // Main logic
     if (resetClicks === 0) {
       handleResetClicksZero();
