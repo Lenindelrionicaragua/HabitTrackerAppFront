@@ -12,6 +12,8 @@ export const SET_RESET_TIMEOUTS = "SET_RESET_TIMEOUTS";
 export const SET_HAS_STARTED = "SET_HAS_STARTED";
 export const SET_CIRCLE_COLOR = "SET_CIRCLE_COLOR";
 
+export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
+
 export const setInitialTime = newInitialTime => {
   return {
     type: SET_INITIAL_TIME,
@@ -88,3 +90,8 @@ export const setCircleColor = newCircleColor => {
     payload: newCircleColor
   };
 };
+
+export const setPauseTime = pauseTime => ({
+  type: SET_PAUSE_TIME,
+  payload: pauseTime
+});

@@ -67,7 +67,7 @@ describe("useStopwatchScreen", () => {
       result.current.pauseStopwatch();
     });
 
-    expect(result.current.running).toBe(false);
+    expect(result.current.isRunning).toBe(false);
 
     const elapsedTimeAfterPause = result.current.elapsedTime;
     const remainingTimeAfterPause = result.current.remainingTime;
@@ -104,7 +104,7 @@ describe("useStopwatchScreen", () => {
       result.current.resumeStopwatch();
     });
 
-    expect(result.current.running).toBe(true);
+    expect(result.current.isRunning).toBe(true);
 
     act(() => {
       jest.advanceTimersByTime(10000);
@@ -128,7 +128,7 @@ describe("useStopwatchScreen", () => {
       jest.advanceTimersByTime(initialTime * 1000);
     });
 
-    expect(result.current.running).toBe(false);
+    expect(result.current.isRunning).toBe(false);
 
     expect(result.current.timeCompleted).toBe(true);
 

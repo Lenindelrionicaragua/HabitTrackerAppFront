@@ -1,4 +1,4 @@
-import useEffect from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setResetButtonLabel,
@@ -6,7 +6,8 @@ import {
   setResetClicks,
   setResetTimeouts,
   setHasStarted,
-  setCircleColor
+  setCircleColor,
+  setIsRunning
 } from "../actions/counterActions";
 import { clearInfoTextAfter } from "../util/messageAndTimeoutHandlers";
 import { Colors } from "../styles/AppStyles";
@@ -22,6 +23,7 @@ function useResetStopwatch() {
   const resetTimeouts = useSelector(state => state.resetTimeouts);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const circleColor = useSelector(state => state.circleColor.circleColor);
+  const remainingTime = useSelector(state => state.remainingTime);
 
   const dispatch = useDispatch();
 
@@ -57,26 +59,23 @@ function useResetStopwatch() {
         "Are you sure you want to reset the stopwatch?",
         10000
       );
-      // Asegúrate de definir y utilizar intervalRef correctamente
-      // Puedes importar el hook useStopwatch si es necesario
-      clearInterval(intervalRef.current);
+      dispatch(setIsRunning(false));
     }
     clearInfoTextAfter(
       12000,
-      dispatch(setInfoText),
-      dispatch(setResetTimeouts),
+      text => dispatch(setInfoText(text)),
+      timeouts => dispatch(setResetTimeouts(timeouts)),
       resetTimeouts
     );
   };
 
   const handleResetClicksOne = () => {
     if (remainingTime !== 0) {
-      performReset();
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
       clearInfoTextAfter(
         2000,
-        dispatch(setInfoText),
-        dispatch(setResetTimeouts),
+        text => dispatch(setInfoText(text)),
+        timeouts => dispatch(setResetTimeouts(timeouts)),
         resetTimeouts
       );
     }
@@ -88,13 +87,12 @@ function useResetStopwatch() {
       dispatch(setHasStarted(false));
       updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
     } else {
-      performReset();
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
     }
     clearInfoTextAfter(
       2000,
-      dispatch(setInfoText),
-      dispatch(setResetTimeouts),
+      text => dispatch(setInfoText(text)),
+      timeouts => dispatch(setResetTimeouts(timeouts)),
       resetTimeouts
     );
   };
@@ -119,7 +117,11 @@ function useResetStopwatch() {
     hasStarted,
     setHasStarted: started => dispatch(setHasStarted(started)),
     circleColor,
-    setCircleColor: color => dispatch(setCircleColor(color))
+    setCircleColor: color => dispatch(setCircleColor(color)),
+    handleResetClicksZero,
+    handleResetClicksOne,
+    handleResetClicksTwoOrMore,
+    updateButtonAndInfoText
   };
 }
 

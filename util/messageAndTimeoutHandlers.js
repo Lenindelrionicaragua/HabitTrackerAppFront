@@ -12,10 +12,25 @@ export const clearMessagesAndTimeouts = (
 // Function to clear infoText after a delay
 export const clearInfoTextAfter = (
   delay,
-  setInfoText = () => {},
-  setResetTimeouts = () => {},
-  resetTimeouts = []
+  setInfoText,
+  setResetTimeouts,
+  resetTimeouts
 ) => {
-  const timeoutId = setTimeout(() => setInfoText(""), delay);
+  const timeoutId = setTimeout(() => {
+    setInfoText("");
+    clearMessagesAndTimeouts(resetTimeouts, setResetTimeouts, setInfoText);
+  }, delay);
+
   setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
 };
+
+// Function to clear infoText after a delay
+// export const clearInfoTextAfter = (
+//   delay,
+//   setInfoText = () => {},
+//   setResetTimeouts = () => {},
+//   resetTimeouts = []
+// ) => {
+//   const timeoutId = setTimeout(() => setInfoText(""), delay);
+//   setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+// };
