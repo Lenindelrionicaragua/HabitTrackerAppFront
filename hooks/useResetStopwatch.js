@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setResetButtonLabel,
@@ -6,14 +5,9 @@ import {
   setResetClicks,
   setResetTimeouts,
   setHasStarted,
-  setCircleColor,
   setIsRunning
 } from "../actions/counterActions";
-import { logInfo, logError } from "../util/logging";
 import { clearInfoTextAfter } from "../util/messageAndTimeoutHandlers";
-import { Colors } from "../styles/AppStyles";
-
-const { skyBlue } = Colors;
 
 function useResetStopwatch() {
   const resetButtonLabel = useSelector(
@@ -23,20 +17,16 @@ function useResetStopwatch() {
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const resetTimeouts = useSelector(state => state.resetTimeouts);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
-  const circleColor = useSelector(state => state.circleColor.circleColor);
   const remainingTime = useSelector(state => state.remainingTime);
 
   const dispatch = useDispatch();
 
   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
-    logInfo(`Updating button label to: ${label}`);
     dispatch(setResetButtonLabel(label));
-    logInfo(`Updating info text to: ${infoText}`);
     dispatch(setInfoText(infoText));
 
     if (cancelAfter) {
       const timeoutId = setTimeout(() => {
-        logInfo("Timeout reached, resetting button label and clicks");
         dispatch(setResetButtonLabel("RESET"));
         dispatch(setResetClicks(0));
         dispatch(setInfoText("Reset cancelled."));
@@ -46,7 +36,6 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksZero = () => {
-    logInfo("handleResetClicksZero called");
     if (remainingTime === 0) {
       updateButtonAndInfoText(
         "RESET",
@@ -70,7 +59,6 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksOne = () => {
-    logInfo("handleResetClicksOne called");
     if (remainingTime !== 0) {
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
       clearInfoTextAfter(
@@ -83,7 +71,6 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksTwoOrMore = () => {
-    logInfo("handleResetClicksTwoOrMore called");
     if (remainingTime === 0) {
       dispatch(setResetClicks(0));
       dispatch(setHasStarted(false));
@@ -99,16 +86,6 @@ function useResetStopwatch() {
     );
   };
 
-  useEffect(() => {
-    if (resetClicks === 0) {
-      handleResetClicksZero();
-    } else if (resetClicks === 1) {
-      handleResetClicksOne();
-    } else if (resetClicks >= 2) {
-      handleResetClicksTwoOrMore();
-    }
-  }, [resetClicks, remainingTime, dispatch, resetTimeouts]);
-
   return {
     resetButtonLabel,
     setResetButtonLabel: label => dispatch(setResetButtonLabel(label)),
@@ -118,8 +95,8 @@ function useResetStopwatch() {
     setResetClicks: clicks => dispatch(setResetClicks(clicks)),
     hasStarted,
     setHasStarted: started => dispatch(setHasStarted(started)),
-    circleColor,
-    setCircleColor: color => dispatch(setCircleColor(color)),
+    resetTimeouts,
+    setResetTimeouts,
     handleResetClicksZero,
     handleResetClicksOne,
     handleResetClicksTwoOrMore,
