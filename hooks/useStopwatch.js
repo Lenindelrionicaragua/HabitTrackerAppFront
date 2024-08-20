@@ -36,7 +36,16 @@ function useStopwatch() {
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
 
+  const clearPreviousTimeouts = () => {
+    clearMessagesAndTimeouts(
+      resetTimeoutsIds,
+      setResetTimeoutsIds,
+      setInfoText
+    );
+  };
+
   const startTimer = initialTime => {
+    clearPreviousTimeouts();
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
     dispatch(setIsRunning(true));

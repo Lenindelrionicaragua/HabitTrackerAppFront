@@ -20,6 +20,14 @@ function useResetStopwatch() {
 
   const dispatch = useDispatch();
 
+  const clearPreviousTimeouts = () => {
+    clearMessagesAndTimeouts(
+      resetTimeoutsIds,
+      setResetTimeoutsIds,
+      setInfoText
+    );
+  };
+
   const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
     dispatch(setResetButtonLabel(label));
     dispatch(setInfoText(infoText));
@@ -37,6 +45,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksZero = () => {
+    clearPreviousTimeouts();
     if (remainingTime === 0) {
       updateButtonAndInfoText(
         "RESET",
@@ -55,6 +64,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksOne = () => {
+    clearPreviousTimeouts();
     if (remainingTime !== 0) {
       updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
       setInfoTextWithTimeout("Stopwatch has been reset.", 2000);
@@ -62,6 +72,7 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksTwoOrMore = () => {
+    clearPreviousTimeouts();
     if (remainingTime === 0) {
       dispatch(setResetClicks(0));
       updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
