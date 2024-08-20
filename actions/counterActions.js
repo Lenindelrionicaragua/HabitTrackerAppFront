@@ -3,6 +3,7 @@ export const SET_REMAINING_TIME = "SET_REMAINING_TIME";
 export const SET_ELAPSED_TIME = "SET_ELAPSED_TIME";
 export const SET_TIME_COMPLETED = "SET_TIME_COMPLETED";
 export const SET_IS_RUNNING = "SET_RUNNING";
+export const SET_FIRST_RUN = "SET_FIRST_RUN";
 export const SET_START_TIME_REF = "SET_START_TIME_REF";
 
 export const SET_RESET_BUTTON_LABEL = "SET_RESET_BUTTON_LABEL";
@@ -11,6 +12,7 @@ export const SET_RESET_CLICKS = "SET_RESET_CLICKS";
 export const SET_RESET_TIMEOUTS_IDS = "SET_RESET_TIMEOUTS_IDS";
 export const SET_HAS_STARTED = "SET_HAS_STARTED";
 export const SET_CIRCLE_COLOR = "SET_CIRCLE_COLOR";
+export const SET_INNER_CIRCLE_COLOR = "SET_INNER_CIRCLE_COLOR";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
@@ -46,6 +48,13 @@ export const setIsRunning = newIsRunning => {
   return {
     type: SET_IS_RUNNING,
     payload: newIsRunning
+  };
+};
+
+export const firstRun = newFirstRun => {
+  return {
+    type: SET_FIRST_RUN,
+    payload: newFirstRun
   };
 };
 
@@ -88,6 +97,13 @@ export const setCircleColor = newCircleColor => {
   return {
     type: SET_CIRCLE_COLOR,
     payload: newCircleColor
+  };
+};
+
+export const setInnerCircleColor = newInnerCircleColor => {
+  return {
+    type: SET_INNER_CIRCLE_COLOR,
+    payload: newInnerCircleColor
   };
 };
 
