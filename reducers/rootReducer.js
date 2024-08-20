@@ -12,6 +12,7 @@ import hasStartedReducer from "./hasStartedReducer";
 import circleColorReducer from "./circleColorReducer";
 import innerCircleColorReducer from "./innerCircleColorReducer";
 import firstRunReducer from "./firstRunReducer";
+import activityIndexReducer from "./activityIndexReducer";
 
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   hasStarted: hasStartedReducer,
   circleColor: circleColorReducer,
   innerCircleColor: innerCircleColorReducer,
-  firstRun: firstRunReducer
+  firstRun: firstRunReducer,
+  activityIndex: activityIndexReducer
 });
 
 export default rootReducer;
