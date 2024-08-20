@@ -13,6 +13,7 @@ import circleColorReducer from "./circleColorReducer";
 import innerCircleColorReducer from "./innerCircleColorReducer";
 import firstRunReducer from "./firstRunReducer";
 import activityIndexReducer from "./activityIndexReducer";
+// import alarmReducer from "./alarmReducer";
 
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   innerCircleColor: innerCircleColorReducer,
   firstRun: firstRunReducer,
   activityIndex: activityIndexReducer
+  // alarm: alarmReducer
 });
 
 export default rootReducer;

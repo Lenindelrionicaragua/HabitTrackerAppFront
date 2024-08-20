@@ -1,4 +1,4 @@
-import { skyBlue } from "../styles/AppStyles";
+import { skyBlue, white, green } from "../styles/AppStyles";
 
 const initialCircleColor = {
   circleColor: skyBlue

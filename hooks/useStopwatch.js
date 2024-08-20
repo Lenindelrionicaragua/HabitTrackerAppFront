@@ -13,7 +13,10 @@ import {
   setActivityIndex,
   setFirstRun
 } from "../actions/counterActions";
-import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../utils/timers";
+import {
+  clearMessagesAndTimeouts,
+  clearInfoTextAfter
+} from "../util/messageAndTimeoutHandlers";
 
 function useStopwatch() {
   const initialTime = useSelector(state => state.initialTime.initialTime);
