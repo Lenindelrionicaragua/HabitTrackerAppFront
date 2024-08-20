@@ -2,13 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
+import { setSaveTimeButtonLabel } from "../../actions/counterActions";
+
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../util/handleButtonPress";
-import useCircleColors from "../../hooks/useCircleColors";
+import useCircleColors from "../../hooks/useCircleColor";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
@@ -60,6 +62,9 @@ const StopwatchScreen = () => {
   const [alarm, setAlarm] = useState();
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const { circleColor, innerCircleColor, updateColors } = useCircleColors();
+  const saveTimeButtonLabel = useSelector(
+    state => state.saveTimeButtonLabel.saveTimeButtonLabel
+  );
 
   // Redux dispatch
   const dispatch = useDispatch();
