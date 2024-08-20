@@ -14,6 +14,9 @@ export const SET_HAS_STARTED = "SET_HAS_STARTED";
 export const SET_CIRCLE_COLOR = "SET_CIRCLE_COLOR";
 export const SET_INNER_CIRCLE_COLOR = "SET_INNER_CIRCLE_COLOR";
 
+export const SET_SAVE_TIME_BUTTON_LABEL = "SET_SAVE_TIME_BUTTON_LABEL";
+export const SET_ACTIVITY_INDEX = "SET_ACTIVITY_INDEX";
+
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
 export const setInitialTime = newInitialTime => {
@@ -107,7 +110,23 @@ export const setInnerCircleColor = newInnerCircleColor => {
   };
 };
 
-export const setPauseTime = pauseTime => ({
-  type: SET_PAUSE_TIME,
-  payload: pauseTime
-});
+export const setPauseTime = pauseTime => {
+  return {
+    type: SET_PAUSE_TIME,
+    payload: pauseTime
+  };
+};
+
+export const setSaveTimeButtonLabel = saveTimeButtonLabel => {
+  return {
+    type: SET_SAVE_TIME_BUTTON_LABEL,
+    payload: saveTimeButtonLabel
+  };
+};
+
+export const setActivityIndex = activityIndex => {
+  return {
+    type: SET_ACTIVITY_INDEX,
+    payload: activityIndex
+  };
+};
