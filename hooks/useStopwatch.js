@@ -6,8 +6,14 @@ import {
   setInitialTime,
   setElapsedTime,
   setTimeCompleted,
-  setIsRunning
+  setIsRunning,
+  setResetTimeoutsIds,
+  setInfoText,
+  setHasStarted,
+  setActivityIndex,
+  setFirstRun
 } from "../actions/counterActions";
+import { clearMessagesAndTimeouts, clearInfoTextAfter } from "../utils/timers";
 
 function useStopwatch() {
   const initialTime = useSelector(state => state.initialTime.initialTime);
@@ -16,6 +22,11 @@ function useStopwatch() {
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
+  const activityIndex = useSelector(state => state.activityIndex.activityIndex);
+  const firstRun = useSelector(state => state.firstRun.firstRun);
+  const resetTimeoutsIds = useSelector(
+    state => state.resetTimeoutsIds.resetTimeoutsIds
+  );
 
   const dispatch = useDispatch();
 
@@ -38,7 +49,6 @@ function useStopwatch() {
     if (!isRunning) {
       const now = Date.now();
       totalPausedTimeRef.current += now - pauseTimeRef.current;
-
       dispatch(setIsRunning(true));
     }
   };
@@ -46,12 +56,11 @@ function useStopwatch() {
   const updateTime = () => {
     if (isRunning) {
       const now = Date.now();
-
       const elapsedTime = Math.floor(
         (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
       );
-
       const remainingTime = Math.max(0, initialTime - elapsedTime);
+
       dispatch(setElapsedTime(elapsedTime));
       dispatch(setRemainingTime(remainingTime));
 
@@ -62,24 +71,70 @@ function useStopwatch() {
     }
   };
 
+  const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
+    dispatch(setActivityIndex(activityIdx));
+    dispatch(setInitialTime(time));
+    dispatch(setInfoText(infoText));
+    clearMessagesAndTimeouts(
+      resetTimeoutsIds,
+      ids => dispatch(setResetTimeoutsIds(ids)),
+      msg => dispatch(setInfoText(msg))
+    );
+    clearInfoTextAfter(
+      5000,
+      msg => dispatch(setInfoText(msg)),
+      ids => dispatch(setResetTimeoutsIds(ids)),
+      resetTimeoutsIds
+    );
+  };
+
+  const handleNoActivityNoTime = () => {
+    setDefaultsAndStartTimer(null, 600, "Default time and activity selected.");
+    dispatch(setHasStarted(true));
+  };
+
+  const handleActivityNoTime = () => {
+    setDefaultsAndStartTimer(activityIndex, 600, "Default time selected.");
+    dispatch(setHasStarted(true));
+  };
+
+  const handleNoActivityTime = () => {
+    setDefaultsAndStartTimer(null, remainingTime, "Default activity selected.");
+    dispatch(setHasStarted(true));
+  };
+
+  const handleActivityTime = () => {
+    startTimer(remainingTime);
+    dispatch(setInfoText("Timer started with the selected activity."));
+    clearInfoTextAfter(
+      5000,
+      msg => dispatch(setInfoText(msg)),
+      ids => dispatch(setResetTimeoutsIds(ids)),
+      resetTimeoutsIds
+    );
+    dispatch(setIsRunning(true));
+    dispatch(setFirstRun(true));
+    dispatch(setHasStarted(true));
+  };
+
   useInterval(updateTime, isRunning ? 1000 : null);
 
   return {
     initialTime,
-    setInitialTime: newInitialTime => dispatch(setInitialTime(newInitialTime)),
     remainingTime,
-    setRemainingTime: newRemainingTime =>
-      dispatch(setRemainingTime(newRemainingTime)),
     elapsedTime,
-    setElapsedTime: newElapsedTime => dispatch(setElapsedTime(newElapsedTime)),
     timeCompleted,
-    setTimeCompleted: newTimeCompleted =>
-      dispatch(setTimeCompleted(newTimeCompleted)),
     isRunning,
-    setIsRunning: newIsRunning => dispatch(setIsRunning(newIsRunning)),
+    hasStarted,
+    activityIndex,
+    firstRun,
     pauseStopwatch,
     resumeStopwatch,
-    startTimer
+    startTimer,
+    handleNoActivityNoTime,
+    handleActivityNoTime,
+    handleNoActivityTime,
+    handleActivityTime
   };
 }
 

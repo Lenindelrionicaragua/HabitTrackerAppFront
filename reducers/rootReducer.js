@@ -10,6 +10,8 @@ import resetClicksReducer from "./resetClicksReducer";
 import resetTimeoutsIdsReducer from "./resetTimeoutsIdsReducer";
 import hasStartedReducer from "./hasStartedReducer";
 import circleColorReducer from "./circleColorReducer";
+import innerCircleColorReducer from "./innerCircleColorReducer";
+import firstRunReducer from "./firstRunReducer";
 
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
   resetClicks: resetClicksReducer,
   resetTimeoutsIds: resetTimeoutsIdsReducer,
   hasStarted: hasStartedReducer,
-  circleColor: circleColorReducer
+  circleColor: circleColorReducer,
+  innerCircleColor: innerCircleColorReducer,
+  firstRun: firstRunReducer
 });
 
 export default rootReducer;

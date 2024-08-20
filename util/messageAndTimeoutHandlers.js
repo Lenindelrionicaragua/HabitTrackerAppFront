@@ -1,10 +1,11 @@
-const clearMessagesAndTimeouts = (timeouts, setTimeouts, setInfoText) => {
-  if (!Array.isArray(timeouts)) {
-    console.error("resetTimeouts should be an array");
-    return;
-  }
-  timeouts.forEach(timeout => clearTimeout(timeout));
-  setTimeouts([]);
+// Function to clear messages and timeouts in the buttons
+export const clearMessagesAndTimeouts = (
+  resetTimeoutsIds = [],
+  setResetTimeoutsIds = () => {},
+  setInfoText = () => {}
+) => {
+  resetTimeoutsIds.forEach(timeoutId => clearTimeout(timeoutId));
+  setResetTimeoutsIds([]);
   setInfoText("");
 };
 
@@ -12,9 +13,9 @@ const clearMessagesAndTimeouts = (timeouts, setTimeouts, setInfoText) => {
 export const clearInfoTextAfter = (
   delay,
   setInfoText = () => {},
-  setResetTimeouts = () => {},
-  resetTimeouts = []
+  setResetTimeoutsIds = () => {},
+  resetTimeoutsIds = []
 ) => {
   const timeoutId = setTimeout(() => setInfoText(""), delay);
-  setResetTimeouts(prevTimeouts => [...prevTimeouts, timeoutId]);
+  setResetTimeoutsIds(prevTimeouts => [...prevTimeouts, timeoutId]);
 };
