@@ -57,40 +57,39 @@ const activities = [
 ];
 
 const StopwatchScreen = () => {
-  const [firstRun, setFirstRun] = useState(false);
+  // const [firstRun, setFirstRun] = useState(false);
   const [alarm, setAlarm] = useState();
-  const [activityIndex, setActivityIndex] = useState(null);
-  const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
+  // const [activityIndex, setActivityIndex] = useState(null);
+  // const [saveTimeButtonLabel, setSaveTimeButtonLabel] = useState("SAVE TIME");
   const [defaultActivityIndex, setDefaultActivityIndex] = useState(0);
   const [defaultTime, setDefaultTime] = useState(300); // time in seconds
-  const [innerCircleColor, setInnerCircleColor] = useState(white);
+  // const [innerCircleColor, setInnerCircleColor] = useState(white);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   // const circleColor = useSelector(state => state.circleColor.circleColor);
   // const [infoText, setInfoText] = useState(
   //   "Choose your task\nand adjust the time\n to start the tracker."
   // );
-  const [hasStarted, setHasStarted] = useState(false);
+  // const [hasStarted, setHasStarted] = useState(false);
   // const [resetButtonLabel, setResetButtonLabel] = useState("RESET");
   // const [resetClicks, setResetClicks] = useState(0);
-  const [resetTimeoutsIds, setResetTimeoutsIds] = useState([]);
-  const [circleColor, setCircleColor] = useState(skyBlue);
+  // const [resetTimeoutsIds, setResetTimeoutsIds] = useState([]);
+  // const [circleColor, setCircleColor] = useState(skyBlue);
 
   // custom hooks
   const { activeButtons, handleButtonPress } = useButtonHandler();
 
-  function StopwatchComponent() {
-    const {
-      hasStarted,
-      activityIndex,
-      remainingTime,
-      firstRun,
-      handleNoActivityNoTime,
-      handleActivityNoTime,
-      handleNoActivityTime,
-      handleActivityTime,
-      resumeStopwatch,
-    } = useStopwatch();
+  const {
+    hasStarted,
+    activityIndex,
+    remainingTime,
+    firstRun,
+    handleNoActivityNoTime,
+    handleActivityNoTime,
+    handleNoActivityTime,
+    handleActivityTime,
+    resumeStopwatch
+  } = useStopwatch();
 
   const {
     resetButtonLabel,
@@ -134,8 +133,6 @@ const StopwatchScreen = () => {
 
   // Start button
   const startStopwatch = () => {
- 
-
     // Main logic
     if (!hasStarted) {
       if (activityIndex === null && remainingTime === 0) {
@@ -216,16 +213,16 @@ const StopwatchScreen = () => {
     dispatch(setRemainingTime(0));
     dispatch(setElapsedTime(0));
     dispatch(setIsRunning(false));
-    setActivityIndex(null);
-    setHasStarted(false);
-    setFirstRun(false);
+    dispatch(setActivityIndex(null));
+    dispatch(setHasStarted(false));
+    dispatch(setFirstRun(false));
     dispatch(setResetClicks(0));
-    setButtonsDisabled(false);
+    dispatch(setButtonsDisabled(false));
     dispatch(setResetButtonLabel("RESET"));
-    setSaveTimeButtonLabel("SAVE-TIME");
-    setCircleColor(skyBlue);
-    setInnerCircleColor(white);
-    setButtonsDisabled(false);
+    dispatch(setSaveTimeButtonLabel("SAVE-TIME"));
+    dispatch(setCircleColor(skyBlue));
+    dispatch(setInnerCircleColor(white));
+
     dispatch(setTimeCompleted(true));
 
     logInfo(`Timer was reset.`);

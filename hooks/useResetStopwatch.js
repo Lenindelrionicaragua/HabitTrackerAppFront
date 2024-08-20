@@ -3,8 +3,8 @@ import {
   setResetButtonLabel,
   setInfoText,
   setResetClicks,
-  // setResetTimeoutsIds,
-  // setHasStarted,
+  setResetTimeoutsIds,
+  setHasStarted,
   setIsRunning
 } from "../actions/counterActions";
 import { clearInfoTextAfter } from "../util/messageAndTimeoutHandlers";
@@ -54,7 +54,12 @@ function useResetStopwatch() {
       );
       dispatch(setIsRunning(false));
     }
-    clearInfoTextAfter(12000, setInfoText, setResetTimeouts, resetTimeouts);
+    clearInfoTextAfter(
+      12000,
+      setInfoText,
+      setResetTimeoutsIds,
+      resetTimeoutsIds
+    );
   };
 
   const handleResetClicksOne = () => {
