@@ -107,7 +107,7 @@ const StopwatchScreen = () => {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [infoText]);
+  }, [infoText, dispatch, setInfoText]);
 
   useEffect(() => {
     if (timeCompleted) {
