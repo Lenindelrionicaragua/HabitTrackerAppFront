@@ -6,7 +6,7 @@ import {
   setResetTimeoutsIds,
   setIsRunning
 } from "../actions/counterActions";
-import useMessageAndTimeouts from "./useMessageAndTimeouts";
+import useMessageAndTimeouts from "../hooks/useMessageAndTimeouts";
 
 function useResetStopwatch() {
   const { setInfoTextWithTimeout, clearAllMessagesAndTimeouts } =
