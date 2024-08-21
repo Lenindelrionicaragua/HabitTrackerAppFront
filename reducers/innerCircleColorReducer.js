@@ -1,5 +1,3 @@
-import { skyBlue, white, green } from "../styles/AppStyles";
-
 const initialInnerCircleColor = {
   circleColor: skyBlue
 };
