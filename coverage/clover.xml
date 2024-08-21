@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724256186658" clover="3.2.0">
-  <project timestamp="1724256186659" name="All files">
-    <metrics statements="1108" coveredstatements="46" conditionals="392" coveredconditionals="6" methods="250" coveredmethods="6" elements="1750" coveredelements="58" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
+<coverage generated="1724256475030" clover="3.2.0">
+  <project timestamp="1724256475031" name="All files">
+    <metrics statements="1108" coveredstatements="48" conditionals="392" coveredconditionals="8" methods="250" coveredmethods="6" elements="1750" coveredelements="62" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -727,7 +727,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="175" coveredstatements="10" conditionals="36" coveredconditionals="6" methods="59" coveredmethods="4"/>
+      <metrics statements="175" coveredstatements="12" conditionals="36" coveredconditionals="8" methods="59" coveredmethods="4"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -910,19 +910,19 @@
         <line num="123" count="0" type="stmt"/>
       </file>
       <file name="useUpdateCircleColor.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useUpdateCircleColor.js">
-        <metrics statements="12" coveredstatements="10" conditionals="8" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.navigators">

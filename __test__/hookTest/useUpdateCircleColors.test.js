@@ -42,4 +42,32 @@ describe("useUpdateCircleColors hook", () => {
       setInnerCircleColor(newInnerCircleColor)
     ]);
   });
+
+  it("should throw an error if newCircleColor is not a string", () => {
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useUpdateCircleColors(), { wrapper });
+
+    expect(() =>
+      act(() => {
+        result.current.updateColors(123, "yellow");
+      })
+    ).toThrow("Invalid value for circleColor");
+  });
+
+  it("should throw an error if newInnerCircleColor is not a string", () => {
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useUpdateCircleColors(), { wrapper });
+
+    expect(() =>
+      act(() => {
+        result.current.updateColors("green", 123);
+      })
+    ).toThrow("Invalid value for innerCircleColor");
+  });
 });
