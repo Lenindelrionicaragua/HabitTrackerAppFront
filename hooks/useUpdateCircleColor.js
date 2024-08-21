@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setCircleColor, setInnerCircleColor } from "../actions/counterActions";
 
-const useCircleColors = () => {
+const useUpdateCircleColors = () => {
   const dispatch = useDispatch();
   const circleColor = useSelector(state => state.circleColor);
   const innerCircleColor = useSelector(state => state.innerCircleColor);
@@ -14,4 +14,4 @@ const useCircleColors = () => {
   return { circleColor, innerCircleColor, updateColors };
 };
 
-export default useCircleColors;
+export default useUpdateCircleColors;
