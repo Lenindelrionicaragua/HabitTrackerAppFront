@@ -19,10 +19,8 @@ function useMessageAndTimeouts() {
     );
   };
 
-  const setInfoTextWithTimeout = () => {
-    clearAllMessagesAndTimeouts();
+  const scheduleInfoTextClearInStore = () => {
     scheduleInfoTextClear(
-      delay,
       msg => dispatch(setInfoText(msg)),
       ids => dispatch(setResetTimeoutsIds(ids)),
       resetTimeoutsIds
@@ -31,7 +29,7 @@ function useMessageAndTimeouts() {
 
   return {
     clearAllMessagesAndTimeouts,
-    setInfoTextWithTimeout
+    scheduleInfoTextClearInStore
   };
 }
 
