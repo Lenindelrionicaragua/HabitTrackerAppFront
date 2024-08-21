@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInfoText, setResetTimeoutsIds } from "../actions/counterActions";
 import {
   clearMessagesAndTimeouts,
-  clearInfoTextAfter
+  scheduleInfoTextClear
 } from "../util/messageAndTimeoutHandlers";
 
 function useMessageAndTimeouts() {
@@ -19,9 +19,9 @@ function useMessageAndTimeouts() {
     );
   };
 
-  const setInfoTextWithTimeout = (text, delay) => {
+  const setInfoTextWithTimeout = () => {
     clearAllMessagesAndTimeouts();
-    clearInfoTextAfter(
+    scheduleInfoTextClear(
       delay,
       msg => dispatch(setInfoText(msg)),
       ids => dispatch(setResetTimeoutsIds(ids)),
