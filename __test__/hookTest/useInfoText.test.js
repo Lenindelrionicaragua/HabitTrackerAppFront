@@ -12,8 +12,8 @@ describe("useInfoText hook with mock store", () => {
 
   beforeEach(() => {
     store = mockStore({
-      infoText: { infoText: "" },
-      resetTimeoutsIds: { resetTimeoutsIds: [] }
+      infoText: { infoText: "testText" },
+      resetTimeoutsIds: { resetTimeoutsIds: [1, 2, 3] }
     });
 
     store.dispatch = jest.fn();
@@ -23,6 +23,7 @@ describe("useInfoText hook with mock store", () => {
   afterEach(() => {
     jest.clearAllTimers();
     jest.useRealTimers();
+    store.dispatch.mockClear();
   });
 
   it("should update info text in the store", () => {
@@ -34,8 +35,10 @@ describe("useInfoText hook with mock store", () => {
       result.current.setInfoTextWithTimeout("Test message", 2000);
     });
 
+    expect(store.dispatch).toHaveBeenNthCalledWith(1, setResetTimeoutsIds([]));
+    expect(store.dispatch).toHaveBeenNthCalledWith(2, setInfoText(""));
     expect(store.dispatch).toHaveBeenNthCalledWith(
-      1,
+      3,
       setInfoText("Test message")
     );
 
@@ -43,7 +46,7 @@ describe("useInfoText hook with mock store", () => {
       jest.advanceTimersByTime(2000);
     });
 
-    expect(store.dispatch).toHaveBeenNthCalledWith(3, setInfoText(""));
+    expect(store.dispatch).toHaveBeenNthCalledWith(5, setInfoText(""));
   });
 
   it("should clear previous timeouts and previous message", () => {
