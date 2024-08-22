@@ -45,4 +45,17 @@ describe("useInfoText hook with mock store", () => {
 
     expect(store.dispatch).toHaveBeenNthCalledWith(3, setInfoText(""));
   });
+
+  it("should clear previous timeouts and previous message", () => {
+    const { result } = renderHook(() => useInfoText(), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
+
+    act(() => {
+      result.current.clearTimeoutsAndMessage();
+    });
+
+    expect(store.dispatch).toHaveBeenNthCalledWith(1, setResetTimeoutsIds([]));
+    expect(store.dispatch).toHaveBeenNthCalledWith(2, setInfoText(""));
+  });
 });
