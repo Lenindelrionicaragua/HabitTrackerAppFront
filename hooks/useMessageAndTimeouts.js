@@ -1,88 +1,36 @@
-import { useDispatch, useSelector } from "react-redux";
-import { setInfoText, setResetTimeoutsIds } from "../actions/counterActions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { setInfoText, setResetTimeoutsIds } from "../actions/counterActions";
 
-function useMessageAndTimeouts() {
-  const dispatch = useDispatch();
-  const resetTimeoutsIds = useSelector(
-    state => state.resetTimeoutsIds.resetTimeoutsIds || []
-  );
+// function useMessageAndTimeouts() {
+//   const dispatch = useDispatch();
+//   const resetTimeoutsIds = useSelector(
+//     state => state.resetTimeoutsIds.resetTimeoutsIds || []
+//   );
 
-  // Definición de clearMessagesAndTimeouts dentro del hook
-  const clearMessagesAndTimeouts = (
-    timeoutIds = [],
-    setTimeoutIds = () => {},
-    setInfoText = () => {}
-  ) => {
-    if (!Array.isArray(timeoutIds)) {
-      throw new TypeError("Expected `timeoutIds` to be an array");
-    }
+//   const clearMessagesAndTimeouts = (delay = 0) => {
+//     // Clear all existing timeouts
+//     resetTimeoutsIds.forEach(id => clearTimeout(id));
 
-    if (
-      typeof setTimeoutIds !== "function" ||
-      typeof setInfoText !== "function"
-    ) {
-      throw new TypeError(
-        "Expected `setTimeoutIds` and `setInfoText` to be functions"
-      );
-    }
+//     // Reset the state
+//     dispatch(setResetTimeoutsIds([]));
+//     dispatch(setInfoText(""));
 
-    // Clear all timeouts
-    timeoutIds.forEach(id => clearTimeout(id));
+//     // If a delay is provided, schedule a new timeout to clear info text
+//     if (delay > 0) {
+//       const timeoutId = setTimeout(() => {
+//         dispatch(setInfoText(""));
+//         dispatch(setResetTimeoutsIds([])); // Clear the timeout IDs after the text is cleared
+//       }, delay);
 
-    // Reset state
-    setTimeoutIds([]);
-    setInfoText("");
-  };
+//       // Update the store with the new timeout ID
+//       dispatch(setResetTimeoutsIds([timeoutId]));
+//     }
+//   };
 
-  // Definición de scheduleInfoTextClear dentro del hook
-  const scheduleInfoTextClear = (
-    delay,
-    setInfoText = () => {},
-    setTimeoutIds = () => {},
-    timeoutIds = []
-  ) => {
-    if (typeof delay !== "number") {
-      throw new TypeError("Expected `delay` to be a number");
-    }
+//   return {
+//     clearMessagesAndTimeouts,
+//     resetTimeoutsIds
+//   };
+// }
 
-    if (
-      typeof setInfoText !== "function" ||
-      typeof setTimeoutIds !== "function"
-    ) {
-      throw new TypeError(
-        "Expected `setInfoText` and `setTimeoutIds` to be functions"
-      );
-    }
-
-    // Schedule the timeout
-    const timeoutId = setTimeout(() => setInfoText(""), delay);
-
-    // Update timeout IDs
-    setTimeoutIds(prevIds => [...prevIds, timeoutId]);
-  };
-
-  const clearAllMessagesAndTimeouts = () => {
-    clearMessagesAndTimeouts(
-      resetTimeoutsIds,
-      ids => dispatch(setResetTimeoutsIds(ids)),
-      msg => dispatch(setInfoText(msg))
-    );
-  };
-
-  const scheduleInfoTextClearInStore = delay => {
-    scheduleInfoTextClear(
-      delay,
-      msg => dispatch(setInfoText(msg)),
-      ids => dispatch(setResetTimeoutsIds(ids)),
-      resetTimeoutsIds
-    );
-  };
-
-  return {
-    clearAllMessagesAndTimeouts,
-    scheduleInfoTextClearInStore,
-    resetTimeoutsIds
-  };
-}
-
-export default useMessageAndTimeouts;
+// export default useMessageAndTimeouts;

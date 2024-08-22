@@ -4,98 +4,84 @@ import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
 import useMessageAndTimeouts from "../../hooks/useMessageAndTimeouts";
 import { setInfoText, setResetTimeoutsIds } from "../../actions/counterActions";
-import { clearMessagesAndTimeouts } from "../../util/messageAndTimeoutHandlers";
 
 const mockStore = configureStore([]);
 
 describe("useMessageAndTimeouts hook", () => {
   let store;
-  let initialState;
+  let clearTimeoutMock;
 
   beforeEach(() => {
-    initialState = {
-      resetTimeoutsIds: [1, 2, 3]
-    };
-    store = mockStore(initialState);
+    store = mockStore({
+      resetTimeoutsIds: []
+    });
     jest.useFakeTimers();
+    clearTimeoutMock = jest.spyOn(global, "clearTimeout");
+    jest.spyOn(global, "setTimeout");
   });
 
   afterEach(() => {
-    jest.useRealTimers(); // Restore real timers after the test
+    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
-  // it("should dispatch actions to clear all messages and timeouts", () => {
-  //   const wrapper = ({ children }) => (
-  //     <Provider store={store}>{children}</Provider>
-  //   );
-
-  //   const { result } = renderHook(() => useMessageAndTimeouts(), { wrapper });
-
-  //   // Call the function to clear all messages and timeouts
-  //   act(() => {
-  //     result.current.clearAllMessagesAndTimeouts();
-  //   });
-
-  //   // Verify that the correct actions are dispatched
-  //   const actions = store.getActions();
-  //   expect(actions).toContainEqual(setResetTimeoutsIds([])); // Expect an empty array
-  //   expect(actions).toContainEqual(setInfoText(""));
-  // });
-
-  // it("should dispatch actions to clear all messages and timeouts", () => {
-  //   const wrapper = ({ children }) => (
-  //     <Provider store={store}>{children}</Provider>
-  //   );
-
-  //   const { result } = renderHook(() => useMessageAndTimeouts(), { wrapper });
-
-  //   // Call the function to clear all messages and timeouts
-  //   act(() => {
-  //     result.current.clearAllMessagesAndTimeouts();
-  //   });
-
-  //   // Verify that the correct actions are dispatched
-  //   const actions = store.getActions();
-  //   expect(actions).toContainEqual({
-  //     type: "SET_RESET_TIMEOUTS_IDS",
-  //     payload: []
-  //   });
-  //   expect(actions).toContainEqual({
-  //     type: "SET_INFO_TEXT",
-  //     payload: ""
-  //   });
-  // });
-
-  it("should correctly set initial resetTimeoutsIds state", () => {
-    const delay = 5000;
-    const setInfoText = jest.fn();
-    const setTimeoutIds = jest.fn();
-    const timeoutIds = [1, 2, 3];
-
-    const mockSetTimeout = jest.spyOn(global, "setTimeout");
-
+  it("should clear all timeouts and reset info text", () => {
     const wrapper = ({ children }) => (
       <Provider store={store}>{children}</Provider>
     );
 
     const { result } = renderHook(() => useMessageAndTimeouts(), { wrapper });
 
-    // expect(result.current.resetTimeoutsIds).toEqual([1, 2, 3]);
+    // Set some initial timeouts
+    const initialTimeoutIds = [
+      setTimeout(() => {}, 1000),
+      setTimeout(() => {}, 2000)
+    ];
+    store.dispatch(setResetTimeoutsIds(initialTimeoutIds));
 
-    // Llamar a la función que queremos probar
+    // Call the function to clear messages and timeouts
     act(() => {
-      result.current.scheduleInfoTextClearInStore(delay);
+      result.current.clearMessagesAndTimeouts();
     });
 
-    // Simular el paso del tiempo
-    jest.advanceTimersByTime(delay);
-
-    // Verificar que las acciones esperadas se han despachado
+    // Verify that the store actions are dispatched correctly
     const actions = store.getActions();
     expect(actions).toContainEqual(setInfoText(""));
     expect(actions).toContainEqual(setResetTimeoutsIds([]));
 
-    // Restaurar el espía de `setTimeout`
-    mockSetTimeout.mockRestore();
+    // Verify that the timeouts were cleared
+    initialTimeoutIds.forEach(id => {
+      expect(clearTimeoutMock).toHaveBeenCalledWith(id);
+    });
+  });
+
+  it("should schedule a new timeout if a delay is provided", () => {
+    const delay = 5000;
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useMessageAndTimeouts(), { wrapper });
+
+    // Call the function with a delay
+    act(() => {
+      result.current.scheduleInfoTextClearInStore(delay);
+    });
+
+    // Verify that the timeout was scheduled
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), delay);
+
+    // Verify the store is updated with the new timeout ID
+    const actions = store.getActions();
+    expect(actions).toContainEqual(setInfoText(""));
+    expect(actions).toContainEqual(setResetTimeoutsIds(expect.any(Array)));
+
+    // Simulate the passage of time
+    jest.advanceTimersByTime(delay);
+
+    // Verify the timeout was executed
+    const newActions = store.getActions();
+    expect(newActions).toContainEqual(setInfoText(""));
+    expect(newActions).toContainEqual(setResetTimeoutsIds([]));
   });
 });
