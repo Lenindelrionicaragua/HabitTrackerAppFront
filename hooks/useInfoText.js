@@ -1,4 +1,3 @@
-// hooks/useInfoText.js
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setInfoText, setResetTimeoutsIds } from "../actions/counterActions";
@@ -12,6 +11,7 @@ const useInfoText = () => {
   const dispatch = useDispatch();
 
   const clearPreviousTimeouts = () => {
+    console.log("Clearing previous timeouts");
     clearMessagesAndTimeouts(
       resetTimeoutsIds,
       ids => dispatch(setResetTimeoutsIds(ids)),
@@ -20,9 +20,11 @@ const useInfoText = () => {
   };
 
   const setInfoTextWithTimeout = (text, timeout) => {
+    console.log("Setting infoText:", text);
     dispatch(setInfoText(text));
 
     const timeoutId = setTimeout(() => {
+      console.log("Clearing infoText after timeout:", timeout);
       dispatch(setInfoText(""));
     }, timeout);
 
