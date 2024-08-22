@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724328027055" clover="3.2.0">
-  <project timestamp="1724328027055" name="All files">
-    <metrics statements="1113" coveredstatements="41" conditionals="392" coveredconditionals="0" methods="253" coveredmethods="2" elements="1758" coveredelements="43" complexity="0" loc="1113" ncloc="1113" packages="68" files="111" classes="111"/>
+<coverage generated="1724339461002" clover="3.2.0">
+  <project timestamp="1724339461003" name="All files">
+    <metrics statements="1113" coveredstatements="139" conditionals="392" coveredconditionals="37" methods="253" coveredmethods="28" elements="1758" coveredelements="204" complexity="0" loc="1113" ncloc="1113" packages="68" files="111" classes="111"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -383,9 +383,9 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.actions">
-      <metrics statements="50" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="0"/>
+      <metrics statements="50" coveredstatements="36" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="2"/>
       <file name="counterActions.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/actions/counterActions.js">
-        <metrics statements="50" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="0"/>
+        <metrics statements="50" coveredstatements="36" conditionals="0" coveredconditionals="0" methods="16" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -419,11 +419,11 @@
         <line num="65" count="1" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
         <line num="72" count="1" type="stmt"/>
-        <line num="73" count="0" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="0" type="stmt"/>
         <line num="86" count="1" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
+        <line num="87" count="3" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
         <line num="100" count="1" type="stmt"/>
@@ -727,7 +727,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="180" coveredstatements="2" conditionals="36" coveredconditionals="0" methods="62" coveredmethods="2"/>
+      <metrics statements="180" coveredstatements="17" conditionals="36" coveredconditionals="0" methods="62" coveredmethods="9"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -748,25 +748,25 @@
         <line num="44" count="0" type="stmt"/>
       </file>
       <file name="useInfoText.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useInfoText.js">
-        <metrics statements="18" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="2"/>
+        <metrics statements="18" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="9"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
       </file>
       <file name="useInterval.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useInterval.js">
         <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
@@ -945,147 +945,147 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.reducers">
-      <metrics statements="90" coveredstatements="3" conditionals="45" coveredconditionals="0" methods="15" coveredmethods="0"/>
+      <metrics statements="90" coveredstatements="77" conditionals="45" coveredconditionals="32" methods="15" coveredmethods="15"/>
       <file name="activityIndexReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/activityIndexReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
       <file name="alarmReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/alarmReducer.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
       <file name="circleColorReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/circleColorReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
       </file>
       <file name="elapsedTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/elapsedTimeReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-      </file>
-      <file name="firstRunReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/firstRunReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-      </file>
-      <file name="hasStartedReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/hasStartedReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-      </file>
-      <file name="infoTextReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/infoTextReducer.js">
-        <metrics statements="6" coveredstatements="3" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+      </file>
+      <file name="firstRunReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/firstRunReducer.js">
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+      </file>
+      <file name="hasStartedReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/hasStartedReducer.js">
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+      </file>
+      <file name="infoTextReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/infoTextReducer.js">
+        <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
       </file>
       <file name="initialTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/initialTimeReducer.js">
-        <metrics statements="5" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="6" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="5" coveredstatements="4" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
       </file>
       <file name="innerCircleColorReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/innerCircleColorReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
       </file>
       <file name="isRunningReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/isRunningReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
       <file name="remainingTimeReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/remainingTimeReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
       <file name="resetButtonLabelReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/resetButtonLabelReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
       <file name="resetClicksReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/resetClicksReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
       <file name="resetTimeoutsIdsReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/resetTimeoutsIdsReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
       </file>
       <file name="rootReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/rootReducer.js">
-        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="18" count="0" type="stmt"/>
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="18" count="1" type="stmt"/>
       </file>
       <file name="saveTimeButtonLabelReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/saveTimeButtonLabelReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
+        <line num="18" count="9" type="stmt"/>
       </file>
       <file name="timeCompletedReducer.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/reducers/timeCompletedReducer.js">
-        <metrics statements="6" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="6" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.screens.LinkVerificationScreen">
@@ -1569,14 +1569,14 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.styles">
-      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="AppStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/styles/AppStyles.js">
-        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.util">
-      <metrics statements="56" coveredstatements="2" conditionals="32" coveredconditionals="0" methods="24" coveredmethods="0"/>
+      <metrics statements="56" coveredstatements="8" conditionals="32" coveredconditionals="5" methods="24" coveredmethods="2"/>
       <file name="formatTime.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/formatTime.js">
         <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -1618,15 +1618,15 @@
         <line num="45" count="0" type="stmt"/>
       </file>
       <file name="messageAndTimeoutHandlers.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/messageAndTimeoutHandlers.js">
-        <metrics statements="15" coveredstatements="2" conditionals="18" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <metrics statements="15" coveredstatements="8" conditionals="18" coveredconditionals="5" methods="9" coveredmethods="2"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
         <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="55" count="0" type="stmt"/>
