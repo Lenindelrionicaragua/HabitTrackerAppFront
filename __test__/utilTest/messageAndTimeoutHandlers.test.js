@@ -112,3 +112,4 @@ describe("scheduleInfoTextClear", () => {
     }).toThrow(TypeError);
   });
 });
+const mockStore = configureStore([]);
