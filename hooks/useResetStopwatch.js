@@ -4,8 +4,8 @@ import {
   setResetClicks,
   setIsRunning
 } from "../actions/counterActions";
-import useInfoText from "./useInfoText";
-import { usePerformReset } from "./usePerformReset";
+import { useInfoText } from "../hooks/useInfoText";
+import { usePerformReset } from "../hooks/usePerformReset";
 
 function useResetStopwatch() {
   const performReset = usePerformReset();
@@ -46,7 +46,7 @@ function useResetStopwatch() {
       dispatch(setIsRunning(false));
     }
     setTimeout(() => {
-      dispatch(setResetClicks(0)); // Reset clicks after the confirmation timeout
+      dispatch(setResetClicks(0));
       setInfoTextWithTimeout("Reset cancelled.", 12000);
     }, 12000);
   };
