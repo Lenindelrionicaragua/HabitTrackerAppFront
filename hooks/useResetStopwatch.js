@@ -1,60 +1,43 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   setResetButtonLabel,
-  setInfoText,
   setResetClicks,
-  setResetTimeoutsIds,
   setIsRunning
 } from "../actions/counterActions";
-import useMessageAndTimeouts from "../hooks/useMessageAndTimeouts";
+import useInfoText from "./useInfoText";
 
 function useResetStopwatch() {
-  const { setInfoTextWithTimeout, clearAllMessagesAndTimeouts } =
-    useMessageAndTimeouts();
+  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
   const resetButtonLabel = useSelector(
     state => state.resetButtonLabel.resetButtonLabel
   );
-  const infoText = useSelector(state => state.infoText.infoText);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const remainingTime = useSelector(state => state.remainingTime);
 
   const dispatch = useDispatch();
 
-  const clearPreviousTimeouts = () => {
-    clearMessagesAndTimeouts(
-      resetTimeoutsIds,
-      setResetTimeoutsIds,
-      setInfoText
-    );
-  };
-
-  const updateButtonAndInfoText = (label, infoText, cancelAfter) => {
+  const updateButtonLabel = (label, cancelAfter) => {
     dispatch(setResetButtonLabel(label));
-    dispatch(setInfoText(infoText));
 
     if (cancelAfter) {
-      const timeoutId = setTimeout(() => {
+      setTimeout(() => {
         dispatch(setResetButtonLabel("RESET"));
         dispatch(setResetClicks(0));
-        dispatch(setInfoText("Reset cancelled."));
       }, cancelAfter);
-      dispatch(
-        setResetTimeoutsIds(prevTimeouts => [...prevTimeouts, timeoutId])
-      );
     }
   };
 
   const handleResetClicksZero = () => {
-    clearPreviousTimeouts();
+    clearTimeoutsAndMessage();
     if (remainingTime === 0) {
-      updateButtonAndInfoText(
-        "RESET",
+      updateButtonLabel("RESET");
+      setInfoTextWithTimeout(
         "The timer is already at zero. Do you want to reset it?",
         10000
       );
     } else {
-      updateButtonAndInfoText(
-        "CONFIRM RESET",
+      updateButtonLabel("CONFIRM RESET", 10000);
+      setInfoTextWithTimeout(
         "Are you sure you want to reset the stopwatch?",
         10000
       );
@@ -64,33 +47,34 @@ function useResetStopwatch() {
   };
 
   const handleResetClicksOne = () => {
-    clearPreviousTimeouts();
+    clearTimeoutsAndMessage();
     if (remainingTime !== 0) {
-      updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+      performReset();
+      updateButtonLabel("RESET", 10000);
       setInfoTextWithTimeout("Stopwatch has been reset.", 2000);
     }
   };
 
   const handleResetClicksTwoOrMore = () => {
-    clearPreviousTimeouts();
+    clearTimeoutsAndMessage();
     if (remainingTime === 0) {
       dispatch(setResetClicks(0));
-      updateButtonAndInfoText("RESET", "Stopwatch is already reset.", 10000);
+      updateButtonLabel("RESET", 10000);
+      setInfoTextWithTimeout("Stopwatch is already reset.", 10000);
     } else {
-      updateButtonAndInfoText("RESET", "Stopwatch has been reset.", 10000);
+      performReset();
+      updateButtonLabel("RESET", 10000);
+      setInfoTextWithTimeout("Stopwatch has been reset.", 10000);
     }
-    setInfoTextWithTimeout("Stopwatch has been reset.", 2000);
   };
 
   return {
     resetButtonLabel,
     setResetButtonLabel: label => dispatch(setResetButtonLabel(label)),
-    infoText,
     setResetClicks: clicks => dispatch(setResetClicks(clicks)),
     handleResetClicksZero,
     handleResetClicksOne,
-    handleResetClicksTwoOrMore,
-    updateButtonAndInfoText
+    handleResetClicksTwoOrMore
   };
 }
 
