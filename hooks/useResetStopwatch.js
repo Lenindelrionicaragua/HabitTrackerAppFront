@@ -5,8 +5,10 @@ import {
   setIsRunning
 } from "../actions/counterActions";
 import useInfoText from "./useInfoText";
+import { usePerformReset } from "./usePerformReset";
 
 function useResetStopwatch() {
+  const performReset = usePerformReset();
   const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
   const resetButtonLabel = useSelector(
     state => state.resetButtonLabel.resetButtonLabel
@@ -43,7 +45,10 @@ function useResetStopwatch() {
       );
       dispatch(setIsRunning(false));
     }
-    setInfoTextWithTimeout("Reset cancelled.", 12000);
+    setTimeout(() => {
+      dispatch(setResetClicks(0)); // Reset clicks after the confirmation timeout
+      setInfoTextWithTimeout("Reset cancelled.", 12000);
+    }, 12000);
   };
 
   const handleResetClicksOne = () => {
