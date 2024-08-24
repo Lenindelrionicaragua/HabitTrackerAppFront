@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import { useDispatch, useSelector } from "react-redux";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
-import usePerformReset from "../../hooks/usePerformReset";
+import { usePerformReset } from "../../hooks/usePerformReset";
 import useInfoText from "../../hooks/useInfoText";
 
 jest.mock("react-redux", () => ({
@@ -10,8 +10,7 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("../../hooks/usePerformReset", () => ({
-  __esModule: true,
-  default: jest.fn()
+  usePerformReset: jest.fn()
 }));
 
 jest.mock("../../hooks/useInfoText", () => ({
@@ -33,15 +32,19 @@ describe("useResetStopwatch", () => {
 
     useSelector.mockImplementation(selector => {
       if (selector({ remainingTime: 10 }) === 10) {
-        return 10; // Simula que remainingTime no es 0
+        return 10;
       }
       if (selector({ resetClicks: 2 }) === 2) {
-        return 2; // Establece el valor inicial de resetClicks
+        return 2;
       }
       return null;
     });
 
     usePerformReset.mockReturnValue(performReset);
+    useInfoText.mockReturnValue({
+      setInfoTextWithTimeout,
+      clearTimeoutsAndMessage
+    });
 
     const { result } = renderHook(() => useResetStopwatch());
 

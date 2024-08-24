@@ -4,7 +4,7 @@ import {
   setResetClicks,
   setIsRunning
 } from "../actions/counterActions";
-import { useInfoText } from "../hooks/useInfoText";
+import useInfoText from "../hooks/useInfoText";
 import { usePerformReset } from "../hooks/usePerformReset";
 
 function useResetStopwatch() {
