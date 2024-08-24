@@ -6,6 +6,7 @@ import rootReducer from "../../reducers/rootReducer";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { usePerformReset } from "../../hooks/usePerformReset";
 import useInfoText from "../../hooks/useInfoText";
+import { setResetClicks } from "../../actions/counterActions";
 
 // Mock de hooks
 jest.mock("../../hooks/usePerformReset", () => ({
@@ -79,6 +80,8 @@ describe("useResetStopwatch", () => {
 
     const store = createStore(rootReducer, initialState);
 
+    const dispatchSpy = jest.spyOn(store, "dispatch");
+
     useInfoText.mockReturnValue({
       setInfoTextWithTimeout,
       clearTimeoutsAndMessage
@@ -111,6 +114,10 @@ describe("useResetStopwatch", () => {
       "Reset cancelled.",
       12000
     );
+    expect(dispatchSpy).toHaveBeenNthCalledWith(4, {
+      type: "SET_RESET_CLICKS",
+      payload: 0
+    });
   });
 
   it("should call performReset when handleResetClicksOne is called and remainingTime is not 0", () => {
