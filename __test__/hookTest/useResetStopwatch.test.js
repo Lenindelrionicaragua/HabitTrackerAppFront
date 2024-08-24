@@ -6,7 +6,10 @@ import rootReducer from "../../reducers/rootReducer";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { usePerformReset } from "../../hooks/usePerformReset";
 import useInfoText from "../../hooks/useInfoText";
-import { setResetClicks } from "../../actions/counterActions";
+import {
+  setResetButtonLabel,
+  setResetClicks
+} from "../../actions/counterActions";
 
 // Mock de hooks
 jest.mock("../../hooks/usePerformReset", () => ({
@@ -31,6 +34,7 @@ describe("useResetStopwatch", () => {
 
   it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is 0", () => {
     const dispatch = jest.fn();
+    const updateButtonLabel = jest.fn();
     const setInfoTextWithTimeout = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
@@ -41,6 +45,8 @@ describe("useResetStopwatch", () => {
     };
 
     const store = createStore(rootReducer, initialState);
+
+    const dispatchSpy = jest.spyOn(store, "dispatch");
 
     useInfoText.mockReturnValue({
       setInfoTextWithTimeout,
@@ -56,6 +62,11 @@ describe("useResetStopwatch", () => {
     act(() => {
       result.current.handleResetClicksZero();
     });
+
+    expect(store.dispatch).toHaveBeenNthCalledWith(
+      1,
+      setResetButtonLabel("RESET")
+    );
 
     act(() => {
       jest.runAllTimers();
