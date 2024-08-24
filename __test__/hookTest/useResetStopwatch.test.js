@@ -28,6 +28,44 @@ describe("useResetStopwatch", () => {
     jest.clearAllMocks();
   });
 
+  it("should call performReset when handleResetClicksOne is called and remainingTime is not 0", () => {
+    const dispatch = jest.fn();
+    const performReset = jest.fn();
+    const setInfoTextWithTimeout = jest.fn();
+    const clearTimeoutsAndMessage = jest.fn();
+
+    const initialState = {
+      resetButtonLabel: { resetButtonLabel: "RESET" },
+      resetClicks: { resetClicks: 1 },
+      remainingTime: 10
+    };
+
+    const store = createStore(rootReducer, initialState);
+
+    usePerformReset.mockReturnValue(performReset);
+    useInfoText.mockReturnValue({
+      setInfoTextWithTimeout,
+      clearTimeoutsAndMessage
+    });
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useResetStopwatch(), { wrapper });
+
+    act(() => {
+      result.current.handleResetClicksTwoOrMore();
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(performReset).toHaveBeenCalled();
+    expect(setInfoTextWithTimeout).toHaveBeenCalled();
+  });
+
   it("should call performReset when handleResetClicksTwoOrMore is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const performReset = jest.fn();
