@@ -28,6 +28,91 @@ describe("useResetStopwatch", () => {
     jest.clearAllMocks();
   });
 
+  it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is 0", () => {
+    const dispatch = jest.fn();
+    const setInfoTextWithTimeout = jest.fn();
+    const clearTimeoutsAndMessage = jest.fn();
+
+    const initialState = {
+      resetButtonLabel: { resetButtonLabel: "RESET" },
+      resetClicks: { resetClicks: 0 },
+      remainingTime: 0
+    };
+
+    const store = createStore(rootReducer, initialState);
+
+    useInfoText.mockReturnValue({
+      setInfoTextWithTimeout,
+      clearTimeoutsAndMessage
+    });
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useResetStopwatch(), { wrapper });
+
+    act(() => {
+      result.current.handleResetClicksZero();
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+      "The timer is already at zero. Do you want to reset it?",
+      10000
+    );
+  });
+
+  it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is not 0", () => {
+    const dispatch = jest.fn();
+    const setInfoTextWithTimeout = jest.fn();
+    const clearTimeoutsAndMessage = jest.fn();
+
+    const initialState = {
+      resetButtonLabel: { resetButtonLabel: "RESET" },
+      resetClicks: { resetClicks: 0 },
+      remainingTime: 10
+    };
+
+    const store = createStore(rootReducer, initialState);
+
+    useInfoText.mockReturnValue({
+      setInfoTextWithTimeout,
+      clearTimeoutsAndMessage
+    });
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useResetStopwatch(), { wrapper });
+
+    act(() => {
+      result.current.handleResetClicksZero();
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+
+    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+      "Are you sure you want to reset the stopwatch?",
+      10000
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+      "Reset cancelled.",
+      12000
+    );
+  });
+
   it("should call performReset when handleResetClicksOne is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const performReset = jest.fn();
@@ -55,7 +140,7 @@ describe("useResetStopwatch", () => {
     const { result } = renderHook(() => useResetStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleResetClicksTwoOrMore();
+      result.current.handleResetClicksOne();
     });
 
     act(() => {
