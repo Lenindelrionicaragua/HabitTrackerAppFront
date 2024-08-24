@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724430314897" clover="3.2.0">
-  <project timestamp="1724430314898" name="All files">
-    <metrics statements="1115" coveredstatements="34" conditionals="374" coveredconditionals="0" methods="241" coveredmethods="1" elements="1730" coveredelements="35" complexity="0" loc="1115" ncloc="1115" packages="68" files="110" classes="110"/>
+<coverage generated="1724503450214" clover="3.2.0">
+  <project timestamp="1724503450214" name="All files">
+    <metrics statements="1115" coveredstatements="37" conditionals="374" coveredconditionals="0" methods="241" coveredmethods="2" elements="1730" coveredelements="39" complexity="0" loc="1115" ncloc="1115" packages="68" files="110" classes="110"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -726,7 +726,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="198" coveredstatements="1" conditionals="36" coveredconditionals="0" methods="59" coveredmethods="1"/>
+      <metrics statements="198" coveredstatements="4" conditionals="36" coveredconditionals="0" methods="59" coveredmethods="2"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -821,11 +821,11 @@
         <line num="32" count="0" type="stmt"/>
       </file>
       <file name="useResetStopwatch.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useResetStopwatch.js">
-        <metrics statements="42" coveredstatements="1" conditionals="8" coveredconditionals="0" methods="12" coveredmethods="1"/>
+        <metrics statements="42" coveredstatements="4" conditionals="8" coveredconditionals="0" methods="12" coveredmethods="2"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
