@@ -18,6 +18,16 @@ jest.mock("../../hooks/useInfoText", () => ({
 }));
 
 describe("useResetStopwatch", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+    jest.clearAllMocks();
+  });
+
   it("should call performReset when handleResetClicksTwoOrMore is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const performReset = jest.fn();
@@ -46,6 +56,10 @@ describe("useResetStopwatch", () => {
 
     act(() => {
       result.current.handleResetClicksTwoOrMore();
+    });
+
+    act(() => {
+      jest.runAllTimers();
     });
 
     expect(performReset).toHaveBeenCalled();
