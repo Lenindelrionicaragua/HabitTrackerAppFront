@@ -1,5 +1,5 @@
 const initialResetButtonLabel = {
-  label: "RESET"
+  resetButtonLabel: "RESET"
 };
 
 const SET_RESET_BUTTON_LABEL = "SET_RESET_BUTTON_LABEL";
@@ -9,7 +9,7 @@ const resetButtonLabelReducer = (state = initialResetButtonLabel, action) => {
     case SET_RESET_BUTTON_LABEL:
       return {
         ...state,
-        label: action.payload
+        resetButtonLabel: action.payload
       };
     default:
       return state;

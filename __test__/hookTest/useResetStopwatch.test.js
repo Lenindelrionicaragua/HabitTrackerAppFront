@@ -1,24 +1,18 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { useDispatch, useSelector } from "react-redux";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "../../reducers/rootReducer"; // Ajusta la ruta según tu estructura de carpetas
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { usePerformReset } from "../../hooks/usePerformReset";
 import useInfoText from "../../hooks/useInfoText";
 
-jest.mock("react-redux", () => ({
-  useDispatch: jest.fn(),
-  useSelector: jest.fn()
-}));
-
+// Mock de hooks
 jest.mock("../../hooks/usePerformReset", () => ({
   usePerformReset: jest.fn()
 }));
 
 jest.mock("../../hooks/useInfoText", () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    setInfoTextWithTimeout: jest.fn(),
-    clearTimeoutsAndMessage: jest.fn()
-  }))
+  useInfoText: jest.fn()
 }));
 
 describe("useResetStopwatch", () => {
@@ -28,30 +22,35 @@ describe("useResetStopwatch", () => {
     const setInfoTextWithTimeout = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
-    useDispatch.mockReturnValue(dispatch);
+    // Configuración del estado inicial para la tienda
+    const initialState = {
+      resetButtonLabel: { resetButtonLabel: "RESET" },
+      resetClicks: { resetClicks: 2 },
+      remainingTime: 10
+    };
 
-    useSelector.mockImplementation(selector => {
-      if (selector({ remainingTime: 10 }) === 10) {
-        return 10;
-      }
-      if (selector({ resetClicks: 2 }) === 2) {
-        return 2;
-      }
-      return null;
-    });
+    // Crear la tienda con el estado inicial
+    const store = createStore(rootReducer, initialState);
 
+    // Configurar los mocks
     usePerformReset.mockReturnValue(performReset);
     useInfoText.mockReturnValue({
       setInfoTextWithTimeout,
       clearTimeoutsAndMessage
     });
 
-    const { result } = renderHook(() => useResetStopwatch());
+    // Renderizar el hook con la tienda
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+    const { result } = renderHook(() => useResetStopwatch(), { wrapper });
 
+    // Ejecutar la acción que debería disparar performReset
     act(() => {
       result.current.handleResetClicksTwoOrMore();
     });
 
+    // Asegurarse de que las funciones fueron llamadas
     expect(performReset).toHaveBeenCalled();
     expect(setInfoTextWithTimeout).toHaveBeenCalled();
   });
