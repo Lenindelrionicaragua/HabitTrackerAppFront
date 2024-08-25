@@ -92,10 +92,10 @@ function useStopwatch() {
 
   const handleActivityTime = () => {
     startTimer(remainingTime);
-    setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
     dispatch(setIsRunning(true));
     dispatch(setFirstRun(true));
     dispatch(setHasStarted(true));
+    setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
   };
 
   useInterval(updateTime, isRunning ? 1000 : null);
