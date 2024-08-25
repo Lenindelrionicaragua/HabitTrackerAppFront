@@ -7,8 +7,6 @@ import {
   setElapsedTime,
   setTimeCompleted,
   setIsRunning,
-  setResetTimeoutsIds,
-  setInfoText,
   setHasStarted,
   setActivityIndex,
   setFirstRun
@@ -25,9 +23,6 @@ function useStopwatch() {
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const activityIndex = useSelector(state => state.activityIndex.activityIndex);
   const firstRun = useSelector(state => state.firstRun.firstRun);
-  const resetTimeoutsIds = useSelector(
-    state => state.resetTimeoutsIds.resetTimeoutsIds
-  );
 
   const dispatch = useDispatch();
 
@@ -76,7 +71,6 @@ function useStopwatch() {
   const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
     dispatch(setActivityIndex(activityIdx));
     dispatch(setInitialTime(time));
-    dispatch(setInfoText(infoText));
     clearTimeoutsAndMessage();
     setInfoTextWithTimeout(infoText, 5000);
   };
@@ -98,7 +92,6 @@ function useStopwatch() {
 
   const handleActivityTime = () => {
     startTimer(remainingTime);
-    dispatch(setInfoText("Timer started with the selected activity."));
     setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
     dispatch(setIsRunning(true));
     dispatch(setFirstRun(true));

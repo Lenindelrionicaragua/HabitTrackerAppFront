@@ -10,14 +10,14 @@ import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../util/handleButtonPress";
-import useCircleColors from "../../hooks/useCircleColor";
+import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
 import {
-  clearMessagesAndTimeouts,
-  clearInfoTextAfter
-} from "../../util/messageAndTimeoutHandlers";
+  clearTimeoutsAndMessage,
+  setInfoTextWithTimeou
+} from "../../hooks/useInfoText";
 // Styles
 import { Colors } from "../../styles/AppStyles";
 import {

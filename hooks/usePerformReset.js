@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateColors } from "../hooks/useUpdateCircleColor";
+import { useUpdateCircleColors } from "../hooks/useUpdateCircleColors";
 import { Colors } from "../styles/AppStyles";
 import {
   setInitialTime,
@@ -20,6 +20,7 @@ import { logInfo } from "./../util/logging";
 export const usePerformReset = () => {
   const dispatch = useDispatch();
   const { skyBlue, white } = Colors;
+  const { updateColors } = useUpdateCircleColors();
 
   return () => {
     dispatch(setInitialTime(0));
