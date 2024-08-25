@@ -143,7 +143,91 @@ describe("useStopwatchScreen", () => {
   //   expect(result.current.elapsedTime).toBe(initialTime);
   // });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityNoTime is called", () => {
+  //   it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityNoTime is called", () => {
+  //     const dispatch = jest.fn();
+  //     const setInfoTextWithTimeout = jest.fn();
+  //     const clearTimeoutsAndMessage = jest.fn();
+
+  //     const initialState = {
+  //       activityIndex: { activityIndex: null },
+  //       initialTime: 300,
+  //       resetButtonLabel: { resetButtonLabel: "RESET" },
+  //       resetClicks: { resetClicks: 0 },
+  //       remainingTime: 0
+  //     };
+
+  //     const store = createStore(rootReducer, initialState);
+
+  //     const dispatchSpy = jest.spyOn(store, "dispatch");
+
+  //     useInfoText.mockReturnValue({
+  //       setInfoTextWithTimeout,
+  //       clearTimeoutsAndMessage
+  //     });
+
+  //     const wrapper = ({ children }) => (
+  //       <Provider store={store}>{children}</Provider>
+  //     );
+
+  //     const { result } = renderHook(() => useStopwatch(), { wrapper });
+
+  //     act(() => {
+  //       result.current.handleNoActivityNoTime();
+  //     });
+
+  //     expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+  //       "Default time and activity selected.",
+  //       5000
+  //     );
+
+  //     act(() => {
+  //       jest.runAllTimers();
+  //     });
+  //   });
+
+  //   it("should call setInfoTextWithTimeout with correct arguments when handleActivityNoTime is called", () => {
+  //     const dispatch = jest.fn();
+  //     const setInfoTextWithTimeout = jest.fn();
+  //     const clearTimeoutsAndMessage = jest.fn();
+
+  //     const initialState = {
+  //       activityIndex: { activityIndex: null },
+  //       initialTime: 300,
+  //       resetButtonLabel: { resetButtonLabel: "RESET" },
+  //       resetClicks: { resetClicks: 0 },
+  //       remainingTime: 0
+  //     };
+
+  //     const store = createStore(rootReducer, initialState);
+
+  //     const dispatchSpy = jest.spyOn(store, "dispatch");
+
+  //     useInfoText.mockReturnValue({
+  //       setInfoTextWithTimeout,
+  //       clearTimeoutsAndMessage
+  //     });
+
+  //     const wrapper = ({ children }) => (
+  //       <Provider store={store}>{children}</Provider>
+  //     );
+
+  //     const { result } = renderHook(() => useStopwatch(), { wrapper });
+
+  //     act(() => {
+  //       result.current.handleActivityNoTime();
+  //     });
+
+  //     expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+  //       "Default time selected.",
+  //       5000
+  //     );
+
+  //     act(() => {
+  //       jest.runAllTimers();
+  //     });
+  //   });
+
+  it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityTime is called", () => {
     const dispatch = jest.fn();
     const setInfoTextWithTimeout = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
@@ -172,11 +256,11 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleNoActivityNoTime();
+      result.current.handleNoActivityTime();
     });
 
     expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "Default time and activity selected.",
+      "Default activity selected.",
       5000
     );
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724591017313" clover="3.2.0">
-  <project timestamp="1724591017314" name="All files">
+<coverage generated="1724592027483" clover="3.2.0">
+  <project timestamp="1724592027483" name="All files">
     <metrics statements="1108" coveredstatements="150" conditionals="374" coveredconditionals="35" methods="237" coveredmethods="32" elements="1719" coveredelements="217" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
@@ -910,14 +910,14 @@
         <line num="74" count="1" type="stmt"/>
         <line num="75" count="1" type="stmt"/>
         <line num="78" count="2" type="stmt"/>
-        <line num="79" count="1" type="stmt"/>
-        <line num="80" count="1" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
         <line num="83" count="2" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="88" count="2" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
         <line num="93" count="2" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
