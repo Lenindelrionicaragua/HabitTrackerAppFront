@@ -13,11 +13,10 @@ import {
   setActivityIndex,
   setFirstRun
 } from "../actions/counterActions";
-import useMessageAndTimeouts from "../hooks/useMessageAndTimeouts";
+import useInfoText from "../hooks/useInfoText";
 
 function useStopwatch() {
-  const { setInfoTextWithTimeout, clearAllMessagesAndTimeouts } =
-    useMessageAndTimeouts();
+  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
@@ -36,16 +35,8 @@ function useStopwatch() {
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
 
-  const clearPreviousTimeouts = () => {
-    clearMessagesAndTimeouts(
-      resetTimeoutsIds,
-      setResetTimeoutsIds,
-      setInfoText
-    );
-  };
-
   const startTimer = initialTime => {
-    clearPreviousTimeouts();
+    clearTimeoutsAndMessage();
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
     dispatch(setIsRunning(true));
@@ -86,11 +77,7 @@ function useStopwatch() {
     dispatch(setActivityIndex(activityIdx));
     dispatch(setInitialTime(time));
     dispatch(setInfoText(infoText));
-    clearMessagesAndTimeouts(
-      resetTimeoutsIds,
-      ids => dispatch(setResetTimeoutsIds(ids)),
-      msg => dispatch(setInfoText(msg))
-    );
+    clearTimeoutsAndMessage();
     setInfoTextWithTimeout(infoText, 5000);
   };
 
