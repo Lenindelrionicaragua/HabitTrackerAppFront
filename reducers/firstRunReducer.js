@@ -4,7 +4,7 @@ const initialFirstRun = {
 
 const SET_FIRST_RUN = "SET_FIRST_RUN";
 
-const firstRunReducer = (state = initialFirstRun, action) => {
+const setFirstRunReducer = (state = initialFirstRun, action) => {
   switch (action.type) {
     case SET_FIRST_RUN:
       return {
@@ -16,4 +16,4 @@ const firstRunReducer = (state = initialFirstRun, action) => {
   }
 };
 
-export default firstRunReducer;
+export default setFirstRunReducer;

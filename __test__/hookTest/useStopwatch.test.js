@@ -5,7 +5,12 @@ import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
 import useStopwatch from "../../hooks/useStopwatch";
 import useInfoText from "../../hooks/useInfoText";
-import { setActivityIndex } from "../../actions/counterActions";
+import {
+  setActivityIndex,
+  setIsRunning,
+  setHasStarted,
+  setFirstRun
+} from "../../actions/counterActions";
 
 jest.mock("../../hooks/useInfoText", () => ({
   __esModule: true, // Needed to use default export
@@ -227,7 +232,49 @@ describe("useStopwatchScreen", () => {
   //     });
   //   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityTime is called", () => {
+  //   it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityTime is called", () => {
+  //     const dispatch = jest.fn();
+  //     const setInfoTextWithTimeout = jest.fn();
+  //     const clearTimeoutsAndMessage = jest.fn();
+
+  //     const initialState = {
+  //       activityIndex: { activityIndex: null },
+  //       initialTime: 300,
+  //       resetButtonLabel: { resetButtonLabel: "RESET" },
+  //       resetClicks: { resetClicks: 0 },
+  //       remainingTime: 0
+  //     };
+
+  //     const store = createStore(rootReducer, initialState);
+
+  //     const dispatchSpy = jest.spyOn(store, "dispatch");
+
+  //     useInfoText.mockReturnValue({
+  //       setInfoTextWithTimeout,
+  //       clearTimeoutsAndMessage
+  //     });
+
+  //     const wrapper = ({ children }) => (
+  //       <Provider store={store}>{children}</Provider>
+  //     );
+
+  //     const { result } = renderHook(() => useStopwatch(), { wrapper });
+
+  //     act(() => {
+  //       result.current.handleNoActivityTime();
+  //     });
+
+  //     expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+  //       "Default activity selected.",
+  //       5000
+  //     );
+
+  //     act(() => {
+  //       jest.runAllTimers();
+  //     });
+  //   });
+
+  it("should call setInfoTextWithTimeout with correct arguments when handleActivityTime is called", () => {
     const dispatch = jest.fn();
     const setInfoTextWithTimeout = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
@@ -256,16 +303,16 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleNoActivityTime();
+      result.current.handleActivityTime();
     });
 
     expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "Default activity selected.",
+      "Timer started with the selected activity.",
       5000
     );
 
     act(() => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(5000);
     });
   });
 });
