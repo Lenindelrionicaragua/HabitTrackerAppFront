@@ -55,7 +55,7 @@ export const setIsRunning = newIsRunning => {
   };
 };
 
-export const firstRun = newFirstRun => {
+export const setFirstRun = newFirstRun => {
   return {
     type: SET_FIRST_RUN,
     payload: newFirstRun
