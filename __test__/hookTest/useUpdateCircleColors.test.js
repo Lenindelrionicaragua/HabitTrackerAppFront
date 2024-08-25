@@ -4,7 +4,7 @@ import {
   setCircleColor,
   setInnerCircleColor
 } from "../../actions/counterActions";
-import useUpdateCircleColors from "../../hooks/useUpdateCircleColor";
+import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
 
