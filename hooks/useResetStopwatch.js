@@ -75,8 +75,6 @@ function useResetStopwatch() {
 
   return {
     resetButtonLabel,
-    setResetButtonLabel: label => dispatch(setResetButtonLabel(label)),
-    setResetClicks: clicks => dispatch(setResetClicks(clicks)),
     handleResetClicksZero,
     handleResetClicksOne,
     handleResetClicksTwoOrMore
