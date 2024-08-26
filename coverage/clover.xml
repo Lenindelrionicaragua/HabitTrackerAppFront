@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724681583865" clover="3.2.0">
-  <project timestamp="1724681583866" name="All files">
+<coverage generated="1724683925855" clover="3.2.0">
+  <project timestamp="1724683925855" name="All files">
     <metrics statements="1108" coveredstatements="25" conditionals="374" coveredconditionals="0" methods="237" coveredmethods="3" elements="1719" coveredelements="28" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
@@ -781,24 +781,24 @@
       <file name="usePerformReset.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePerformReset.js">
         <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="21" count="12" type="stmt"/>
-        <line num="22" count="12" type="stmt"/>
-        <line num="23" count="12" type="stmt"/>
-        <line num="25" count="12" type="stmt"/>
-        <line num="26" count="12" type="stmt"/>
-        <line num="27" count="12" type="stmt"/>
-        <line num="28" count="12" type="stmt"/>
-        <line num="29" count="12" type="stmt"/>
-        <line num="30" count="12" type="stmt"/>
-        <line num="31" count="12" type="stmt"/>
-        <line num="32" count="12" type="stmt"/>
-        <line num="33" count="12" type="stmt"/>
-        <line num="34" count="12" type="stmt"/>
-        <line num="35" count="12" type="stmt"/>
-        <line num="36" count="12" type="stmt"/>
-        <line num="38" count="12" type="stmt"/>
-        <line num="40" count="12" type="stmt"/>
-        <line num="42" count="12" type="stmt"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="25" count="13" type="stmt"/>
+        <line num="26" count="13" type="stmt"/>
+        <line num="27" count="13" type="stmt"/>
+        <line num="28" count="13" type="stmt"/>
+        <line num="29" count="13" type="stmt"/>
+        <line num="30" count="13" type="stmt"/>
+        <line num="31" count="13" type="stmt"/>
+        <line num="32" count="13" type="stmt"/>
+        <line num="33" count="13" type="stmt"/>
+        <line num="34" count="13" type="stmt"/>
+        <line num="35" count="13" type="stmt"/>
+        <line num="36" count="13" type="stmt"/>
+        <line num="38" count="13" type="stmt"/>
+        <line num="40" count="13" type="stmt"/>
+        <line num="42" count="13" type="stmt"/>
       </file>
       <file name="usePlayAlarm.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePlayAlarm.js">
         <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -1613,7 +1613,7 @@
       <file name="logging.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/logging.js">
         <metrics statements="14" coveredstatements="5" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="13" count="12" type="stmt"/>
+        <line num="13" count="13" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
