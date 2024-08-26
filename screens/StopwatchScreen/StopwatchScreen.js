@@ -6,6 +6,7 @@ import { setSaveTimeButtonLabel } from "../../actions/counterActions";
 
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
+import { usePerformReset } from "../../hooks/usePerformReset";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
@@ -14,10 +15,7 @@ import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
-import {
-  clearTimeoutsAndMessage,
-  setInfoTextWithTimeou
-} from "../../hooks/useInfoText";
+import useInfoText from "../../hooks/useInfoText";
 // Styles
 import { Colors } from "../../styles/AppStyles";
 import {
@@ -61,7 +59,7 @@ const activities = [
 const StopwatchScreen = () => {
   const [alarm, setAlarm] = useState();
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const { circleColor, innerCircleColor, updateColors } = useCircleColors();
+
   const saveTimeButtonLabel = useSelector(
     state => state.saveTimeButtonLabel.saveTimeButtonLabel
   );
@@ -70,6 +68,10 @@ const StopwatchScreen = () => {
   const dispatch = useDispatch();
 
   // custom hooks
+  const performReset = usePerformReset();
+  const { circleColor, innerCircleColor, updateColors } =
+    useUpdateCircleColors();
+  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
   const { activeButtons, handleButtonPress } = useButtonHandler();
   const {
     hasStarted,
@@ -151,26 +153,35 @@ const StopwatchScreen = () => {
   // Reset button handler
   const resetStopwatch = () => {
     dispatch(setResetClicks(prevClicks => prevClicks + 1));
-    // aqui hay que setCircleColor(skyBlue);
+
     if (resetClicks === 0) {
       handleResetClicksZero();
     } else if (resetClicks === 1) {
+      // circleColor / innerCircleColor
+      updateColors(Colors.skyBlue, Colors.white);
       handleResetClicksOne();
     } else if (resetClicks >= 2) {
+      // circleColor / innerCircleColor
+      updateColors(Colors.skyBlue, Colors.white);
       handleResetClicksTwoOrMore();
     }
   };
 
   // Save time records handler
   const saveTimeRecords = () => {
-    clearPreviousTimeouts();
+    clearTimeoutsAndMessage();
     dispatch(setIsRunning(false));
 
     if (remainingTime === 0 && !firstRun) {
       dispatch(
         setInfoText("No time recorded. Please start the timer before saving.")
       );
-      clearInfoTextAfter(1000, setInfoText, setResetTimeouts, resetTimeouts);
+      setInfoTextWithTimeout(
+        1000,
+        setInfoText,
+        setResetTimeouts,
+        resetTimeouts
+      );
 
       return;
     }
@@ -187,36 +198,38 @@ const StopwatchScreen = () => {
     dispatch(setIsRunning(false));
     dispatch(setSaveTimeButtonLabel("SAVING"));
     dispatch(setInfoText("Saving"));
-    updateColors(green, green);
+    // circleColor / innerCircleColor
+    updateColors(Colors.green, Colors.green);
     setButtonsDisabled(true);
 
     setTimeout(() => {
       performReset();
       setInfoText("Time saved successfully! Your activity has been recorded.");
     }, 4000);
-
-    clearInfoTextAfter(5000, setInfoText, setResetTimeouts, resetTimeouts);
+    clearTimeoutsAndMessage();
+    setInfoTextWithTimeout(setInfoText, 5000);
   };
 
   // Function to perform reset
-  const performReset = () => {
-    dispatch(setInitialTime(0));
-    dispatch(setRemainingTime(0));
-    dispatch(setElapsedTime(0));
-    dispatch(setIsRunning(false));
-    dispatch(setActivityIndex(null));
-    dispatch(setHasStarted(false));
-    dispatch(setFirstRun(false));
-    dispatch(setResetClicks(0));
-    dispatch(setButtonsDisabled(false));
-    dispatch(setResetButtonLabel("RESET"));
-    dispatch(setSaveTimeButtonLabel("SAVE-TIME"));
-    updateColors(skyBlue, white);
+  // const performReset = () => {
+  //   dispatch(setInitialTime(0));
+  //   dispatch(setRemainingTime(0));
+  //   dispatch(setElapsedTime(0));
+  //   dispatch(setIsRunning(false));
+  //   dispatch(setActivityIndex(null));
+  //   dispatch(setHasStarted(false));
+  //   dispatch(setFirstRun(false));
+  //   dispatch(setResetClicks(0));
+  //   dispatch(setButtonsDisabled(false));
+  //   dispatch(setResetButtonLabel("RESET"));
+  //   dispatch(setSaveTimeButtonLabel("SAVE-TIME"));
+  //   // circleColor / innerCircleColor
+  //   updateColors(skyBlue, white);
 
-    dispatch(setTimeCompleted(true));
+  //   dispatch(setTimeCompleted(true));
 
-    logInfo(`Timer was reset.`);
-  };
+  //   logInfo(`Timer was reset.`);
+  // };
 
   const handleActivityChange = () => {
     dispatch(setIsRunning(false));
