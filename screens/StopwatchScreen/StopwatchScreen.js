@@ -12,10 +12,10 @@ import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../util/handleButtonPress";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
+import useInfoText from "../../hooks/useInfoText";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
-import useInfoText from "../../hooks/useInfoText";
 // Styles
 import { Colors } from "../../styles/AppStyles";
 import {
@@ -71,7 +71,8 @@ const StopwatchScreen = () => {
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
+  const { infoText, setInfoTextWithTimeout, clearTimeoutsAndMessage } =
+    useInfoText();
   const { activeButtons, handleButtonPress } = useButtonHandler();
   const {
     hasStarted,
@@ -91,10 +92,6 @@ const StopwatchScreen = () => {
 
   const {
     resetButtonLabel,
-    setResetButtonLabel,
-    infoText,
-    setInfoText,
-    resetClicks,
     handleResetClicksZero,
     handleResetClicksOne,
     handleResetClicksTwoOrMore
@@ -105,11 +102,12 @@ const StopwatchScreen = () => {
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
-        dispatch(setInfoText(""));
+        clearTimeoutsAndMessage();
       }, 3000);
+
       return () => clearTimeout(timer);
     }
-  }, [infoText, dispatch, setInfoText]);
+  }, [infoText, clearTimeoutsAndMessage]);
 
   useEffect(() => {
     if (timeCompleted) {
@@ -121,6 +119,7 @@ const StopwatchScreen = () => {
   // alarm
   useEffect(() => {
     return () => {
+      clearTimeoutsAndMessage();
       if (alarm) {
         alarm.unloadAsync();
       }
@@ -173,14 +172,9 @@ const StopwatchScreen = () => {
     dispatch(setIsRunning(false));
 
     if (remainingTime === 0 && !firstRun) {
-      dispatch(
-        setInfoText("No time recorded. Please start the timer before saving.")
-      );
       setInfoTextWithTimeout(
-        1000,
-        setInfoText,
-        setResetTimeouts,
-        resetTimeouts
+        "No time recorded. Please start the timer before saving.",
+        1000
       );
 
       return;
@@ -197,43 +191,23 @@ const StopwatchScreen = () => {
   const processSaveAndUpdateUI = () => {
     dispatch(setIsRunning(false));
     dispatch(setSaveTimeButtonLabel("SAVING"));
-    dispatch(setInfoText("Saving"));
+    setInfoTextWithTimeout("Saving", 3000);
     // circleColor / innerCircleColor
     updateColors(Colors.green, Colors.green);
     setButtonsDisabled(true);
 
     setTimeout(() => {
       performReset();
-      setInfoText("Time saved successfully! Your activity has been recorded.");
+      setInfoTextWithTimeout(
+        "Time saved successfully! Your activity has been recorded."
+      );
     }, 4000);
     clearTimeoutsAndMessage();
-    setInfoTextWithTimeout(setInfoText, 5000);
   };
-
-  // Function to perform reset
-  // const performReset = () => {
-  //   dispatch(setInitialTime(0));
-  //   dispatch(setRemainingTime(0));
-  //   dispatch(setElapsedTime(0));
-  //   dispatch(setIsRunning(false));
-  //   dispatch(setActivityIndex(null));
-  //   dispatch(setHasStarted(false));
-  //   dispatch(setFirstRun(false));
-  //   dispatch(setResetClicks(0));
-  //   dispatch(setButtonsDisabled(false));
-  //   dispatch(setResetButtonLabel("RESET"));
-  //   dispatch(setSaveTimeButtonLabel("SAVE-TIME"));
-  //   // circleColor / innerCircleColor
-  //   updateColors(skyBlue, white);
-
-  //   dispatch(setTimeCompleted(true));
-
-  //   logInfo(`Timer was reset.`);
-  // };
 
   const handleActivityChange = () => {
     dispatch(setIsRunning(false));
-    dispatch(setInfoText(null));
+    setInfoTextWithTimeout("", 1000);
     setActivityIndex(prevIndex =>
       prevIndex === activities.length - 1 ? 0 : prevIndex + 1
     );
