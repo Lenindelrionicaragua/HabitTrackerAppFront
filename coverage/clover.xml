@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724669711551" clover="3.2.0">
-  <project timestamp="1724669711551" name="All files">
-    <metrics statements="1108" coveredstatements="0" conditionals="374" coveredconditionals="0" methods="237" coveredmethods="0" elements="1719" coveredelements="0" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
+<coverage generated="1724672743215" clover="3.2.0">
+  <project timestamp="1724672743215" name="All files">
+    <metrics statements="1108" coveredstatements="25" conditionals="374" coveredconditionals="0" methods="237" coveredmethods="3" elements="1719" coveredelements="28" complexity="0" loc="1108" ncloc="1108" packages="68" files="110" classes="110"/>
     <package name="ZenTimerAppFront">
       <metrics statements="28" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="App.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/App.js">
@@ -726,7 +726,7 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.hooks">
-      <metrics statements="191" coveredstatements="0" conditionals="36" coveredconditionals="0" methods="55" coveredmethods="0"/>
+      <metrics statements="191" coveredstatements="19" conditionals="36" coveredconditionals="0" methods="55" coveredmethods="2"/>
       <file name="useCircleParams.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useCircleParams.js">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -779,26 +779,26 @@
         <line num="19" count="0" type="stmt"/>
       </file>
       <file name="usePerformReset.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePerformReset.js">
-        <metrics statements="19" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
+        <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
       <file name="usePlayAlarm.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePlayAlarm.js">
         <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -1579,14 +1579,14 @@
       </file>
     </package>
     <package name="ZenTimerAppFront.styles">
-      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="AppStyles.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/styles/AppStyles.js">
-        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="ZenTimerAppFront.util">
-      <metrics statements="41" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="15" coveredmethods="0"/>
+      <metrics statements="41" coveredstatements="5" conditionals="14" coveredconditionals="0" methods="15" coveredmethods="1"/>
       <file name="formatTime.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/formatTime.js">
         <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -1611,12 +1611,12 @@
         <line num="20" count="0" type="stmt"/>
       </file>
       <file name="logging.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/logging.js">
-        <metrics statements="14" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
+        <metrics statements="14" coveredstatements="5" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
         <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1624,7 +1624,7 @@
         <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="34" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
       </file>
       <file name="validateAllowedFields.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/validateAllowedFields.js">
