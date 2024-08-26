@@ -23,10 +23,10 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("../../hooks/useUpdateCircleColors", () => ({
-  __esModule: true, // This is important for proper mocking of ES modules
-  useUpdateCircleColors: () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
     updateColors: jest.fn()
-  })
+  }))
 }));
 
 jest.mock("../../actions/counterActions", () => ({
@@ -211,5 +211,19 @@ describe("usePerformReset", () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith(setTimeCompleted(0));
+  });
+
+  it("should call updateColors function", () => {
+    const updateColors = jest.fn();
+
+    useUpdateCircleColors.mockReturnValue({ updateColors });
+
+    const { result } = renderHook(() => usePerformReset());
+
+    act(() => {
+      result.current();
+    });
+
+    expect(updateColors).toHaveBeenCalled();
   });
 });

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useUpdateCircleColors } from "../hooks/useUpdateCircleColors";
+import useUpdateCircleColors from "../hooks/useUpdateCircleColors";
 import { Colors } from "../styles/AppStyles";
 import {
   setInitialTime,
