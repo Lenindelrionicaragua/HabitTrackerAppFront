@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import useStopwatchLogic from "../../hooks/useStopwatchLogic";
+import useStopwatchLogicMock from "../../__mocks__/useStopwatchLogicMock";
 
 describe("useStopwatch", () => {
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe("useStopwatch", () => {
 
   it("should decrease the time accurately and consistently", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatchLogic());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -41,7 +41,7 @@ describe("useStopwatch", () => {
 
   it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatchLogic());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -72,7 +72,7 @@ describe("useStopwatch", () => {
 
   it("should resume the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatchLogic());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -102,7 +102,7 @@ describe("useStopwatch", () => {
 
   it("should set timeCompleted to true when the initial time is completed", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatchLogic());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
