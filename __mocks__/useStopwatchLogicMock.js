@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useInterval } from "../hooks/useInterval";
 
-function useStopwatchLogic() {
+function useStopwatchLogicMock() {
   const [initialTime, setInitialTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -64,4 +64,4 @@ function useStopwatchLogic() {
   };
 }
 
-export default useStopwatchLogic;
+export default useStopwatchLogicMock;
