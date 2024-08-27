@@ -221,11 +221,17 @@ const StopwatchScreen = () => {
   };
 
   const handleActivityChange = () => {
-    dispatch(setIsRunning(false));
-    dispatch(setInfoTextWithTimeout("", 1000));
+    const currentActivityIndex = useSelector(
+      state => state.activityIndex.activityIndex
+    );
     const newIndex =
-      activityIndex === activities.length - 1 ? 0 : activityIndex + 1;
+      currentActivityIndex === activities.length - 1
+        ? 0
+        : currentActivityIndex + 1;
+
+    dispatch(setIsRunning(false));
     dispatch(setActivityIndex(newIndex));
+    dispatch(setInfoTextWithTimeout("", 1000));
   };
 
   const handleTimeSelection = selectedTime => {
