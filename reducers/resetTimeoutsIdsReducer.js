@@ -1,5 +1,5 @@
 const initialResetTimeoutsIds = {
-  resetTimeoutsIds: [1, 2, 3]
+  resetTimeoutsIds: []
 };
 
 const SET_RESET_TIMEOUTS_IDS = "SET_RESET_TIMEOUTS_IDS";

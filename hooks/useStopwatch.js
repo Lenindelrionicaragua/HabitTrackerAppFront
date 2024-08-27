@@ -14,6 +14,15 @@ import {
 import useInfoText from "../hooks/useInfoText";
 import { logInfo } from "../util/logging";
 
+const activities = [
+  "Study",
+  "Work",
+  "Exercise",
+  "Family time",
+  "Screen-free time",
+  "Rest"
+];
+
 function useStopwatch() {
   const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
   const initialTime = useSelector(state => state.initialTime.initialTime);
@@ -23,6 +32,7 @@ function useStopwatch() {
   const isRunning = useSelector(state => state.isRunning.isRunning);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const activityIndex = useSelector(state => state.activityIndex.activityIndex);
+  const activities = useSelector(state => state.activities.activities);
   const firstRun = useSelector(state => state.firstRun.firstRun);
 
   const dispatch = useDispatch();
@@ -31,18 +41,26 @@ function useStopwatch() {
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
 
-  const startTimer = initialTime => {
+  const MAX_TIME_SECONDS = 99 * 3600; // Maximum time in seconds
+  const MIN_TIME_MINUTES = 0; // Minimum time in seconds
+
+  // Function to start the timer with a specified initial time
+  const startTimer = selectedTime => {
     clearTimeoutsAndMessage();
-    dispatch(setInitialTime(initialTime));
+    dispatch(setInitialTime(selectedTime));
+    dispatch(setRemainingTime(selectedTime));
+    dispatch(setElapsedTime(0));
     startTimeRef.current = Date.now();
     dispatch(setIsRunning(true));
   };
 
+  // Function to pause the stopwatch
   const pauseStopwatch = () => {
     pauseTimeRef.current = Date.now();
     dispatch(setIsRunning(false));
   };
 
+  // Function to resume the stopwatch
   const resumeStopwatch = () => {
     if (!isRunning) {
       const now = Date.now();
@@ -51,6 +69,7 @@ function useStopwatch() {
     }
   };
 
+  // Update the time each second
   const updateTime = () => {
     if (isRunning) {
       const now = Date.now();
@@ -69,9 +88,21 @@ function useStopwatch() {
     }
   };
 
+  // Function to handle time selection (similar to handleTimeSelection)
+  const handleTimeSelection = selectedTime => {
+    const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
+    const finalTime =
+      newInitialTime <= MAX_TIME_SECONDS ? newInitialTime : MAX_TIME_SECONDS;
+
+    dispatch(setInitialTime(finalTime));
+    dispatch(setRemainingTime(finalTime));
+    dispatch(setElapsedTime(0));
+    dispatch(setIsRunning(false));
+  };
+
   const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
     dispatch(setActivityIndex(activityIdx));
-    clearTimeoutsAndMessage();
+    handleTimeSelection(time); // Update time selection logic
     setInfoTextWithTimeout(infoText, 5000);
   };
 
@@ -98,12 +129,23 @@ function useStopwatch() {
     setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
   };
 
+  const handleActivityChange = () => {
+    const newIndex =
+      activityIndex === activities.length - 1 ? 0 : activityIndex + 1;
+
+    dispatch(setIsRunning(false));
+    dispatch(setActivityIndex(newIndex));
+    setInfoTextWithTimeout("", 1000);
+  };
+
   useInterval(updateTime, isRunning ? 1000 : null);
 
   return {
     pauseStopwatch,
     resumeStopwatch,
     startTimer,
+    handleTimeSelection,
+    handleActivityChange,
     handleNoActivityNoTime,
     handleActivityNoTime,
     handleNoActivityTime,

@@ -16,6 +16,7 @@ export const SET_INNER_CIRCLE_COLOR = "SET_INNER_CIRCLE_COLOR";
 
 export const SET_SAVE_TIME_BUTTON_LABEL = "SET_SAVE_TIME_BUTTON_LABEL";
 export const SET_ACTIVITY_INDEX = "SET_ACTIVITY_INDEX";
+export const SET_ACTIVITIES = "SET_ACTIVITIES";
 // export const SET_ALARM = "SET_ALARM";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
@@ -131,6 +132,11 @@ export const setActivityIndex = activityIndex => {
     payload: activityIndex
   };
 };
+
+export const setActivities = activities => ({
+  type: SET_ACTIVITIES,
+  payload: activities
+});
 
 // export const setAlarm = alarm => {
 //   return {

@@ -99,7 +99,8 @@ const StopwatchScreen = () => {
     handleNoActivityNoTime,
     handleActivityNoTime,
     handleNoActivityTime,
-    handleActivityTime
+    handleActivityTime,
+    handleTimeSelection
   } = useStopwatch();
 
   const {
@@ -143,13 +144,10 @@ const StopwatchScreen = () => {
     if (!hasStarted) {
       if (activityIndex === null && remainingTime === 0) {
         handleNoActivityNoTime();
-        handleTimeSelection();
       } else if (activityIndex !== null && remainingTime === 0) {
         handleActivityNoTime();
-        handleTimeSelection();
       } else if (activityIndex === null && remainingTime > 0) {
         handleNoActivityTime();
-        handleTimeSelection();
       } else if (activityIndex !== null && remainingTime > 0) {
         handleActivityTime();
       }
@@ -221,32 +219,27 @@ const StopwatchScreen = () => {
   };
 
   const handleActivityChange = () => {
-    const currentActivityIndex = useSelector(
-      state => state.activityIndex.activityIndex
-    );
     const newIndex =
-      currentActivityIndex === activities.length - 1
-        ? 0
-        : currentActivityIndex + 1;
+      activityIndex === activities.length - 1 ? 0 : activityIndex + 1;
 
     dispatch(setIsRunning(false));
     dispatch(setActivityIndex(newIndex));
     dispatch(setInfoTextWithTimeout("", 1000));
   };
 
-  const handleTimeSelection = selectedTime => {
-    const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
+  // const handleTimeSelection = selectedTime => {
+  //   const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
 
-    if (newInitialTime <= MAX_TIME_SECONDS) {
-      dispatch(setInitialTime(newInitialTime));
-      dispatch(setRemainingTime(newInitialTime));
-      dispatch(setElapsedTime(0));
-      dispatch(setIsRunning(false));
-    } else {
-      dispatch(setInitialTime(MAX_TIME_SECONDS));
-      dispatch(setRemainingTime(MAX_TIME_SECONDS));
-    }
-  };
+  //   if (newInitialTime <= MAX_TIME_SECONDS) {
+  //     dispatch(setInitialTime(newInitialTime));
+  //     dispatch(setRemainingTime(newInitialTime));
+  //     dispatch(setElapsedTime(0));
+  //     dispatch(setIsRunning(false));
+  //   } else {
+  //     dispatch(setInitialTime(MAX_TIME_SECONDS));
+  //     dispatch(setRemainingTime(MAX_TIME_SECONDS));
+  //   }
+  // };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
   const { circumference, strokeDashoffset } = useCircleParams(
