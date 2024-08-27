@@ -12,6 +12,7 @@ import {
   setFirstRun
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
+import { logInfo } from "../util/logging";
 
 function useStopwatch() {
   const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
@@ -23,6 +24,8 @@ function useStopwatch() {
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const activityIndex = useSelector(state => state.activityIndex.activityIndex);
   const firstRun = useSelector(state => state.firstRun.firstRun);
+
+  logInfo(activityIndex);
 
   const dispatch = useDispatch();
 
@@ -70,13 +73,12 @@ function useStopwatch() {
 
   const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
     dispatch(setActivityIndex(activityIdx));
-    dispatch(setInitialTime(time));
     clearTimeoutsAndMessage();
     setInfoTextWithTimeout(infoText, 5000);
   };
 
   const handleNoActivityNoTime = () => {
-    setDefaultsAndStartTimer(null, 300, "Default time and activity selected.");
+    setDefaultsAndStartTimer(0, 300, "Default time and activity selected.");
     dispatch(setHasStarted(true));
   };
 
@@ -86,7 +88,7 @@ function useStopwatch() {
   };
 
   const handleNoActivityTime = () => {
-    setDefaultsAndStartTimer(null, remainingTime, "Default activity selected.");
+    setDefaultsAndStartTimer(0, remainingTime, "Default activity selected.");
     dispatch(setHasStarted(true));
   };
 

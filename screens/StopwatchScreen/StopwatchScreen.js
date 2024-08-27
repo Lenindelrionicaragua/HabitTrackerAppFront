@@ -16,6 +16,17 @@ import useInfoText from "../../hooks/useInfoText";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
+// store
+import {
+  setInitialTime,
+  setRemainingTime,
+  setElapsedTime,
+  setIsRunning,
+  setActivityIndex,
+  setTimeCompleted,
+  setHasStarted,
+  setFirstRun
+} from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
 import {
@@ -66,6 +77,14 @@ const StopwatchScreen = () => {
 
   // Redux dispatch
   const dispatch = useDispatch();
+  const initialTime = useSelector(state => state.initialTime.initialTime);
+  const remainingTime = useSelector(state => state.remainingTime.remainingTime);
+  const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
+  const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
+  const isRunning = useSelector(state => state.isRunning.isRunning);
+  const hasStarted = useSelector(state => state.hasStarted.hasStarted);
+  const activityIndex = useSelector(state => state.activityIndex.activityIndex);
+  const firstRun = useSelector(state => state.firstRun.firstRun);
 
   // custom hooks
   const performReset = usePerformReset();
@@ -75,19 +94,12 @@ const StopwatchScreen = () => {
     useInfoText();
   const { activeButtons, handleButtonPress } = useButtonHandler();
   const {
-    hasStarted,
-    activityIndex,
-    remainingTime,
-    firstRun,
-    timeCompleted,
-    elapsedTime,
-    initialTime,
-    isRunning,
+    pauseStopwatch,
+    resumeStopwatch,
     handleNoActivityNoTime,
     handleActivityNoTime,
     handleNoActivityTime,
-    handleActivityTime,
-    resumeStopwatch
+    handleActivityTime
   } = useStopwatch();
 
   const {
@@ -131,10 +143,13 @@ const StopwatchScreen = () => {
     if (!hasStarted) {
       if (activityIndex === null && remainingTime === 0) {
         handleNoActivityNoTime();
+        handleTimeSelection();
       } else if (activityIndex !== null && remainingTime === 0) {
         handleActivityNoTime();
+        handleTimeSelection();
       } else if (activityIndex === null && remainingTime > 0) {
         handleNoActivityTime();
+        handleTimeSelection();
       } else if (activityIndex !== null && remainingTime > 0) {
         handleActivityTime();
       }
