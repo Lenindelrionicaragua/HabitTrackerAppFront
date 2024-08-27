@@ -185,9 +185,9 @@ describe("useStopwatchScreen", () => {
       result.current.handleActivityTime();
     });
 
-    expect(store.dispatch).toHaveBeenNthCalledWith(2, setIsRunning(true));
-    expect(store.dispatch).toHaveBeenNthCalledWith(4, setFirstRun(true));
-    expect(store.dispatch).toHaveBeenNthCalledWith(5, setHasStarted(true));
+    expect(store.dispatch).toHaveBeenNthCalledWith(5, setIsRunning(true));
+    expect(store.dispatch).toHaveBeenNthCalledWith(6, setFirstRun(true));
+    expect(store.dispatch).toHaveBeenNthCalledWith(7, setHasStarted(true));
 
     act(() => {
       jest.advanceTimersByTime(5000);

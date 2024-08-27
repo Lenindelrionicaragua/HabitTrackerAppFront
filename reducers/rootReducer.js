@@ -13,6 +13,7 @@ import circleColorReducer from "./circleColorReducer";
 import innerCircleColorReducer from "./innerCircleColorReducer";
 import firstRunReducer from "./firstRunReducer";
 import activityIndexReducer from "./activityIndexReducer";
+import activitiesReducer from "./activitiesReducer";
 import saveTimeButtonLabelReducer from "./saveTimeButtonLabelReducer";
 
 const rootReducer = combineReducers({
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   innerCircleColor: innerCircleColorReducer,
   firstRun: firstRunReducer,
   activityIndex: activityIndexReducer,
-  saveTimeButtonLabel: saveTimeButtonLabelReducer
+  saveTimeButtonLabel: saveTimeButtonLabelReducer,
+  activities: activitiesReducer
 });
 
 export default rootReducer;
