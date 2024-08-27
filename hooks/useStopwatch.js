@@ -25,8 +25,6 @@ function useStopwatch() {
   const activityIndex = useSelector(state => state.activityIndex.activityIndex);
   const firstRun = useSelector(state => state.firstRun.firstRun);
 
-  logInfo(activityIndex);
-
   const dispatch = useDispatch();
 
   const startTimeRef = useRef(0);
@@ -103,14 +101,6 @@ function useStopwatch() {
   useInterval(updateTime, isRunning ? 1000 : null);
 
   return {
-    initialTime,
-    remainingTime,
-    elapsedTime,
-    timeCompleted,
-    isRunning,
-    hasStarted,
-    activityIndex,
-    firstRun,
     pauseStopwatch,
     resumeStopwatch,
     startTimer,
