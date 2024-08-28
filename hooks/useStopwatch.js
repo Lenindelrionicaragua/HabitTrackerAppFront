@@ -16,7 +16,7 @@ import useInfoText from "../hooks/useInfoText";
 import { logInfo } from "../util/logging";
 
 function useStopwatch() {
-  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
+  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
@@ -98,26 +98,26 @@ function useStopwatch() {
   const handleNoActivityNoTime = () => {
     dispatch(setActivityIndex(0));
     handleTimeSelection(300);
-    setInfoTextWithTimeout("Default time and activity selected.", 5000);
+    updateInfoText("Default time and activity selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleActivityNoTime = () => {
     handleTimeSelection(300);
-    setInfoTextWithTimeout("Default time selected.", 5000);
+    updateInfoText("Default time selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleNoActivityTime = () => {
     dispatch(setActivityIndex(0));
     handleTimeSelection(remainingTime);
-    setInfoTextWithTimeout("Default activity selected.", 5000);
+    updateInfoText("Default activity selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleActivityTime = () => {
     startTimer(remainingTime);
-    setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
+    updateInfoText("Timer started with the selected activity.", 5000);
     dispatch(setFirstRun(true));
     dispatch(setHasStarted(true));
   };

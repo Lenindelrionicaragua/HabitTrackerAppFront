@@ -11,6 +11,10 @@ const useInfoText = () => {
     dispatch(setInfoText(""));
   };
 
+  const updateInfoText = text => {
+    dispatch(setInfoText(text));
+  };
+
   useEffect(() => {
     return () => {
       clearTimeoutsAndMessage();
@@ -19,6 +23,7 @@ const useInfoText = () => {
 
   return {
     infoText,
+    updateInfoText,
     clearTimeoutsAndMessage
   };
 };

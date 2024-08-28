@@ -39,7 +39,7 @@ describe("useStopwatchScreen", () => {
   });
 
   it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityNoTime is called", () => {
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -51,7 +51,7 @@ describe("useStopwatchScreen", () => {
     const store = createStore(rootReducer, initialState);
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -65,7 +65,7 @@ describe("useStopwatchScreen", () => {
       result.current.handleNoActivityNoTime();
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+    expect(updateInfoText).toHaveBeenCalledWith(
       "Default time and activity selected.",
       5000
     );
@@ -76,7 +76,7 @@ describe("useStopwatchScreen", () => {
   });
 
   it("should call setInfoTextWithTimeout with correct arguments when handleActivityNoTime is called", () => {
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -91,7 +91,7 @@ describe("useStopwatchScreen", () => {
     const store = createStore(rootReducer, initialState);
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -105,18 +105,15 @@ describe("useStopwatchScreen", () => {
       result.current.handleActivityNoTime();
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "Default time selected.",
-      5000
-    );
+    expect(updateInfoText).toHaveBeenCalledWith("Default time selected.", 5000);
 
     act(() => {
       jest.runAllTimers();
     });
   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityTime is called", () => {
-    const setInfoTextWithTimeout = jest.fn();
+  it("should call updateInfoText with correct arguments when handleNoActivityTime is called", () => {
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -128,7 +125,7 @@ describe("useStopwatchScreen", () => {
     const store = createStore(rootReducer, initialState);
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -142,7 +139,7 @@ describe("useStopwatchScreen", () => {
       result.current.handleNoActivityTime();
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
+    expect(updateInfoText).toHaveBeenCalledWith(
       "Default activity selected.",
       5000
     );
@@ -154,7 +151,7 @@ describe("useStopwatchScreen", () => {
 
   it("should call setIsRunning, setFirsRun and setHasStarted with TRUE, when ActivityTime is called", () => {
     const dispatch = jest.fn();
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -171,7 +168,7 @@ describe("useStopwatchScreen", () => {
     const dispatchSpy = jest.spyOn(store, "dispatch");
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
