@@ -105,13 +105,15 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (infoText) {
+      const duration = timeCompleted ? 5000 : 3000;
+
       const timer = setTimeout(() => {
         clearTimeoutsAndMessage();
-      }, 3000);
+      }, duration);
 
       return () => clearTimeout(timer);
     }
-  }, [infoText, clearTimeoutsAndMessage]);
+  }, [infoText, timeCompleted, clearTimeoutsAndMessage]);
 
   useEffect(() => {
     if (timeCompleted) {
