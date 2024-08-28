@@ -38,4 +38,19 @@ describe("useInfoText hook with mock store", () => {
     expect(store.dispatch).toHaveBeenNthCalledWith(1, setResetTimeoutsIds([]));
     expect(store.dispatch).toHaveBeenNthCalledWith(2, setInfoText(""));
   });
+
+  it("should update info text and clear previous timeouts", () => {
+    const { result } = renderHook(() => useInfoText(), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
+
+    act(() => {
+      result.current.updateInfoText("New test message");
+    });
+
+    expect(store.dispatch).toHaveBeenNthCalledWith(
+      1,
+      setInfoText("New test message")
+    );
+  });
 });

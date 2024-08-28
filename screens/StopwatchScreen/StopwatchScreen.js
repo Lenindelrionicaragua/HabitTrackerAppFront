@@ -81,8 +81,7 @@ const StopwatchScreen = () => {
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-  const { infoText, setInfoTextWithTimeout, clearTimeoutsAndMessage } =
-    useInfoText();
+  const { infoText, clearTimeoutsAndMessage } = useInfoText();
   const { activeButtons, handleButtonPress } = useButtonHandler();
   const {
     pauseStopwatch,
