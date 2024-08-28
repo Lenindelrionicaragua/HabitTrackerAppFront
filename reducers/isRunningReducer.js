@@ -1,12 +1,12 @@
-const initialRunningState = {
+const initialIsRunningState = {
   isRunning: false
 };
 
-const SET_RUNNING = "SET_RUNNING";
+const SET_IS_RUNNING = "SET_IS_RUNNING";
 
-const isRunningReducer = (state = initialRunningState, action) => {
+const isRunningReducer = (state = initialIsRunningState, action) => {
   switch (action.type) {
-    case SET_RUNNING:
+    case SET_IS_RUNNING:
       return {
         ...state,
         isRunning: action.payload
