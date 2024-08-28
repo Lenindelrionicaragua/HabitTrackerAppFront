@@ -23,9 +23,11 @@ import {
   setElapsedTime,
   setIsRunning,
   setActivityIndex,
+  setActivities,
   setTimeCompleted,
   setHasStarted,
-  setFirstRun
+  setFirstRun,
+  setResetClicks
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -54,19 +56,6 @@ import {
 
 const { black, white, skyBlue, green } = Colors;
 
-const MAX_TIME_HOURS = 99;
-const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600;
-const MIN_TIME_MINUTES = 0;
-
-const activities = [
-  "Study",
-  "Work",
-  "Exercise",
-  "Family time",
-  "Screen-free time",
-  "Rest"
-];
-
 const StopwatchScreen = () => {
   const [alarm, setAlarm] = useState();
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
@@ -85,6 +74,8 @@ const StopwatchScreen = () => {
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const activityIndex = useSelector(state => state.activityIndex.activityIndex);
   const firstRun = useSelector(state => state.firstRun.firstRun);
+  const resetClicks = useSelector(state => state.resetClicks.resetClicks);
+  const activities = useSelector(state => state.activities.activities);
 
   // custom hooks
   const performReset = usePerformReset();
@@ -100,7 +91,8 @@ const StopwatchScreen = () => {
     handleActivityNoTime,
     handleNoActivityTime,
     handleActivityTime,
-    handleTimeSelection
+    handleTimeSelection,
+    handleActivityChange
   } = useStopwatch();
 
   const {
@@ -111,6 +103,13 @@ const StopwatchScreen = () => {
   } = useResetStopwatch();
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
+
+  // For Test only
+  useEffect(() => {
+    logInfo(
+      `testing the actualization of remainingTime in StopwatchScreen: ${formatTime(remainingTime)}`
+    );
+  }, [remainingTime]);
 
   useEffect(() => {
     if (infoText) {
@@ -217,29 +216,6 @@ const StopwatchScreen = () => {
     }, 4000);
     clearTimeoutsAndMessage();
   };
-
-  const handleActivityChange = () => {
-    const newIndex =
-      activityIndex === activities.length - 1 ? 0 : activityIndex + 1;
-
-    dispatch(setIsRunning(false));
-    dispatch(setActivityIndex(newIndex));
-    dispatch(setInfoTextWithTimeout("", 1000));
-  };
-
-  // const handleTimeSelection = selectedTime => {
-  //   const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
-
-  //   if (newInitialTime <= MAX_TIME_SECONDS) {
-  //     dispatch(setInitialTime(newInitialTime));
-  //     dispatch(setRemainingTime(newInitialTime));
-  //     dispatch(setElapsedTime(0));
-  //     dispatch(setIsRunning(false));
-  //   } else {
-  //     dispatch(setInitialTime(MAX_TIME_SECONDS));
-  //     dispatch(setRemainingTime(MAX_TIME_SECONDS));
-  //   }
-  // };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
   const { circumference, strokeDashoffset } = useCircleParams(
