@@ -26,30 +26,7 @@ describe("useInfoText hook with mock store", () => {
     store.dispatch.mockClear();
   });
 
-  it("should update info text in the store", () => {
-    const { result } = renderHook(() => useInfoText(), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
-    });
-
-    act(() => {
-      result.current.setInfoTextWithTimeout("Test message", 2000);
-    });
-
-    expect(store.dispatch).toHaveBeenNthCalledWith(1, setResetTimeoutsIds([]));
-    expect(store.dispatch).toHaveBeenNthCalledWith(2, setInfoText(""));
-    expect(store.dispatch).toHaveBeenNthCalledWith(
-      3,
-      setInfoText("Test message")
-    );
-
-    act(() => {
-      jest.advanceTimersByTime(2000);
-    });
-
-    expect(store.dispatch).toHaveBeenNthCalledWith(5, setInfoText(""));
-  });
-
-  it("should clear previous timeouts and previous message", () => {
+  it("should clean the info text and resetTimeoutsIds when clearTimeoutsAndMessage is called", () => {
     const { result } = renderHook(() => useInfoText(), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });

@@ -104,13 +104,6 @@ const StopwatchScreen = () => {
 
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  // For Test only
-  useEffect(() => {
-    logInfo(
-      `testing the actualization of remainingTime in StopwatchScreen: ${formatTime(remainingTime)}`
-    );
-  }, [remainingTime]);
-
   useEffect(() => {
     if (infoText) {
       const timer = setTimeout(() => {
