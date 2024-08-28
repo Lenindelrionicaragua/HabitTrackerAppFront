@@ -9,19 +9,11 @@ import {
   setIsRunning,
   setHasStarted,
   setActivityIndex,
-  setFirstRun
+  setFirstRun,
+  setActivities
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
 import { logInfo } from "../util/logging";
-
-const activities = [
-  "Study",
-  "Work",
-  "Exercise",
-  "Family time",
-  "Screen-free time",
-  "Rest"
-];
 
 function useStopwatch() {
   const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
@@ -35,21 +27,22 @@ function useStopwatch() {
   const activities = useSelector(state => state.activities.activities);
   const firstRun = useSelector(state => state.firstRun.firstRun);
 
+  logInfo(`remainginTime intialState: ${remainingTime}`);
+  logInfo(`isRunning initial State: ${isRunning}`);
+
   const dispatch = useDispatch();
 
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
   const totalPausedTimeRef = useRef(0);
 
-  const MAX_TIME_SECONDS = 99 * 3600; // Maximum time in seconds
-  const MIN_TIME_MINUTES = 0; // Minimum time in seconds
+  const MAX_TIME_HOURS = 99;
+  const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600;
+  const MIN_TIME_MINUTES = 0;
 
   // Function to start the timer with a specified initial time
-  const startTimer = selectedTime => {
-    clearTimeoutsAndMessage();
-    dispatch(setInitialTime(selectedTime));
-    dispatch(setRemainingTime(selectedTime));
-    dispatch(setElapsedTime(0));
+  const startTimer = initialTime => {
+    dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
     dispatch(setIsRunning(true));
   };
@@ -91,42 +84,43 @@ function useStopwatch() {
   // Function to handle time selection (similar to handleTimeSelection)
   const handleTimeSelection = selectedTime => {
     const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
-    const finalTime =
-      newInitialTime <= MAX_TIME_SECONDS ? newInitialTime : MAX_TIME_SECONDS;
 
-    dispatch(setInitialTime(finalTime));
-    dispatch(setRemainingTime(finalTime));
-    dispatch(setElapsedTime(0));
-    dispatch(setIsRunning(false));
-  };
-
-  const setDefaultsAndStartTimer = (activityIdx, time, infoText) => {
-    dispatch(setActivityIndex(activityIdx));
-    handleTimeSelection(time); // Update time selection logic
-    setInfoTextWithTimeout(infoText, 5000);
+    if (newInitialTime <= MAX_TIME_SECONDS) {
+      dispatch(setInitialTime(newInitialTime));
+      dispatch(setRemainingTime(newInitialTime));
+      dispatch(setElapsedTime(0));
+      dispatch(setIsRunning(false));
+    } else {
+      dispatch(setInitialTime(MAX_TIME_SECONDS));
+      dispatch(setRemainingTime(MAX_TIME_SECONDS));
+    }
   };
 
   const handleNoActivityNoTime = () => {
-    setDefaultsAndStartTimer(0, 300, "Default time and activity selected.");
+    dispatch(setActivityIndex(0));
+    handleTimeSelection(300);
+    setInfoTextWithTimeout("Default time and activity selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleActivityNoTime = () => {
-    setDefaultsAndStartTimer(activityIndex, 300, "Default time selected.");
+    handleTimeSelection(300);
+    setInfoTextWithTimeout("Default time selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleNoActivityTime = () => {
-    setDefaultsAndStartTimer(0, remainingTime, "Default activity selected.");
+    dispatch(setActivityIndex(0));
+    handleTimeSelection(remainingTime);
+    setInfoTextWithTimeout("Default activity selected.", 5000);
     dispatch(setHasStarted(true));
   };
 
   const handleActivityTime = () => {
     startTimer(remainingTime);
-    dispatch(setIsRunning(true));
+    setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
     dispatch(setFirstRun(true));
     dispatch(setHasStarted(true));
-    setInfoTextWithTimeout("Timer started with the selected activity.", 5000);
   };
 
   const handleActivityChange = () => {
@@ -135,7 +129,7 @@ function useStopwatch() {
 
     dispatch(setIsRunning(false));
     dispatch(setActivityIndex(newIndex));
-    setInfoTextWithTimeout("", 1000);
+    clearTimeoutsAndMessage();
   };
 
   useInterval(updateTime, isRunning ? 1000 : null);
