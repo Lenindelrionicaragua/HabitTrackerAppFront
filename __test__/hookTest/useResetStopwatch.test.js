@@ -35,7 +35,7 @@ describe("useResetStopwatch", () => {
   it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is 0", () => {
     const dispatch = jest.fn();
     const updateButtonLabel = jest.fn();
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -49,7 +49,7 @@ describe("useResetStopwatch", () => {
     const dispatchSpy = jest.spyOn(store, "dispatch");
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -72,15 +72,14 @@ describe("useResetStopwatch", () => {
       jest.runAllTimers();
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "The timer is already at zero. Do you want to reset it?",
-      10000
+    expect(updateInfoText).toHaveBeenCalledWith(
+      "The timer is already at zero. Do you want to reset it?"
     );
   });
 
   it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -94,7 +93,7 @@ describe("useResetStopwatch", () => {
     const dispatchSpy = jest.spyOn(store, "dispatch");
 
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -112,20 +111,16 @@ describe("useResetStopwatch", () => {
       jest.advanceTimersByTime(10000);
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "Are you sure you want to reset the stopwatch?",
-      10000
+    expect(updateInfoText).toHaveBeenCalledWith(
+      "Are you sure you want to reset the stopwatch?"
     );
 
     act(() => {
       jest.advanceTimersByTime(2000);
     });
 
-    expect(setInfoTextWithTimeout).toHaveBeenCalledWith(
-      "Reset cancelled.",
-      12000
-    );
-    expect(dispatchSpy).toHaveBeenNthCalledWith(4, {
+    expect(updateInfoText).toHaveBeenCalledWith("Reset cancelled.");
+    expect(dispatchSpy).toHaveBeenNthCalledWith(3, {
       type: "SET_RESET_CLICKS",
       payload: 0
     });
@@ -134,7 +129,7 @@ describe("useResetStopwatch", () => {
   it("should call performReset when handleResetClicksOne is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const performReset = jest.fn();
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -147,7 +142,7 @@ describe("useResetStopwatch", () => {
 
     usePerformReset.mockReturnValue(performReset);
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -166,13 +161,13 @@ describe("useResetStopwatch", () => {
     });
 
     expect(performReset).toHaveBeenCalled();
-    expect(setInfoTextWithTimeout).toHaveBeenCalled();
+    expect(updateInfoText).toHaveBeenCalled();
   });
 
   it("should call performReset when handleResetClicksTwoOrMore is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const performReset = jest.fn();
-    const setInfoTextWithTimeout = jest.fn();
+    const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
@@ -185,7 +180,7 @@ describe("useResetStopwatch", () => {
 
     usePerformReset.mockReturnValue(performReset);
     useInfoText.mockReturnValue({
-      setInfoTextWithTimeout,
+      updateInfoText,
       clearTimeoutsAndMessage
     });
 
@@ -204,6 +199,6 @@ describe("useResetStopwatch", () => {
     });
 
     expect(performReset).toHaveBeenCalled();
-    expect(setInfoTextWithTimeout).toHaveBeenCalled();
+    expect(updateInfoText).toHaveBeenCalled();
   });
 });

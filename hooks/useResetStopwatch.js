@@ -9,7 +9,7 @@ import { usePerformReset } from "../hooks/usePerformReset";
 
 function useResetStopwatch() {
   const performReset = usePerformReset();
-  const { setInfoTextWithTimeout, clearTimeoutsAndMessage } = useInfoText();
+  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
   const resetButtonLabel = useSelector(
     state => state.resetButtonLabel.resetButtonLabel
   );
@@ -33,21 +33,15 @@ function useResetStopwatch() {
     clearTimeoutsAndMessage();
     if (remainingTime === 0) {
       updateButtonLabel("RESET");
-      setInfoTextWithTimeout(
-        "The timer is already at zero. Do you want to reset it?",
-        10000
-      );
+      updateInfoText("The timer is already at zero. Do you want to reset it?");
     } else {
-      updateButtonLabel("CONFIRM RESET", 10000);
-      setInfoTextWithTimeout(
-        "Are you sure you want to reset the stopwatch?",
-        10000
-      );
+      updateButtonLabel("CONFIRM RESET");
+      updateInfoText("Are you sure you want to reset the stopwatch?");
       dispatch(setIsRunning(false));
     }
     setTimeout(() => {
       dispatch(setResetClicks(0));
-      setInfoTextWithTimeout("Reset cancelled.", 12000);
+      updateInfoText("Reset cancelled.");
     }, 12000);
   };
 
@@ -56,7 +50,7 @@ function useResetStopwatch() {
     if (remainingTime !== 0) {
       performReset();
       updateButtonLabel("RESET", 10000);
-      setInfoTextWithTimeout("Stopwatch has been reset.", 2000);
+      updateInfoText("Stopwatch has been reset.");
     }
   };
 
@@ -65,11 +59,11 @@ function useResetStopwatch() {
     if (remainingTime === 0) {
       dispatch(setResetClicks(0));
       updateButtonLabel("RESET", 10000);
-      setInfoTextWithTimeout("Stopwatch is already reset.", 10000);
+      updateInfoText("Stopwatch is already reset.");
     } else {
       performReset();
       updateButtonLabel("RESET", 10000);
-      setInfoTextWithTimeout("Stopwatch has been reset.", 10000);
+      updateInfoText("Stopwatch has been reset.");
     }
   };
 
