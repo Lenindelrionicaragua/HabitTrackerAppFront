@@ -27,8 +27,6 @@ function useStopwatch() {
   const activities = useSelector(state => state.activities.activities);
   const firstRun = useSelector(state => state.firstRun.firstRun);
 
-  logInfo(`isRunning: ${isRunning}`);
-
   const dispatch = useDispatch();
 
   const startTimeRef = useRef(0);

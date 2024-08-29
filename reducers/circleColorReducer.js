@@ -1,4 +1,6 @@
-import { skyBlue, white, green } from "../styles/AppStyles";
+import { Colors } from "../styles/AppStyles";
+
+const { skyBlue, green, white } = Colors;
 
 const initialCircleColor = {
   circleColor: skyBlue
@@ -11,7 +13,7 @@ const circleColorReducer = (state = initialCircleColor, action) => {
     case SET_CIRCLE_COLOR:
       return {
         ...state,
-        circleColor: action.payload
+        circleColor: action.payload || state.circleColor
       };
     default:
       return state;
