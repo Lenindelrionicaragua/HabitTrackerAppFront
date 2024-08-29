@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.41% </span>
+                <span class="strong">2.4% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/124</span>
+                <span class='fraction'>3/125</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.7% </span>
+                <span class="strong">2.65% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/111</span>
+                <span class='fraction'>3/113</span>
             </div>
         
             
@@ -506,7 +506,12 @@
 <a name='L441'></a><a href='#L441'>441</a>
 <a name='L442'></a><a href='#L442'>442</a>
 <a name='L443'></a><a href='#L443'>443</a>
-<a name='L444'></a><a href='#L444'>444</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a>
+<a name='L447'></a><a href='#L447'>447</a>
+<a name='L448'></a><a href='#L448'>448</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -566,7 +571,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -583,6 +587,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -664,6 +671,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -978,7 +986,8 @@ import {
   setTimeCompleted,
   setHasStarted,
   setFirstRun,
-  setResetClicks
+  setResetClicks,
+  setButtonsDisabled
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -1009,7 +1018,6 @@ const { black, white, skyBlue, green } = Colors;
 &nbsp;
 const StopwatchScreen = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
   const [alarm, setAlarm] = <span class="cstat-no" title="statement not covered" >useState();</span>
-  const [buttonsDisabled, setButtonsDisabled] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
 &nbsp;
   // Redux dispatch
   const saveTimeButtonLabel = <span class="cstat-no" title="statement not covered" >useSelector(</span>
@@ -1026,6 +1034,9 @@ const StopwatchScreen = <span class="fstat-no" title="function not covered" >()<
   const firstRun = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.firstRun.firstRun)</span>;</span>
   const resetClicks = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.resetClicks.resetClicks)</span>;</span>
   const activities = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.activities.activities)</span>;</span>
+  const buttonsDisabled = <span class="cstat-no" title="statement not covered" >useSelector(</span>
+<span class="fstat-no" title="function not covered" >    st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.buttonsDisabled.buttonsDisabled</span>
+  );
 &nbsp;
   // custom hooks
   const performReset = <span class="cstat-no" title="statement not covered" >usePerformReset();</span>
@@ -1108,7 +1119,8 @@ const StopwatchScreen = <span class="fstat-no" title="function not covered" >()<
 &nbsp;
   // Reset button handler
   const resetStopwatch = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    dispatch(setResetClicks(<span class="fstat-no" title="function not covered" >pr</span>evClicks =&gt; <span class="cstat-no" title="statement not covered" >prevClicks + 1)</span>);</span>
+    const newResetClicks = <span class="cstat-no" title="statement not covered" >resetClicks + 1;</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setResetClicks(newResetClicks));</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (resetClicks === 0) {</span>
 <span class="cstat-no" title="statement not covered" >      handleResetClicksZero();</span>
@@ -1146,7 +1158,7 @@ const StopwatchScreen = <span class="fstat-no" title="function not covered" >()<
 <span class="cstat-no" title="statement not covered" >    updateInfoText("Saving");</span>
     // circleColor / innerCircleColor
 <span class="cstat-no" title="statement not covered" >    updateColors(green, green);</span>
-<span class="cstat-no" title="statement not covered" >    setButtonsDisabled(true);</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setButtonsDisabled(true));</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      performReset();</span>
@@ -1399,7 +1411,7 @@ export default StopwatchScreen;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-29T10:36:38.204Z
+                at 2024-08-29T11:05:00.882Z
             </div>
         <script src="prettify.js"></script>
         <script>
