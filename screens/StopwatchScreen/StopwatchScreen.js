@@ -27,7 +27,8 @@ import {
   setTimeCompleted,
   setHasStarted,
   setFirstRun,
-  setResetClicks
+  setResetClicks,
+  setButtonsDisabled
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -58,13 +59,11 @@ const { black, white, skyBlue, green } = Colors;
 
 const StopwatchScreen = () => {
   const [alarm, setAlarm] = useState();
-  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+  // Redux dispatch
   const saveTimeButtonLabel = useSelector(
     state => state.saveTimeButtonLabel.saveTimeButtonLabel
   );
-
-  // Redux dispatch
   const dispatch = useDispatch();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
@@ -76,6 +75,9 @@ const StopwatchScreen = () => {
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const activities = useSelector(state => state.activities.activities);
+  const buttonsDisabled = useSelector(
+    state => state.buttonsDisabled.buttonsDisabled
+  );
 
   // custom hooks
   const performReset = usePerformReset();
@@ -133,8 +135,6 @@ const StopwatchScreen = () => {
     };
   }, [alarm]);
 
-  logInfo(circleColor);
-  logInfo(innerCircleColor);
   // Start button// Start button handler
   const startStopwatch = () => {
     if (!hasStarted) {
@@ -198,7 +198,7 @@ const StopwatchScreen = () => {
     updateInfoText("Saving");
     // circleColor / innerCircleColor
     updateColors(green, green);
-    setButtonsDisabled(true);
+    dispatch(setButtonsDisabled(true));
 
     setTimeout(() => {
       performReset();
