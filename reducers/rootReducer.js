@@ -15,6 +15,7 @@ import firstRunReducer from "./firstRunReducer";
 import activityIndexReducer from "./activityIndexReducer";
 import activitiesReducer from "./activitiesReducer";
 import saveTimeButtonLabelReducer from "./saveTimeButtonLabelReducer";
+import buttonsDisabledReducer from "./buttonsDisabledReducer";
 
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   firstRun: firstRunReducer,
   activityIndex: activityIndexReducer,
   saveTimeButtonLabel: saveTimeButtonLabelReducer,
+  buttonsDisabled: buttonsDisabledReducer,
   activities: activitiesReducer
 });
 
