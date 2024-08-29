@@ -108,7 +108,7 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (infoText) {
-      const duration = timeCompleted ? 5000 : 3000;
+      const duration = saveTimeButtonLabel === "SAVING" ? 5000 : 3000;
 
       const timer = setTimeout(() => {
         clearTimeoutsAndMessage();
@@ -206,7 +206,7 @@ const StopwatchScreen = () => {
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
       );
-    }, 4000);
+    }, 6000);
     clearTimeoutsAndMessage();
   };
 
