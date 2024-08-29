@@ -81,6 +81,7 @@ const StopwatchScreen = () => {
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
+
   const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
   const { activeButtons, handleButtonPress } = useButtonHandler();
   const {
@@ -132,6 +133,8 @@ const StopwatchScreen = () => {
     };
   }, [alarm]);
 
+  logInfo(circleColor);
+  logInfo(innerCircleColor);
   // Start button// Start button handler
   const startStopwatch = () => {
     if (!hasStarted) {
@@ -179,7 +182,6 @@ const StopwatchScreen = () => {
 
     if (remainingTime === 0 && !firstRun) {
       updateInfoText("No time recorded. Please start the timer before saving.");
-
       return;
     }
 
@@ -192,11 +194,10 @@ const StopwatchScreen = () => {
   };
 
   const processSaveAndUpdateUI = () => {
-    dispatch(setIsRunning(false));
     dispatch(setSaveTimeButtonLabel("SAVING"));
     updateInfoText("Saving");
     // circleColor / innerCircleColor
-    updateColors(Colors.green, Colors.green);
+    updateColors(green, green);
     setButtonsDisabled(true);
 
     setTimeout(() => {
