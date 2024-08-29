@@ -141,7 +141,7 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
-        "Timer start with the selected activity."
+        "Timer started with the selected activity."
       );
 
       // Save action

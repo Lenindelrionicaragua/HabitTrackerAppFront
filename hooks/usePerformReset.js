@@ -37,7 +37,7 @@ export const usePerformReset = () => {
 
     updateColors(skyBlue, white);
 
-    dispatch(setTimeCompleted(true));
+    dispatch(setTimeCompleted(false));
 
     logInfo(`Timer was reset.`);
   };
