@@ -160,7 +160,8 @@ const StopwatchScreen = () => {
 
   // Reset button handler
   const resetStopwatch = () => {
-    dispatch(setResetClicks(prevClicks => prevClicks + 1));
+    const newResetClicks = resetClicks + 1;
+    dispatch(setResetClicks(newResetClicks));
 
     if (resetClicks === 0) {
       handleResetClicksZero();
