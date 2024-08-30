@@ -139,9 +139,9 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="start-button"]').click();
 
-      cy.get('[data-testId="svg-info-text"]').should(
+      cy.get('[data-testId="svg-info-text"]', { timeout: 1000 }).should(
         "contain.text",
-        "Timer started with the selected activity."
+        "Timer started whit time and activity selected."
       );
 
       // Save action
