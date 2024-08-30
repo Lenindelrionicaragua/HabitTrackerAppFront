@@ -42,10 +42,15 @@ function useStopwatch() {
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
     dispatch(setIsRunning(true));
+
+    setTimeout(() => {
+      clearTimeoutsAndMessage();
+    }, 3000);
   };
 
   // Function to pause the stopwatch
   const pauseStopwatch = () => {
+    updateInfoText("Timer paused.");
     pauseTimeRef.current = Date.now();
     dispatch(setIsRunning(false));
   };
@@ -53,9 +58,14 @@ function useStopwatch() {
   // Function to resume the stopwatch
   const resumeStopwatch = () => {
     if (!isRunning) {
+      updateInfoText("Timer resume.");
       const now = Date.now();
       totalPausedTimeRef.current += now - pauseTimeRef.current;
       dispatch(setIsRunning(true));
+
+      setTimeout(() => {
+        clearTimeoutsAndMessage();
+      }, 3000);
     }
   };
 
@@ -99,26 +109,26 @@ function useStopwatch() {
   const handleNoActivityNoTime = () => {
     dispatch(setActivityIndex(0));
     handleTimeSelection(300);
-    updateInfoText("Default time and activity selected.", 5000);
+    updateInfoText("Default time and activity selected.");
     dispatch(setHasStarted(true));
   };
 
   const handleActivityNoTime = () => {
     handleTimeSelection(300);
-    updateInfoText("Default time selected.", 5000);
+    updateInfoText("Default time selected.");
     dispatch(setHasStarted(true));
   };
 
   const handleNoActivityTime = () => {
     dispatch(setActivityIndex(0));
     handleTimeSelection(remainingTime);
-    updateInfoText("Default activity selected.", 5000);
+    updateInfoText("Default activity selected.");
     dispatch(setHasStarted(true));
   };
 
   const handleActivityTime = () => {
     startTimer(remainingTime);
-    updateInfoText("Timer started with the selected activity.", 5000);
+    updateInfoText("Timer started whit time and activity selected.");
     dispatch(setFirstRun(true));
     dispatch(setHasStarted(true));
   };

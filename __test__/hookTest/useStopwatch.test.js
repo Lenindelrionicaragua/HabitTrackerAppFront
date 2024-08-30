@@ -66,8 +66,7 @@ describe("useStopwatchScreen", () => {
     });
 
     expect(updateInfoText).toHaveBeenCalledWith(
-      "Default time and activity selected.",
-      5000
+      "Default time and activity selected."
     );
 
     act(() => {
@@ -105,7 +104,7 @@ describe("useStopwatchScreen", () => {
       result.current.handleActivityNoTime();
     });
 
-    expect(updateInfoText).toHaveBeenCalledWith("Default time selected.", 5000);
+    expect(updateInfoText).toHaveBeenCalledWith("Default time selected.");
 
     act(() => {
       jest.runAllTimers();
@@ -139,10 +138,7 @@ describe("useStopwatchScreen", () => {
       result.current.handleNoActivityTime();
     });
 
-    expect(updateInfoText).toHaveBeenCalledWith(
-      "Default activity selected.",
-      5000
-    );
+    expect(updateInfoText).toHaveBeenCalledWith("Default activity selected.");
 
     act(() => {
       jest.runAllTimers();

@@ -204,7 +204,7 @@ describe("StopwatchScreen", () => {
       cy.get('[data-testId="start-button"]').click();
       cy.get('[data-testId="start-button"]').click();
 
-      // Fast-forward 1 minute
+      // Fast-forward 1 minute to hear the sound alarm
       cy.tick(60000);
     });
   });
