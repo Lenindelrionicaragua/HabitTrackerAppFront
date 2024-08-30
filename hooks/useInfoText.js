@@ -4,6 +4,7 @@ import { setInfoText, setResetTimeoutsIds } from "../actions/counterActions";
 
 const useInfoText = () => {
   const infoText = useSelector(state => state.infoText.infoText);
+
   const dispatch = useDispatch();
 
   const clearTimeoutsAndMessage = () => {

@@ -108,7 +108,7 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (infoText) {
-      const duration = saveTimeButtonLabel === "SAVING" ? 5000 : 3000;
+      const duration = timeCompleted ? 5000 : 3000;
 
       const timer = setTimeout(() => {
         clearTimeoutsAndMessage();
@@ -196,6 +196,7 @@ const StopwatchScreen = () => {
 
   const processSaveAndUpdateUI = () => {
     dispatch(setSaveTimeButtonLabel("SAVING"));
+
     updateInfoText("Saving");
     // circleColor / innerCircleColor
     updateColors(green, green);
@@ -206,8 +207,8 @@ const StopwatchScreen = () => {
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
       );
+      clearTimeoutsAndMessage();
     }, 6000);
-    clearTimeoutsAndMessage();
   };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
