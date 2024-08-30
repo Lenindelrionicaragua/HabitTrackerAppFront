@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">5.26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>1/19</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">5.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>1/19</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -126,29 +126,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useDispatch } from "react-redux";
@@ -170,29 +170,29 @@ import {
 } from "../actions/counterActions";
 import { logInfo } from "./../util/logging";
 &nbsp;
-export const usePerformReset = () =&gt; {
-  const dispatch = useDispatch();
-  const { skyBlue, white } = Colors;
-  const { updateColors } = useUpdateCircleColors();
+export const usePerformReset = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+  const dispatch = <span class="cstat-no" title="statement not covered" >useDispatch();</span>
+  const { skyBlue, white } = <span class="cstat-no" title="statement not covered" >Colors;</span>
+  const { updateColors } = <span class="cstat-no" title="statement not covered" >useUpdateCircleColors();</span>
 &nbsp;
-  return () =&gt; {
-    dispatch(setInitialTime(0));
-    dispatch(setRemainingTime(0));
-    dispatch(setElapsedTime(0));
-    dispatch(setIsRunning(false));
-    dispatch(setActivityIndex(null));
-    dispatch(setHasStarted(false));
-    dispatch(setFirstRun(false));
-    dispatch(setResetClicks(0));
-    dispatch(setButtonsDisabled(false));
-    dispatch(setResetButtonLabel("RESET"));
-    dispatch(setSaveTimeButtonLabel("SAVE-TIME"));
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setInitialTime(0));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setRemainingTime(0));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setElapsedTime(0));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setIsRunning(false));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setActivityIndex(null));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setHasStarted(false));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setFirstRun(false));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setResetClicks(0));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setButtonsDisabled(false));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setResetButtonLabel("RESET"));</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setSaveTimeButtonLabel("SAVE-TIME"));</span>
 &nbsp;
-    updateColors(skyBlue, white);
+<span class="cstat-no" title="statement not covered" >    updateColors(skyBlue, white);</span>
 &nbsp;
-    dispatch(setTimeCompleted(false));
+<span class="cstat-no" title="statement not covered" >    dispatch(setTimeCompleted(false));</span>
 &nbsp;
-    logInfo(`Timer was reset.`);
+<span class="cstat-no" title="statement not covered" >    logInfo(`Timer was reset.`);</span>
   };
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -202,7 +202,7 @@ export const usePerformReset = () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-29T13:45:55.020Z
+                at 2024-08-30T09:00:40.013Z
             </div>
         <script src="../prettify.js"></script>
         <script>

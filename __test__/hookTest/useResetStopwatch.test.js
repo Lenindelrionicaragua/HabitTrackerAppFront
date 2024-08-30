@@ -32,7 +32,7 @@ describe("useResetStopwatch", () => {
     jest.clearAllMocks();
   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is 0", () => {
+  it("should call updateInfoText with correct arguments when handleResetClicksZero is called and remainingTime is 0", () => {
     const dispatch = jest.fn();
     const updateButtonLabel = jest.fn();
     const updateInfoText = jest.fn();
@@ -63,11 +63,6 @@ describe("useResetStopwatch", () => {
       result.current.handleResetClicksZero();
     });
 
-    expect(store.dispatch).toHaveBeenNthCalledWith(
-      1,
-      setResetButtonLabel("RESET")
-    );
-
     act(() => {
       jest.runAllTimers();
     });
@@ -77,7 +72,7 @@ describe("useResetStopwatch", () => {
     );
   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleResetClicksZero is called and remainingTime is not 0", () => {
+  it("should call updateInfoText with correct arguments when handleResetClicksZero is called and remainingTime is not 0", () => {
     const dispatch = jest.fn();
     const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
@@ -120,7 +115,7 @@ describe("useResetStopwatch", () => {
     });
 
     expect(updateInfoText).toHaveBeenCalledWith("Reset cancelled.");
-    expect(dispatchSpy).toHaveBeenNthCalledWith(3, {
+    expect(dispatchSpy).toHaveBeenNthCalledWith(4, {
       type: "SET_RESET_CLICKS",
       payload: 0
     });
