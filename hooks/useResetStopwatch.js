@@ -8,7 +8,7 @@ import {
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
 import { usePerformReset } from "../hooks/usePerformReset";
-import { logInfo } from "../util/logging";
+import { logInfo, logError } from "../util/logging";
 
 function useResetStopwatch() {
   const performReset = usePerformReset();
