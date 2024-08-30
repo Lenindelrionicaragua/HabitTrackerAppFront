@@ -16,7 +16,8 @@ const Banner = () => {
   return (
     <BannerContainer>
       <ButtonContainer>
-        <Button onPress={() => navigation.navigate("LoginScreen")}>
+        <Button>
+          {/* <Button onPress={() => navigation.navigate("LoginScreen")}> */}
           <Ionicons name="stats-chart" size={24} color="white" />
           <ButtonText>Metrics</ButtonText>
         </Button>
@@ -24,7 +25,8 @@ const Banner = () => {
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate("SignupScreen")}>
+        <Button>
+          {/* <Button onPress={() => navigation.navigate("SignupScreen")}> */}
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>

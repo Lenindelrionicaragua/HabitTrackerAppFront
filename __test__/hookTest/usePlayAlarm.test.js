@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Audio } from "expo-av";
-import { usePlayAlarm } from "../../hooks/usePlayaAlarm";
+import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 
 jest.mock("expo-av", () => ({
   Audio: {
