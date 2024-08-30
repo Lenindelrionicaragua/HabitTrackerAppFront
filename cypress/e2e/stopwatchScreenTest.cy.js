@@ -178,6 +178,28 @@ describe("StopwatchScreen", () => {
         .should("contain.text", "Study")
         .click()
         .should("contain.text", "Work");
+
+      //reset timer
+      cy.get('[data-testId="reset-button"]').should("exist").click();
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Are you sure you want to reset the stopwatch?"
+      );
+
+      cy.get('[data-testId="reset-button"]').should("exist").click();
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Stopwatch has been reset."
+      );
+
+      // Select time + 1 minute
+      cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(6).click();
+
+      // start the timer
+      cy.get('[data-testId="start-button"]').click();
+      cy.get('[data-testId="start-button"]').click();
     });
   });
 });
