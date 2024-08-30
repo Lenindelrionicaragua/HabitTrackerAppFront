@@ -139,9 +139,9 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="start-button"]').click();
 
-      cy.get('[data-testId="svg-info-text"]').should(
+      cy.get('[data-testId="svg-info-text"]', { timeout: 1000 }).should(
         "contain.text",
-        "Timer start with the selected activity."
+        "Timer started whit time and activity selected."
       );
 
       // Save action
@@ -150,6 +150,8 @@ describe("StopwatchScreen", () => {
       cy.wait(500);
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "Saving");
+
+      cy.wait(1000);
 
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
@@ -176,6 +178,34 @@ describe("StopwatchScreen", () => {
         .should("contain.text", "Study")
         .click()
         .should("contain.text", "Work");
+
+      //reset timer
+      cy.get('[data-testId="reset-button"]').should("exist").click();
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Are you sure you want to reset the stopwatch?"
+      );
+
+      cy.get('[data-testId="reset-button"]').should("exist").click();
+
+      cy.get('[data-testId="svg-info-text"]').should(
+        "contain.text",
+        "Stopwatch has been reset."
+      );
+
+      // Select time + 1 minute
+      cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(6).click();
+
+      // Use cy.clock() to control the time
+      cy.clock();
+
+      // start the timer
+      cy.get('[data-testId="start-button"]').click();
+      cy.get('[data-testId="start-button"]').click();
+
+      // Fast-forward 1 minute to hear the sound alarm
+      cy.tick(60000);
     });
   });
 });

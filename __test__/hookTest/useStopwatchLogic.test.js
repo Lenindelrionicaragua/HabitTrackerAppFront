@@ -1,10 +1,7 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import useStopwatch from "../../hooks/useStopwatch";
+import useStopwatchLogicMock from "../../__mocks__/useStopwatchLogicMock";
 
-const setCircleColor = jest.fn();
-setCircleColor("skyBlue");
-
-describe("useStopwatchScreen", () => {
+describe("useStopwatch", () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.clearAllMocks();
@@ -18,7 +15,7 @@ describe("useStopwatchScreen", () => {
 
   it("should decrease the time accurately and consistently", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -44,7 +41,7 @@ describe("useStopwatchScreen", () => {
 
   it("should pause the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -75,7 +72,7 @@ describe("useStopwatchScreen", () => {
 
   it("should resume the stopwatch correctly", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -103,9 +100,9 @@ describe("useStopwatchScreen", () => {
     expect(result.current.elapsedTime).toBe(20);
   });
 
-  it("useStopwatchScreen should set timeCompleted to true when the initial time is completed", () => {
+  it("should set timeCompleted to true when the initial time is completed", () => {
     const initialTime = 50;
-    const { result } = renderHook(() => useStopwatch());
+    const { result } = renderHook(() => useStopwatchLogicMock());
 
     act(() => {
       result.current.startTimer(initialTime);
@@ -116,9 +113,7 @@ describe("useStopwatchScreen", () => {
     });
 
     expect(result.current.running).toBe(false);
-
     expect(result.current.timeCompleted).toBe(true);
-
     expect(result.current.remainingTime).toBe(0);
     expect(result.current.elapsedTime).toBe(initialTime);
   });

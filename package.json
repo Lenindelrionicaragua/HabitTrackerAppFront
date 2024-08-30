@@ -10,13 +10,11 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
-    "@types/react": "^18.3.3",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
-    "components": "^0.1.0",
-    "constants": "^0.0.2",
     "cypress-real-events": "^1.13.0",
     "expo": "51.0.8",
     "expo-auth-session": "~5.5.2",
@@ -31,6 +29,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-web-browser": "~13.0.3",
     "formik": "^2.4.5",
+    "install": "^0.13.0",
     "jest-expo": "~51.0.2",
     "jslint": "^0.12.1",
     "react": "18.2.0",
@@ -46,12 +45,16 @@
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.11",
     "react-native-web-linear-gradient": "^1.1.2",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^3.1.0",
     "styled": "^1.0.0",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.1.12",
+    "typescript": "~5.3.3"
   },
   "resolutions": {
-    "@expo/config-plugins": "8.0.4",
-    "@types/react": "^18.0.0"
+    "@expo/config-plugins": "8.0.4"
   },
   "scripts": {
     "test": "jest --verbose",
@@ -65,11 +68,11 @@
     "cypress:open": "cypress open"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.25.2",
     "@babel/plugin-proposal-export-default-from": "^7.24.7",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
-    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-react": "^7.24.7",
     "@expo/metro-runtime": "^3.1.3",
     "@react-native-community/cli": "^13.6.4",
     "@testing-library/react": "^16.0.0",

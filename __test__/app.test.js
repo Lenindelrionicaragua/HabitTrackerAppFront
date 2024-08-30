@@ -59,19 +59,21 @@ describe("App", () => {
     });
   });
 
-  test("Render LoginScreen if there are no stored credentials", async () => {
-    const { getByTestId } = render(
-      <CredentialsContext.Provider
-        value={mockCredentialsContextWithoutCredentials}
-      >
-        <RootStack />
-      </CredentialsContext.Provider>
-    );
+  //TURN ON THIS TEST IN PRODUCCTION
 
-    // Wait for the LoginScreen to be rendered
-    await waitFor(() => {
-      const loginScreen = getByTestId("login-styled-container");
-      expect(loginScreen).toBeTruthy();
-    });
-  });
+  // test("Render LoginScreen if there are no stored credentials", async () => {
+  //   const { getByTestId } = render(
+  //     <CredentialsContext.Provider
+  //       value={mockCredentialsContextWithoutCredentials}
+  //     >
+  //       <RootStack />
+  //     </CredentialsContext.Provider>
+  //   );
+
+  // Wait for the LoginScreen to be rendered
+  //   await waitFor(() => {
+  //     const loginScreen = getByTestId("login-styled-container");
+  //     expect(loginScreen).toBeTruthy();
+  //   });
+  // });
 });

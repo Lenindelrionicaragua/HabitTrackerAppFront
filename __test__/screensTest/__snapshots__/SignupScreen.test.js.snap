@@ -56,10 +56,11 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
         <RCTSafeAreaView
           style={
             {
-              "backgroundColor": "#f9f7f3",
+              "backgroundColor": "#fffff",
               "flexBasis": 0,
               "flexGrow": 1,
               "flexShrink": 1,
+              "height": "100%",
               "paddingBottom": 15,
               "paddingLeft": 15,
               "paddingRight": 15,
@@ -85,7 +86,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
             <Text
               style={
                 {
-                  "color": "#000000",
+                  "color": "#040c0c",
                   "fontSize": 30,
                   "fontWeight": "bold",
                   "paddingBottom": 10,
@@ -97,12 +98,12 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
               }
               testID="signup-page-title"
             >
-              ZenTimer
+              Habit Tracker
             </Text>
             <Text
               style={
                 {
-                  "color": "#1a1204",
+                  "color": "#bbcbde",
                   "fontSize": 10,
                   "fontWeight": "bold",
                   "letterSpacing": 1,
@@ -140,7 +141,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#000000",
+                          "color": "#040c0c",
                           "fontSize": 30,
                         },
                         undefined,
@@ -159,7 +160,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -171,15 +172,14 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="Zen User"
-                  placeholderTextColor="#f9f7f3"
                   style={
                     {
-                      "backgroundColor": "#ffc500",
+                      "backgroundColor": "#ffffff",
                       "borderBottomLeftRadius": 5,
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 16,
                       "height": 60,
                       "marginBottom": 10,
@@ -214,7 +214,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#000000",
+                          "color": "#040c0c",
                           "fontSize": 30,
                         },
                         undefined,
@@ -233,7 +233,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -246,15 +246,14 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="serenity@gmail.com"
-                  placeholderTextColor="#f9f7f3"
                   style={
                     {
-                      "backgroundColor": "#ffc500",
+                      "backgroundColor": "#ffffff",
                       "borderBottomLeftRadius": 5,
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 16,
                       "height": 60,
                       "marginBottom": 10,
@@ -289,7 +288,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#000000",
+                          "color": "#040c0c",
                           "fontSize": 30,
                         },
                         undefined,
@@ -308,7 +307,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -352,15 +351,14 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     onBlur={[Function]}
                     onChangeText={[Function]}
                     placeholder="Tue Feb 01 1984"
-                    placeholderTextColor="#f9f7f3"
                     style={
                       {
-                        "backgroundColor": "#ffc500",
+                        "backgroundColor": "#ffffff",
                         "borderBottomLeftRadius": 5,
                         "borderBottomRightRadius": 5,
                         "borderTopLeftRadius": 5,
                         "borderTopRightRadius": 5,
-                        "color": "#1a1204",
+                        "color": "#bbcbde",
                         "fontSize": 16,
                         "height": 60,
                         "marginBottom": 10,
@@ -396,7 +394,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#000000",
+                          "color": "#040c0c",
                           "fontSize": 30,
                         },
                         undefined,
@@ -415,7 +413,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -427,16 +425,15 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="* * * * * * *"
-                  placeholderTextColor="#f9f7f3"
                   secureTextEntry={true}
                   style={
                     {
-                      "backgroundColor": "#ffc500",
+                      "backgroundColor": "#ffffff",
                       "borderBottomLeftRadius": 5,
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 16,
                       "height": 60,
                       "marginBottom": 10,
@@ -496,7 +493,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#f9f7f3",
+                          "color": "#fffff",
                           "fontSize": 25,
                         },
                         undefined,
@@ -533,7 +530,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#000000",
+                          "color": "#040c0c",
                           "fontSize": 30,
                         },
                         undefined,
@@ -552,7 +549,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -564,16 +561,15 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="* * * * * * *"
-                  placeholderTextColor="#f9f7f3"
                   secureTextEntry={true}
                   style={
                     {
-                      "backgroundColor": "#ffc500",
+                      "backgroundColor": "#ffffff",
                       "borderBottomLeftRadius": 5,
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 16,
                       "height": 60,
                       "marginBottom": 10,
@@ -633,7 +629,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#f9f7f3",
+                          "color": "#fffff",
                           "fontSize": 25,
                         },
                         undefined,
@@ -694,7 +690,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 style={
                   {
                     "alignItems": "center",
-                    "backgroundColor": "#000000",
+                    "backgroundColor": "#040c0c",
                     "borderBottomLeftRadius": 5,
                     "borderBottomRightRadius": 5,
                     "borderTopLeftRadius": 5,
@@ -713,7 +709,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#ffe1a8",
+                      "color": "#5cbcfc",
                       "fontSize": 16,
                     }
                   }
@@ -725,7 +721,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
               <View
                 style={
                   {
-                    "backgroundColor": "#ffc500",
+                    "backgroundColor": "#ffffff",
                     "height": 1,
                     "marginVertical": 10,
                     "width": "100%",
@@ -751,7 +747,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   style={
                     {
                       "alignContent": "center",
-                      "color": "#1a1204",
+                      "color": "#bbcbde",
                       "fontSize": 15,
                       "justifyContent": "center",
                     }
@@ -801,7 +797,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   <Text
                     style={
                       {
-                        "color": "#ffc554",
+                        "color": "#012382",
                         "fontSize": 15,
                       }
                     }

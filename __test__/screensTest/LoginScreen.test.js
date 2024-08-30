@@ -88,7 +88,7 @@ describe("LoginScreen", () => {
     const { getByTestId } = loginScreenRender;
     const pageTitleComponent = getByTestId("page-title");
     const textContent = pageTitleComponent.props.children.toString();
-    expect(textContent).toMatch("ZenTimer");
+    expect(textContent).toMatch("Habit Tracker");
   });
 
   test("SubTitle should render a string of letters, numbers or spaces", () => {

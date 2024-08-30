@@ -10,8 +10,8 @@ import {
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import SignupScreen from "../../screens/SignupScreen/SignupScreen";
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+// import axios from "axios";
+// import MockAdapter from "axios-mock-adapter";
 // Rendering Functions
 const renderSignupScreen = () => render(<SignupScreen />);
 const renderSignupScreenWithRenderer = () => renderer.create(<SignupScreen />);
@@ -54,7 +54,7 @@ describe("SignupScreen", () => {
     const { getByTestId } = signupScreenRender;
     const pageTitleComponent = getByTestId("signup-page-title");
     const textContent = pageTitleComponent.props.children.toString();
-    expect(textContent).toMatch("ZenTimer");
+    expect(textContent).toMatch("Habit Tracker");
   });
 
   test("SubTitle should render a string of letters, numbers or spaces", () => {
