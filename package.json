@@ -13,7 +13,6 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
-    "@testing-library/react-hooks": "^8.0.1",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
     "components": "^0.1.0",
