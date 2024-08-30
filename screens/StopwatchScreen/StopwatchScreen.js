@@ -125,7 +125,7 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  // alarm
+  alarm;
   useEffect(() => {
     return () => {
       clearTimeoutsAndMessage();
