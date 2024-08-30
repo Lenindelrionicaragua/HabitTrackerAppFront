@@ -66,12 +66,15 @@ function useStopwatch() {
       const elapsedTime = Math.floor(
         (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
       );
-      const remainingTime = Math.max(0, initialTime - elapsedTime);
+      const remainingTime = Math.max(
+        MIN_TIME_MINUTES,
+        initialTime - elapsedTime
+      );
 
       dispatch(setElapsedTime(elapsedTime));
       dispatch(setRemainingTime(remainingTime));
 
-      if (remainingTime === 0) {
+      if (remainingTime <= MIN_TIME_MINUTES) {
         dispatch(setTimeCompleted(true));
         dispatch(setIsRunning(false));
       }
