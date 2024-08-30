@@ -197,9 +197,15 @@ describe("StopwatchScreen", () => {
       // Select time + 1 minute
       cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(6).click();
 
+      // Use cy.clock() to control the time
+      cy.clock();
+
       // start the timer
       cy.get('[data-testId="start-button"]').click();
       cy.get('[data-testId="start-button"]').click();
+
+      // Fast-forward 1 minute
+      cy.tick(60000);
     });
   });
 });
