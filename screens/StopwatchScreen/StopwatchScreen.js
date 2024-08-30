@@ -207,7 +207,6 @@ const StopwatchScreen = () => {
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
       );
-      clearTimeoutsAndMessage();
     }, 6000);
   };
 

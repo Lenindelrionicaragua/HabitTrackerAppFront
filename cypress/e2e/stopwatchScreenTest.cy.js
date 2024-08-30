@@ -151,6 +151,8 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "Saving");
 
+      cy.wait(1000);
+
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
         "Time saved successfully! Your activity has been recorded."
