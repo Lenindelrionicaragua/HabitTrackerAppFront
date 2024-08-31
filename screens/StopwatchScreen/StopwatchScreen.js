@@ -83,9 +83,10 @@ const StopwatchScreen = () => {
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-
   const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
-  const { activeButtons, handleButtonPress } = useButtonHandler();
+  const buttonIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  const { activeButtons, handleButtonPress } = useButtonHandler(buttonIds);
+
   const {
     pauseStopwatch,
     resumeStopwatch,
@@ -224,7 +225,7 @@ const StopwatchScreen = () => {
 
   // Define styles for time increment buttons
   const getButtonStyles = buttonId => ({
-    borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
+    borderColor: !!activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
     borderWidth: 2,
     borderStyle: "solid",
     opacity: isRunning || firstRun ? 0 : 1,
