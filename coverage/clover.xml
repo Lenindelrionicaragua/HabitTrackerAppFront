@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1725106684190" clover="3.2.0">
-  <project timestamp="1725106684190" name="All files">
-    <metrics statements="127" coveredstatements="13" conditionals="111" coveredconditionals="1" methods="50" coveredmethods="6" elements="288" coveredelements="20" complexity="0" loc="127" ncloc="127" packages="3" files="4" classes="4"/>
-    <package name="hooks">
-      <metrics statements="12" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="7" coveredmethods="0"/>
-      <file name="useButtonHandler.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/useButtonHandler.js">
-        <metrics statements="12" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="3" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-      </file>
-      <file name="usePlayAlarm.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/hooks/usePlayAlarm.js">
-        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      </file>
-    </package>
+<coverage generated="1725107188755" clover="3.2.0">
+  <project timestamp="1725107188755" name="All files">
+    <metrics statements="104" coveredstatements="3" conditionals="109" coveredconditionals="0" methods="36" coveredmethods="0" elements="249" coveredelements="3" complexity="0" loc="104" ncloc="104" packages="2" files="2" classes="2"/>
     <package name="screens.StopwatchScreen">
-      <metrics statements="103" coveredstatements="3" conditionals="109" coveredconditionals="0" methods="36" coveredmethods="0"/>
+      <metrics statements="104" coveredstatements="3" conditionals="109" coveredconditionals="0" methods="36" coveredmethods="0"/>
       <file name="StopwatchScreen.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/screens/StopwatchScreen/StopwatchScreen.js">
-        <metrics statements="103" coveredstatements="3" conditionals="109" coveredconditionals="0" methods="36" coveredmethods="0"/>
+        <metrics statements="104" coveredstatements="3" conditionals="109" coveredconditionals="0" methods="36" coveredmethods="0"/>
         <line num="58" count="1" type="stmt"/>
         <line num="60" count="1" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
@@ -99,6 +78,7 @@
         <line num="198" count="0" type="stmt"/>
         <line num="200" count="0" type="stmt"/>
         <line num="202" count="0" type="stmt"/>
+        <line num="203" count="0" type="stmt"/>
         <line num="205" count="0" type="stmt"/>
         <line num="207" count="0" type="stmt"/>
         <line num="208" count="0" type="stmt"/>
@@ -133,21 +113,9 @@
       </file>
     </package>
     <package name="util">
-      <metrics statements="12" coveredstatements="10" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="6"/>
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="handleButtonPress.js" path="/Users/leninortizreyes/Desktop/ZenTimerAppFront/ZenTimerAppFront/util/handleButtonPress.js">
-        <metrics statements="12" coveredstatements="10" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="6"/>
-        <line num="3" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="5" count="8" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="12" count="8" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="23" count="3" type="stmt"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="31" count="8" type="stmt"/>
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
   </project>

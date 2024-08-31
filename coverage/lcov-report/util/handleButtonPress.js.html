@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/14</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/12</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,68 +97,68 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useCallback } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// import { useState, useCallback } from "react";
 &nbsp;
-export const useButtonHandler = (initialButtonIds = []) =&gt; {
-  // Initialize activeButtons with all buttonIds set to false
-  const initialActiveButtonsState = initialButtonIds.reduce(<span class="fstat-no" title="function not covered" >(a</span>cc, buttonId) =&gt; {
-<span class="cstat-no" title="statement not covered" >    acc[buttonId] = false;</span>
-<span class="cstat-no" title="statement not covered" >    return acc;</span>
-  }, {});
+// export const useButtonHandler = (initialButtonIds = []) =&gt; {
+//   // Initialize activeButtons with all buttonIds set to false
+//   const initialActiveButtonsState = initialButtonIds.reduce((acc, buttonId) =&gt; {
+//     acc[buttonId] = false;
+//     return acc;
+//   }, {});
 &nbsp;
-  const [activeButtons, setActiveButtons] = useState(initialActiveButtonsState);
+//   const [activeButtons, setActiveButtons] = useState(initialActiveButtonsState);
 &nbsp;
-  const handleButtonPress = useCallback(buttonId =&gt; {
-    setActiveButtons(prevState =&gt; ({
-      ...Object.keys(prevState).reduce((acc, key) =&gt; {
-        // Reset all buttons to false
-        acc[key] = false;
-        return acc;
-      }, {}),
-      // Set the pressed button to true
-      [buttonId]: true
-    }));
+//   const handleButtonPress = useCallback(buttonId =&gt; {
+//     setActiveButtons(prevState =&gt; ({
+//       ...Object.keys(prevState).reduce((acc, key) =&gt; {
+//         // Reset all buttons to false
+//         acc[key] = false;
+//         return acc;
+//       }, {}),
+//       // Set the pressed button to true
+//       [buttonId]: true
+//     }));
 &nbsp;
-    setTimeout(() =&gt; {
-      setActiveButtons(prevState =&gt; ({
-        ...prevState,
-        [buttonId]: false
-      }));
-    }, 500);
-  }, []);
+//     setTimeout(() =&gt; {
+//       setActiveButtons(prevState =&gt; ({
+//         ...prevState,
+//         [buttonId]: false
+//       }));
+//     }, 500);
+//   }, []);
 &nbsp;
-  return { activeButtons, handleButtonPress };
-};
+//   return { activeButtons, handleButtonPress };
+// };
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -166,7 +166,7 @@ export const useButtonHandler = (initialButtonIds = []) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-31T12:18:04.137Z
+                at 2024-08-31T12:26:28.722Z
             </div>
         <script src="../prettify.js"></script>
         <script>
