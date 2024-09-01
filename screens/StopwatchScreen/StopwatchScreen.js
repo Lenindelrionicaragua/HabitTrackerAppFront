@@ -204,7 +204,6 @@ const StopwatchScreen = () => {
     dispatch(setButtonsDisabled(true));
 
     setTimeout(() => {
-      // playAlarm(require("../../assets/alarm_2.wav"));
       performReset();
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
