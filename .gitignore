@@ -38,7 +38,7 @@ envVariables.js
 *.tsbuildinfo
 
 # Coverage
-.coverage/.DS_Store
+coverage/
 .idea/
 ZenTimerAppFront/
 
