@@ -79,8 +79,6 @@ const StopwatchScreen = () => {
     state => state.buttonsDisabled.buttonsDisabled
   );
 
-  console.log("buttonsDisabled:", buttonsDisabled);
-
   // custom hooks
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
@@ -127,6 +125,20 @@ const StopwatchScreen = () => {
       saveTimeRecords();
     }
   }, [timeCompleted]);
+
+  useEffect(() => {
+    logInfo(`Initial Time: ${initialTime}`);
+    logInfo(`Remaining Time: ${remainingTime}`);
+    logInfo(`Elapsed Time: ${elapsedTime}`);
+    logInfo(`Time Completed: ${timeCompleted}`);
+    logInfo(`Is Running: ${isRunning}`);
+    logInfo(`Has Started: ${hasStarted}`);
+    logInfo(`Activity Index: ${activityIndex}`);
+    logInfo(`First Run: ${firstRun}`);
+    logInfo(`Reset Clicks: ${resetClicks}`);
+    logInfo(`Buttons Disabled: ${buttonsDisabled}`);
+    logInfo(`Save Time Button Label: ${saveTimeButtonLabel}`);
+  }, []);
 
   // alarm;
   // useEffect(() => {

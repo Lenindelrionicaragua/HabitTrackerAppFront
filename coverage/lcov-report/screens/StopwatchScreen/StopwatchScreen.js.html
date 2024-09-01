@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.54% </span>
+                <span class="strong">2.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/118</span>
+                <span class='fraction'>3/129</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/36</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.83% </span>
+                <span class="strong">2.56% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/106</span>
+                <span class='fraction'>3/117</span>
             </div>
         
             
@@ -513,7 +513,19 @@
 <a name='L448'></a><a href='#L448'>448</a>
 <a name='L449'></a><a href='#L449'>449</a>
 <a name='L450'></a><a href='#L450'>450</a>
-<a name='L451'></a><a href='#L451'>451</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a>
+<a name='L458'></a><a href='#L458'>458</a>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a>
+<a name='L463'></a><a href='#L463'>463</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -594,8 +606,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,6 +651,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1044,8 +1068,6 @@ const StopwatchScreen = <span class="fstat-no" title="function not covered" >()<
 <span class="fstat-no" title="function not covered" >    st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.buttonsDisabled.buttonsDisabled</span>
   );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  console.log("buttonsDisabled:", buttonsDisabled);</span>
-&nbsp;
   // custom hooks
   const performReset = <span class="cstat-no" title="statement not covered" >usePerformReset();</span>
   const { circleColor, innerCircleColor, updateColors } =
@@ -1092,6 +1114,20 @@ const StopwatchScreen = <span class="fstat-no" title="function not covered" >()<
 <span class="cstat-no" title="statement not covered" >      saveTimeRecords();</span>
     }
   }, [timeCompleted]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Initial Time: ${initialTime}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Remaining Time: ${remainingTime}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Elapsed Time: ${elapsedTime}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Time Completed: ${timeCompleted}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Is Running: ${isRunning}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Has Started: ${hasStarted}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Activity Index: ${activityIndex}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`First Run: ${firstRun}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Reset Clicks: ${resetClicks}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Buttons Disabled: ${buttonsDisabled}`);</span>
+<span class="cstat-no" title="statement not covered" >    logInfo(`Save Time Button Label: ${saveTimeButtonLabel}`);</span>
+  }, []);
 &nbsp;
   // alarm;
   // useEffect(() =&gt; {
@@ -1420,7 +1456,7 @@ export default StopwatchScreen;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-01T17:23:20.770Z
+                at 2024-09-01T17:46:42.150Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
