@@ -79,6 +79,8 @@ const StopwatchScreen = () => {
     state => state.buttonsDisabled.buttonsDisabled
   );
 
+  console.log("buttonsDisabled:", buttonsDisabled);
+
   // custom hooks
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
