@@ -9,7 +9,10 @@ const buttonsDisabledReducer = (state = initialButtonsDisabled, action) => {
     case SET_BUTTONS_DISABLED:
       return {
         ...state,
-        buttonsDisabled: action.payload
+        buttonsDisabled:
+          action.payload === true || action.payload === false
+            ? action.payload
+            : state.buttonsDisabled
       };
     default:
       return state;
