@@ -238,7 +238,7 @@ const StopwatchScreen = () => {
 
   // Define styles for time increment buttons
   const getButtonStyles = buttonId => ({
-    borderColor: !!activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
+    borderColor: activeButtons[buttonId] ? Colors.seaGreen : Colors.white,
     borderWidth: 2,
     borderStyle: "solid",
     opacity: isRunning || firstRun ? 0 : 1,
