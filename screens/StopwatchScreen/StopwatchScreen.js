@@ -7,7 +7,7 @@ import { setSaveTimeButtonLabel } from "../../actions/counterActions";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePerformReset } from "../../hooks/usePerformReset";
-// import { usePlayAlarm } from "../../hooks/usePlayAlarm";
+import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../hooks/useButtonHandler";
@@ -58,7 +58,7 @@ import {
 const { black, white, skyBlue, green } = Colors;
 
 const StopwatchScreen = () => {
-  // const [alarm, setAlarm] = useState();
+  const [alarm, setAlarm] = useState();
 
   // Redux dispatch
   const saveTimeButtonLabel = useSelector(
@@ -105,7 +105,7 @@ const StopwatchScreen = () => {
     handleResetClicksTwoOrMore
   } = useResetStopwatch();
 
-  // const { playAlarm } = usePlayAlarm(logInfo, logError);
+  const { playAlarm } = usePlayAlarm(logInfo, logError);
 
   useEffect(() => {
     if (infoText) {
@@ -121,20 +121,20 @@ const StopwatchScreen = () => {
 
   useEffect(() => {
     if (timeCompleted) {
-      // playAlarm(require("../../assets/alarm_2.wav"));
+      playAlarm(require("../../assets/alarm_2.wav"));
       saveTimeRecords();
     }
   }, [timeCompleted]);
 
-  // alarm;
-  // useEffect(() => {
-  //   return () => {
-  //     clearTimeoutsAndMessage();
-  //     if (alarm) {
-  //       alarm.unloadAsync();
-  //     }
-  //   };
-  // }, [alarm]);
+  alarm;
+  useEffect(() => {
+    return () => {
+      clearTimeoutsAndMessage();
+      if (alarm) {
+        alarm.unloadAsync();
+      }
+    };
+  }, [alarm]);
 
   // Start button// Start button handler
   const startStopwatch = () => {
@@ -204,6 +204,10 @@ const StopwatchScreen = () => {
     dispatch(setButtonsDisabled(true));
 
     setTimeout(() => {
+      if (!timeCompleted) {
+        playAlarm(require("../../assets/alarm_2.wav"));
+      }
+
       performReset();
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
