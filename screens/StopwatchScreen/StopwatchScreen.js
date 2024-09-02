@@ -126,20 +126,6 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  useEffect(() => {
-    logInfo(`Initial Time: ${initialTime}`);
-    logInfo(`Remaining Time: ${remainingTime}`);
-    logInfo(`Elapsed Time: ${elapsedTime}`);
-    logInfo(`Time Completed: ${timeCompleted}`);
-    logInfo(`Is Running: ${isRunning}`);
-    logInfo(`Has Started: ${hasStarted}`);
-    logInfo(`Activity Index: ${activityIndex}`);
-    logInfo(`First Run: ${firstRun}`);
-    logInfo(`Reset Clicks: ${resetClicks}`);
-    logInfo(`Buttons Disabled: ${buttonsDisabled}`);
-    logInfo(`Save Time Button Label: ${saveTimeButtonLabel}`);
-  }, []);
-
   // alarm;
   // useEffect(() => {
   //   return () => {
