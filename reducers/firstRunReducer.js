@@ -1,5 +1,5 @@
 const initialFirstRun = {
-  firstRun: 0
+  firstRun: false
 };
 
 const SET_FIRST_RUN = "SET_FIRST_RUN";
