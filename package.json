@@ -11,8 +11,6 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@reduxjs/toolkit": "^2.2.7",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.4.8",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
     "cypress-real-events": "^1.13.0",
