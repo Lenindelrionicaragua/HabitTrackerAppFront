@@ -10,7 +10,7 @@ import { usePerformReset } from "../../hooks/usePerformReset";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
-import { useButtonHandler } from "../../util/handleButtonPress";
+import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
 //utils
@@ -83,9 +83,10 @@ const StopwatchScreen = () => {
   const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-
   const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
-  const { activeButtons, handleButtonPress } = useButtonHandler();
+  const buttonIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  const { activeButtons, handleButtonPress } = useButtonHandler(buttonIds);
+
   const {
     pauseStopwatch,
     resumeStopwatch,
@@ -203,7 +204,10 @@ const StopwatchScreen = () => {
     dispatch(setButtonsDisabled(true));
 
     setTimeout(() => {
-      playAlarm(require("../../assets/alarm_2.wav"));
+      if (!timeCompleted) {
+        playAlarm(require("../../assets/alarm_2.wav"));
+      }
+
       performReset();
       updateInfoText(
         "Time saved successfully! Your activity has been recorded."
