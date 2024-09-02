@@ -128,7 +128,9 @@ export const setSaveTimeButtonLabel = saveTimeButtonLabel => {
 };
 
 export const setButtonsDisabled = buttonsDisabled => {
-  console.log("setButtonsDisabled called with:", buttonsDisabled);
+  if (typeof buttonsDisabled !== "boolean") {
+    console.error("Invalid value for buttonsDisabled:", buttonsDisabled);
+  }
   return {
     type: SET_BUTTONS_DISABLED,
     payload: buttonsDisabled
