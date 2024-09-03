@@ -1,11 +1,13 @@
 name: Deploy to Netlify
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
-      - develop
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +19,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+
+          node-version: '18' 
+
 
       - name: Install dependencies
         run: npm install
@@ -32,21 +36,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
-      - name: Create GitHub Deployment
-        id: create_deployment
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/deployments
-          mediaType: '{"previews":["flash"]}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       
-      - name: Set GitHub Deployment Status to "success"
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/deployments/${{ steps.create_deployment.outputs.deployment_id }}/statuses
-          mediaType: '{"previews":["flash"]}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
