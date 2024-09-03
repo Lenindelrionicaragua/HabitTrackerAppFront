@@ -41,8 +41,7 @@ jobs:
           mediaType: '{"previews":["flash"]}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # El cuerpo de la solicitud se pasará como un JSON en la sección de 'with'
-
+       
       - name: Set GitHub Deployment Status to "success"
         uses: octokit/request-action@v2.x
         with:
@@ -50,4 +49,4 @@ jobs:
           mediaType: '{"previews":["flash"]}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # El cuerpo de la solicitud se pasará como un JSON en la sección de 'with'
+      
