@@ -4,10 +4,12 @@ on:
   pull_request:
     branches:
       - main
+      - develop
   push:
     branches:
       - main
-      
+      - develop
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18' 
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -36,23 +38,26 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Create GitHub Deployment
+        id: create_deployment
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/:owner/:repo/deployments
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          ref: ${{ github.sha }}
-          environment: production
+          route: |
+            POST /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/deployments
+            {
+              "ref": "${{ github.sha }}",
+              "environment": "${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}",
+              "required_contexts": []
+            }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set GitHub Deployment Status to "success"
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/:owner/:repo/deployments/:deployment_id/statuses
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
-          state: success
+          route: |
+            POST /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/deployments/${{ steps.create_deployment.outputs.deployment_id }}/statuses
+            {
+              "state": "success"
+            }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
