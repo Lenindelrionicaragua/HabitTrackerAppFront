@@ -1,10 +1,13 @@
 name: Deploy to Netlify
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +19,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+
+          node-version: '18' 
+
 
       - name: Install dependencies
         run: npm install
@@ -31,17 +36,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
-      - name: Create GitHub Deployment
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/${{ github.repository_owner }}/${{ github.repository }}/deployments
-          mediaType: application/vnd.github.ant-man-preview+json
-          body: |
-            {
-              "ref": "${{ github.ref }}",
-              "environment": "production",
-              "required_contexts": []
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
