@@ -40,7 +40,7 @@ jobs:
           mediaType: application/vnd.github.ant-man-preview+json
           ref: ${{ github.sha }}
           environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
-          required_contexts: []
+         
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
 
