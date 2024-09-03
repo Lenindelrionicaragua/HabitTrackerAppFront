@@ -35,11 +35,13 @@ jobs:
       - name: Create GitHub Deployment
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/{owner}/{repo}/deployments
+          route: POST /repos/${{ github.repository_owner }}/${{ github.repository }}/deployments
           mediaType: application/vnd.github.ant-man-preview+json
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.repository }}
-          ref: ${{ github.ref }}
-          environment: production
+          body: |
+            {
+              "ref": "${{ github.ref }}",
+              "environment": "production",
+              "required_contexts": []
+            }
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
