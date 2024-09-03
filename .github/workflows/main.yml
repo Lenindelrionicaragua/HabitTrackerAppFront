@@ -1,10 +1,6 @@
 name: Deploy to Netlify
 
 on:
-  pull_request:
-    branches:
-      - main
-      - develop
   push:
     branches:
       - main
@@ -49,7 +45,7 @@ jobs:
               "required_contexts": []
             }
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Set GitHub Deployment Status to "success"
         uses: octokit/request-action@v2.x
@@ -60,4 +56,4 @@ jobs:
               "state": "success"
             }
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
