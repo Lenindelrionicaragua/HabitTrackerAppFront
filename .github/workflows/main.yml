@@ -45,7 +45,7 @@ jobs:
             });
             return response.data.id;
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
 
       - name: Set GitHub Deployment Status to "success"
         uses: actions/github-script@v6
@@ -58,4 +58,4 @@ jobs:
               state: 'success'
             });
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
