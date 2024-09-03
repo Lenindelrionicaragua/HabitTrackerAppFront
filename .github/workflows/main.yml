@@ -19,9 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-
           node-version: '18' 
-
 
       - name: Install dependencies
         run: npm install
@@ -36,3 +34,25 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Create GitHub Deployment
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:owner/:repo/deployments
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          ref: ${{ github.sha }}
+          environment: production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set GitHub Deployment Status to "success"
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:owner/:repo/deployments/:deployment_id/statuses
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
+          state: success
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
