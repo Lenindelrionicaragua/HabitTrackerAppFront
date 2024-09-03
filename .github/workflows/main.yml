@@ -30,8 +30,7 @@ jobs:
         with:
           args: deploy --dir=dist --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Token de Netlify
 
       - name: Create GitHub Deployment
         id: create_deployment
@@ -39,13 +38,11 @@ jobs:
         with:
           route: POST /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/deployments
           mediaType: application/vnd.github.ant-man-preview+json
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.repository }}
           ref: ${{ github.sha }}
-          environment: production
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
           required_contexts: []
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
 
       - name: Set GitHub Deployment Status to "success"
         uses: octokit/request-action@v2.x
@@ -54,4 +51,4 @@ jobs:
           mediaType: application/vnd.github.ant-man-preview+json
           state: success
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
