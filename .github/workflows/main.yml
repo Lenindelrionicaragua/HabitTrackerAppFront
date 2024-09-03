@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
 
 jobs:
   build:
@@ -30,32 +29,17 @@ jobs:
         with:
           args: deploy --dir=dist --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Token de Netlify
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Create GitHub Deployment
-        id: create_deployment
-        uses: actions/github-script@v6
+        uses: octokit/request-action@v2.x
         with:
-          script: |
-            const response = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha,
-              environment: context.ref === 'refs/heads/main' ? 'production' : 'development'
-            });
-            return response.data.id;
+          route: POST /repos/{owner}/{repo}/deployments
+          mediaType: application/vnd.github.ant-man-preview+json
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          environment: production
         env:
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
-
-      - name: Set GitHub Deployment Status to "success"
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: ${{ steps.create_deployment.outputs.deployment_id }},
-              state: 'success'
-            });
-        env:
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # PAT de GitHub
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
