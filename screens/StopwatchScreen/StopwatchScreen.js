@@ -13,6 +13,7 @@ import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
+import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
@@ -58,7 +59,7 @@ import {
 const { black, white, skyBlue, green } = Colors;
 
 const StopwatchScreen = () => {
-  const [alarm, setAlarm] = useState();
+  // const [alarm, setAlarm] = useState();
 
   // Redux dispatch
   // const saveTimeButtonLabel = useSelector(
@@ -124,7 +125,7 @@ const StopwatchScreen = () => {
       playAlarm(require("../../assets/alarm_2.wav"));
       saveTimeRecords();
     }
-  }, [timeCompleted]);
+  }, [timeCompleted, playAlarm, saveTimeRecords]);
 
   alarm;
   useEffect(() => {

@@ -23,8 +23,6 @@ function useSaveTimeRecords() {
   const { updateColors } = useUpdateCircleColors();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  const [alarm, setAlarm] = useState();
-
   const { green } = Colors;
 
   const saveTimeRecords = () => {
