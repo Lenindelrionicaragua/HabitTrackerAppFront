@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logInfo } from "../util/logging";
+import { logInfo, logError } from "../util/logging";
 import {
   setIsRunning,
   setSaveTimeButtonLabel,
@@ -21,7 +21,9 @@ function useSaveTimeRecords() {
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   const { updateColors } = useUpdateCircleColors();
-  const { playAlarm } = usePlayAlarm(logInfo);
+  const { playAlarm } = usePlayAlarm(logInfo, logError);
+
+  const [alarm, setAlarm] = useState();
 
   const { green } = Colors;
 
