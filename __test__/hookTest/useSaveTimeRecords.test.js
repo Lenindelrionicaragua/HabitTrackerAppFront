@@ -18,16 +18,15 @@ jest.mock("../../hooks/usePerformReset", () => ({
 }));
 
 jest.mock("../../hooks/useInfoText", () => ({
-  __esModule: true, // Needed to use default export
-  default: jest.fn(() => ({
-    updateInfoText: jest.fn(),
-    clearTimeoutsAndMessage: jest.fn()
-  }))
+  __esModule: true, // Necesario para mockear el default export
+  default: jest.fn()
 }));
 
 describe("useSaveTimeRecords", () => {
   let store;
   let dispatchSpy;
+  let updateInfoText;
+  let clearTimeoutsAndMessage;
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -45,12 +44,21 @@ describe("useSaveTimeRecords", () => {
     store = createStore(rootReducer, initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
+    updateInfoText = jest.fn();
+    clearTimeoutsAndMessage = jest.fn();
+
+    useInfoText.mockReturnValue({
+      updateInfoText,
+      clearTimeoutsAndMessage
+    });
+
     jest.clearAllMocks();
   });
 
   afterEach(() => {
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
+    jest.clearAllMocks();
   });
 
   it("saveTimeRecords should call clearTimeoutsAndMessage, and setIsRunning to false, when the timer is running", () => {
@@ -64,9 +72,28 @@ describe("useSaveTimeRecords", () => {
       result.current.saveTimeRecords();
     });
 
+    expect(useInfoText().clearTimeoutsAndMessage).toHaveBeenCalled();
+
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: "SET_IS_RUNNING",
       payload: false
     });
   });
+
+  //   it("saveTimeRecords should call updateInfoText with the right arguments when the time es 0 and !firstRun", () => {
+  //     const wrapper = ({ children }) => (
+  //       <Provider store={store}>{children}</Provider>
+  //     );
+
+  //     const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
+
+  //     act(() => {
+  //       result.current.saveTimeRecords();
+  //     });
+
+  //     expect(dispatchSpy).toHaveBeenCalledWith({
+  //       type: "SET_IS_RUNNING",
+  //       payload: false
+  //     });
+  //   });
 });
