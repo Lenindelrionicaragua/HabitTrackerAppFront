@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import useInfoText from "./useInfoText";
 import { logInfo } from "../util/logging";
 import {
   setIsRunning,
   setSaveTimeButtonLabel,
   setButtonsDisabled
 } from "../actions/counterActions";
+import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
 import { usePerformReset } from "./usePerformReset";
 import { formatTime } from "../util/formatTime";
