@@ -61,9 +61,9 @@ const StopwatchScreen = () => {
   const [alarm, setAlarm] = useState();
 
   // Redux dispatch
-  const saveTimeButtonLabel = useSelector(
-    state => state.saveTimeButtonLabel.saveTimeButtonLabel
-  );
+  // const saveTimeButtonLabel = useSelector(
+  //   state => state.saveTimeButtonLabel.saveTimeButtonLabel
+  // );
   const dispatch = useDispatch();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
@@ -178,42 +178,42 @@ const StopwatchScreen = () => {
   };
 
   // Save time records handler
-  const saveTimeRecords = () => {
-    clearTimeoutsAndMessage();
-    dispatch(setIsRunning(false));
+  // const saveTimeRecords = () => {
+  //   clearTimeoutsAndMessage();
+  //   dispatch(setIsRunning(false));
 
-    if (remainingTime === 0 && !firstRun) {
-      updateInfoText("No time recorded. Please start the timer before saving.");
-      return;
-    }
+  //   if (remainingTime === 0 && !firstRun) {
+  //     updateInfoText("No time recorded. Please start the timer before saving.");
+  //     return;
+  //   }
 
-    if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-      logInfo(`ElapsedTime time saved: ${formatTime(elapsedTime)}`);
-      processSaveAndUpdateUI();
-      return;
-    }
-  };
+  //   if ((remainingTime !== 0 && firstRun) || timeCompleted) {
+  //     logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
+  //     logInfo(`ElapsedTime time saved: ${formatTime(elapsedTime)}`);
+  //     processSaveAndUpdateUI();
+  //     return;
+  //   }
+  // };
 
-  const processSaveAndUpdateUI = () => {
-    dispatch(setSaveTimeButtonLabel("SAVING"));
+  // const processSaveAndUpdateUI = () => {
+  //   dispatch(setSaveTimeButtonLabel("SAVING"));
 
-    updateInfoText("Saving");
-    // circleColor / innerCircleColor
-    updateColors(green, green);
-    dispatch(setButtonsDisabled(true));
+  //   updateInfoText("Saving");
+  //   // circleColor / innerCircleColor
+  //   updateColors(green, green);
+  //   dispatch(setButtonsDisabled(true));
 
-    setTimeout(() => {
-      if (!timeCompleted) {
-        playAlarm(require("../../assets/alarm_2.wav"));
-      }
+  //   setTimeout(() => {
+  //     if (!timeCompleted) {
+  //       playAlarm(require("../../assets/alarm_2.wav"));
+  //     }
 
-      performReset();
-      updateInfoText(
-        "Time saved successfully! Your activity has been recorded."
-      );
-    }, 6000);
-  };
+  //     performReset();
+  //     updateInfoText(
+  //       "Time saved successfully! Your activity has been recorded."
+  //     );
+  //   }, 6000);
+  // };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
   const { circumference, strokeDashoffset } = useCircleParams(
