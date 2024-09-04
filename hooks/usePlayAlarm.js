@@ -1,27 +1,30 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { Audio } from "expo-av";
+import { logInfo } from "../util/logging";
 
 export const usePlayAlarm = (logInfo, logError) => {
-  const [alarm, setAlarm] = useState(null);
+  const soundRef = useRef(null);
 
   const playAlarm = async soundPath => {
     try {
       logInfo("Loading Sound");
-      if (alarm) {
-        await alarm.unloadAsync();
-        setAlarm(null);
+
+      if (soundRef.current) {
+        await soundRef.current.unloadAsync();
+        soundRef.current = null;
       }
 
       const { sound } = await Audio.Sound.createAsync(soundPath);
-      setAlarm(sound);
+      soundRef.current = sound;
 
       logInfo("Playing notification Sound");
       await sound.playAsync();
 
-      sound.setOnPlaybackStatusUpdate(status => {
+      sound.setOnPlaybackStatusUpdate(async status => {
         if (status.didJustFinish) {
           logInfo("Sound has finished playing");
-          sound.unloadAsync();
+          await sound.unloadAsync();
+          soundRef.current = null;
         }
       });
     } catch (error) {
@@ -29,5 +32,5 @@ export const usePlayAlarm = (logInfo, logError) => {
     }
   };
 
-  return { playAlarm, alarm };
+  return { playAlarm, soundRef };
 };

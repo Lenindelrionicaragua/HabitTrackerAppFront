@@ -11,7 +11,7 @@ jest.mock("expo-av", () => ({
 }));
 
 describe("usePlayAlarm hook", () => {
-  let mockUnloadedAsync;
+  let mockUnloadAsync;
   let mockPlayAsync;
   let mockSetOnPlaybackStatusUpdate;
 
@@ -20,13 +20,13 @@ describe("usePlayAlarm hook", () => {
   const logError = jest.fn();
 
   beforeEach(() => {
-    mockUnloadedAsync = jest.fn();
+    mockUnloadAsync = jest.fn();
     mockPlayAsync = jest.fn();
     mockSetOnPlaybackStatusUpdate = jest.fn();
 
     Audio.Sound.createAsync.mockResolvedValue({
       sound: {
-        unloadAsync: mockUnloadedAsync,
+        unloadAsync: mockUnloadAsync,
         playAsync: mockPlayAsync,
         setOnPlaybackStatusUpdate: mockSetOnPlaybackStatusUpdate
       }
@@ -45,7 +45,7 @@ describe("usePlayAlarm hook", () => {
     });
 
     expect(Audio.Sound.createAsync).toHaveBeenCalledWith(soundPath);
-    expect(result.current.alarm.playAsync).toHaveBeenCalled();
+    expect(result.current.soundRef.current.playAsync).toHaveBeenCalled();
     expect(logInfo).toHaveBeenCalledWith("Loading Sound");
     expect(logInfo).toHaveBeenCalledWith("Playing notification Sound");
   });
@@ -63,7 +63,7 @@ describe("usePlayAlarm hook", () => {
       await result.current.playAlarm(soundPath);
     });
 
-    expect(mockUnloadedAsync).toHaveBeenCalledTimes(1);
+    expect(mockUnloadAsync).toHaveBeenCalledTimes(1);
 
     expect(logInfo).toHaveBeenCalledWith("Loading Sound");
   });
@@ -78,9 +78,12 @@ describe("usePlayAlarm hook", () => {
     expect(mockSetOnPlaybackStatusUpdate).toHaveBeenCalled();
 
     const mockStatus = { didJustFinish: true };
-    mockSetOnPlaybackStatusUpdate.mock.calls[0][0](mockStatus);
+    await act(async () => {
+      mockSetOnPlaybackStatusUpdate.mock.calls[0][0](mockStatus);
+    });
 
-    expect(mockUnloadedAsync).toHaveBeenCalled();
+    expect(mockUnloadAsync).toHaveBeenCalled();
     expect(logInfo).toHaveBeenCalledWith("Sound has finished playing");
+    expect(result.current.soundRef.current).toBeNull();
   });
 });
