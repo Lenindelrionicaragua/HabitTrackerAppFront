@@ -1,11 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
-import { usePerformReset } from "../../hooks/usePerformReset";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
@@ -46,10 +45,9 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { black, white, skyBlue, green } = Colors;
+const { black } = Colors;
 
 const StopwatchScreen = () => {
-  const soundRef = useRef(null);
   const dispatch = useDispatch();
 
   // Store states
@@ -68,13 +66,12 @@ const StopwatchScreen = () => {
   );
 
   // custom hooks
-  const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-  const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
+  const { infoText, clearTimeoutsAndMessage } = useInfoText();
   const buttonIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   const { activeButtons, handleButtonPress } = useButtonHandler(buttonIds);
-  const { saveTimeRecords, processSaveAndUpdateUI } = useSaveTimeRecords();
+  const { saveTimeRecords } = useSaveTimeRecords();
 
   const {
     pauseStopwatch,
