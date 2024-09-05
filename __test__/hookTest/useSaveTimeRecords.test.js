@@ -6,7 +6,7 @@ import rootReducer from "../../reducers/rootReducer";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 import { usePerformReset } from "../../hooks/usePerformReset";
 import useInfoText from "../../hooks/useInfoText";
-import usePlayAlarm from "../../hooks/usePlayAlarm";
+import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 
 jest.mock("../../hooks/usePerformReset", () => ({
   usePerformReset: jest.fn()

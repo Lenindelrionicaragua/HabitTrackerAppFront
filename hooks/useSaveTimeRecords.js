@@ -51,7 +51,7 @@ function useSaveTimeRecords() {
 
     setTimeout(() => {
       if (!timeCompleted) {
-        playAlarm(require("../../assets/alarm_2.wav"));
+        playAlarm(require("../assets/alarm_2.wav"));
       }
 
       performReset();

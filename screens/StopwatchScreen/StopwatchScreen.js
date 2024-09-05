@@ -59,12 +59,8 @@ import {
 const { black, white, skyBlue, green } = Colors;
 
 const StopwatchScreen = () => {
-  // const [alarm, setAlarm] = useState();
-
   // Redux dispatch
-  // const saveTimeButtonLabel = useSelector(
-  //   state => state.saveTimeButtonLabel.saveTimeButtonLabel
-  // );
+  const soundRef = useRef(null);
   const dispatch = useDispatch();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
@@ -79,6 +75,9 @@ const StopwatchScreen = () => {
   const buttonsDisabled = useSelector(
     state => state.buttonsDisabled.buttonsDisabled
   );
+  const saveTimeButtonLabel = useSelector(
+    state => state.saveTimeButtonLabel.saveTimeButtonLabel
+  );
 
   // custom hooks
   const performReset = usePerformReset();
@@ -87,6 +86,7 @@ const StopwatchScreen = () => {
   const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
   const buttonIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   const { activeButtons, handleButtonPress } = useButtonHandler(buttonIds);
+  const { saveTimeRecords, processSaveAndUpdateUI } = useSaveTimeRecords();
 
   const {
     pauseStopwatch,
@@ -127,15 +127,14 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted, playAlarm, saveTimeRecords]);
 
-  alarm;
   useEffect(() => {
     return () => {
       clearTimeoutsAndMessage();
-      if (alarm) {
-        alarm.unloadAsync();
+      if (soundRef.current) {
+        soundRef.current.unloadAsync();
       }
     };
-  }, [alarm]);
+  }, [clearTimeoutsAndMessage]);
 
   // Start button// Start button handler
   const startStopwatch = () => {
