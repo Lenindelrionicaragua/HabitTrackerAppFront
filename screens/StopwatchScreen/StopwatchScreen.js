@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setSaveTimeButtonLabel } from "../../actions/counterActions";
 
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
@@ -29,7 +28,8 @@ import {
   setHasStarted,
   setFirstRun,
   setResetClicks,
-  setButtonsDisabled
+  setButtonsDisabled,
+  saveTimeButtonLabel
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -59,9 +59,10 @@ import {
 const { black, white, skyBlue, green } = Colors;
 
 const StopwatchScreen = () => {
-  // Redux dispatch
   const soundRef = useRef(null);
   const dispatch = useDispatch();
+
+  // Store states
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
@@ -74,9 +75,6 @@ const StopwatchScreen = () => {
   const activities = useSelector(state => state.activities.activities);
   const buttonsDisabled = useSelector(
     state => state.buttonsDisabled.buttonsDisabled
-  );
-  const saveTimeButtonLabel = useSelector(
-    state => state.saveTimeButtonLabel.saveTimeButtonLabel
   );
 
   // custom hooks
@@ -125,7 +123,7 @@ const StopwatchScreen = () => {
       playAlarm(require("../../assets/alarm_2.wav"));
       saveTimeRecords();
     }
-  }, [timeCompleted, playAlarm, saveTimeRecords]);
+  }, [timeCompleted]);
 
   useEffect(() => {
     return () => {
@@ -176,44 +174,6 @@ const StopwatchScreen = () => {
       handleResetClicksTwoOrMore();
     }
   };
-
-  // Save time records handler
-  // const saveTimeRecords = () => {
-  //   clearTimeoutsAndMessage();
-  //   dispatch(setIsRunning(false));
-
-  //   if (remainingTime === 0 && !firstRun) {
-  //     updateInfoText("No time recorded. Please start the timer before saving.");
-  //     return;
-  //   }
-
-  //   if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-  //     logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-  //     logInfo(`ElapsedTime time saved: ${formatTime(elapsedTime)}`);
-  //     processSaveAndUpdateUI();
-  //     return;
-  //   }
-  // };
-
-  // const processSaveAndUpdateUI = () => {
-  //   dispatch(setSaveTimeButtonLabel("SAVING"));
-
-  //   updateInfoText("Saving");
-  //   // circleColor / innerCircleColor
-  //   updateColors(green, green);
-  //   dispatch(setButtonsDisabled(true));
-
-  //   setTimeout(() => {
-  //     if (!timeCompleted) {
-  //       playAlarm(require("../../assets/alarm_2.wav"));
-  //     }
-
-  //     performReset();
-  //     updateInfoText(
-  //       "Time saved successfully! Your activity has been recorded."
-  //     );
-  //   }, 6000);
-  // };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
   const { circumference, strokeDashoffset } = useCircleParams(
