@@ -13,12 +13,14 @@ jest.mock("../../hooks/usePerformReset", () => ({
 }));
 
 jest.mock("../../hooks/useInfoText", () => ({
-  __esModule: true,
+  __esModule: true, // Needed to use default export
   default: jest.fn()
 }));
 
 jest.mock("../../hooks/usePlayAlarm", () => ({
-  usePlayAlarm: jest.fn()
+  usePlayAlarm: jest.fn(() => ({
+    playAlarm: jest.fn()
+  }))
 }));
 
 describe("useSaveTimeRecords", () => {
@@ -26,29 +28,28 @@ describe("useSaveTimeRecords", () => {
   let dispatchSpy;
   let updateInfoText;
   let clearTimeoutsAndMessage;
-  let processSaveAndUpdateUI;
+  let playAlarm;
+  let performReset;
 
   beforeEach(() => {
     jest.useFakeTimers();
+    jest.clearAllMocks();
 
     updateInfoText = jest.fn();
     clearTimeoutsAndMessage = jest.fn();
     playAlarm = jest.fn();
+    performReset = jest.fn();
 
     useInfoText.mockReturnValue({
       updateInfoText,
       clearTimeoutsAndMessage
     });
 
-    jest.mock("../../hooks/usePlayAlarm", () => ({
-      usePlayAlarm: jest.fn(() => ({
-        playAlarm: jest.fn()
-      }))
-    }));
+    usePlayAlarm.mockReturnValue({
+      playAlarm
+    });
 
-    jest.clearAllMocks();
-
-    processSaveAndUpdateUI = jest.fn();
+    usePerformReset.mockReturnValue(performReset);
   });
 
   afterEach(() => {
@@ -82,14 +83,13 @@ describe("useSaveTimeRecords", () => {
     });
 
     expect(useInfoText().clearTimeoutsAndMessage).toHaveBeenCalled();
-
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: "SET_IS_RUNNING",
       payload: false
     });
   });
 
-  it("saveTimeRecords should call updateInfoText with the right arguments when the time es 0 and firstRun is false", () => {
+  it("saveTimeRecords should call updateInfoText with the right arguments when the time is 0 and firstRun is false", () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -131,6 +131,7 @@ describe("useSaveTimeRecords", () => {
 
     store = createStore(rootReducer, initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
+
     const wrapper = ({ children }) => (
       <Provider store={store}>{children}</Provider>
     );
@@ -141,10 +142,10 @@ describe("useSaveTimeRecords", () => {
       result.current.saveTimeRecords();
     });
 
-    expect(processSaveAndUpdateUI).not.toHaveBeenCalled();
+    expect(performReset).not.toHaveBeenCalled();
   });
 
-  it("saveTimeRecords should call processSaveAndUpdateUI if remaining time is 0 and firstRun is false", () => {
+  it("saveTimeRecords should call performReset if remaining time is greater than 0 and firstRun is true", () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -164,10 +165,20 @@ describe("useSaveTimeRecords", () => {
 
     const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
 
+    usePerformReset.mockReturnValue(performReset);
+
     act(() => {
       result.current.saveTimeRecords();
     });
 
-    expect(processSaveAndUpdateUI).toHaveBeenCalled();
+    act(() => {
+      result.current.processSaveAndUpdateUI();
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(performReset).toHaveBeenCalled();
   });
 });
