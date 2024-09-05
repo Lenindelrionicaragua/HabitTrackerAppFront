@@ -172,6 +172,68 @@ describe("useSaveTimeRecords", () => {
     });
 
     act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(performReset).toHaveBeenCalled();
+  });
+
+  it("saveTimeRecords should not call performReset if time is not completed or remaining time is 0", () => {
+    const initialState = {
+      isRunning: { isRunning: true },
+      saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
+      buttonsDisabled: { buttonsDisabled: false },
+      remainingTime: { remainingTime: 0 },
+      firstRun: { firstRun: false },
+      timeCompleted: { timeCompleted: false },
+      elapsedTime: { elapsedTime: 0 }
+    };
+
+    store = createStore(rootReducer, initialState);
+    dispatchSpy = jest.spyOn(store, "dispatch");
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
+
+    usePerformReset.mockReturnValue(performReset);
+
+    act(() => {
+      result.current.saveTimeRecords();
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(performReset).not.toHaveBeenCalled();
+  });
+
+  it("processSaveAndUpdateUI should call performReset ", () => {
+    const initialState = {
+      isRunning: { isRunning: true },
+      saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
+      buttonsDisabled: { buttonsDisabled: false },
+      remainingTime: { remainingTime: 0 },
+      firstRun: { firstRun: true },
+      timeCompleted: { timeCompleted: true },
+      elapsedTime: { elapsedTime: 0 }
+    };
+
+    store = createStore(rootReducer, initialState);
+    dispatchSpy = jest.spyOn(store, "dispatch");
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
+
+    usePerformReset.mockReturnValue(performReset);
+
+    act(() => {
       result.current.processSaveAndUpdateUI();
     });
 
@@ -180,5 +242,38 @@ describe("useSaveTimeRecords", () => {
     });
 
     expect(performReset).toHaveBeenCalled();
+  });
+
+  it("processSaveAndUpdateUI should call playAlarm is time is not completed ", () => {
+    const initialState = {
+      isRunning: { isRunning: true },
+      saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
+      buttonsDisabled: { buttonsDisabled: false },
+      remainingTime: { remainingTime: 0 },
+      firstRun: { firstRun: true },
+      timeCompleted: { timeCompleted: false },
+      elapsedTime: { elapsedTime: 0 }
+    };
+
+    store = createStore(rootReducer, initialState);
+    dispatchSpy = jest.spyOn(store, "dispatch");
+
+    const wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+    );
+
+    const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
+
+    usePerformReset.mockReturnValue(performReset);
+
+    act(() => {
+      result.current.processSaveAndUpdateUI();
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(playAlarm).toHaveBeenCalled();
   });
 });
