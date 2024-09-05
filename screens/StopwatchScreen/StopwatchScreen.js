@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,17 +18,7 @@ import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
 // store
 import {
-  setInitialTime,
-  setRemainingTime,
-  setElapsedTime,
-  setIsRunning,
-  setActivityIndex,
-  setActivities,
-  setTimeCompleted,
-  setHasStarted,
-  setFirstRun,
   setResetClicks,
-  setButtonsDisabled,
   saveTimeButtonLabel
 } from "../../actions/counterActions";
 // Styles
@@ -124,15 +114,6 @@ const StopwatchScreen = () => {
       saveTimeRecords();
     }
   }, [timeCompleted]);
-
-  useEffect(() => {
-    return () => {
-      clearTimeoutsAndMessage();
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-      }
-    };
-  }, [clearTimeoutsAndMessage]);
 
   // Start button// Start button handler
   const startStopwatch = () => {

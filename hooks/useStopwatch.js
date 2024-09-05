@@ -9,11 +9,9 @@ import {
   setIsRunning,
   setHasStarted,
   setActivityIndex,
-  setFirstRun,
-  setActivities
+  setFirstRun
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
-import { logInfo } from "../util/logging";
 
 function useStopwatch() {
   const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
