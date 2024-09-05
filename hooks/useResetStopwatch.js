@@ -1,14 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setResetButtonLabel,
   setResetClicks,
-  setIsRunning,
-  setResetTimeoutsIds
+  setIsRunning
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
 import { usePerformReset } from "../hooks/usePerformReset";
-import { logInfo, logError } from "../util/logging";
 
 function useResetStopwatch() {
   const performReset = usePerformReset();

@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { useButtonHandler } from "../../util/handleButtonPress";
+import { useButtonHandler } from "../../hooks/useButtonHandler";
 
 beforeEach(() => {
   jest.useFakeTimers();

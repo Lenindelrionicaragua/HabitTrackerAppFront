@@ -1,34 +1,24 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setSaveTimeButtonLabel } from "../../actions/counterActions";
 
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
-import { usePerformReset } from "../../hooks/usePerformReset";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
 import useResetStopwatch from "../../hooks/useResetStopwatch";
 import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
+import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
 // store
 import {
-  setInitialTime,
-  setRemainingTime,
-  setElapsedTime,
-  setIsRunning,
-  setActivityIndex,
-  setActivities,
-  setTimeCompleted,
-  setHasStarted,
-  setFirstRun,
   setResetClicks,
-  setButtonsDisabled
+  saveTimeButtonLabel
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -55,16 +45,12 @@ import {
   ButtonText
 } from "./StopwatchScreenStyles";
 
-const { black, white, skyBlue, green } = Colors;
+const { black } = Colors;
 
 const StopwatchScreen = () => {
-  const [alarm, setAlarm] = useState();
-
-  // Redux dispatch
-  const saveTimeButtonLabel = useSelector(
-    state => state.saveTimeButtonLabel.saveTimeButtonLabel
-  );
   const dispatch = useDispatch();
+
+  // Store states
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
@@ -80,12 +66,12 @@ const StopwatchScreen = () => {
   );
 
   // custom hooks
-  const performReset = usePerformReset();
   const { circleColor, innerCircleColor, updateColors } =
     useUpdateCircleColors();
-  const { infoText, clearTimeoutsAndMessage, updateInfoText } = useInfoText();
+  const { infoText, clearTimeoutsAndMessage } = useInfoText();
   const buttonIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   const { activeButtons, handleButtonPress } = useButtonHandler(buttonIds);
+  const { saveTimeRecords } = useSaveTimeRecords();
 
   const {
     pauseStopwatch,
@@ -126,16 +112,6 @@ const StopwatchScreen = () => {
     }
   }, [timeCompleted]);
 
-  alarm;
-  useEffect(() => {
-    return () => {
-      clearTimeoutsAndMessage();
-      if (alarm) {
-        alarm.unloadAsync();
-      }
-    };
-  }, [alarm]);
-
   // Start button// Start button handler
   const startStopwatch = () => {
     if (!hasStarted) {
@@ -175,44 +151,6 @@ const StopwatchScreen = () => {
       updateColors(Colors.skyBlue, Colors.white);
       handleResetClicksTwoOrMore();
     }
-  };
-
-  // Save time records handler
-  const saveTimeRecords = () => {
-    clearTimeoutsAndMessage();
-    dispatch(setIsRunning(false));
-
-    if (remainingTime === 0 && !firstRun) {
-      updateInfoText("No time recorded. Please start the timer before saving.");
-      return;
-    }
-
-    if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-      logInfo(`ElapsedTime time saved: ${formatTime(elapsedTime)}`);
-      processSaveAndUpdateUI();
-      return;
-    }
-  };
-
-  const processSaveAndUpdateUI = () => {
-    dispatch(setSaveTimeButtonLabel("SAVING"));
-
-    updateInfoText("Saving");
-    // circleColor / innerCircleColor
-    updateColors(green, green);
-    dispatch(setButtonsDisabled(true));
-
-    setTimeout(() => {
-      if (!timeCompleted) {
-        playAlarm(require("../../assets/alarm_2.wav"));
-      }
-
-      performReset();
-      updateInfoText(
-        "Time saved successfully! Your activity has been recorded."
-      );
-    }, 6000);
   };
 
   // Calculates circle parameters for a graphical time indicator based on elapsedTime and initialTime.
