@@ -6,7 +6,7 @@ function useStopwatchLogicMock() {
   const [remainingTime, setRemainingTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [timeCompleted, setTimeCompleted] = useState(false);
-  const [running, setRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
 
   const startTimeRef = useRef(0);
   const pauseTimeRef = useRef(0);
@@ -15,24 +15,28 @@ function useStopwatchLogicMock() {
   const startTimer = initialTime => {
     setInitialTime(initialTime);
     startTimeRef.current = Date.now();
-    setRunning(true);
+    setIsRunning(true);
   };
 
   const pauseStopwatch = () => {
-    pauseTimeRef.current = Date.now();
-    setRunning(false);
+    if (isRunning) {
+      pauseTimeRef.current = Date.now();
+      setIsRunning(false);
+    }
   };
 
   const resumeStopwatch = () => {
-    if (!running) {
+    if (!isRunning) {
       const now = Date.now();
-      totalPausedTimeRef.current += now - pauseTimeRef.current;
-      setRunning(true);
+      const pausedDuration = now - pauseTimeRef.current;
+      startTimeRef.current += pausedDuration;
+      totalPausedTimeRef.current += pausedDuration;
+      setIsRunning(true);
     }
   };
 
   const updateTime = () => {
-    if (running) {
+    if (isRunning) {
       const now = Date.now();
 
       const elapsedTime = Math.floor(
@@ -45,19 +49,19 @@ function useStopwatchLogicMock() {
 
       if (remainingTime === 0) {
         setTimeCompleted(true);
-        setRunning(false);
+        setIsRunning(false);
       }
     }
   };
 
-  useInterval(updateTime, running ? 1000 : null);
+  useInterval(updateTime, isRunning ? 1000 : null);
 
   return {
     initialTime,
     remainingTime,
     elapsedTime,
     timeCompleted,
-    running,
+    isRunning: isRunning,
     pauseStopwatch,
     resumeStopwatch,
     startTimer

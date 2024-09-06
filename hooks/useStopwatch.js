@@ -48,9 +48,11 @@ function useStopwatch() {
 
   // Function to pause the stopwatch
   const pauseStopwatch = () => {
-    updateInfoText("Timer paused.");
-    pauseTimeRef.current = Date.now();
-    dispatch(setIsRunning(false));
+    if (isRunning) {
+      updateInfoText("Timer paused.");
+      pauseTimeRef.current = Date.now();
+      dispatch(setIsRunning(false));
+    }
   };
 
   // Function to resume the stopwatch
@@ -58,7 +60,10 @@ function useStopwatch() {
     if (!isRunning) {
       updateInfoText("Timer resume.");
       const now = Date.now();
-      totalPausedTimeRef.current += now - pauseTimeRef.current;
+      const pausedDuration = now - pauseTimeRef.current;
+      startTimeRef.current += pausedDuration;
+      totalPausedTimeRef.current += pausedDuration;
+
       dispatch(setIsRunning(true));
 
       setTimeout(() => {

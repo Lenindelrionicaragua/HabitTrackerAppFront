@@ -55,7 +55,7 @@ describe("useStopwatch", () => {
       result.current.pauseStopwatch();
     });
 
-    expect(result.current.running).toBe(false);
+    expect(result.current.isRunning).toBe(false);
 
     const elapsedTimeAfterPause = result.current.elapsedTime;
     const remainingTimeAfterPause = result.current.remainingTime;
@@ -90,7 +90,7 @@ describe("useStopwatch", () => {
       result.current.resumeStopwatch();
     });
 
-    expect(result.current.running).toBe(true);
+    expect(result.current.isRunning).toBe(true);
 
     act(() => {
       jest.advanceTimersByTime(10000);
@@ -112,9 +112,40 @@ describe("useStopwatch", () => {
       jest.advanceTimersByTime(initialTime * 1000);
     });
 
-    expect(result.current.running).toBe(false);
+    expect(result.current.isRunning).toBe(false);
     expect(result.current.timeCompleted).toBe(true);
     expect(result.current.remainingTime).toBe(0);
     expect(result.current.elapsedTime).toBe(initialTime);
+  });
+
+  it("should handle rapid multiple resume and pause calls correctly", () => {
+    const initialTime = 50;
+    const { result } = renderHook(() => useStopwatchLogicMock());
+
+    act(() => {
+      result.current.startTimer(initialTime);
+    });
+
+    for (let i = 0; i < 10; i++) {
+      act(() => {
+        result.current.pauseStopwatch();
+        jest.advanceTimersByTime(50);
+      });
+
+      act(() => {
+        result.current.resumeStopwatch();
+        jest.advanceTimersByTime(50);
+      });
+    }
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.isRunning).toBe(true);
+
+    expect(result.current.elapsedTime).toBeCloseTo(1, 0.1);
+
+    expect(result.current.remainingTime).toBeCloseTo(initialTime - 1, 1);
   });
 });
