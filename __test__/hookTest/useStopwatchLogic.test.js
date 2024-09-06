@@ -117,4 +117,33 @@ describe("useStopwatch", () => {
     expect(result.current.remainingTime).toBe(0);
     expect(result.current.elapsedTime).toBe(initialTime);
   });
+
+  it("should handle multiple resume and pause calls correctly", () => {
+    const initialTime = 50;
+    const { result } = renderHook(() => useStopwatchLogicMock());
+
+    // Iniciar el cronómetro
+    act(() => {
+      result.current.startTimer(initialTime);
+    });
+
+    // Simular múltiples pausas y reanudaciones en un corto período de tiempo
+    act(() => {
+      for (let i = 0; i < 5; i++) {
+        jest.advanceTimersByTime(100); // Simular 100ms de avance
+        result.current.pauseStopwatch(); // Pausar cronómetro
+        jest.advanceTimersByTime(100); // Simular 100ms de pausa
+        result.current.resumeStopwatch(); // Reanudar cronómetro
+      }
+    });
+
+    // Verificar que el cronómetro siga corriendo
+    expect(result.current.running).toBe(true);
+
+    // Verificar que el tiempo transcurrido no se haya acumulado incorrectamente
+    expect(result.current.elapsedTime).toBeLessThan(1); // Debería ser cercano a 0
+
+    // Comprobar que el tiempo restante sea cercano al valor inicial
+    expect(result.current.remainingTime).toBeCloseTo(initialTime, 1); // Debería ser cercano a 50
+  });
 });

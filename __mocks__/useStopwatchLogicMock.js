@@ -19,14 +19,17 @@ function useStopwatchLogicMock() {
   };
 
   const pauseStopwatch = () => {
-    pauseTimeRef.current = Date.now();
-    setRunning(false);
+    if (running) {
+      pauseTimeRef.current = Date.now();
+      setRunning(false);
+    }
   };
 
   const resumeStopwatch = () => {
     if (!running) {
       const now = Date.now();
-      totalPausedTimeRef.current += now - pauseTimeRef.current;
+      const pausedDuration = now - pauseTimeRef.current;
+      totalPausedTimeRef.current += pausedDuration;
       setRunning(true);
     }
   };
