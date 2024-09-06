@@ -16,12 +16,14 @@ function useStopwatchLogicMock() {
     setInitialTime(initialTime);
     startTimeRef.current = Date.now();
     setRunning(true);
+    console.log("start");
   };
 
   const pauseStopwatch = () => {
     if (running) {
       pauseTimeRef.current = Date.now();
       setRunning(false);
+      console.log("pause");
     }
   };
 
@@ -30,7 +32,9 @@ function useStopwatchLogicMock() {
       const now = Date.now();
       const pausedDuration = now - pauseTimeRef.current;
       totalPausedTimeRef.current += pausedDuration;
+      startTimeRef.current = Date.now() - elapsedTime * 1000;
       setRunning(true);
+      console.log("resume");
     }
   };
 
@@ -51,6 +55,7 @@ function useStopwatchLogicMock() {
         setRunning(false);
       }
     }
+    console.log("updateTime:", { elapsedTime, remainingTime, running });
   };
 
   useInterval(updateTime, running ? 1000 : null);
