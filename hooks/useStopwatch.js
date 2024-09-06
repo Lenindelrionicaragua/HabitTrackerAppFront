@@ -61,7 +61,9 @@ function useStopwatch() {
       updateInfoText("Timer resume.");
       const now = Date.now();
       const pausedDuration = now - pauseTimeRef.current;
+      startTimeRef.current += pausedDuration;
       totalPausedTimeRef.current += pausedDuration;
+
       dispatch(setIsRunning(true));
 
       setTimeout(() => {
