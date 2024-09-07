@@ -176,28 +176,28 @@ const StopwatchScreen = () => {
   });
 
   // Debounced versions of the button handlers
-  const debouncedResetStopwatch = useDebounce(() => {
+  const debouncedResetStopwatch = debounce(() => {
     if (!buttonsDisabled) {
       resetStopwatch();
       handleButtonPress(6);
     }
   }, 300);
 
-  const debouncedStartStopwatch = useDebounce(() => {
+  const debouncedStartStopwatch = debounce(() => {
     if (!buttonsDisabled) {
       startStopwatch();
       handleButtonPress(8);
     }
   }, 300);
 
-  const debouncedPauseStopwatch = useDebounce(() => {
+  const debouncedPauseStopwatch = debounce(() => {
     if (!buttonsDisabled) {
       pauseStopwatch();
       handleButtonPress(7);
     }
   }, 300);
 
-  const debouncedSaveTimeRecords = useDebounce(() => {
+  const debouncedSaveTimeRecords = debounce(() => {
     if (!buttonsDisabled) {
       saveTimeRecords();
       handleButtonPress(9);
