@@ -12,6 +12,7 @@ import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
+import useDebounce from "../../hooks/useDebounce";
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
@@ -173,6 +174,35 @@ const StopwatchScreen = () => {
     cursor: isRunning || firstRun ? "not-allowed" : "pointer"
   });
 
+  // Debounced versions of the button handlers
+  const debouncedResetStopwatch = debounce(() => {
+    if (!buttonsDisabled) {
+      resetStopwatch();
+      handleButtonPress(6);
+    }
+  }, 300);
+
+  const debouncedStartStopwatch = debounce(() => {
+    if (!buttonsDisabled) {
+      startStopwatch();
+      handleButtonPress(8);
+    }
+  }, 300);
+
+  const debouncedPauseStopwatch = debounce(() => {
+    if (!buttonsDisabled) {
+      pauseStopwatch();
+      handleButtonPress(7);
+    }
+  }, 300);
+
+  const debouncedSaveTimeRecords = debounce(() => {
+    if (!buttonsDisabled) {
+      saveTimeRecords();
+      handleButtonPress(9);
+    }
+  }, 300);
+
   return (
     <StyledContainer testID="stopwatch-screen-container">
       <ScreenTitle testID="stopwatch-title">Habit Tracker</ScreenTitle>
@@ -304,12 +334,7 @@ const StopwatchScreen = () => {
 
       <RowContainer>
         <StyledButtonLeft
-          onPress={() => {
-            if (!buttonsDisabled) {
-              resetStopwatch();
-              handleButtonPress(6);
-            }
-          }}
+          onPress={debouncedResetStopwatch}
           disabled={buttonsDisabled}
           testID="reset-button"
         >
@@ -324,10 +349,7 @@ const StopwatchScreen = () => {
         </StyledButtonLeft>
         {isRunning ? (
           <StyledStartButton
-            onPress={() => {
-              pauseStopwatch();
-              handleButtonPress(7);
-            }}
+            onPress={debouncedPauseStopwatch}
             disabled={buttonsDisabled}
             testID="pause-button"
           >
@@ -339,12 +361,7 @@ const StopwatchScreen = () => {
           </StyledStartButton>
         ) : (
           <StyledStartButton
-            onPress={() => {
-              if (!buttonsDisabled) {
-                startStopwatch();
-                handleButtonPress(8);
-              }
-            }}
+            onPress={debouncedStartStopwatch}
             disabled={buttonsDisabled}
             testID="start-button"
           >
@@ -357,12 +374,7 @@ const StopwatchScreen = () => {
           </StyledStartButton>
         )}
         <StyledButtonRight
-          onPress={() => {
-            if (!buttonsDisabled) {
-              saveTimeRecords();
-              handleButtonPress(9);
-            }
-          }}
+          onPress={debouncedSaveTimeRecords}
           disabled={buttonsDisabled}
           testID="save-button"
         >
