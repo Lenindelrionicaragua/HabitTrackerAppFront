@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
+import debounce from "lodash.debounce";
 
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
@@ -12,7 +13,7 @@ import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
-import useDebounce from "../../hooks/useDebounce";
+
 //utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
@@ -175,28 +176,28 @@ const StopwatchScreen = () => {
   });
 
   // Debounced versions of the button handlers
-  const debouncedResetStopwatch = debounce(() => {
+  const debouncedResetStopwatch = useDebounce(() => {
     if (!buttonsDisabled) {
       resetStopwatch();
       handleButtonPress(6);
     }
   }, 300);
 
-  const debouncedStartStopwatch = debounce(() => {
+  const debouncedStartStopwatch = useDebounce(() => {
     if (!buttonsDisabled) {
       startStopwatch();
       handleButtonPress(8);
     }
   }, 300);
 
-  const debouncedPauseStopwatch = debounce(() => {
+  const debouncedPauseStopwatch = useDebounce(() => {
     if (!buttonsDisabled) {
       pauseStopwatch();
       handleButtonPress(7);
     }
   }, 300);
 
-  const debouncedSaveTimeRecords = debounce(() => {
+  const debouncedSaveTimeRecords = useDebounce(() => {
     if (!buttonsDisabled) {
       saveTimeRecords();
       handleButtonPress(9);
