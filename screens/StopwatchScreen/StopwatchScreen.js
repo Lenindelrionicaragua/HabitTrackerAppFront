@@ -176,33 +176,49 @@ const StopwatchScreen = () => {
   });
 
   // Debounced versions of the button handlers
-  const debouncedResetStopwatch = debounce(() => {
-    if (!buttonsDisabled) {
-      resetStopwatch();
-      handleButtonPress(6);
-    }
-  }, 300);
+  const debouncedResetStopwatch = debounce(
+    () => {
+      if (!buttonsDisabled) {
+        resetStopwatch();
+        handleButtonPress(6);
+      }
+    },
+    500,
+    { leading: true, trailing: false }
+  );
 
-  const debouncedStartStopwatch = debounce(() => {
-    if (!buttonsDisabled) {
-      startStopwatch();
-      handleButtonPress(8);
-    }
-  }, 300);
+  const debouncedStartStopwatch = debounce(
+    () => {
+      if (!buttonsDisabled) {
+        startStopwatch();
+        handleButtonPress(8);
+      }
+    },
+    500,
+    { leading: true, trailing: false }
+  );
 
-  const debouncedPauseStopwatch = debounce(() => {
-    if (!buttonsDisabled) {
-      pauseStopwatch();
-      handleButtonPress(7);
-    }
-  }, 300);
+  const debouncedPauseStopwatch = debounce(
+    () => {
+      if (!buttonsDisabled) {
+        pauseStopwatch();
+        handleButtonPress(7);
+      }
+    },
+    500,
+    { leading: true, trailing: false }
+  );
 
-  const debouncedSaveTimeRecords = debounce(() => {
-    if (!buttonsDisabled) {
-      saveTimeRecords();
-      handleButtonPress(9);
-    }
-  }, 300);
+  const debouncedSaveTimeRecords = debounce(
+    () => {
+      if (!buttonsDisabled) {
+        saveTimeRecords();
+        handleButtonPress(9);
+      }
+    },
+    500,
+    { leading: true, trailing: false }
+  );
 
   return (
     <StyledContainer testID="stopwatch-screen-container">
