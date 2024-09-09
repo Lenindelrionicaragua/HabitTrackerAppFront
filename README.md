@@ -6,7 +6,7 @@ https://6671a67ca79a96009c798e8b--habit-tracker-app-front.netlify.app
 
 stopwatch in development:
 
-https://habit-tracker-app-front.netlify.app/
+https://habit-tracker-app-front.netlify.app
 
 ![1](https://github.com/user-attachments/assets/3631e448-05c3-45ca-9696-257766b09fe9)
 
