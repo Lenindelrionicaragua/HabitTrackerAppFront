@@ -1,7 +1,5 @@
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {
   BannerContainer,
@@ -16,8 +14,7 @@ const Banner = () => {
   return (
     <BannerContainer>
       <ButtonContainer>
-        <Button>
-          {/* <Button onPress={() => navigation.navigate("LoginScreen")}> */}
+        <Button onPress={() => navigation.navigate("MetricsScreen")}>
           <Ionicons name="stats-chart" size={24} color="white" />
           <ButtonText>Metrics</ButtonText>
         </Button>
@@ -25,8 +22,7 @@ const Banner = () => {
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button>
-          {/* <Button onPress={() => navigation.navigate("SignupScreen")}> */}
+        <Button onPress={() => navigation.navigate("SignupScreen")}>
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>
