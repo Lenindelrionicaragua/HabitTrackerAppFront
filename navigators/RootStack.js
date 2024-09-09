@@ -9,6 +9,7 @@ import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
 import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
+import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
 import Banner from "../component/Banner/Banner";
 
 // credentials context
@@ -37,17 +38,34 @@ const RootStack = () => {
             initialRouteName="StopwatchScreen"
           >
             {storedCredentials ? (
-              <Stack.Screen
-                name="WelcomeScreen"
-                component={WelcomeScreen}
-                testID="welcome-screen"
-              />
+              <>
+                <Stack.Screen
+                  name="WelcomeScreen"
+                  component={WelcomeScreen}
+                  testID="welcome-screen"
+                />
+                <Stack.Screen
+                  name="MetricsScreen"
+                  component={MetricsScreen}
+                  testID="metrics-screen"
+                />
+                <Stack.Screen
+                  name="StopwatchScreen"
+                  component={StopwatchScreen}
+                  testID="stopwatch-screen"
+                />
+              </>
             ) : (
               <>
                 <Stack.Screen
                   name="StopwatchScreen"
                   component={StopwatchScreen}
                   testID="stopwatch-screen"
+                />
+                <Stack.Screen
+                  name="MetricsScreen"
+                  component={MetricsScreen}
+                  testID="metrics-screen"
                 />
                 <Stack.Screen
                   name="LoginScreen"
@@ -68,7 +86,7 @@ const RootStack = () => {
               </>
             )}
           </Stack.Navigator>
-          <Banner />
+          <Banner storedCredentials={storedCredentials} />
         </NavigationContainer>
       )}
     </CredentialsContext.Consumer>
