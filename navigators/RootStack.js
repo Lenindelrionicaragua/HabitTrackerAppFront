@@ -86,7 +86,7 @@ const RootStack = () => {
               </>
             )}
           </Stack.Navigator>
-          <Banner />
+          <Banner storedCredentials={storedCredentials} />
         </NavigationContainer>
       )}
     </CredentialsContext.Consumer>

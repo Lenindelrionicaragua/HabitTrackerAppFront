@@ -8,7 +8,7 @@ import {
   ButtonText
 } from "./BannerStyles";
 
-const Banner = () => {
+const Banner = ({ storedCredentials }) => {
   const navigation = useNavigation();
 
   return (
@@ -22,7 +22,13 @@ const Banner = () => {
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate("SignupScreen")}>
+        <Button
+          onPress={() =>
+            navigation.navigate(
+              storedCredentials ? "WelcomeScreen" : "LoginScreen"
+            )
+          }
+        >
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>

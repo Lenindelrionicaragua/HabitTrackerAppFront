@@ -7,7 +7,6 @@ import {
   SubTitle
 } from "./MetricsScreenStyles";
 
-// MetricsScreen component
 const MetricsScreen = () => {
   return (
     <StyledContainer testID="metrics-container">
