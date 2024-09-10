@@ -19,6 +19,9 @@ const { grey, lightGrey, black } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn, activeScreen } = useSelector(state => state.loggedIn);
+
   return (
     <CredentialsContext.Consumer>
       {({ storedCredentials }) => (

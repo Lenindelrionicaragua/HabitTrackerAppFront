@@ -21,6 +21,9 @@ export const SET_ACTIVITIES = "SET_ACTIVITIES";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
+export const SET_LOGGED_IN = "SET_LOGGED_IN";
+export const SET_ACTIVE_SCREEN = "SET_ACTIVE_SCREEN";
+
 export const setInitialTime = newInitialTime => {
   return {
     type: SET_INITIAL_TIME,
@@ -144,3 +147,17 @@ export const setActivities = activities => ({
   type: SET_ACTIVITIES,
   payload: activities
 });
+
+export const setLoggedIn = isLoggedIn => {
+  return {
+    type: SET_LOGGED_IN,
+    payload: isLoggedIn
+  };
+};
+
+export const setActiveScreen = screen => {
+  return {
+    type: SET_ACTIVE_SCREEN,
+    payload: screen
+  };
+};

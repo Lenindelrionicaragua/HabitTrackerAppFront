@@ -17,6 +17,10 @@ import activitiesReducer from "./activitiesReducer";
 import saveTimeButtonLabelReducer from "./saveTimeButtonLabelReducer";
 import buttonsDisabledReducer from "./buttonsDisabledReducer";
 
+//navigation
+import loggedInReducer from "./loggedInReducer";
+import activeScreenReducer from "./activeScreenReducer";
+
 const rootReducer = combineReducers({
   initialTime: initialTimeReducer,
   remainingTime: remainingTimeReducer,
@@ -34,7 +38,9 @@ const rootReducer = combineReducers({
   activityIndex: activityIndexReducer,
   saveTimeButtonLabel: saveTimeButtonLabelReducer,
   buttonsDisabled: buttonsDisabledReducer,
-  activities: activitiesReducer
+  activities: activitiesReducer,
+  loggedIn: loggedInReducer,
+  activeScreen: activeScreenReducer
 });
 
 export default rootReducer;
