@@ -1,5 +1,5 @@
 const initialActiveScreenState = {
-  activeScreen: "StopwatchScreen"
+  activeScreen: "LoginScreen"
 };
 
 const activeScreenReducer = (state = initialActiveScreenState, action) => {

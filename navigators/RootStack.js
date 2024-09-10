@@ -11,6 +11,7 @@ import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerifi
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
 import Banner from "../component/Banner/Banner";
+import { setLoggedIn, setActiveScreen } from "../actions/counterActions";
 
 // credentials context
 import { CredentialsContext } from "../context/credentialsContext";
@@ -19,9 +20,6 @@ const { grey, lightGrey, black } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
-  const dispatch = useDispatch();
-  const { isLoggedIn, activeScreen } = useSelector(state => state.loggedIn);
-
   return (
     <CredentialsContext.Consumer>
       {({ storedCredentials }) => (

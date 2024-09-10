@@ -1,6 +1,7 @@
 import React from "react";
 import { Ionicons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 import {
   BannerContainer,
   ButtonContainer,
@@ -10,6 +11,8 @@ import {
 
 const Banner = ({ storedCredentials }) => {
   const navigation = useNavigation();
+
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   return (
     <BannerContainer>
@@ -25,7 +28,7 @@ const Banner = ({ storedCredentials }) => {
         <Button
           onPress={() =>
             navigation.navigate(
-              storedCredentials ? "WelcomeScreen" : "LoginScreen"
+              storedCredentials ? "WelcomeScreen" : activeScreen
             )
           }
         >
