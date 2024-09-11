@@ -17,15 +17,21 @@ const Banner = ({ storedCredentials }) => {
   return (
     <BannerContainer>
       <ButtonContainer>
-        <Button onPress={() => navigation.navigate("activeScreen")}>
+        <Button onPress={() => navigation.navigate("MetricsScreen")}>
           <Ionicons name="stats-chart" size={24} color="white" />
           <ButtonText>Metrics</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate(" activeScreen")}>
+        <Button onPress={() => navigation.navigate("StopwatchScreen")}>
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate(activeScreen)}>
+        <Button
+          onPress={() =>
+            navigation.navigate(
+              storedCredentials ? "WelcomeScreen" : activeScreen
+            )
+          }
+        >
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>
