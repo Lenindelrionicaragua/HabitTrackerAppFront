@@ -161,6 +161,7 @@ const LoginScreen = ({ navigation, route }) => {
             user,
             handleMessage({ successStatus: true, msg: msg })
           );
+          dispatch(setActiveScreen("WelcomeScreen"));
         } else {
           logInfo(msg);
           handleMessage({ successStatus: true, msg: msg });

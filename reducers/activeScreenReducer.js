@@ -1,3 +1,5 @@
+import { logInfo } from "../util/logging";
+
 const initialActiveScreenState = {
   activeScreen: "LoginScreen"
 };
@@ -5,6 +7,7 @@ const initialActiveScreenState = {
 const activeScreenReducer = (state = initialActiveScreenState, action) => {
   switch (action.type) {
     case "SET_ACTIVE_SCREEN":
+      logInfo(`Screen changed to: ${action.payload}`);
       return {
         ...state,
         activeScreen: action.payload
