@@ -27,8 +27,12 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
-// api url
+// Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
+
+// Redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
 
 // Colors
 const { white, lightGrey } = Colors;
@@ -45,6 +49,10 @@ const SignupScreen = ({ navigation }) => {
   //Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
+
+  // Redux-store
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -82,6 +90,7 @@ const SignupScreen = ({ navigation }) => {
             "LinkVerificationScreen",
             ({ ...user } = response.data)
           );
+          dispatch(setActiveScreen("LinkVerificationScreen"));
           // saveLoginCredentials(
           //   user,
           //   handleMessage({ successStatus: true, msg: msg })

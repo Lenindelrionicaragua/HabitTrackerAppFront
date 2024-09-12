@@ -14,14 +14,18 @@ import {
 } from "./LinkVerificationStyles";
 import axios from "axios";
 
-// icon
+// Icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
 
-// resend timer
+// Resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
 
-// api url
+// Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
+
+// Redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
 
 // Colors
 const { white, orange } = Colors;
@@ -30,7 +34,11 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
 
-  // resend timer
+  // Redux-store
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+
+  // Resend timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
@@ -83,6 +91,11 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     }, 5000);
   };
 
+  const handleProceed = () => {
+    dispatch(setActiveScreen("LoginScreen"));
+    navigation.navigate("LoginScreen", { email: email });
+  };
+
   return (
     <StyledContainer
       style={{ alignItems: "center" }}
@@ -100,10 +113,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           We will sent you an email to verify your account.
           <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
-        <StyledButton
-          onPress={() => navigation.navigate("LoginScreen", { email: email })}
-          style={{ flexDirection: "row" }}
-        >
+        <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
           <ButtonText>Proceed</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>

@@ -50,7 +50,6 @@ WebBrowser.maybeCompleteAuthSession();
 const { seaGreen, infoGrey, darkGrey } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
-  const dispatch = useDispatch();
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
@@ -59,6 +58,8 @@ const LoginScreen = ({ navigation, route }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
+  // Redux-store
+  const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
