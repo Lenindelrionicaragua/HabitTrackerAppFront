@@ -25,13 +25,7 @@ const Banner = ({ storedCredentials }) => {
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button
-          onPress={() =>
-            navigation.navigate(
-              storedCredentials ? "WelcomeScreen" : activeScreen
-            )
-          }
-        >
+        <Button onPress={() => navigation.navigate(activeScreen)}>
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>

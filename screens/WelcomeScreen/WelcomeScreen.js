@@ -24,6 +24,10 @@ import { logInfo, logError } from "../../util/logging";
 // api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
+// redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
+
 // Credentials
 import {
   EXPO_CLIENT_ID,
@@ -33,6 +37,8 @@ import {
 } from "@env";
 
 const WelcomeScreen = () => {
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   //Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
@@ -74,6 +80,7 @@ const WelcomeScreen = () => {
         "Logout successful",
         "You have been logged out successfully."
       );
+      dispatch(setActiveScreen("LoginScreen"));
       // Make request to the logout at the server
       const response = await axios.post(`${baseApiUrl}/auth/log-out`);
       if (response.data.success) {
