@@ -39,17 +39,10 @@ const RootStack = () => {
                 paddingLeft: 20
               }
             }}
-            initialRouteName={
-              storedCredentials ? "StopwatchScreen" : activeScreen
-            }
+            initialRouteName={activeScreen}
           >
             {storedCredentials ? (
               <>
-                <Stack.Screen
-                  name="LinkVerificationScreen"
-                  component={LinkVerificationScreen}
-                  testID="link-verification"
-                />
                 <Stack.Screen
                   name="WelcomeScreen"
                   component={WelcomeScreen}
@@ -64,6 +57,11 @@ const RootStack = () => {
                   name="StopwatchScreen"
                   component={StopwatchScreen}
                   testID="stopwatch-screen"
+                />
+                <Stack.Screen
+                  name="LinkVerificationScreen"
+                  component={LinkVerificationScreen}
+                  testID="link-verification"
                 />
               </>
             ) : (

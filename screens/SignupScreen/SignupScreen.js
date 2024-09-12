@@ -46,7 +46,7 @@ const SignupScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
-  //Context
+  // Context;
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
@@ -65,7 +65,7 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // form handling
+  // Form handling
   const handleSignup = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
@@ -86,10 +86,11 @@ const SignupScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
+          dispatch(setActiveScreen("LinkVerificationScreen"));
           navigation.navigate("LinkVerificationScreen", {
             ...user
           });
-          dispatch(setActiveScreen("LinkVerificationScreen"));
+
           return saveLoginCredentials(user, msg, true);
         } else {
           logInfo(msg);
@@ -117,11 +118,16 @@ const SignupScreen = ({ navigation }) => {
   const saveLoginCredentials = (credentials, msg, successStatus) => {
     AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
       .then(() => {
+        logInfo(
+          `Credentials stored in AsyncStorage: ${JSON.stringify(credentials)}`
+        );
+
         handleMessage({
           successStatus: true,
           msg: "Login credentials saved successfully"
         });
         setStoredCredentials(credentials);
+        logInfo(`Credentials set in context: ${JSON.stringify(credentials)}`);
       })
       .catch(error => {
         logError(error);

@@ -83,7 +83,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       alert(`Resending email failed! ${error.message}`);
     }
     setResendingEmail(false);
-    // hold on message
+    // Hold on message
     setTimeout(() => {
       setResendStatus("Resend");
       setActiveResend(false);
