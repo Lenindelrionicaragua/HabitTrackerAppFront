@@ -39,7 +39,9 @@ const RootStack = () => {
                 paddingLeft: 20
               }
             }}
-            initialRouteName={activeScreen}
+            initialRouteName={
+              storedCredentials ? "StopwatchScreen" : activeScreen
+            }
           >
             {storedCredentials ? (
               <>

@@ -33,6 +33,10 @@ import { CredentialsContext } from "../../context/credentialsContext";
 // api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
+// redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
+
 // Credentials
 import {
   EXPO_CLIENT_ID,
@@ -54,6 +58,9 @@ const LoginScreen = ({ navigation, route }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -67,7 +74,7 @@ const LoginScreen = ({ navigation, route }) => {
       const { authentication } = response;
       handleGoogleResponse(authentication);
     } else if (response?.type === "error") {
-      handleMessage({ msg: "Google signin was cancelled or failed" });
+      handleMessage({ msg: "Google sign in was cancelled or failed" });
     }
   }, [response]);
 
@@ -96,6 +103,7 @@ const LoginScreen = ({ navigation, route }) => {
           msg: "Google signin was successful"
         }
       );
+      dispatch(setActiveScreen("WelcomeScreen"));
     } catch (error) {
       handleMessage({
         msg: "An error occurred. Check your network and try again"
