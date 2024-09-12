@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -27,6 +27,9 @@ import { baseApiUrl } from "../../component/Shared/SharedUrl";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
+// Credentials context
+import { CredentialsContext } from "../../context/credentialsContext";
+
 // Colors
 const { white, orange } = Colors;
 
@@ -38,12 +41,16 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
+  // Credentials context
+  const { storedCredentials } = useContext(CredentialsContext);
+
   // Resend timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
 
-  const { email, userId } = route?.params;
+  const email = storedCredentials?.email;
+  const userId = storedCredentials?.userId;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -93,7 +100,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   const handleProceed = () => {
     dispatch(setActiveScreen("LoginScreen"));
-    navigation.navigate("LoginScreen", { email: email });
+    navigation.navigate("LoginScreen", { email });
   };
 
   return (
