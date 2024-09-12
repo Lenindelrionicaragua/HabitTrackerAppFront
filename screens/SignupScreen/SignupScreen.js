@@ -86,26 +86,22 @@ const SignupScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate(
-            "LinkVerificationScreen",
-            ({ ...user } = response.data)
-          );
+          navigation.navigate("LinkVerificationScreen", {
+            ...user
+          });
           dispatch(setActiveScreen("LinkVerificationScreen"));
-          // saveLoginCredentials(
-          //   user,
-          //   handleMessage({ successStatus: true, msg: msg })
-          // );
+          return saveLoginCredentials(user, msg, true);
         } else {
           logInfo(msg);
-          handleMessage({ successStatus: true, msg: msg });
+          return handleMessage({ successStatus: false, msg: msg });
         }
       })
       .catch(error => {
         const errorMsg = error.response?.data?.msg || "An error occurred";
-        logError(error.response.data.msg);
+        logError(errorMsg);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg
+          msg: errorMsg
         });
       })
       .finally(() => {
