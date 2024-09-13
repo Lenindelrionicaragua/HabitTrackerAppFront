@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { Platform, StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
@@ -70,26 +71,34 @@ const LoginScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
-  useEffect(() => {
-    const checkStoredCredentials = async () => {
-      try {
-        const credentials = await AsyncStorage.getItem("zenTimerCredentials");
-        if (credentials) {
-          await AsyncStorage.removeItem("zenTimerCredentials");
-          setStoredCredentials(null);
-          dispatch(setActiveScreen("LoginScreen"));
-        }
-      } catch (error) {
-        logError("Error checking stored credentials:", error);
-      }
-    };
-    checkStoredCredentials();
-  }, []);
+  useEffect(() => {}, []);
 
-  useEffect(() => {
-    setMsg("");
-    setSuccessStatus("");
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // This will run every time the screen is focused
+      setMsg("");
+      setSuccessStatus("");
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      // This will run every time the screen is focused
+      const checkStoredCredentials = async () => {
+        try {
+          const credentials = await AsyncStorage.getItem("zenTimerCredentials");
+          if (credentials) {
+            await AsyncStorage.removeItem("zenTimerCredentials");
+            setStoredCredentials(null);
+            dispatch(setActiveScreen("LoginScreen"));
+          }
+        } catch (error) {
+          logError("Error checking stored credentials:", error);
+        }
+      };
+      checkStoredCredentials();
+    }, [dispatch, setStoredCredentials])
+  );
 
   useEffect(() => {
     if (response?.type === "success") {
