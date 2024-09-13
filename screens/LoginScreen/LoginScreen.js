@@ -71,6 +71,22 @@ const LoginScreen = ({ navigation, route }) => {
   });
 
   useEffect(() => {
+    const checkStoredCredentials = async () => {
+      try {
+        const credentials = await AsyncStorage.getItem("zenTimerCredentials");
+        if (credentials) {
+          await AsyncStorage.removeItem("zenTimerCredentials");
+          setStoredCredentials(null);
+          dispatch(setActiveScreen("LoginScreen"));
+        }
+      } catch (error) {
+        logError("Error checking stored credentials:", error);
+      }
+    };
+    checkStoredCredentials();
+  }, []);
+
+  useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
       handleGoogleResponse(authentication);
@@ -104,6 +120,7 @@ const LoginScreen = ({ navigation, route }) => {
           msg: "Google signin was successful"
         }
       );
+      navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } catch (error) {
       handleMessage({
@@ -162,6 +179,7 @@ const LoginScreen = ({ navigation, route }) => {
             user,
             handleMessage({ successStatus: true, msg: msg })
           );
+          navigation.navigate("WelcomeScreen");
           dispatch(setActiveScreen("WelcomeScreen"));
         } else {
           logInfo(msg);

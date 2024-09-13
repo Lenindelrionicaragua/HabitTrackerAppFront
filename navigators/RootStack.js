@@ -66,22 +66,16 @@ const RootStack = () => {
           component={SignupScreen}
           testID="signup-screen"
         />
-
-        {/* Conditional Screens */}
-        {storedCredentials && (
-          <>
-            <Stack.Screen
-              name="WelcomeScreen"
-              component={WelcomeScreen}
-              testID="welcome-screen"
-            />
-            <Stack.Screen
-              name="LinkVerificationScreen"
-              component={LinkVerificationScreen}
-              testID="link-verification"
-            />
-          </>
-        )}
+        <Stack.Screen
+          name="WelcomeScreen"
+          component={WelcomeScreen}
+          testID="welcome-screen"
+        />
+        <Stack.Screen
+          name="LinkVerificationScreen"
+          component={LinkVerificationScreen}
+          testID="link-verification"
+        />
       </Stack.Navigator>
       <Banner storedCredentials={storedCredentials} />
     </NavigationContainer>
