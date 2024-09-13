@@ -87,6 +87,11 @@ const LoginScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
+    setMsg("");
+    setSuccessStatus("");
+  }, []);
+
+  useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
       handleGoogleResponse(authentication);
