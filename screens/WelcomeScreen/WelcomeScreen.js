@@ -36,7 +36,7 @@ import {
   WEB_CLIENT_ID
 } from "@env";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   //Context
@@ -76,18 +76,23 @@ const WelcomeScreen = () => {
       await AsyncStorage.removeItem("zenTimerCredentials");
       setStoredCredentials("");
       logInfo("Logout successful");
+
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
       );
-      dispatch(setActiveScreen("LoginScreen"));
-      // Make request to the logout at the server
+
+      // Server-side logout
       const response = await axios.post(`${baseApiUrl}/auth/log-out`);
       if (response.data.success) {
         logInfo("User successfully logged out");
       } else {
         logError("Logout failed: " + response.data.message);
       }
+
+      // Navigate to login screen and update redux state
+      navigation.navigate("LoginScreen");
+      dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {
       logError(error);
       Alert.alert("Logout failed", "An error occurred during logout.");
