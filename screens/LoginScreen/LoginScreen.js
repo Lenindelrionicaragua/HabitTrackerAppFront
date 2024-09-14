@@ -140,8 +140,15 @@ const LoginScreen = ({ navigation, route }) => {
       handleMessage({
         msg: "An error occurred. Check your network and try again"
       });
+    } finally {
       setGoogleSubmitting(false);
     }
+  };
+
+  // Ensure to handle Google sign-in click properly
+  const handleGoogleSignIn = () => {
+    setGoogleSubmitting(true);
+    promptAsync();
   };
 
   const sendGoogleDataToServer = async userData => {
@@ -322,10 +329,7 @@ const LoginScreen = ({ navigation, route }) => {
                   <StyledButton
                     google={true}
                     disabled={!request}
-                    onPress={() => {
-                      setGoogleSubmitting(true);
-                      promptAsync();
-                    }}
+                    onPress={handleGoogleSignIn}
                     testID="google-styled-button"
                   >
                     <Fontisto
