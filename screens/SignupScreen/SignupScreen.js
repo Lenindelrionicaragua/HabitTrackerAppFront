@@ -27,8 +27,12 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
-// api url
+// Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
+
+// Redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
 
 // Colors
 const { white, lightGrey } = Colors;
@@ -42,9 +46,13 @@ const SignupScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
-  //Context
+  // Context;
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
+
+  // Redux-store
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -57,7 +65,7 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // form handling
+  // Form handling
   const handleSignup = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
@@ -78,25 +86,23 @@ const SignupScreen = ({ navigation }) => {
 
         if (success) {
           setSuccessStatus(success);
-          navigation.navigate(
-            "LinkVerificationScreen",
-            ({ ...user } = response.data)
-          );
-          // saveLoginCredentials(
-          //   user,
-          //   handleMessage({ successStatus: true, msg: msg })
-          // );
+          dispatch(setActiveScreen("LinkVerificationScreen"));
+          navigation.navigate("LinkVerificationScreen", {
+            ...user
+          });
+
+          return saveLoginCredentials(user, msg, true);
         } else {
           logInfo(msg);
-          handleMessage({ successStatus: true, msg: msg });
+          return handleMessage({ successStatus: false, msg: msg });
         }
       })
       .catch(error => {
         const errorMsg = error.response?.data?.msg || "An error occurred";
-        logError(error.response.data.msg);
+        logError(errorMsg);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg
+          msg: errorMsg
         });
       })
       .finally(() => {

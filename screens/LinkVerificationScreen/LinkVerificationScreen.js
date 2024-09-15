@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -14,14 +14,21 @@ import {
 } from "./LinkVerificationStyles";
 import axios from "axios";
 
-// icon
+// Icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
 
-// resend timer
+// Resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
 
-// api url
+// Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
+
+// Redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
+
+// Credentials context
+import { CredentialsContext } from "../../context/credentialsContext";
 
 // Colors
 const { white, orange } = Colors;
@@ -30,12 +37,20 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
 
-  // resend timer
+  // Redux-store
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+
+  // Credentials context
+  const { storedCredentials } = useContext(CredentialsContext);
+
+  // Resend timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
 
-  const { email, userId } = route?.params;
+  const email = storedCredentials?.email;
+  const userId = storedCredentials?.userId;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -75,12 +90,17 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       alert(`Resending email failed! ${error.message}`);
     }
     setResendingEmail(false);
-    // hold on message
+    // Hold on message
     setTimeout(() => {
       setResendStatus("Resend");
       setActiveResend(false);
       triggerTimer();
     }, 5000);
+  };
+
+  const handleProceed = () => {
+    dispatch(setActiveScreen("LoginScreen"));
+    navigation.navigate("LoginScreen", { email });
   };
 
   return (
@@ -100,10 +120,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           We will sent you an email to verify your account.
           <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
-        <StyledButton
-          onPress={() => navigation.navigate("LoginScreen", { email: email })}
-          style={{ flexDirection: "row" }}
-        >
+        <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
           <ButtonText>Proceed</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>

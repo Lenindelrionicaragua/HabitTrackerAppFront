@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { Platform, StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
@@ -33,6 +34,10 @@ import { CredentialsContext } from "../../context/credentialsContext";
 // api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
+// redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
+
 // Credentials
 import {
   EXPO_CLIENT_ID,
@@ -54,6 +59,10 @@ const LoginScreen = ({ navigation, route }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
+  // Redux-store
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -62,12 +71,41 @@ const LoginScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
+  useEffect(() => {}, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      // This will run every time the screen is focused
+      setMsg("");
+      setSuccessStatus("");
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      // This will run every time the screen is focused
+      const checkStoredCredentials = async () => {
+        try {
+          const credentials = await AsyncStorage.getItem("zenTimerCredentials");
+          if (credentials) {
+            await AsyncStorage.removeItem("zenTimerCredentials");
+            setStoredCredentials(null);
+            dispatch(setActiveScreen("LoginScreen"));
+          }
+        } catch (error) {
+          logError("Error checking stored credentials:", error);
+        }
+      };
+      checkStoredCredentials();
+    }, [dispatch, setStoredCredentials])
+  );
+
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
       handleGoogleResponse(authentication);
     } else if (response?.type === "error") {
-      handleMessage({ msg: "Google signin was cancelled or failed" });
+      handleMessage({ msg: "Google sign in was cancelled or failed" });
     }
   }, [response]);
 
@@ -96,12 +134,21 @@ const LoginScreen = ({ navigation, route }) => {
           msg: "Google signin was successful"
         }
       );
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
     } catch (error) {
       handleMessage({
         msg: "An error occurred. Check your network and try again"
       });
+    } finally {
       setGoogleSubmitting(false);
     }
+  };
+
+  // Ensure to handle Google sign-in click properly
+  const handleGoogleSignIn = () => {
+    setGoogleSubmitting(true);
+    promptAsync();
   };
 
   const sendGoogleDataToServer = async userData => {
@@ -153,6 +200,8 @@ const LoginScreen = ({ navigation, route }) => {
             user,
             handleMessage({ successStatus: true, msg: msg })
           );
+          navigation.navigate("WelcomeScreen");
+          dispatch(setActiveScreen("WelcomeScreen"));
         } else {
           logInfo(msg);
           handleMessage({ successStatus: true, msg: msg });
@@ -280,10 +329,7 @@ const LoginScreen = ({ navigation, route }) => {
                   <StyledButton
                     google={true}
                     disabled={!request}
-                    onPress={() => {
-                      setGoogleSubmitting(true);
-                      promptAsync();
-                    }}
+                    onPress={handleGoogleSignIn}
                     testID="google-styled-button"
                   >
                     <Fontisto
