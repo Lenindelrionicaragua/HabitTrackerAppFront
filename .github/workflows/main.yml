@@ -32,9 +32,9 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          EXPO_CLIENT_ID: ${{ secrets.EXPO_CLIENT_ID }}
-          IOS_CLIENT_ID: ${{ secrets.IOS_CLIENT_ID }}
-          ANDROID_CLIENT_ID: ${{ secrets.ANDROID_CLIENT_ID }}
-          WEB_CLIENT_ID: ${{ secrets.WEB_CLIENT_ID }}
-          API_URL_DEVELOPMENT: ${{ secrets.API_URL_DEVELOPMENT }}
-          API_URL_PRODUCTION: ${{ secrets.API_URL_PRODUCTION }}
+          # EXPO_CLIENT_ID: ${{ secrets.EXPO_CLIENT_ID }}
+          # IOS_CLIENT_ID: ${{ secrets.IOS_CLIENT_ID }}
+          # ANDROID_CLIENT_ID: ${{ secrets.ANDROID_CLIENT_ID }}
+          # WEB_CLIENT_ID: ${{ secrets.WEB_CLIENT_ID }}
+          # API_URL_DEVELOPMENT: ${{ secrets.API_URL_DEVELOPMENT }}
+          # API_URL_PRODUCTION: ${{ secrets.API_URL_PRODUCTION }}
