@@ -12,7 +12,7 @@ https://habit-tracker-app-front.netlify.app
 
 Test in mobile:
 
-![Captura de Pantalla 2024-09-15 a la(s) 19 56 25](https://github.com/user-attachments/assets/9eadbd3e-5b78-4ae5-9dda-04def8d4bd57)
+![Captura de Pantalla 2024-09-16 a la(s) 12 05 32](https://github.com/user-attachments/assets/f066586c-400c-456f-a427-870a8393ff74)
 
 Habit Traker: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
