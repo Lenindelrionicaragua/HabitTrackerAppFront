@@ -1,10 +1,6 @@
 # Habit Traker!
 
-Deploy link login/signin:
-
-https://6671a67ca79a96009c798e8b--habit-tracker-app-front.netlify.app
-
-stopwatch in development:
+Stopwatch in development:
 
 https://habit-tracker-app-front.netlify.app
 
