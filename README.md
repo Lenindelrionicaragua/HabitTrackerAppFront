@@ -1,6 +1,6 @@
 # Habit Traker!
 
-Stopwatch in development:
+Web version of the app:
 
 https://habit-tracker-app-front.netlify.app
 
