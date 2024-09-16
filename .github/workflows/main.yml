@@ -1,13 +1,10 @@
 name: Deploy to Netlify
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,9 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-
-          node-version: '18' 
-
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -29,17 +24,17 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --dir=dist --prod
+        run: netlify deploy --prod --dir=dist
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          EXPO_CLIENT_ID: ${{ secrets.EXPO_CLIENT_ID}}
-          IOS_CLIENT_I: ${{secrets.IOS_CLIENT_I}}
-          ANDROID_CLIENT_ID: ${{secrets.ANDROID_CLIENT_ID}}
-          WEB_CLIENT_I: ${{secrets.WEB_CLIENT_I}}
-          API_URL_DEVELOPMENT: ${{secrets.API_URL_DEVELOPMENT}}
-          API_URL_PRODUCTION: ${{secrets.API_URL_PRODUCTION}}
-          
+          EXPO_CLIENT_ID: ${{ secrets.EXPO_CLIENT_ID }}
+          IOS_CLIENT_ID: ${{ secrets.IOS_CLIENT_ID }}
+          ANDROID_CLIENT_ID: ${{ secrets.ANDROID_CLIENT_ID }}
+          WEB_CLIENT_ID: ${{ secrets.WEB_CLIENT_ID }}
+          API_URL_DEVELOPMENT: ${{ secrets.API_URL_DEVELOPMENT }}
+          API_URL_PRODUCTION: ${{ secrets.API_URL_PRODUCTION }}
