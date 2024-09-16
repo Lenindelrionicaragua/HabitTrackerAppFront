@@ -31,25 +31,18 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
-// api url
-import { baseApiUrl } from "../../component/Shared/SharedUrl";
+// Credentials and Url
+import {
+  baseApiUrl,
+  expoClientId,
+  iosClientId,
+  androidClientId,
+  webClientId
+} from "../../component/Shared/SharedUrl";
 
 // redux-store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
-
-// import {
-//   EXPO_CLIENT_ID,
-//   IOS_CLIENT_ID,
-//   ANDROID_CLIENT_ID,
-//   WEB_CLIENT_ID
-// } from "@env";
-
-// Credentials
-const EXPO_CLIENT_ID = process.env.EXPO_CLIENT_ID;
-const IOS_CLIENT_ID = process.env.IOS_CLIENT_ID;
-const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID;
-const WEB_CLIENT_ID = process.env.WEB_CLIENT_ID;
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -69,10 +62,10 @@ const LoginScreen = ({ navigation, route }) => {
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: process.env.EXPO_CLIENT_ID,
-    iosClientId: process.env.IOS_CLIENT_ID,
-    androidClientId: process.env.ANDROID_CLIENT_ID,
-    webClientId: process.env.WEB_CLIENT_ID,
+    expoClientId: expoClientId,
+    iosClientId: iosClientId,
+    androidClientId: androidClientId,
+    webClientId: webClientId,
     scopes: ["profile", "email", "openid"]
   });
 
