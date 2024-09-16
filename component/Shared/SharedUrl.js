@@ -21,5 +21,5 @@ export const androidClientId = ANDROID_CLIENT_ID;
 export const webClientId = WEB_CLIENT_ID;
 
 logInfo(`NODE_ENV: ${NODE_ENV}`);
-logInfo(`API_URL_DEVELOPMENT: ${API_URL_DEVELOPMENT}`);
-logInfo(`API_URL_PRODUCTION: ${API_URL_PRODUCTION}`);
+// logInfo(`API_URL_DEVELOPMENT: ${API_URL_DEVELOPMENT}`);
+// logInfo(`API_URL_PRODUCTION: ${API_URL_PRODUCTION}`);
