@@ -11,7 +11,7 @@ import {
 import { logInfo } from "../../util/logging";
 
 export const baseApiUrl =
-  NODE_ENV === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT;
+  NODE_ENV !== "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT;
 
 export const expoClientId = EXPO_CLIENT_ID;
 export const iosClientId = IOS_CLIENT_ID;
