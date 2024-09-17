@@ -27,21 +27,23 @@ const red = "#ff0000";
 const paddingTop = Platform.OS === "web" ? "7%" : "0%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
-const containerWidth = Platform.OS === "web" ? "50%" : "100%";
+const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 const textInputHeight = Platform.OS === "web" ? "50px" : "60px";
 const buttonHeight = Platform.OS === "web" ? "50px" : "60px";
 
-const SubTitleMarginBotton = Platform.OS === "web" ? "0px" : "10px";
+const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
+
+const lineMarginVertical = Platform.OS === "web" ? "5px" : "10px";
 const footerPaddingTop = Platform.OS === "web" ? "10px" : "15px";
 
 export const StyledContainer = styled(
   Platform.OS === "web" ? View : SafeAreaView
 )`
   flex: 1;
+  padding: 15px;
   background-color: ${darkGrey};
   width: ${containerWidth};
-  padding: 15px;
   height: ${containerHeight};
   margin-top: ${paddingTop};
   margin-bottom: ${paddingBottom};
@@ -76,7 +78,7 @@ export const PageTitle = styled(Text)`
 
 export const SubTitle = styled(Text)`
   font-size: 10px;
-  margin-bottom: ${SubTitleMarginBotton};
+  margin-bottom: ${SubTitleMarginBottom};
   letter-spacing: 1px;
   font-weight: bold;
   color: ${infoGrey};
@@ -160,7 +162,7 @@ export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 10px;
+  margin-vertical: ${lineMarginVertical}x;
 `;
 
 export const FooterView = styled(View)`
@@ -184,6 +186,7 @@ export const SignupLink = styled(Pressable)`
 `;
 
 export const SignupLinkContent = styled(Text)`
-  color: ${lightPink};
+  padding-left: 5px;
+  color: ${lightGreen};
   font-size: 15px;
 `;
