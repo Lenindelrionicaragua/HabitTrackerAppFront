@@ -27,6 +27,7 @@ const red = "#ff0000";
 const paddingTop = Platform.OS === "web" ? "7%" : "0%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+const textInputHeight = Platform.OS === "web" ? 40 : 60;
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
@@ -83,10 +84,12 @@ export const StyledTextInput = styled(TextInput)`
   padding-right: 55px;
   border-radius: 5px;
   font-size: 16px;
-  height: 60px;
+  height: ${textInputHeight};
   margin-vertical: 3px;
   margin-bottom: 10px;
   color: ${infoGrey};
+  position: relative;
+  z-index: 0;
 `;
 
 export const StyledInputLabel = styled(Text)`
@@ -96,16 +99,16 @@ export const StyledInputLabel = styled(Text)`
 `;
 
 export const LeftIcon = styled(View)`
-  left: 15px;
-  top: 38px;
   position: absolute;
+  left: 15px;
+  top: 38%;
   z-index: 1;
 `;
 
 export const RightIcon = styled(Pressable)`
-  right: 15px;
-  top: 38px;
   position: absolute;
+  right: 15px;
+  top: 43%;
   z-index: 1;
 `;
 

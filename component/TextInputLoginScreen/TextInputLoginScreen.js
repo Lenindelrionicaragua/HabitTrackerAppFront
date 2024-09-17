@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { Octicons, Feather } from "@expo/vector-icons";
 import {
   StyledInputLabel,
@@ -10,6 +10,9 @@ import {
 import { Colors } from "../../styles/AppStyles";
 
 const { darkGrey, black } = Colors;
+
+const iconSize = Platform.OS === "web" ? 25 : 30;
+const rightIconSize = Platform.OS === "web" ? 20 : 25;
 
 const TextInputLoginScreen = props => {
   const {
@@ -24,7 +27,12 @@ const TextInputLoginScreen = props => {
   return (
     <View testID="text-input-login-screen">
       <LeftIcon testID="left-icon">
-        <Octicons name={icon} size={30} color={black} testID="octicons-icon" />
+        <Octicons
+          name={icon}
+          size={iconSize}
+          color={black}
+          testID="octicons-icon"
+        />
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput
@@ -38,7 +46,7 @@ const TextInputLoginScreen = props => {
         >
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
-            size={25}
+            size={rightIconSize}
             color={darkGrey}
             onPress={() => setHidePassword(!hidePassword)}
             testID="feather-icon"
