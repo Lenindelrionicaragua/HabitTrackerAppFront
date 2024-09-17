@@ -11,7 +11,7 @@ import { Colors } from "../../styles/AppStyles";
 
 const { darkGrey, black } = Colors;
 
-const iconSize = Platform.OS === "web" ? 25 : 30;
+const iconSize = Platform.OS === "web" ? 22 : 30;
 const rightIconSize = Platform.OS === "web" ? 20 : 25;
 
 const TextInputLoginScreen = props => {
