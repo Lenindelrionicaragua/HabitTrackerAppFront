@@ -25,10 +25,10 @@ const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
-const textInputHeight = Platform.OS === "web" ? "40px" : "60px";
-const buttonHeight = Platform.OS === "web" ? "40px" : "60px";
+const textInputHeight = Platform.OS === "web" ? "40px" : "53px";
+const buttonHeight = Platform.OS === "web" ? "40px" : "53px";
 
-const footerPaddingTop = Platform.OS === "web" ? "0px" : "15px";
+const footerPaddingTop = Platform.OS === "web" ? "12px" : "10px";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
@@ -105,7 +105,7 @@ export const RightIcon = styled(Pressable)`
 `;
 
 export const StyledButton = styled(Pressable)`
-  padding: 15px;
+  margin-top: -10px;
   background-color: ${black};
   justify-content: center;
   align-items: center;
@@ -124,7 +124,7 @@ export const StyledButton = styled(Pressable)`
 
 export const ButtonText = styled(Text)`
   color: ${seaGreen};
-  font-size: 16px;
+  font-size: 15px;
 
   ${props =>
     props.google == true &&
@@ -151,7 +151,6 @@ export const FooterView = styled(View)`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
   padding-top: ${footerPaddingTop};
 `;
 
