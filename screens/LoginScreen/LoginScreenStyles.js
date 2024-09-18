@@ -35,7 +35,7 @@ const buttonHeight = Platform.OS === "web" ? "50px" : "60px";
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
 const lineMarginVertical = Platform.OS === "web" ? "5px" : "10px";
-const footerPaddingTop = Platform.OS === "web" ? "15px" : "17px";
+const footerPaddingTop = Platform.OS === "web" ? "15px" : "15px";
 
 export const StyledContainer = styled(
   Platform.OS === "web" ? View : SafeAreaView

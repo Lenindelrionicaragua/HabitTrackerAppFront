@@ -25,10 +25,10 @@ const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
-const textInputHeight = Platform.OS === "web" ? "40px" : "53px";
-const buttonHeight = Platform.OS === "web" ? "40px" : "53px";
+const textInputHeight = Platform.OS === "web" ? "40px" : "55px";
+const buttonHeight = Platform.OS === "web" ? "40px" : "55px";
 
-const footerPaddingTop = Platform.OS === "web" ? "12px" : "10px";
+const footerPaddingTop = Platform.OS === "web" ? "12px" : "4px";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
