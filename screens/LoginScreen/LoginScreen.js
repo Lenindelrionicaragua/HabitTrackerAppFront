@@ -102,8 +102,9 @@ const LoginScreen = ({ navigation, route }) => {
     if (response?.type === "success") {
       const { authentication } = response;
       handleGoogleResponse(authentication);
-    } else if (response?.type === "error") {
+    } else if (response?.type === "error" || response?.type === "dismiss") {
       handleMessage({ msg: "Google sign in was cancelled or failed" });
+      setGoogleSubmitting(false);
     }
   }, [response]);
 

@@ -18,15 +18,15 @@ const {
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "10%" : "5%";
+const paddingTop = Platform.OS === "web" ? "5%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "20%";
-const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+const containerHeight = Platform.OS === "web" ? "75%" : "100%";
 const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
-const textInputHeight = Platform.OS === "web" ? "40px" : "55px";
-const buttonHeight = Platform.OS === "web" ? "40px" : "55px";
+const textInputHeight = Platform.OS === "web" ? "45px" : "55px";
+const buttonHeight = Platform.OS === "web" ? "45px" : "55px";
 
 const footerPaddingTop = Platform.OS === "web" ? "12px" : "4px";
 
@@ -36,8 +36,8 @@ export const StyledContainer = styled(SafeAreaView)`
   background-color: ${darkGrey};
   width: ${containerWidth};
   height: ${containerHeight};
-  margin-top: ${paddingTop};
-  margin-bottom: ${paddingBottom};
+  padding-top: ${paddingTop};
+  padding-bottom: ${paddingBottom};
   align-items: ${Platform.OS === "web" ? "center" : "stretch"};
   margin-left: auto;
   margin-right: auto;
@@ -105,38 +105,23 @@ export const RightIcon = styled(Pressable)`
 `;
 
 export const StyledButton = styled(Pressable)`
-  margin-top: -10px;
   background-color: ${black};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 5px;
-  height: ${buttonHeight};
 
-  ${props =>
-    props.google == true &&
-    `
-    background-color: ${white};
-    flex-direction: row;
-    justify-content: center;
-  `}
+  height: ${buttonHeight};
 `;
 
 export const ButtonText = styled(Text)`
   color: ${seaGreen};
   font-size: 15px;
-
-  ${props =>
-    props.google == true &&
-    `
-    padding: 25px;
-    color: ${black}
-  `}
 `;
 
 export const MsgBox = styled(Text)`
   text-align: center;
   font-size: 13px;
+  padding: 5px;
   color: ${prop => (prop.type === "SUCCESS" ? green : red)};
 `;
 
