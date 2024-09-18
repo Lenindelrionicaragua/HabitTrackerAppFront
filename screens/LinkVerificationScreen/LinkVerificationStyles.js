@@ -1,5 +1,11 @@
 import styled from "styled-components/native";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  Platform
+} from "react-native";
 import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
 
@@ -11,29 +17,39 @@ const {
   lightGrey,
   black,
   skyBlue,
-  lightGreen
+  lightGreen,
+  darkGrey
 } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
 
+const containerHeight = Platform.OS === "web" ? "90%" : "85%";
+const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+const marginTopTopContainer = Platform.OS === "web" ? "80px" : "120px";
+
 export const StyledContainer = styled(SafeAreaView)`
-  flex: 1;
   background-color: ${lightGrey};
+  width: ${containerWidth};
+  height: ${containerHeight};
+  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
   width: 100%;
 `;
 
 export const TopContainer = styled(View)`
   flex: 1;
   justify-content: center;
-  padding: 20px;
+  padding: 0px;
+  margin-top: ${marginTopTopContainer};
+  margin-bottom: -20px;
 `;
 
 export const IconBackGround = styled(View)`
   width: 250px;
   height: 250px;
+
   background-color: ${black};
-  border-radius: 250px;
+  border-radius: 500px;
   justify-content: center;
   align-items: center;
 `;
@@ -48,12 +64,12 @@ export const PageTitle = styled(Text)`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
-  color: ${white};
-  padding: 10px;
+  color: ${lightGrey};
+  padding: 0px;
 `;
 
 export const InfoText = styled(Text)`
-  color: ${infoWhite};
+  color: ${lightGrey};
   font-size: 15px;
   text-align: center;
 `;
@@ -61,6 +77,7 @@ export const InfoText = styled(Text)`
 export const EmphasizeText = styled(Text)`
   font-weight: bold;
   font-style: italic;
+  padding-left: 2px;
 `;
 
 export const StyledButton = styled(Pressable)`
@@ -84,6 +101,7 @@ export const StyledButton = styled(Pressable)`
 export const ButtonText = styled(Text)`
   color: ${seaGreen};
   font-size: 16px;
+  padding-right: 5px;
 
   ${props =>
     props.google == true &&
@@ -103,10 +121,11 @@ export const InlineGroup = styled(View)`
 export const TextLink = styled(TouchableOpacity)`
   justify-content: center;
   align-items: center;
+  color: ${green};
+  padding-left: 5px;
 `;
 
 export const TextLinkContent = styled(Text)`
-  color: ${lightPink};
   font-size: 15px;
 
   ${props => {
@@ -114,7 +133,7 @@ export const TextLinkContent = styled(Text)`
     if (resendStatus === "Failed!") {
       return `color: ${red}`;
     } else if (resendStatus === "Sent!") {
-      return `color: ${green}`;
+      return `color: ${lightGreen}`;
     }
   }}
 `;

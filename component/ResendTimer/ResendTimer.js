@@ -9,7 +9,17 @@ import {
 } from "./ResendTimerStyles";
 import { Colors } from "./../../styles/AppStyles";
 
-const { darkGrey } = Colors;
+const {
+  seaGreen,
+  white,
+  infoWhite,
+  lightPink,
+  lightGrey,
+  black,
+  skyBlue,
+  lightGreen,
+  darkGrey
+} = Colors;
 
 const ResendTimer = ({
   activeResend,
