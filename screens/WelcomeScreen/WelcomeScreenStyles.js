@@ -15,7 +15,7 @@ const {
 } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
-const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
   background-color: ${darkGrey};
