@@ -14,6 +14,7 @@ const {
   lightGreen
 } = Colors;
 
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
 const marginTop = Platform.OS === "web" ? "1%" : "2%";
 const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
@@ -23,7 +24,9 @@ export const StyledContainer = styled(SafeAreaView)`
   background-color: ${darkGrey};
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: ${containerWidth};
+  margin-left: auto;
+  margin-right: auto;
   padding: 5%;
   padding-bottom: ${paddingBottom};
 `;
