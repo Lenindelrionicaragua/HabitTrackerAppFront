@@ -1,7 +1,7 @@
 import { logInfo } from "../util/logging";
 
 const initialActiveScreenState = {
-  activeScreen: "LinkVerificationScreen"
+  activeScreen: "LoginScreen"
 };
 
 const activeScreenReducer = (state = initialActiveScreenState, action) => {
