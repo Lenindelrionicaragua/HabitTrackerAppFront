@@ -21,7 +21,7 @@ const red = "#ff0000";
 const paddingTop = Platform.OS === "web" ? "5%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "20%";
 const containerHeight = Platform.OS === "web" ? "75%" : "100%";
-const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 

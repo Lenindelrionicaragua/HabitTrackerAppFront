@@ -27,7 +27,7 @@ const red = "#ff0000";
 const paddingTop = Platform.OS === "web" ? "7%" : "0%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
-const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 
 const textInputHeight = Platform.OS === "web" ? "50px" : "60px";
 const buttonHeight = Platform.OS === "web" ? "50px" : "60px";
