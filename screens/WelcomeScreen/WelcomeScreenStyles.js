@@ -14,11 +14,10 @@ const {
   black
 } = Colors;
 
-const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+const containerHeight = Platform.OS === "web" ? "85%" : "90%";
 const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
-  flex: 1;
   background-color: ${darkGrey};
   width: ${containerWidth};
   height: ${containerHeight};
@@ -51,7 +50,7 @@ export const Avatar = styled(Image)`
 `;
 
 export const WelcomeImage = styled(Image)`
-  height: 40%;
+  height: 50%;
   width: 100%;
 `;
 
@@ -122,5 +121,5 @@ export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 10px;
+  margin-vertical: 5px;
 `;
