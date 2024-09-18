@@ -120,7 +120,7 @@ export const ButtonText = styled(Text)`
 
 export const MsgBox = styled(Text)`
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   padding: 5px;
   color: ${prop => (prop.type === "SUCCESS" ? green : red)};
 `;

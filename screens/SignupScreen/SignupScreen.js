@@ -98,13 +98,24 @@ const SignupScreen = ({ navigation }) => {
         }
       })
       .catch(error => {
-        const errorMsg = error.response?.data?.msg || "An error occurred";
-        logError(errorMsg);
-        handleMessage({
-          successStatus: false,
-          msg: errorMsg
-        });
+        const status = error.response?.status;
+
+        if (status === 503) {
+          handleMessage({
+            successStatus: false,
+            msg: "Service is currently unavailable. Please try again later."
+          });
+        } else {
+          const errorMsg =
+            error.response?.data?.msg || error.message || "An error occurred";
+          logError("Error:", error.response?.data || error.message || error);
+          handleMessage({
+            successStatus: false,
+            msg: errorMsg
+          });
+        }
       })
+
       .finally(() => {
         setSubmitting(false);
       });
