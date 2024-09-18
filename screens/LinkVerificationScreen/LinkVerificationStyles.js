@@ -25,7 +25,7 @@ const green = "#00ff00";
 const red = "#ff0000";
 
 const containerHeight = Platform.OS === "web" ? "90%" : "85%";
-const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const marginTopTopContainer = Platform.OS === "web" ? "80px" : "120px";
 
 export const StyledContainer = styled(SafeAreaView)`
