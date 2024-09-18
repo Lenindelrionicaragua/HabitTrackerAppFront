@@ -1,14 +1,29 @@
 import styled from "styled-components/native";
-import { View, Image, Text, Pressable } from "react-native";
+import { View, Image, Text, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { seaGreen, white, infoWhite, lightPink, darkGrey, black } = Colors;
+const {
+  seaGreen,
+  white,
+  infoGrey,
+  infoWhite,
+  lightPink,
+  skyBlue,
+  darkGrey,
+  black
+} = Colors;
+
+const containerHeight = Platform.OS === "web" ? "85%" : "90%";
+const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
-  flex: 1;
   background-color: ${darkGrey};
-  width: 100%;
+  width: ${containerWidth};
+  height: ${containerHeight};
+  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const InnerContainer = styled(View)`
@@ -19,7 +34,6 @@ export const InnerContainer = styled(View)`
 `;
 
 export const WelcomeContainer = styled(InnerContainer)`
-  padding: 25px;
   padding-top: 10px;
   justify-content: center;
 `;
@@ -30,7 +44,7 @@ export const Avatar = styled(Image)`
   margin: auto;
   border-radius: 50px;
   border-width: 2px;
-  border-color: ${lightPink};
+  border-color: ${black};
   margin-bottom: 10px;
   margin-top: 10px;
 `;
@@ -59,7 +73,7 @@ export const SubTitle = styled(Text)`
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${infoWhite};
+  color: ${infoGrey};
 
   ${props =>
     props.welcome &&
@@ -107,5 +121,5 @@ export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 10px;
+  margin-vertical: 5px;
 `;

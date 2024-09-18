@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Pressable } from "react-native";
+import { View, Pressable, Platform } from "react-native";
 import { Octicons, Feather } from "@expo/vector-icons";
 import {
   StyledInputLabel,
@@ -10,6 +10,9 @@ import {
 import { Colors } from "../../styles/AppStyles";
 
 const { darkGrey, black } = Colors;
+
+const iconSize = Platform.OS === "web" ? 22 : 25;
+const rightIconSize = Platform.OS === "web" ? 20 : 22;
 
 const TextInputSignupScreen = props => {
   const {
@@ -26,7 +29,7 @@ const TextInputSignupScreen = props => {
   return (
     <View testID="text-input-signup-screen">
       <LeftIcon testID="left-icon">
-        <Octicons name={icon} size={30} color={black} />
+        <Octicons name={icon} size={iconSize} color={black} />
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       {!isDate && (
@@ -50,7 +53,7 @@ const TextInputSignupScreen = props => {
         >
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
-            size={25}
+            size={rightIconSize}
             color={darkGrey}
           />
         </RightIcon>

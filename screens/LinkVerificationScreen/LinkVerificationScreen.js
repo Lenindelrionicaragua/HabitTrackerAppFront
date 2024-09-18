@@ -31,7 +31,16 @@ import { setActiveScreen } from "../../actions/counterActions";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // Colors
-const { white, orange } = Colors;
+const {
+  seaGreen,
+  white,
+  infoWhite,
+  lightPink,
+  lightGrey,
+  black,
+  skyBlue,
+  lightGreen
+} = Colors;
 
 const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
@@ -111,7 +120,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       <TopContainer>
         <IconBackGround>
           <StatusBar style="dark" />
-          <Octicons name="mail" size={125} color={orange} />
+          <Octicons name="mail" size={125} color={white} />
         </IconBackGround>
       </TopContainer>
       <BottomContainer>

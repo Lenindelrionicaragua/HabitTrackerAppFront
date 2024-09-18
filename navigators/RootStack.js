@@ -42,7 +42,8 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        initialRouteName={activeScreen}
+        // initialRouteName={activeScreen}
+        initialRouteName={StopwatchScreen}
       >
         {/* Common Screens */}
         <Stack.Screen

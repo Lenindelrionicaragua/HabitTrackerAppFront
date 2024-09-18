@@ -10,6 +10,7 @@ const {
   lightPink,
   darkGrey,
   black,
+  infoGrey,
   skyBlue,
   lightGreen
 } = Colors;
@@ -17,23 +18,33 @@ const {
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "10%" : "5%";
+const paddingTop = Platform.OS === "web" ? "5%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "20%";
-const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+const containerHeight = Platform.OS === "web" ? "75%" : "100%";
+const containerWidth = Platform.OS === "web" ? "500px" : "100%";
+
+const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
+
+const textInputHeight = Platform.OS === "web" ? "45px" : "55px";
+const buttonHeight = Platform.OS === "web" ? "45px" : "55px";
+
+const footerPaddingTop = Platform.OS === "web" ? "12px" : "4px";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   padding: 15px;
   background-color: ${darkGrey};
-  width: 100%;
+  width: ${containerWidth};
   height: ${containerHeight};
-  /**
-  margin-top: ${paddingTop};
-  margin-bottom: ${paddingBottom};
-  **/
+  padding-top: ${paddingTop};
+  padding-bottom: ${paddingBottom};
+  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const InnerContainer = styled(View)`
+  background-color: ${darkGrey};
   flex: 1;
   width: 100%;
   align-items: center;
@@ -50,10 +61,10 @@ export const PageTitle = styled(Text)`
 
 export const SubTitle = styled(Text)`
   font-size: 10px;
-  margin-bottom: 20px;
+  margin-bottom: ${SubTitleMarginBottom};
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${infoWhite};
+  color: ${black};
 `;
 
 export const StyledFormArea = styled(View)`
@@ -67,65 +78,50 @@ export const StyledTextInput = styled(TextInput)`
   padding-right: 55px;
   border-radius: 5px;
   font-size: 16px;
-  height: 60px;
+  height: ${textInputHeight};
   margin-vertical: 3px;
   margin-bottom: 10px;
-  color: ${infoWhite};
+  color: ${infoGrey};
 `;
 
 export const StyledInputLabel = styled(Text)`
-  color: ${infoWhite};
+  color: ${infoGrey};
   font-size: 13px;
   text-align: left;
 `;
 
 export const LeftIcon = styled(View)`
   left: 15px;
-  top: 38px;
+  top: 40%;
   position: absolute;
   z-index: 1;
 `;
 
 export const RightIcon = styled(Pressable)`
   right: 15px;
-  top: 38px;
+  top: 40%;
   position: absolute;
   z-index: 1;
 `;
 
 export const StyledButton = styled(Pressable)`
-  padding: 15px;
   background-color: ${black};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 5px;
-  height: 60px;
 
-  ${props =>
-    props.google == true &&
-    `
-    background-color: ${white};
-    flex-direction: row;
-    justify-content: center;
-  `}
+  height: ${buttonHeight};
 `;
 
 export const ButtonText = styled(Text)`
   color: ${seaGreen};
-  font-size: 16px;
-
-  ${props =>
-    props.google == true &&
-    `
-    padding: 25px;
-    color: ${black}
-  `}
+  font-size: 15px;
 `;
 
 export const MsgBox = styled(Text)`
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
+  padding: 5px;
   color: ${prop => (prop.type === "SUCCESS" ? green : red)};
 `;
 
@@ -140,13 +136,13 @@ export const FooterView = styled(View)`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
+  padding-top: ${footerPaddingTop};
 `;
 
 export const FooterText = styled(Text)`
   justify-content: center;
   align-content: center;
-  color: ${infoWhite};
+  color: ${infoGrey};
   font-size: 15px;
 `;
 
@@ -156,6 +152,7 @@ export const FooterLink = styled(Pressable)`
 `;
 
 export const FooterLinkContent = styled(Text)`
-  color: ${lightPink};
+  padding-left: 5px;
+  color: ${lightGreen};
   font-size: 15px;
 `;

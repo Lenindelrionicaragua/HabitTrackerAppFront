@@ -27,17 +27,29 @@ const red = "#ff0000";
 const paddingTop = Platform.OS === "web" ? "7%" : "0%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
+const containerWidth = Platform.OS === "web" ? "500px" : "100%";
 
-export const StyledContainer = styled(SafeAreaView)`
+const textInputHeight = Platform.OS === "web" ? "50px" : "60px";
+const buttonHeight = Platform.OS === "web" ? "50px" : "60px";
+
+const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
+
+const lineMarginVertical = Platform.OS === "web" ? "5px" : "10px";
+const footerPaddingTop = Platform.OS === "web" ? "15px" : "15px";
+
+export const StyledContainer = styled(
+  Platform.OS === "web" ? View : SafeAreaView
+)`
   flex: 1;
-  background-color: ${darkGrey};
-  width: 100%;
   padding: 15px;
+  background-color: ${darkGrey};
+  width: ${containerWidth};
   height: ${containerHeight};
-  /**
   margin-top: ${paddingTop};
   margin-bottom: ${paddingBottom};
-  **/
+  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const InnerContainer = styled(View)`
@@ -66,7 +78,7 @@ export const PageTitle = styled(Text)`
 
 export const SubTitle = styled(Text)`
   font-size: 10px;
-  margin-bottom: 20px;
+  margin-bottom: ${SubTitleMarginBottom};
   letter-spacing: 1px;
   font-weight: bold;
   color: ${infoGrey};
@@ -83,10 +95,12 @@ export const StyledTextInput = styled(TextInput)`
   padding-right: 55px;
   border-radius: 5px;
   font-size: 16px;
-  height: 60px;
+  height: ${textInputHeight};
   margin-vertical: 3px;
   margin-bottom: 10px;
   color: ${infoGrey};
+  position: relative;
+  z-index: 0;
 `;
 
 export const StyledInputLabel = styled(Text)`
@@ -96,16 +110,16 @@ export const StyledInputLabel = styled(Text)`
 `;
 
 export const LeftIcon = styled(View)`
-  left: 15px;
-  top: 38px;
   position: absolute;
+  left: 15px;
+  top: 40%;
   z-index: 1;
 `;
 
 export const RightIcon = styled(Pressable)`
-  right: 15px;
-  top: 38px;
   position: absolute;
+  right: 15px;
+  top: 40%;
   z-index: 1;
 `;
 
@@ -116,7 +130,7 @@ export const StyledButton = styled(Pressable)`
   align-items: center;
   border-radius: 5px;
   margin-vertical: 5px;
-  height: 60px;
+  height: ${buttonHeight};
 
   ${props =>
     props.google == true &&
@@ -148,7 +162,7 @@ export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 10px;
+  margin-vertical: ${lineMarginVertical}x;
 `;
 
 export const FooterView = styled(View)`
@@ -156,6 +170,7 @@ export const FooterView = styled(View)`
   flex-direction: row;
   align-items: center;
   padding: 10px;
+  padding-top: ${footerPaddingTop};
 `;
 
 export const FooterText = styled(Text)`
@@ -171,6 +186,7 @@ export const SignupLink = styled(Pressable)`
 `;
 
 export const SignupLinkContent = styled(Text)`
-  color: ${lightPink};
+  padding-left: 5px;
+  color: ${lightGreen};
   font-size: 15px;
 `;

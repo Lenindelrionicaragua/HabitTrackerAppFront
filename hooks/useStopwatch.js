@@ -61,7 +61,6 @@ function useStopwatch() {
       updateInfoText("Timer resume.");
       const now = Date.now();
       const pausedDuration = now - pauseTimeRef.current;
-      startTimeRef.current += pausedDuration;
       totalPausedTimeRef.current += pausedDuration;
 
       dispatch(setIsRunning(true));
@@ -79,15 +78,12 @@ function useStopwatch() {
       const elapsedTime = Math.floor(
         (now - startTimeRef.current - totalPausedTimeRef.current) / 1000
       );
-      const remainingTime = Math.max(
-        MIN_TIME_MINUTES,
-        initialTime - elapsedTime
-      );
+      const remainingTime = Math.max(0, initialTime - elapsedTime);
 
       dispatch(setElapsedTime(elapsedTime));
       dispatch(setRemainingTime(remainingTime));
 
-      if (remainingTime <= MIN_TIME_MINUTES) {
+      if (remainingTime <= 0) {
         dispatch(setTimeCompleted(true));
         dispatch(setIsRunning(false));
       }

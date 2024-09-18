@@ -29,7 +29,6 @@ function useStopwatchLogicMock() {
     if (!isRunning) {
       const now = Date.now();
       const pausedDuration = now - pauseTimeRef.current;
-      startTimeRef.current += pausedDuration;
       totalPausedTimeRef.current += pausedDuration;
       setIsRunning(true);
     }

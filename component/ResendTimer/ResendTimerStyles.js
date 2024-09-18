@@ -2,13 +2,13 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { infoWhite, lightPink } = Colors;
+const { infoWhite, lightPink, black, lightGrey, seaGreen } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
 
 export const InfoText = styled(Text)`
-  color: ${infoWhite};
+  color: ${lightGrey};
   font-size: 15px;
   text-align: center;
 `;
@@ -16,6 +16,7 @@ export const InfoText = styled(Text)`
 export const EmphasizeText = styled.Text`
   font-weight: bold;
   font-style: italic;
+  color: ${black};
 `;
 
 export const InlineGroup = styled(View)`
@@ -31,8 +32,9 @@ export const TextLink = styled(TouchableOpacity)`
 `;
 
 export const TextLinkContent = styled(Text)`
-  color: ${lightPink};
+  color: ${lightGrey};
   font-size: 15px;
+  padding-left: 5px;
 
   ${props => {
     const { resendStatus } = props;
