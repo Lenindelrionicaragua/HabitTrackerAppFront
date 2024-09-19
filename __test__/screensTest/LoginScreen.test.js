@@ -1,13 +1,15 @@
 import React from "react";
 import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
-// import MockAdapter from "axios-mock-adapter";
-// import axios from "axios";
+import { CredentialsContext } from "../../context/credentialsContext";
+import { Provider } from "react-redux";
 import renderer from "react-test-renderer";
 import { Fontisto } from "@expo/vector-icons";
 import LoginScreen from "../../screens/LoginScreen/LoginScreen";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import { PageLogo } from "../../screens/LoginScreen/LoginScreenStyles";
+import { createStore } from "redux";
+import rootReducer from "../../reducers/rootReducer";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
@@ -39,24 +41,39 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
+// Create a mock store
+const store = createStore(rootReducer);
+
+const renderWithProviders = (ui, { store } = { store }) => {
+  return render(
+    <Provider store={store}>
+      <CredentialsContext.Provider
+        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
+      >
+        {ui}
+      </CredentialsContext.Provider>
+    </Provider>
+  );
+};
+
 // Rendering Functions
-const renderLoginScreen = () => render(<LoginScreen />);
+const renderLoginScreen = () => renderWithProviders(<LoginScreen />, { store });
 const renderLoginScreenWithRenderer = () => renderer.create(<LoginScreen />);
 
 let loginScreenRender;
 let loginScreenRenderWithRenderer;
 
-beforeEach(async () => {
+beforeEach(() => {
   loginScreenRender = renderLoginScreen();
   loginScreenRenderWithRenderer = renderLoginScreenWithRenderer();
 });
 
+afterEach(() => {
+  cleanup();
+});
+
 //LoginScreen
 describe("LoginScreen", () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   test("Renders correctly the LoginScreen Component", () => {
     const loginScreenSnapshot = loginScreenRenderWithRenderer.toJSON();
     expect(loginScreenSnapshot).toMatchSnapshot();
