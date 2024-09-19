@@ -3,7 +3,7 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    // navigate to LoginScreen
+    // Navigate to LoginScreen
     cy.get('[data-testId="home-banner-button"]').click();
 
     // Verify that the page logo exists
@@ -59,7 +59,7 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    // navigate to LoginScreen
+    // Navigate to LoginScreen
     cy.get('[data-testId="home-banner-button"]').click();
 
     const testEmail = "testuser@example.com";
@@ -80,7 +80,7 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    // navigate to LoginScreen
+    // Navigate to LoginScreen
     cy.get('[data-testId="home-banner-button"]').click();
 
     const testEmail = "invaliduser@gmail.com";

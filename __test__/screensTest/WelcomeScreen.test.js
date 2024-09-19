@@ -1,12 +1,14 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { render, cleanup, fireEvent, act } from "@testing-library/react-native";
+import { render, cleanup } from "@testing-library/react-native";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
-
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { CredentialsContext } from "../../context/credentialsContext"; // Import the context
 import WelcomeScreen from "../../screens/WelcomeScreen/WelcomeScreen";
-
 import { StatusBar } from "react-native";
+import rootReducer from "../../reducers/rootReducer"; // Adjust the import according to your project structure
 
 jest.mock("@env", () => ({
   EXPO_CLIENT_ID: "mock_expo_client_id",
@@ -37,11 +39,51 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
+// Mock context
+const mockStoredCredentials = {
+  name: "Zen User",
+  email: "serenity@gmail.com",
+  photoUrl: null,
+  token: "mock_token"
+};
+
+const mockSetStoredCredentials = jest.fn();
+
+const Wrapper = ({ children }) => {
+  // Create a mock Redux store
+  const store = createStore(rootReducer, {
+    activeScreen: {
+      activeScreen: "WelcomeScreen" // Adjust according to your Redux state structure
+    }
+  });
+
+  return (
+    <Provider store={store}>
+      <CredentialsContext.Provider
+        value={{
+          storedCredentials: mockStoredCredentials,
+          setStoredCredentials: mockSetStoredCredentials
+        }}
+      >
+        {children}
+      </CredentialsContext.Provider>
+    </Provider>
+  );
+};
+
 // Rendering Functions
 const renderWelcomeScreen = routeParams =>
-  render(<WelcomeScreen route={{ params: routeParams }} />);
+  render(
+    <Wrapper>
+      <WelcomeScreen route={{ params: routeParams }} />
+    </Wrapper>
+  );
 const renderWelcomeScreenWithRenderer = routeParams =>
-  renderer.create(<WelcomeScreen route={{ params: routeParams }} />);
+  renderer.create(
+    <Wrapper>
+      <WelcomeScreen route={{ params: routeParams }} />
+    </Wrapper>
+  );
 
 let welcomeScreenRender;
 let welcomeScreenRenderWithRenderer;
@@ -57,7 +99,7 @@ beforeEach(() => {
   });
 });
 
-//SignupScreen
+// WelcomeScreen
 describe("WelcomeScreen", () => {
   afterEach(() => {
     cleanup();
