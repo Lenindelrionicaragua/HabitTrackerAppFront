@@ -17,15 +17,24 @@ const Banner = ({ storedCredentials }) => {
   return (
     <BannerContainer>
       <ButtonContainer>
-        <Button onPress={() => navigation.navigate("MetricsScreen")}>
+        <Button
+          onPress={() => navigation.navigate("MetricsScreen")}
+          testID="metrics-banner-button"
+        >
           <Ionicons name="stats-chart" size={24} color="white" />
           <ButtonText>Metrics</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate("StopwatchScreen")}>
+        <Button
+          onPress={() => navigation.navigate("StopwatchScreen")}
+          testID="stopwatch-banner-button"
+        >
           <MaterialIcons name="timer" size={24} color="white" />
           <ButtonText>Timer</ButtonText>
         </Button>
-        <Button onPress={() => navigation.navigate(activeScreen)}>
+        <Button
+          onPress={() => navigation.navigate(activeScreen)}
+          testID="home-banner-button"
+        >
           <FontAwesome name="home" size={24} color="white" />
           <ButtonText>Home</ButtonText>
         </Button>
