@@ -3,7 +3,10 @@ describe("welcomeScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    const testEmail = "usertest@gmail.com";
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
+    const testEmail = "testuser@example.com";
     const testPassword = "Password1234!";
 
     // Input the test email
@@ -24,12 +27,12 @@ describe("welcomeScreen", () => {
     // Verify that the user's name exists and has the correct text
     cy.get('[data-testId="user-name"]')
       .should("exist")
-      .and("have.text", "Len Del Rio");
+      .and("have.text", "testuser");
 
     // Verify that the user's email exists and has the correct text
     cy.get('[data-testId="user-email"]')
       .should("exist")
-      .and("have.text", "usertest@gmail.com");
+      .and("have.text", "testuser@example.com");
 
     // Verify that the avatar image exists
     cy.get('[data-testId="avatar-image"]').should("exist");
@@ -47,7 +50,10 @@ describe("welcomeScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    const testEmail = "usertest@gmail.com";
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
+    const testEmail = "testuser@example.com";
     const testPassword = "Password1234!";
 
     // Input the test email
@@ -63,6 +69,6 @@ describe("welcomeScreen", () => {
     // Verify that the user navigate to the loginScreen after click de logout
     cy.get('[data-testId="page-title"]')
       .should("exist")
-      .should("have.text", "ZenTimer");
+      .should("have.text", "Habit Tracker");
   });
 });
