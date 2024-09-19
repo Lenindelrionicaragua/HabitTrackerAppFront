@@ -18,5 +18,6 @@ module.exports = {
   setupFiles: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^@env$": "<rootDir>/__mocks__/@env.js"
-  }
+  },
+  watchman: false
 };
