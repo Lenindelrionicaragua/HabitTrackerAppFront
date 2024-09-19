@@ -1,15 +1,16 @@
 import React from "react";
 import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
-import { CredentialsContext } from "../../context/credentialsContext";
-import { Provider } from "react-redux";
 import renderer from "react-test-renderer";
 import { Fontisto } from "@expo/vector-icons";
 import LoginScreen from "../../screens/LoginScreen/LoginScreen";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
 import { PageLogo } from "../../screens/LoginScreen/LoginScreenStyles";
+import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
+import { CredentialsContext } from "../../context/credentialsContext";
+import { NavigationContainer } from "@react-navigation/native";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
@@ -20,45 +21,58 @@ jest.mock("@env", () => ({
 }));
 
 // Mock Google auth request
-jest.mock("expo-auth-session/providers/google", () => {
-  return {
-    useAuthRequest: () => [
-      jest.fn(), // request
-      { type: "success" }, // response
-      jest.fn() // promptAsync
-    ]
-  };
-});
+jest.mock("expo-auth-session/providers/google", () => ({
+  useAuthRequest: () => [
+    jest.fn(), // request
+    { type: "success" }, // response
+    jest.fn() // promptAsync
+  ]
+}));
 
 // Mock navigation
 const mockNavigate = jest.fn();
-jest.mock("@react-navigation/native", () => {
-  return {
-    ...jest.requireActual("@react-navigation/native"),
-    useNavigation: () => ({
-      navigate: mockNavigate
-    })
-  };
-});
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => ({
+    navigate: mockNavigate
+  })
+}));
 
-// Create a mock store
-const store = createStore(rootReducer);
+// Create a mock store with initial state
+const initialState = {
+  activeScreen: {
+    activeScreen: "mockActiveScreen"
+  }
+};
 
-const renderWithProviders = (ui, { store } = { store }) => {
-  return render(
+const store = createStore(rootReducer, initialState);
+
+// Function to render LoginScreen wrapped in Provider, CredentialsContext, and NavigationContainer
+const renderLoginScreen = () =>
+  render(
     <Provider store={store}>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
       >
-        {ui}
+        <NavigationContainer>
+          <LoginScreen />
+        </NavigationContainer>
       </CredentialsContext.Provider>
     </Provider>
   );
-};
 
-// Rendering Functions
-const renderLoginScreen = () => renderWithProviders(<LoginScreen />, { store });
-const renderLoginScreenWithRenderer = () => renderer.create(<LoginScreen />);
+const renderLoginScreenWithRenderer = () =>
+  renderer.create(
+    <Provider store={store}>
+      <CredentialsContext.Provider
+        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
+      >
+        <NavigationContainer>
+          <LoginScreen />
+        </NavigationContainer>
+      </CredentialsContext.Provider>
+    </Provider>
+  );
 
 let loginScreenRender;
 let loginScreenRenderWithRenderer;
@@ -68,12 +82,12 @@ beforeEach(() => {
   loginScreenRenderWithRenderer = renderLoginScreenWithRenderer();
 });
 
-afterEach(() => {
-  cleanup();
-});
-
 //LoginScreen
 describe("LoginScreen", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   test("Renders correctly the LoginScreen Component", () => {
     const loginScreenSnapshot = loginScreenRenderWithRenderer.toJSON();
     expect(loginScreenSnapshot).toMatchSnapshot();
