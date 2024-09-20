@@ -56,11 +56,16 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
         <RCTSafeAreaView
           style={
             {
+              "alignItems": "stretch",
               "backgroundColor": "#fffff",
               "flexBasis": 0,
               "flexGrow": 1,
               "flexShrink": 1,
               "height": "100%",
+              "marginBottom": "10%",
+              "marginLeft": "auto",
+              "marginRight": "auto",
+              "marginTop": "0%",
               "paddingBottom": 15,
               "paddingLeft": 15,
               "paddingRight": 15,
@@ -125,7 +130,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   "fontSize": 10,
                   "fontWeight": "bold",
                   "letterSpacing": 1,
-                  "marginBottom": 20,
+                  "marginBottom": 10,
                 }
               }
               testID="sub-title"
@@ -147,7 +152,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -209,6 +214,8 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                       "paddingLeft": 55,
                       "paddingRight": 55,
                       "paddingTop": 15,
+                      "position": "relative",
+                      "zIndex": 0,
                     }
                   }
                   testID="email-input"
@@ -223,7 +230,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -285,6 +292,8 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                       "paddingLeft": 55,
                       "paddingRight": 55,
                       "paddingTop": 15,
+                      "position": "relative",
+                      "zIndex": 0,
                     }
                   }
                   testID="password-input"
@@ -324,7 +333,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     {
                       "position": "absolute",
                       "right": 15,
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -434,7 +443,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   {
                     "backgroundColor": "#ffffff",
                     "height": 1,
-                    "marginVertical": 10,
+                    "marginVertical": "10pxx",
                     "width": "100%",
                   }
                 }
@@ -536,7 +545,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     "paddingBottom": 10,
                     "paddingLeft": 10,
                     "paddingRight": 10,
-                    "paddingTop": 10,
+                    "paddingTop": 15,
                   }
                 }
                 testID="footer-view"
@@ -595,8 +604,9 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   <Text
                     style={
                       {
-                        "color": "#012382",
+                        "color": "#6c747c",
                         "fontSize": 15,
+                        "paddingLeft": 5,
                       }
                     }
                     testID="signup-link-content"

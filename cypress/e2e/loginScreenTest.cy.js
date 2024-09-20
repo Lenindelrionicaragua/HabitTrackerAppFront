@@ -3,13 +3,16 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
     // Verify that the page logo exists
     cy.get('[data-testId="page-logo"]').should("exist");
 
     // Verify that the page title exists and has the correct text
     cy.get('[data-testId="page-title"]')
       .should("exist")
-      .should("have.text", "ZenTimer");
+      .should("have.text", "Habit Tracker");
 
     // Verify that the subtitle exists and has the correct text
     cy.get('[data-testId="sub-title"]')
@@ -56,6 +59,9 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
     const testEmail = "testuser@example.com";
     const testPassword = "password123";
 
@@ -73,6 +79,9 @@ describe("LoginScreen", () => {
   it("Should fail when the user doesn't exist", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
+
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
 
     const testEmail = "invaliduser@gmail.com";
     const testPassword = "invalidpassword";
@@ -96,7 +105,10 @@ describe("LoginScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
-    const testEmail = "usertest@gmail.com";
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
+    const testEmail = "testuser@example.com";
     const testPassword = "invalidPassword";
 
     // Input the email
@@ -112,5 +124,28 @@ describe("LoginScreen", () => {
         "have.text",
         "The password provided is incorrect. Please verify your password and try again."
       );
+  });
+
+  it("Should navigate to WelcomeScreen when the password and user are correct", () => {
+    // Visit the main page
+    cy.visit("http://192.168.178.182:8081");
+
+    // Navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
+    const testEmail = "testuser@example.com";
+    const testPassword = "Password1234!";
+
+    // Enter the email
+    cy.get('[data-testId="email-input"]').type(testEmail);
+
+    // Enter the correct password
+    cy.get('[data-testId="password-input"]').type(testPassword);
+
+    // Click the login button
+    cy.get('[data-testId="login-styled-button"]').click();
+
+    // Verify navigation to the WelcomeScreen
+    cy.get('[data-testId="welcome-container"]').should("exist");
   });
 });

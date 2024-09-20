@@ -56,15 +56,18 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
         <RCTSafeAreaView
           style={
             {
+              "alignItems": "stretch",
               "backgroundColor": "#fffff",
               "flexBasis": 0,
               "flexGrow": 1,
               "flexShrink": 1,
               "height": "100%",
-              "paddingBottom": 15,
+              "marginLeft": "auto",
+              "marginRight": "auto",
+              "paddingBottom": "20%",
               "paddingLeft": 15,
               "paddingRight": 15,
-              "paddingTop": 15,
+              "paddingTop": "5%",
               "width": "100%",
             }
           }
@@ -74,6 +77,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
             style={
               {
                 "alignItems": "center",
+                "backgroundColor": "#fffff",
                 "flexBasis": 0,
                 "flexGrow": 1,
                 "flexShrink": 1,
@@ -103,11 +107,11 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
             <Text
               style={
                 {
-                  "color": "#bbcbde",
+                  "color": "#040c0c",
                   "fontSize": 10,
                   "fontWeight": "bold",
                   "letterSpacing": 1,
-                  "marginBottom": 20,
+                  "marginBottom": 10,
                 }
               }
               testID="signup-page-sub-title"
@@ -129,7 +133,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -142,7 +146,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#040c0c",
-                          "fontSize": 30,
+                          "fontSize": 25,
                         },
                         undefined,
                         {
@@ -160,7 +164,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -179,9 +183,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 16,
-                      "height": 60,
+                      "height": 55,
                       "marginBottom": 10,
                       "marginVertical": 3,
                       "paddingBottom": 15,
@@ -202,7 +206,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -215,7 +219,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#040c0c",
-                          "fontSize": 30,
+                          "fontSize": 25,
                         },
                         undefined,
                         {
@@ -233,7 +237,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -253,9 +257,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 16,
-                      "height": 60,
+                      "height": 55,
                       "marginBottom": 10,
                       "marginVertical": 3,
                       "paddingBottom": 15,
@@ -276,7 +280,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -289,7 +293,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#040c0c",
-                          "fontSize": 30,
+                          "fontSize": 25,
                         },
                         undefined,
                         {
@@ -307,7 +311,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -358,9 +362,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                         "borderBottomRightRadius": 5,
                         "borderTopLeftRadius": 5,
                         "borderTopRightRadius": 5,
-                        "color": "#bbcbde",
+                        "color": "",
                         "fontSize": 16,
-                        "height": 60,
+                        "height": 55,
                         "marginBottom": 10,
                         "marginVertical": 3,
                         "paddingBottom": 15,
@@ -382,7 +386,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -395,7 +399,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#040c0c",
-                          "fontSize": 30,
+                          "fontSize": 25,
                         },
                         undefined,
                         {
@@ -413,7 +417,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -433,9 +437,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 16,
-                      "height": 60,
+                      "height": 55,
                       "marginBottom": 10,
                       "marginVertical": 3,
                       "paddingBottom": 15,
@@ -481,7 +485,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "position": "absolute",
                       "right": 15,
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -494,7 +498,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#fffff",
-                          "fontSize": 25,
+                          "fontSize": 22,
                         },
                         undefined,
                         {
@@ -518,7 +522,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "left": 15,
                       "position": "absolute",
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -531,7 +535,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#040c0c",
-                          "fontSize": 30,
+                          "fontSize": 25,
                         },
                         undefined,
                         {
@@ -549,7 +553,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 13,
                       "textAlign": "left",
                     }
@@ -569,9 +573,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       "borderBottomRightRadius": 5,
                       "borderTopLeftRadius": 5,
                       "borderTopRightRadius": 5,
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 16,
-                      "height": 60,
+                      "height": 55,
                       "marginBottom": 10,
                       "marginVertical": 3,
                       "paddingBottom": 15,
@@ -617,7 +621,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     {
                       "position": "absolute",
                       "right": 15,
-                      "top": 38,
+                      "top": "40%",
                       "zIndex": 1,
                     }
                   }
@@ -630,7 +634,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                       [
                         {
                           "color": "#fffff",
-                          "fontSize": 25,
+                          "fontSize": 22,
                         },
                         undefined,
                         {
@@ -650,7 +654,11 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 style={
                   {
                     "color": "#ff0000",
-                    "fontSize": 13,
+                    "fontSize": 12,
+                    "paddingBottom": 5,
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                    "paddingTop": 5,
                     "textAlign": "center",
                   }
                 }
@@ -695,13 +703,8 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     "borderBottomRightRadius": 5,
                     "borderTopLeftRadius": 5,
                     "borderTopRightRadius": 5,
-                    "height": 60,
+                    "height": 55,
                     "justifyContent": "center",
-                    "marginVertical": 5,
-                    "paddingBottom": 15,
-                    "paddingLeft": 15,
-                    "paddingRight": 15,
-                    "paddingTop": 15,
                   }
                 }
                 testID="signup-styled-button"
@@ -710,7 +713,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   style={
                     {
                       "color": "#5cbcfc",
-                      "fontSize": 16,
+                      "fontSize": 15,
                     }
                   }
                   testID="signup-button-text"
@@ -735,10 +738,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingBottom": 10,
-                    "paddingLeft": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
+                    "paddingTop": 4,
                   }
                 }
                 testID="footer-view"
@@ -747,7 +747,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   style={
                     {
                       "alignContent": "center",
-                      "color": "#bbcbde",
+                      "color": "",
                       "fontSize": 15,
                       "justifyContent": "center",
                     }
@@ -797,8 +797,9 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   <Text
                     style={
                       {
-                        "color": "#012382",
+                        "color": "#6c747c",
                         "fontSize": 15,
+                        "paddingLeft": 5,
                       }
                     }
                     testID="footer-login-link-content"

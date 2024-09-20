@@ -191,26 +191,37 @@ const LoginScreen = ({ navigation, route }) => {
     axios
       .post(url, { user: credentials })
       .then(response => {
-        const { success, msg, user } = response.data;
+        if (response && response.data) {
+          const { success, msg, user } = response.data;
 
-        if (success) {
-          setSuccessStatus(success);
-          saveLoginCredentials(
-            user,
-            handleMessage({ successStatus: true, msg: msg })
-          );
-          navigation.navigate("WelcomeScreen");
-          dispatch(setActiveScreen("WelcomeScreen"));
+          if (success) {
+            setSuccessStatus(success);
+            saveLoginCredentials(
+              user,
+              handleMessage({ successStatus: true, msg: msg })
+            );
+            navigation.navigate("WelcomeScreen");
+            dispatch(setActiveScreen("WelcomeScreen"));
+          } else {
+            logInfo(msg);
+            handleMessage({ successStatus: true, msg: msg });
+          }
         } else {
-          logInfo(msg);
-          handleMessage({ successStatus: true, msg: msg });
+          handleMessage({
+            successStatus: false,
+            msg: "Unexpected server response"
+          });
         }
       })
       .catch(error => {
-        logError(error.response.data.msg);
+        const errorMessage =
+          error.response && error.response.data
+            ? error.response.data.msg
+            : "An unexpected error occurred.";
+        logError(errorMessage);
         handleMessage({
           successStatus: false,
-          msg: error.response.data.msg
+          msg: errorMessage
         });
       })
       .finally(() => {

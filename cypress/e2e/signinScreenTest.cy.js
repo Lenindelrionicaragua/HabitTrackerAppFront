@@ -3,6 +3,9 @@ describe("SigninScreen", () => {
     // Visit the main page
     cy.visit("http://192.168.178.182:8081");
 
+    // navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
     // Click on the sign-up link
     cy.get('[data-testId="signup-link-content"]').click();
 
@@ -56,6 +59,9 @@ describe("SigninScreen", () => {
 
   it("Should fail if the user tries to sign up without a correct password", () => {
     cy.visit("http://192.168.178.182:8081");
+
+    // navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
 
     // Click on the sign-up link
     cy.get('[data-testId="signup-link-content"]').click();
@@ -115,6 +121,9 @@ describe("SigninScreen", () => {
   it("Should fail if the user tries to sign up without filling in the fields", () => {
     cy.visit("http://192.168.178.182:8081");
 
+    // navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
     // Click on the sign-up link
     cy.get('[data-testId="signup-link-content"]').click();
 
@@ -133,6 +142,9 @@ describe("SigninScreen", () => {
   it("Should navigate to loginScreen when the user clicks the login button", () => {
     cy.visit("http://192.168.178.182:8081");
 
+    // navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
+
     // Click on the sign-up link
     cy.get('[data-testId="signup-link-content"]').click();
 
@@ -148,11 +160,14 @@ describe("SigninScreen", () => {
     // Verify that the page title exists and has the correct text
     cy.get('[data-testId="page-title"]')
       .should("exist")
-      .should("have.text", "ZenTimer");
+      .should("have.text", "Habit Tracker");
   });
 
   it("Should fail if the user tries to sign up without a correct confirm-password", () => {
     cy.visit("http://192.168.178.182:8081");
+
+    // navigate to LoginScreen
+    cy.get('[data-testId="home-banner-button"]').click();
 
     //   Click on the sign-up link
     cy.get('[data-testId="signup-link-content"]').click();
