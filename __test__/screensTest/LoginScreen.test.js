@@ -11,6 +11,8 @@ import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
 import { CredentialsContext } from "../../context/credentialsContext";
 import { NavigationContainer } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveScreen } from "../../actions/counterActions";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
@@ -363,16 +365,13 @@ describe("LoginTextInput", () => {
   //Navigation Test
 
   describe("loginScreen navigation", () => {
-    let loginScreenInstance;
     let navigation;
 
     beforeEach(() => {
       navigation = { navigate: jest.fn() };
 
-      const loginScreenRenderWithRenderer = renderer.create(
-        <LoginScreen navigation={navigation} />
-      );
-      loginScreenInstance = loginScreenRenderWithRenderer.root;
+      // Render the LoginScreen wrapped with the necessary providers
+      loginScreenRender = renderLoginScreen();
     });
 
     afterEach(() => {
@@ -380,14 +379,27 @@ describe("LoginTextInput", () => {
     });
 
     test("Navigate to SignupScreen when Signup link is clicked", () => {
-      const { getByTestId } = render(<LoginScreen navigation={navigation} />);
+      const mockNavigation = { navigate: jest.fn() };
+
+      const { getByTestId } = render(
+        <Provider store={store}>
+          <CredentialsContext.Provider
+            value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
+          >
+            <NavigationContainer>
+              <LoginScreen navigation={mockNavigation} />
+            </NavigationContainer>
+          </CredentialsContext.Provider>
+        </Provider>
+      );
+
       const signupLink = getByTestId("signup-link");
 
       act(() => {
         fireEvent.press(signupLink);
       });
 
-      expect(navigation.navigate).toHaveBeenCalledWith("SignupScreen");
+      expect(mockNavigation.navigate).toHaveBeenCalledWith("SignupScreen");
     });
   });
 });
