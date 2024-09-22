@@ -5,108 +5,91 @@ import usePerformFetch from "../../hooks/usePerformFetch";
 // Mock axios
 jest.mock("axios");
 
-describe("usePerformFetch hook", () => {
+describe("usePerformFetch", () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks(); // Clear mocks after each test to avoid interference
   });
 
-  it("should handle a successful GET request", async () => {
-    // Mock axios response for GET
-    const mockData = {
-      data: { success: true, message: "Data fetched successfully" }
-    };
-    axios.get.mockResolvedValueOnce(mockData);
+  it("should handle successful GET request", async () => {
+    const mockData = { success: true, data: "test data" };
+    axios.mockResolvedValueOnce({ data: mockData });
 
-    // Use the hook
-    const { result, waitForNextUpdate } = renderHook(() => usePerformFetch());
+    const { result, waitForNextUpdate } = renderHook(() =>
+      usePerformFetch("https://example.com", "GET")
+    );
 
-    // Trigger the performFetch function (GET request)
+    // Act: perform the fetch
     act(() => {
-      result.current.performFetch("/api/test-endpoint", "GET");
+      result.current.performFetch();
     });
 
-    // Wait for the state to update after the fetch
+    // Wait for the state to update
     await waitForNextUpdate();
 
-    // Assertions
+    // Assert: check the states
+    expect(result.current.data).toEqual(mockData);
     expect(result.current.loading).toBe(false);
-    expect(result.current.success).toBe(true);
-    expect(result.current.data).toEqual(mockData.data);
     expect(result.current.error).toBe(null);
-  });
-
-  it("should handle a failed GET request", async () => {
-    // Mock axios response for GET failure
-    const mockError = { message: "Network Error" };
-    axios.get.mockRejectedValueOnce(mockError);
-
-    // Use the hook
-    const { result, waitForNextUpdate } = renderHook(() => usePerformFetch());
-
-    // Trigger the performFetch function (GET request)
-    act(() => {
-      result.current.performFetch("/api/test-endpoint", "GET");
-    });
-
-    // Wait for the state to update after the fetch
-    await waitForNextUpdate();
-
-    // Assertions
-    expect(result.current.loading).toBe(false);
-    expect(result.current.success).toBe(false);
-    expect(result.current.data).toBe(null);
-    expect(result.current.error).toBe("Network Error");
-  });
-
-  it("should handle a successful POST request", async () => {
-    // Mock axios response for POST
-    const mockPostData = {
-      data: { success: true, message: "Data saved successfully" }
-    };
-    axios.post.mockResolvedValueOnce(mockPostData);
-
-    // Use the hook
-    const { result, waitForNextUpdate } = renderHook(() => usePerformFetch());
-
-    // Trigger the performFetch function (POST request)
-    act(() => {
-      result.current.performFetch("/api/test-endpoint", "POST", {
-        name: "John"
-      });
-    });
-
-    // Wait for the state to update after the fetch
-    await waitForNextUpdate();
-
-    // Assertions
-    expect(result.current.loading).toBe(false);
     expect(result.current.success).toBe(true);
-    expect(result.current.data).toEqual(mockPostData.data);
-    expect(result.current.error).toBe(null);
   });
 
-  it("should handle a failed POST request", async () => {
-    // Mock axios response for POST failure
-    const mockError = { message: "Failed to save data" };
-    axios.post.mockRejectedValueOnce(mockError);
+  it("should handle successful POST request", async () => {
+    const mockResponse = { success: true, message: "Data posted successfully" };
+    axios.mockResolvedValueOnce({ data: mockResponse });
 
-    // Use the hook
-    const { result, waitForNextUpdate } = renderHook(() => usePerformFetch());
+    const { result, waitForNextUpdate } = renderHook(() =>
+      usePerformFetch("https://example.com", "POST", { key: "value" })
+    );
 
-    // Trigger the performFetch function (POST request)
     act(() => {
-      result.current.performFetch("/api/test-endpoint", "POST", {
-        name: "John"
-      });
+      result.current.performFetch();
     });
 
-    // Wait for the state to update after the fetch
     await waitForNextUpdate();
 
-    // Assertions
+    expect(result.current.data).toEqual(mockResponse);
     expect(result.current.loading).toBe(false);
-    expect(result.current.success).toBe(false);
+    expect(result.current.error).toBe(null);
+    expect(result.current.success).toBe(true);
+  });
+
+  it("should handle failed GET request", async () => {
+    const errorMessage = "Network Error";
+    axios.mockRejectedValueOnce(new Error(errorMessage));
+
+    const { result, waitForNextUpdate } = renderHook(() =>
+      usePerformFetch("https://example.com", "GET")
+    );
+
+    act(() => {
+      result.current.performFetch();
+    });
+
+    await waitForNextUpdate();
+
     expect(result.current.data).toBe(null);
-    expect(result.current.error).toBe("Failed to save data");
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBe(errorMessage);
+    expect(result.current.success).toBe(false);
+  });
+
+  it("should handle failed POST request", async () => {
+    const errorMessage = "Server Error";
+    axios.mockRejectedValueOnce(new Error(errorMessage));
+
+    const { result, waitForNextUpdate } = renderHook(() =>
+      usePerformFetch("https://example.com", "POST", { key: "value" })
+    );
+
+    act(() => {
+      result.current.performFetch();
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current.data).toBe(null);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBe(errorMessage);
+    expect(result.current.success).toBe(false);
   });
 });

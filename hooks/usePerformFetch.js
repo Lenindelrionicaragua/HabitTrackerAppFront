@@ -33,22 +33,23 @@ const usePerformFetch = (
         }
       });
 
-      // Set response data to state
-      setData(response.data);
-      setSuccess(true);
-      return response.data;
+      // Ensure data exists in the response before setting it
+      if (response && response.data) {
+        setData(response.data);
+        setSuccess(true);
+      } else {
+        throw new Error("No data received from server");
+      }
     } catch (error) {
-      // Handle errors with axios
+      // Check for a properly structured error response
       const errorMessage =
         error.response?.data?.msg || error.message || "An error occurred";
       setError(errorMessage);
-      return { error: errorMessage };
     } finally {
       setLoading(false);
     }
   };
 
-  // Return values for components to use
   return { data, loading, error, success, performFetch };
 };
 
