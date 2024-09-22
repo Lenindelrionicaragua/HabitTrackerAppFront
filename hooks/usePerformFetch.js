@@ -5,52 +5,49 @@ const usePerformFetch = (
   initialUrl = "",
   initialMethod = "GET",
   initialBody = null,
-  initialHeaders = {}
+  initialHeaders = null
 ) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Fetch request
   const performFetch = async (
     url = initialUrl,
     method = initialMethod,
     body = initialBody,
     headers = initialHeaders
   ) => {
+    if (!url) {
+      setError("Request URL is missing");
+      setLoading(false);
+      setSuccess(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
-    setSuccess(false);
+
     try {
       const response = await axios({
-        method,
         url,
+        method,
         data: body,
-        headers: {
-          "Content-Type": "application/json",
-          ...headers
-        }
+        headers: headers || { "Content-Type": "application/json" }
       });
 
-      // Ensure data exists in the response before setting it
-      if (response && response.data) {
-        setData(response.data);
-        setSuccess(true);
-      } else {
-        throw new Error("No data received from server");
-      }
-    } catch (error) {
-      // Check for a properly structured error response
-      const errorMessage =
-        error.response?.data?.msg || error.message || "An error occurred";
-      setError(errorMessage);
-    } finally {
+      setData(response.data);
+      setSuccess(true);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message || "Unknown error occurred");
+      setData(null);
+      setSuccess(false);
       setLoading(false);
     }
   };
 
-  return { data, loading, error, success, performFetch };
+  return { data, error, loading, success, performFetch };
 };
 
 export default usePerformFetch;
