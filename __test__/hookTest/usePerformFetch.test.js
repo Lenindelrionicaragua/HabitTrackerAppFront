@@ -18,15 +18,12 @@ describe("usePerformFetch", () => {
       usePerformFetch("https://example.com", "GET")
     );
 
-    // Act: perform the fetch
     act(() => {
       result.current.performFetch();
     });
 
-    // Wait for the state to update
     await waitForNextUpdate();
 
-    // Assert: check the states
     expect(result.current.data).toEqual(mockData);
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe(null);
@@ -94,8 +91,6 @@ describe("usePerformFetch", () => {
   });
 });
 
-jest.mock("axios");
-
 describe("usePerformFetch Hook", () => {
   beforeEach(() => {
     axios.mockClear();
@@ -105,24 +100,19 @@ describe("usePerformFetch Hook", () => {
     const { result } = renderHook(() => usePerformFetch());
 
     await act(async () => {
-      const response = await result.current.performFetch(null);
-
-      // Since response may be undefined, check result.current.error instead
+      await result.current.performFetch(null);
       expect(result.current.error).toBe("Request URL is missing");
     });
   });
 
   it("should handle unsupported HTTP method", async () => {
-    axios.mockRejectedValueOnce(new Error("Method Not Allowed"));
-
     const { result } = renderHook(() => usePerformFetch());
 
     await act(async () => {
-      const response = await result.current.performFetch(
+      await result.current.performFetch(
         "https://example.com",
         "INVALID_METHOD"
       );
-      // Check the state instead of response.error
       expect(result.current.error).toBe("Method Not Allowed");
     });
   });
@@ -131,20 +121,21 @@ describe("usePerformFetch Hook", () => {
     const mockData = { data: "test data" };
     axios.mockResolvedValueOnce({ data: mockData });
 
-    const { result } = renderHook(() => usePerformFetch());
+    const { result, waitForNextUpdate } = renderHook(() =>
+      usePerformFetch("https://example.com", "GET")
+    );
 
     await act(async () => {
       await result.current.performFetch(
         "https://example.com",
         "GET",
-        null, // no body
-        null // no headers
+        null,
+        null
       );
-
-      // Check the result's current state
-      expect(result.current.data).toEqual(mockData);
-      expect(result.current.error).toBe(null);
     });
+
+    expect(result.current.data).toEqual(mockData);
+    expect(result.current.error).toBe(null);
   });
 
   it("should handle empty body for POST request", async () => {
@@ -154,12 +145,7 @@ describe("usePerformFetch Hook", () => {
     const { result } = renderHook(() => usePerformFetch());
 
     await act(async () => {
-      await result.current.performFetch(
-        "https://example.com",
-        "POST",
-        null // Empty body
-      );
-
+      await result.current.performFetch("https://example.com", "POST", null);
       expect(result.current.data).toEqual(mockResponse);
       expect(result.current.error).toBe(null);
     });
@@ -170,19 +156,15 @@ describe("usePerformFetch Hook", () => {
 
     await act(async () => {
       await result.current.performFetch();
-      // Check state for error
       expect(result.current.error).toBe("Request URL is missing");
     });
   });
 
   it("should handle invalid URL", async () => {
-    axios.mockRejectedValueOnce(new Error("Invalid URL"));
-
     const { result } = renderHook(() => usePerformFetch());
 
     await act(async () => {
       await result.current.performFetch("invalid-url");
-      // Check state for error
       expect(result.current.error).toBe("Invalid URL");
     });
   });

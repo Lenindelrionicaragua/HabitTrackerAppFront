@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-const usePerformFetch = (url, method = "GET", body = null, headers = {}) => {
+const usePerformFetch = (url, method = "GET", body = null, headers = null) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const performFetch = async () => {
@@ -13,30 +13,40 @@ const usePerformFetch = (url, method = "GET", body = null, headers = {}) => {
       return;
     }
 
+    if (!/^https?:\/\/.+/.test(url)) {
+      setError("Invalid URL");
+      return;
+    }
+
+    const validMethods = ["GET", "POST", "PUT", "DELETE"];
+    if (!validMethods.includes(method)) {
+      setError("Method Not Allowed");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios({
-        url,
         method,
-        headers: {
-          "Content-Type": "application/json",
-          ...headers
-        },
-        data: body
+        url,
+        data: body === null ? undefined : body,
+        headers
       });
-
       setData(response.data);
       setSuccess(true);
     } catch (err) {
-      setError(err.response ? err.response.data.message : err.message);
+      setError(
+        err.response?.data?.message || err.message || "An error occurred"
+      );
+      setSuccess(false);
     } finally {
       setLoading(false);
     }
   };
 
-  return { data, loading, error, success, performFetch };
+  return { data, error, loading, success, performFetch };
 };
 
 export default usePerformFetch;
