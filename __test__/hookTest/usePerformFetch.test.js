@@ -143,14 +143,15 @@ describe("usePerformFetch Hook", () => {
     axios.mockResolvedValueOnce({ data: mockResponse });
 
     const { result } = renderHook(() =>
-      usePerformFetch("https://example.com", "INVALID_METHOD")
+      usePerformFetch("https://example.com", "POST", null)
     );
 
     await act(async () => {
-      await result.current.performFetch("https://example.com", "POST", null);
-      expect(result.current.data).toEqual(mockResponse);
-      expect(result.current.error).toBe(null);
+      await result.current.performFetch();
     });
+
+    expect(result.current.data).toEqual(mockResponse);
+    expect(result.current.error).toBe(null);
   });
 
   it("should handle missing URL", async () => {
@@ -163,11 +164,14 @@ describe("usePerformFetch Hook", () => {
   });
 
   it("should handle invalid URL", async () => {
-    const { result } = renderHook(() => usePerformFetch());
+    const { result } = renderHook(() =>
+      usePerformFetch("invalid-url", "POST", null)
+    );
 
     await act(async () => {
-      await result.current.performFetch("invalid-url");
-      expect(result.current.error).toBe("Invalid URL");
+      await result.current.performFetch();
     });
+
+    expect(result.current.error).toBe("Invalid URL");
   });
 });
