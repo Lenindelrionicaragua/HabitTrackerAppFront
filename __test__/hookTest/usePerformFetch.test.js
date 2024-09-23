@@ -7,7 +7,7 @@ jest.mock("axios");
 
 describe("usePerformFetch", () => {
   afterEach(() => {
-    jest.clearAllMocks(); // Clear mocks after each test to avoid interference
+    jest.clearAllMocks();
   });
 
   it("should handle successful GET request", async () => {
@@ -106,15 +106,15 @@ describe("usePerformFetch Hook", () => {
   });
 
   it("should handle unsupported HTTP method", async () => {
-    const { result } = renderHook(() => usePerformFetch());
+    const { result } = renderHook(() =>
+      usePerformFetch("https://example.com", "INVALID_METHOD")
+    );
 
     await act(async () => {
-      await result.current.performFetch(
-        "https://example.com",
-        "INVALID_METHOD"
-      );
-      expect(result.current.error).toBe("Method Not Allowed");
+      await result.current.performFetch();
     });
+
+    expect(result.current.error).toBe("Method Not Allowed");
   });
 
   it("should handle missing headers", async () => {
@@ -142,7 +142,9 @@ describe("usePerformFetch Hook", () => {
     const mockResponse = { message: "Empty body allowed" };
     axios.mockResolvedValueOnce({ data: mockResponse });
 
-    const { result } = renderHook(() => usePerformFetch());
+    const { result } = renderHook(() =>
+      usePerformFetch("https://example.com", "INVALID_METHOD")
+    );
 
     await act(async () => {
       await result.current.performFetch("https://example.com", "POST", null);
