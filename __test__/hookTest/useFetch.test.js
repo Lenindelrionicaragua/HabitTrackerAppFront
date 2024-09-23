@@ -114,14 +114,23 @@ describe("useFetch Hook", () => {
 
     expect(typeof result.current.cancelFetch).toBe("function");
   });
+});
+
+describe("useFetch Hook", () => {
+  beforeEach(() => {
+    fetch.resetMocks(); // Resetea los mocks antes de cada test
+    jest.clearAllMocks(); // Limpia cualquier mock previo
+  });
 
   it("should call cancelFetch to abort the fetch request", async () => {
-    let fetchPromiseResolve;
-    const fetchPromise = new Promise(resolve => {
-      fetchPromiseResolve = resolve;
+    // Mock para simular que fetch nunca se resuelve
+    fetch.mockImplementationOnce((url, options) => {
+      return new Promise((_, reject) => {
+        options.signal.onabort = () => {
+          reject(new Error("Fetch was canceled"));
+        };
+      });
     });
-
-    fetch.mockImplementationOnce(() => fetchPromise);
 
     const onReceived = jest.fn();
     const { result } = renderHook(() => useFetch("/test-route", onReceived));
@@ -131,17 +140,17 @@ describe("useFetch Hook", () => {
     });
 
     act(() => {
-      result.current.cancelFetch();
+      result.current.cancelFetch(); // Llama a cancelFetch para abortar
     });
 
+    // Usar setImmediate para avanzar el ciclo de eventos
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setImmediate(resolve));
     });
 
-    act(() => {
-      expect(result.current.isLoading).toBe(false);
-      expect(result.current.error).toBeInstanceOf(Error);
-      expect(result.current.error.message).toMatch("Fetch was canceled");
-    });
+    // Comprobar el estado final
+    expect(result.current.isLoading).toBe(false); // La carga debería ser falsa
+    expect(result.current.error).toBeInstanceOf(Error); // Debe haber un error
+    expect(result.current.error.message).toMatch("Fetch was canceled"); // Mensaje de error
   });
 });
