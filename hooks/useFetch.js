@@ -1,51 +1,25 @@
 import { useState } from "react";
-import {
-  baseApiUrl,
-  expoClientId,
-  iosClientId,
-  androidClientId,
-  webClientId
-} from "../component/Shared/SharedUrl";
-/**
- * Our useFetch hook should be used for all communication with the server.
- *
- * route - This is the route you want to access on the server. It should NOT include the /api part, so should be /user or /user/{id}
- * onReceived - a function that will be called with the response of the server. Will only be called if everything went well!
- *
- * Our hook will give you an object with the properties:
- *
- * isLoading - true if the fetch is still in progress
- * error - will contain an Error object if something went wrong
- * performFetch - this function will trigger the fetching. It is up to the user of the hook to determine when to do this!
- * cancelFetch - this function will cancel the fetch, call it when your component is unmounted
- */
-const useFetch = (route, onReceived) => {
-  /**
-   * We use the AbortController which is supported by all modern browsers to handle cancellations
-   * For more info: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
-   */
+import { baseApiUrl } from "../component/Shared/SharedUrl";
+
+const useFetch = (initialRoute, onReceived) => {
   const controller = new AbortController();
   const signal = controller.signal;
   const cancelFetch = () => {
     controller.abort();
   };
 
-  if (route.includes("api/")) {
-    /**
-     * We add this check here to provide a better error message if you accidentally add the api part
-     * As an error that happens later because of this can be very confusing!
-     */
-    throw Error(
-      "when using the useFetch hook, the route should not include the /api/ part"
-    );
+  if (!initialRoute || initialRoute.includes("api/")) {
+    throw new Error("Invalid route provided");
   }
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [route, setRoute] = useState(initialRoute); // Maintain the initial route
 
-  // Add any args given to the function to the fetch function
-  const performFetch = (options, newUrl) => {
-    route = newUrl || route;
+  const performFetch = (options = {}, newUrl) => {
+    if (newUrl) {
+      setRoute(newUrl); // Update the route if a new URL is provided
+    }
     setError(null);
     setIsLoading(true);
 
@@ -58,42 +32,32 @@ const useFetch = (route, onReceived) => {
     };
 
     const fetchData = async () => {
-      // We add the /api subsection here to make it a single point of change if our configuration changes
       const url = `${baseApiUrl}/api${route}`;
-
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 
       if (!res.ok) {
-        setError(
-          `Fetch for ${url} returned an invalid status (${
-            res.status
-          }). Received: ${JSON.stringify(res)}`
-        );
+        setError(`Error: ${res.status} ${res.statusText}`);
+        setIsLoading(false);
+        return; // Early return on error
       }
 
       const jsonResult = await res.json();
 
-      // Log the response for debugging
-      // logInfo(
-      //   "Response from server in useFetch: " + JSON.stringify(jsonResult)
-      // );
-
-      if (jsonResult.success === true) {
+      if (jsonResult.success) {
         onReceived(jsonResult);
       } else {
-        setError(
-          jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(
-              jsonResult
-            )}`
-        );
+        setError(jsonResult.msg || "Unexpected error occurred");
       }
 
       setIsLoading(false);
     };
 
     fetchData().catch(error => {
-      setError(error);
+      if (error.name === "AbortError") {
+        setError(new Error("Fetch was canceled"));
+      } else {
+        setError(error);
+      }
       setIsLoading(false);
     });
   };
