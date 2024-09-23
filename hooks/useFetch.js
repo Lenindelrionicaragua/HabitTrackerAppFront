@@ -1,13 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 
 const useFetch = (initialRoute, onReceived) => {
-  const controller = new AbortController();
-  const signal = controller.signal;
-  const cancelFetch = () => {
-    controller.abort();
-  };
-
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
@@ -15,6 +9,7 @@ const useFetch = (initialRoute, onReceived) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
+  const controllerRef = useRef(null);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
@@ -37,6 +32,11 @@ const useFetch = (initialRoute, onReceived) => {
       },
       credentials: "include"
     };
+
+    // Create a new AbortController for each fetch
+    const controller = new AbortController();
+    controllerRef.current = controller;
+    const signal = controller.signal;
 
     const fetchData = async () => {
       const url = `${baseApiUrl}/api${route}`;
@@ -70,7 +70,21 @@ const useFetch = (initialRoute, onReceived) => {
     fetchData();
   };
 
-  return { isLoading, error, performFetch, cancelFetch };
+  // Cleanup function to abort fetch on unmount
+  useEffect(() => {
+    return () => {
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+    };
+  }, []);
+
+  return {
+    isLoading,
+    error,
+    performFetch,
+    cancelFetch: () => controllerRef.current?.abort()
+  };
 };
 
 export default useFetch;

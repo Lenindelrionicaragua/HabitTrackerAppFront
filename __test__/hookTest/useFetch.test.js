@@ -114,4 +114,33 @@ describe("useFetch Hook", () => {
 
     expect(typeof result.current.cancelFetch).toBe("function");
   });
+
+  it("should call cancelFetch to abort the fetch request", async () => {
+    fetch.mockImplementationOnce((url, options) => {
+      return new Promise((_, reject) => {
+        options.signal.onabort = () => {
+          reject(new Error("Fetch was canceled"));
+        };
+      });
+    });
+
+    const onReceived = jest.fn();
+    const { result } = renderHook(() => useFetch("/test-route", onReceived));
+
+    act(() => {
+      result.current.performFetch();
+    });
+
+    act(() => {
+      result.current.cancelFetch();
+    });
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+    });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toMatch("Fetch was canceled");
+  });
 });
