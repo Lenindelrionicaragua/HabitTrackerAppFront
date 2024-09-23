@@ -93,12 +93,35 @@ describe("useFetch Hook", () => {
     expect(result.current.error).toBe("Invalid URL");
   });
 
-  it("should call cancelFetch to abort the fetch request", async () => {
-    const mockResponse = { success: true, data: "test data" };
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: jest.fn().mockResolvedValueOnce(mockResponse)
+  it("should call cancelFetch", () => {
+    const onReceived = jest.fn();
+    const { result } = renderHook(() => useFetch("/test-route", onReceived));
+    const spyCancelFetch = jest.spyOn(result.current, "cancelFetch");
+
+    act(() => {
+      result.current.cancelFetch();
     });
+
+    expect(spyCancelFetch).toHaveBeenCalled();
+
+    spyCancelFetch.mockRestore();
+  });
+
+  it("should return cancelFetch function", () => {
+    const onReceived = jest.fn();
+
+    const { result } = renderHook(() => useFetch("/test-route", onReceived));
+
+    expect(typeof result.current.cancelFetch).toBe("function");
+  });
+
+  it("should call cancelFetch to abort the fetch request", async () => {
+    let fetchPromiseResolve;
+    const fetchPromise = new Promise(resolve => {
+      fetchPromiseResolve = resolve;
+    });
+
+    fetch.mockImplementationOnce(() => fetchPromise);
 
     const onReceived = jest.fn();
     const { result } = renderHook(() => useFetch("/test-route", onReceived));
@@ -111,7 +134,9 @@ describe("useFetch Hook", () => {
       result.current.cancelFetch();
     });
 
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    });
 
     act(() => {
       expect(result.current.isLoading).toBe(false);
