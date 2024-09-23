@@ -38,7 +38,10 @@ const usePerformFetch = (url, method = "GET", body = null, headers = null) => {
       setSuccess(true);
     } catch (err) {
       setError(
-        err.response?.data?.message || err.message || "An error occurred"
+        err.response?.data?.msg ||
+          err.response?.data?.message ||
+          err.message ||
+          "An error occurred"
       );
       setSuccess(false);
     } finally {

@@ -44,6 +44,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
+// hooks
+import usePerformFetch from "../../hooks/usePerformFetch";
+
 WebBrowser.maybeCompleteAuthSession();
 
 const { seaGreen, infoGrey, darkGrey } = Colors;
@@ -60,6 +63,8 @@ const LoginScreen = ({ navigation, route }) => {
   // Redux-store
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+
+  const { data, error, loading, performFetch } = usePerformFetch();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: expoClientId,
@@ -177,7 +182,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  const handleLogin = (values, setSubmitting) => {
+  const handleLogin = async (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
@@ -188,45 +193,26 @@ const LoginScreen = ({ navigation, route }) => {
 
     const url = `${baseApiUrl}/auth/log-in`;
 
-    axios
-      .post(url, { user: credentials })
-      .then(response => {
-        if (response && response.data) {
-          const { success, msg, user } = response.data;
+    await performFetch(url, "POST", { user: credentials });
 
-          if (success) {
-            setSuccessStatus(success);
-            saveLoginCredentials(
-              user,
-              handleMessage({ successStatus: true, msg: msg })
-            );
-            navigation.navigate("WelcomeScreen");
-            dispatch(setActiveScreen("WelcomeScreen"));
-          } else {
-            logInfo(msg);
-            handleMessage({ successStatus: true, msg: msg });
-          }
-        } else {
-          handleMessage({
-            successStatus: false,
-            msg: "Unexpected server response"
-          });
-        }
-      })
-      .catch(error => {
-        const errorMessage =
-          error.response && error.response.data
-            ? error.response.data.msg
-            : "An unexpected error occurred.";
-        logError(errorMessage);
-        handleMessage({
-          successStatus: false,
-          msg: errorMessage
-        });
-      })
-      .finally(() => {
-        setSubmitting(false);
+    await performFetch();
+    if (error) {
+      setMsg(error);
+      setSuccessStatus(false);
+    } else if (data?.success) {
+      const { user, msg } = data;
+      setSuccessStatus(true);
+      saveLoginCredentials(user, handleMessage({ successStatus: true, msg }));
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
+    } else {
+      handleMessage({
+        successStatus: false,
+        msg: data?.msg || "Unexpected server response"
       });
+    }
+
+    setSubmitting(false);
   };
 
   const handleMessage = ({ successStatus, msg }) => {
