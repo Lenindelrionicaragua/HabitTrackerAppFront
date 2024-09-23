@@ -2,8 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 
 const useFetch = (initialRoute, onReceived) => {
+  // Validate initial route and arguments
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
+  }
+
+  if (typeof initialRoute !== "string") {
+    throw new Error("useFetch: route must be a string");
+  }
+
+  if (typeof onReceived !== "function") {
+    throw new Error("useFetch: onReceived must be a function");
   }
 
   const [error, setError] = useState(null);
