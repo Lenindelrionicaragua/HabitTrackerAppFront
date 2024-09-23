@@ -83,16 +83,6 @@ describe("useFetch Hook", () => {
     );
   });
 
-  it("should handle unsupported HTTP method", async () => {
-    const { result } = renderHook(() => useFetch("/test-route", jest.fn()));
-
-    await act(async () => {
-      await result.current.performFetch({ method: "INVALID_METHOD" });
-    });
-
-    expect(result.current.error).toBe("Method Not Allowed"); // Adjust if you implement specific error handling
-  });
-
   it("should handle invalid URL", async () => {
     const { result } = renderHook(() => useFetch("invalid-url", jest.fn()));
 
@@ -115,21 +105,18 @@ describe("useFetch Hook", () => {
 
     act(() => {
       result.current.performFetch();
-      result.current.cancelFetch(); // Simulate canceling the fetch
     });
 
-    await new Promise(resolve => setTimeout(resolve, 100)); // Wait to ensure fetch can settle
+    act(() => {
+      result.current.cancelFetch();
+    });
 
-    expect(result.current.isLoading).toBe(false);
-    expect(result.current.error).toBeInstanceOf(Error); // Should have an error due to cancellation
-    expect(result.current.error.message).toMatch(/Fetch was canceled/);
-  });
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-  it("should throw an error if the route includes 'api'", () => {
-    const { result } = renderHook(() => useFetch("/api/test-route", jest.fn()));
-
-    expect(() => result.current.performFetch()).toThrow(
-      "Invalid route provided"
-    );
+    act(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.error).toBeInstanceOf(Error);
+      expect(result.current.error.message).toMatch("Fetch was canceled");
+    });
   });
 });

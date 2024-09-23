@@ -14,14 +14,21 @@ const useFetch = (initialRoute, onReceived) => {
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [route, setRoute] = useState(initialRoute); // Maintain the initial route
+  const [route, setRoute] = useState(initialRoute);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
-      setRoute(newUrl); // Update the route if a new URL is provided
+      setRoute(newUrl);
     }
     setError(null);
     setIsLoading(true);
+
+    // Validate URL
+    if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
+      setError("Invalid URL");
+      setIsLoading(false);
+      return;
+    }
 
     const baseOptions = {
       method: "GET",
@@ -33,33 +40,34 @@ const useFetch = (initialRoute, onReceived) => {
 
     const fetchData = async () => {
       const url = `${baseApiUrl}/api${route}`;
-      const res = await fetch(url, { ...baseOptions, ...options, signal });
+      try {
+        const res = await fetch(url, { ...baseOptions, ...options, signal });
 
-      if (!res.ok) {
-        setError(`Error: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+          setError(`Error: ${res.status} ${res.statusText}`);
+          setIsLoading(false);
+          return;
+        }
+
+        const jsonResult = await res.json();
+
+        if (jsonResult.success) {
+          onReceived(jsonResult);
+        } else {
+          setError(jsonResult.msg || "Unexpected error occurred");
+        }
+      } catch (error) {
+        if (error.name === "AbortError") {
+          setError(new Error("Fetch was canceled"));
+        } else {
+          setError(error);
+        }
+      } finally {
         setIsLoading(false);
-        return; // Early return on error
       }
-
-      const jsonResult = await res.json();
-
-      if (jsonResult.success) {
-        onReceived(jsonResult);
-      } else {
-        setError(jsonResult.msg || "Unexpected error occurred");
-      }
-
-      setIsLoading(false);
     };
 
-    fetchData().catch(error => {
-      if (error.name === "AbortError") {
-        setError(new Error("Fetch was canceled"));
-      } else {
-        setError(error);
-      }
-      setIsLoading(false);
-    });
+    fetchData();
   };
 
   return { isLoading, error, performFetch, cancelFetch };
