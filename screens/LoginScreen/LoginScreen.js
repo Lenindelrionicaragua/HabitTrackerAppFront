@@ -182,7 +182,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  const handleLogin = async (values, setSubmitting) => {
+  const handleLogin = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
@@ -193,26 +193,45 @@ const LoginScreen = ({ navigation, route }) => {
 
     const url = `${baseApiUrl}/auth/log-in`;
 
-    await performFetch(url, "POST", { user: credentials });
+    axios
+      .post(url, { user: credentials })
+      .then(response => {
+        if (response && response.data) {
+          const { success, msg, user } = response.data;
 
-    await performFetch();
-    if (error) {
-      setMsg(error);
-      setSuccessStatus(false);
-    } else if (data?.success) {
-      const { user, msg } = data;
-      setSuccessStatus(true);
-      saveLoginCredentials(user, handleMessage({ successStatus: true, msg }));
-      navigation.navigate("WelcomeScreen");
-      dispatch(setActiveScreen("WelcomeScreen"));
-    } else {
-      handleMessage({
-        successStatus: false,
-        msg: data?.msg || "Unexpected server response"
+          if (success) {
+            setSuccessStatus(success);
+            saveLoginCredentials(
+              user,
+              handleMessage({ successStatus: true, msg: msg })
+            );
+            navigation.navigate("WelcomeScreen");
+            dispatch(setActiveScreen("WelcomeScreen"));
+          } else {
+            logInfo(msg);
+            handleMessage({ successStatus: true, msg: msg });
+          }
+        } else {
+          handleMessage({
+            successStatus: false,
+            msg: "Unexpected server response"
+          });
+        }
+      })
+      .catch(error => {
+        const errorMessage =
+          error.response && error.response.data
+            ? error.response.data.msg
+            : "An unexpected error occurred.";
+        logError(errorMessage);
+        handleMessage({
+          successStatus: false,
+          msg: errorMessage
+        });
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-    }
-
-    setSubmitting(false);
   };
 
   const handleMessage = ({ successStatus, msg }) => {
