@@ -45,7 +45,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
 // hooks
-import usePerformFetch from "../../hooks/usePerformFetch";
+import usePerformFetch from "../../hooks/useFetch";
 
 WebBrowser.maybeCompleteAuthSession();
 

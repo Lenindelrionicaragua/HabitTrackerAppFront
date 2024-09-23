@@ -1,21 +1,26 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import axios from "axios";
-import usePerformFetch from "../../hooks/usePerformFetch";
+import useFetch from "../../hooks/useFetch";
 
-// Mock axios
-jest.mock("axios");
-
-describe("usePerformFetch", () => {
-  afterEach(() => {
+describe("useFetch Hook", () => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    global.fetch = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("should handle successful GET request", async () => {
-    const mockData = { success: true, data: "test data" };
-    axios.mockResolvedValueOnce({ data: mockData });
+    const mockResponse = { success: true, data: "test data" };
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValueOnce(mockResponse)
+    });
 
+    const onReceived = jest.fn();
     const { result, waitForNextUpdate } = renderHook(() =>
-      usePerformFetch("https://example.com", "GET")
+      useFetch("/test-route", onReceived)
     );
 
     act(() => {
@@ -24,38 +29,17 @@ describe("usePerformFetch", () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.data).toEqual(mockData);
-    expect(result.current.loading).toBe(false);
+    expect(onReceived).toHaveBeenCalledWith(mockResponse);
+    expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
-    expect(result.current.success).toBe(true);
-  });
-
-  it("should handle successful POST request", async () => {
-    const mockResponse = { success: true, message: "Data posted successfully" };
-    axios.mockResolvedValueOnce({ data: mockResponse });
-
-    const { result, waitForNextUpdate } = renderHook(() =>
-      usePerformFetch("https://example.com", "POST", { key: "value" })
-    );
-
-    act(() => {
-      result.current.performFetch();
-    });
-
-    await waitForNextUpdate();
-
-    expect(result.current.data).toEqual(mockResponse);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBe(null);
-    expect(result.current.success).toBe(true);
   });
 
   it("should handle failed GET request", async () => {
-    const errorMessage = "Network Error";
-    axios.mockRejectedValueOnce(new Error(errorMessage));
+    fetch.mockRejectedValueOnce(new Error("Network Error"));
 
+    const onReceived = jest.fn();
     const { result, waitForNextUpdate } = renderHook(() =>
-      usePerformFetch("https://example.com", "GET")
+      usePerformFetch("/test-route", onReceived)
     );
 
     act(() => {
@@ -64,18 +48,21 @@ describe("usePerformFetch", () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.data).toBe(null);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBe(errorMessage);
-    expect(result.current.success).toBe(false);
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toBe("Network Error");
   });
 
-  it("should handle failed POST request", async () => {
-    const errorMessage = "Server Error";
-    axios.mockRejectedValueOnce(new Error(errorMessage));
+  it("should handle unsuccessful response", async () => {
+    const mockResponse = { success: false, msg: "Error message" };
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValueOnce(mockResponse)
+    });
 
+    const onReceived = jest.fn();
     const { result, waitForNextUpdate } = renderHook(() =>
-      usePerformFetch("https://example.com", "POST", { key: "value" })
+      useFetch("/test-route", onReceived)
     );
 
     act(() => {
@@ -84,89 +71,32 @@ describe("usePerformFetch", () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.data).toBe(null);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBe(errorMessage);
-    expect(result.current.success).toBe(false);
-  });
-});
-
-describe("usePerformFetch Hook", () => {
-  beforeEach(() => {
-    axios.mockClear();
+    expect(onReceived).not.toHaveBeenCalled();
+    expect(result.current.error).toBe("Error message");
   });
 
   it("should handle null request parameters", async () => {
-    const { result } = renderHook(() => usePerformFetch());
+    const { result } = renderHook(() => usePerformFetch(null, jest.fn()));
 
     await act(async () => {
-      await result.current.performFetch(null);
-      expect(result.current.error).toBe("Request URL is missing");
+      result.current.performFetch();
     });
+
+    expect(result.current.error).toBe("Request URL is missing");
   });
 
   it("should handle unsupported HTTP method", async () => {
-    const { result } = renderHook(() =>
-      usePerformFetch("https://example.com", "INVALID_METHOD")
-    );
+    const { result } = renderHook(() => useFetch("/test-route", jest.fn()));
 
     await act(async () => {
-      await result.current.performFetch();
+      await result.current.performFetch({ method: "INVALID_METHOD" });
     });
 
     expect(result.current.error).toBe("Method Not Allowed");
   });
 
-  it("should handle missing headers", async () => {
-    const mockData = { data: "test data" };
-    axios.mockResolvedValueOnce({ data: mockData });
-
-    const { result, waitForNextUpdate } = renderHook(() =>
-      usePerformFetch("https://example.com", "GET")
-    );
-
-    await act(async () => {
-      await result.current.performFetch(
-        "https://example.com",
-        "GET",
-        null,
-        null
-      );
-    });
-
-    expect(result.current.data).toEqual(mockData);
-    expect(result.current.error).toBe(null);
-  });
-
-  it("should handle empty body for POST request", async () => {
-    const mockResponse = { message: "Empty body allowed" };
-    axios.mockResolvedValueOnce({ data: mockResponse });
-
-    const { result } = renderHook(() =>
-      usePerformFetch("https://example.com", "POST", null)
-    );
-
-    await act(async () => {
-      await result.current.performFetch();
-    });
-
-    expect(result.current.data).toEqual(mockResponse);
-    expect(result.current.error).toBe(null);
-  });
-
-  it("should handle missing URL", async () => {
-    const { result } = renderHook(() => usePerformFetch());
-
-    await act(async () => {
-      await result.current.performFetch();
-      expect(result.current.error).toBe("Request URL is missing");
-    });
-  });
-
   it("should handle invalid URL", async () => {
-    const { result } = renderHook(() =>
-      usePerformFetch("invalid-url", "POST", null)
-    );
+    const { result } = renderHook(() => useFetch("invalid-url", jest.fn()));
 
     await act(async () => {
       await result.current.performFetch();
