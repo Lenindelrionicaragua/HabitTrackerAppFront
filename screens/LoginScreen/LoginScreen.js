@@ -193,7 +193,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  const handleLogin = (values, setSubmitting) => {
+  const handleLogin = async (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
@@ -204,28 +204,22 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    performFetch({
-      method: "POST",
-      body: JSON.stringify({ user: credentials }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => {
-        if (response.success) {
-          handleMessage({ successStatus: true, msg: response.msg });
-        } else {
-          handleMessage({ successStatus: false, msg: response.msg });
+    try {
+      await performFetch({
+        method: "POST",
+        body: JSON.stringify({ user: credentials }),
+        headers: {
+          "Content-Type": "application/json"
         }
-      })
-      .catch(error => {
-        handleMessage({
-          successStatus: false,
-          msg: error.message || "Error occurred"
-        });
       });
-
-    setSubmitting(false);
+    } catch (error) {
+      handleMessage({
+        successStatus: false,
+        msg: error.message || "Error occurred"
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleMessage = ({ successStatus, msg }) => {

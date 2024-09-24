@@ -31,7 +31,7 @@ const useFetch = (initialRoute, onReceived) => {
     if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
       setError("Invalid URL");
       setIsLoading(false);
-      return;
+      return Promise.reject(new Error("Invalid URL"));
     }
 
     const baseOptions = {
@@ -53,9 +53,7 @@ const useFetch = (initialRoute, onReceived) => {
         const res = await fetch(url, { ...baseOptions, ...options, signal });
 
         if (!res.ok) {
-          setError(`Error: ${res.status} ${res.statusText}`);
-          setIsLoading(false);
-          return;
+          throw new Error(`Error: ${res.status} ${res.statusText}`);
         }
 
         const jsonResult = await res.json();
@@ -63,8 +61,7 @@ const useFetch = (initialRoute, onReceived) => {
         if (jsonResult.success) {
           onReceived(jsonResult);
         } else {
-          setError(jsonResult.msg || "Unexpected error occurred");
-          setMsg(jsonResult.msg || "Unexpected error occurred");
+          throw new Error(jsonResult.msg || "Unexpected error occurred");
         }
       } catch (error) {
         if (error.name === "AbortError") {
@@ -78,6 +75,8 @@ const useFetch = (initialRoute, onReceived) => {
     };
 
     fetchData();
+
+    return Promise.resolve();
   };
 
   // Cleanup function to abort fetch on unmount
