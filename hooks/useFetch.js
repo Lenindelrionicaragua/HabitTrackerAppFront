@@ -64,6 +64,7 @@ const useFetch = (initialRoute, onReceived) => {
           onReceived(jsonResult);
         } else {
           setError(jsonResult.msg || "Unexpected error occurred");
+          setMsg(jsonResult.msg || "Unexpected error occurred");
         }
       } catch (error) {
         if (error.name === "AbortError") {
