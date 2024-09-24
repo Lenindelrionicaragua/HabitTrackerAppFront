@@ -60,15 +60,19 @@ const LoginScreen = ({ navigation, route }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
-  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+  const { isLoading, error, performFetch, cancelFetch, data } = useFetch(
     "/auth/log-in",
     response => {
-      if (response.success) {
-        saveLoginCredentials(response.user, response.msg);
-        navigation.navigate("WelcomeScreen");
-        dispatch(setActiveScreen("WelcomeScreen"));
-      } else {
-        setMsg(response.msg);
+      if (response) {
+        const { success, msg, user } = response;
+        if (success) {
+          saveLoginCredentials(user);
+          navigation.navigate("WelcomeScreen");
+          dispatch(setActiveScreen("WelcomeScreen"));
+        } else {
+          logInfo(msg);
+          handleMessage({ successStatus: false, msg });
+        }
       }
     }
   );
@@ -192,6 +196,18 @@ const LoginScreen = ({ navigation, route }) => {
       return "Web";
     }
   };
+
+  useEffect(() => {
+    // Check if the fetch operation has returned data and process it
+    if (data) {
+      const { success, msg } = data;
+      if (success) {
+        handleMessage({ successStatus: true, msg });
+      } else {
+        handleMessage({ successStatus: false, msg });
+      }
+    }
+  }, [data]);
 
   const handleLogin = async (values, setSubmitting) => {
     setMsg("");
