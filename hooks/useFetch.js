@@ -18,6 +18,7 @@ const useFetch = (initialRoute, onReceived) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
+  const [data, setData] = useState(null);
   const controllerRef = useRef(null);
 
   const performFetch = (options = {}, newUrl) => {
@@ -57,6 +58,7 @@ const useFetch = (initialRoute, onReceived) => {
         }
 
         const jsonResult = await res.json();
+        setData(jsonResult); // Store the response data
 
         if (jsonResult.success) {
           onReceived(jsonResult);
@@ -92,7 +94,8 @@ const useFetch = (initialRoute, onReceived) => {
     isLoading,
     error,
     performFetch,
-    cancelFetch: () => controllerRef.current?.abort()
+    cancelFetch: () => controllerRef.current?.abort(),
+    data
   };
 };
 
