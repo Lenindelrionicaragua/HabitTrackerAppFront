@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
+import { logInfo } from "../util/logging";
 
 const useFetch = (initialRoute, onReceived) => {
   // Validate initial route and arguments
@@ -20,6 +21,10 @@ const useFetch = (initialRoute, onReceived) => {
   const [route, setRoute] = useState(initialRoute);
   const [data, setData] = useState(null);
   const controllerRef = useRef(null);
+
+  logInfo(`error: ${error}`);
+  logInfo(`status: ${isLoading}`);
+  logInfo(`data: ${data}`);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
@@ -63,7 +68,8 @@ const useFetch = (initialRoute, onReceived) => {
         if (jsonResult.success) {
           onReceived(jsonResult);
         } else {
-          throw new Error(jsonResult.msg || "Unexpected error occurred");
+          setData(jsonResult);
+          setError(new Error(jsonResult.msg || "Unexpected error occurred"));
         }
       } catch (error) {
         if (error.name === "AbortError") {

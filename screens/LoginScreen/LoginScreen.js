@@ -65,8 +65,15 @@ const LoginScreen = ({ navigation, route }) => {
     response => {
       if (response) {
         const { success, msg, user } = response;
+
+        logInfo(error);
         if (success) {
-          saveLoginCredentials(user);
+          setSuccessStatus(success);
+
+          saveLoginCredentials(
+            user,
+            handleMessage({ successStatus: true, msg: msg })
+          );
           navigation.navigate("WelcomeScreen");
           dispatch(setActiveScreen("WelcomeScreen"));
         } else {
