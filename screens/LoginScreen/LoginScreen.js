@@ -44,9 +44,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
-// hooks
-import useFetch from "../../hooks/useFetch";
-
 WebBrowser.maybeCompleteAuthSession();
 
 const { seaGreen, infoGrey, darkGrey } = Colors;
@@ -166,18 +163,7 @@ const LoginScreen = ({ navigation, route }) => {
         handleMessage({ successStatus: true, msg: msg });
       }
     } catch (error) {
-      logError("Error sending Google data to server:", error);
-      // Log más detallado para entender el error
-      logError(
-        "Error response data:",
-        JSON.stringify(error.response?.data, null, 2)
-      );
-      handleMessage({
-        successStatus: false,
-        msg:
-          error.response?.data?.msg ||
-          "An error occurred while signing in with Google"
-      });
+      LogError("Error sending Google data to server:", error);
     }
   };
 
@@ -191,73 +177,61 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  useEffect(() => {
-    // Check if the fetch operation has returned data and process it
-    if (data) {
-      const { success, msg } = data;
-      if (success) {
-        handleMessage({ successStatus: true, msg });
-      } else {
-        handleMessage({ successStatus: false, msg });
-      }
-    }
-  }, [data]);
-
-  const { isLoading, error, performFetch, cancelFetch, data } = useFetch(
-    "/auth/log-in",
-    response => {
-      if (response) {
-        // Logs detallados
-        logInfo(`Response data: ${JSON.stringify(response, null, 2)}`);
-
-        const { success, msg, error: serverError, user } = response;
-
-        if (success) {
-          setSuccessStatus(success);
-          saveLoginCredentials(
-            user,
-            handleMessage({ successStatus: true, msg })
-          );
-          navigation.navigate("WelcomeScreen");
-          dispatch(setActiveScreen("WelcomeScreen"));
-        } else {
-          const errorMsg = serverError || msg || "Unexpected error occurred";
-          handleMessage({ successStatus: false, msg: errorMsg });
-        }
-      }
-    }
-  );
-
-  const handleLogin = async (values, setSubmitting) => {
+  const handleLogin = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
-
-    cancelFetch(); // Cancelar cualquier fetch previo si es necesario
 
     const credentials = {
       email: values.email,
       password: values.password
     };
 
-    try {
-      await performFetch({
-        method: "POST",
-        data: { user: credentials } // Enviar datos en `data` como en axios
+    const url = `${baseApiUrl}/auth/log-in`;
+
+    axios
+      .post(url, { user: credentials })
+      .then(response => {
+        if (response && response.data) {
+          const { success, msg, user } = response.data;
+
+          if (success) {
+            setSuccessStatus(success);
+            saveLoginCredentials(
+              user,
+              handleMessage({ successStatus: true, msg: msg })
+            );
+            navigation.navigate("WelcomeScreen");
+            dispatch(setActiveScreen("WelcomeScreen"));
+          } else {
+            logInfo(msg);
+            handleMessage({ successStatus: true, msg: msg });
+          }
+        } else {
+          handleMessage({
+            successStatus: false,
+            msg: "Unexpected server response"
+          });
+        }
+      })
+      .catch(error => {
+        const errorMessage =
+          error.response && error.response.data
+            ? error.response.data.msg
+            : "An unexpected error occurred.";
+        logError(errorMessage);
+        handleMessage({
+          successStatus: false,
+          msg: errorMessage
+        });
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-    } catch (error) {
-      handleMessage({
-        successStatus: false,
-        msg: error.message || "An unexpected error occurred"
-      });
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
-    logInfo(`Message: ${msg}, Success Status: ${successStatus}`);
   };
 
   const saveLoginCredentials = (credentials, msg, successStatus) => {
