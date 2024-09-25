@@ -60,30 +60,6 @@ const LoginScreen = ({ navigation, route }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
-  const { isLoading, error, performFetch, cancelFetch, data } = useFetch(
-    "/auth/log-in",
-    response => {
-      if (response) {
-        const { success, msg, user } = response;
-
-        logInfo(error);
-        if (success) {
-          setSuccessStatus(success);
-
-          saveLoginCredentials(
-            user,
-            handleMessage({ successStatus: true, msg: msg })
-          );
-          navigation.navigate("WelcomeScreen");
-          dispatch(setActiveScreen("WelcomeScreen"));
-        } else {
-          logInfo(msg);
-          handleMessage({ successStatus: false, msg });
-        }
-      }
-    }
-  );
-
   // Redux-store
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
@@ -190,7 +166,18 @@ const LoginScreen = ({ navigation, route }) => {
         handleMessage({ successStatus: true, msg: msg });
       }
     } catch (error) {
-      LogError("Error sending Google data to server:", error);
+      logError("Error sending Google data to server:", error);
+      // Log más detallado para entender el error
+      logError(
+        "Error response data:",
+        JSON.stringify(error.response?.data, null, 2)
+      );
+      handleMessage({
+        successStatus: false,
+        msg:
+          error.response?.data?.msg ||
+          "An error occurred while signing in with Google"
+      });
     }
   };
 
@@ -216,11 +203,36 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [data]);
 
+  const { isLoading, error, performFetch, cancelFetch, data } = useFetch(
+    "/auth/log-in",
+    response => {
+      if (response) {
+        // Logs detallados
+        logInfo(`Response data: ${JSON.stringify(response, null, 2)}`);
+
+        const { success, msg, error: serverError, user } = response;
+
+        if (success) {
+          setSuccessStatus(success);
+          saveLoginCredentials(
+            user,
+            handleMessage({ successStatus: true, msg })
+          );
+          navigation.navigate("WelcomeScreen");
+          dispatch(setActiveScreen("WelcomeScreen"));
+        } else {
+          const errorMsg = serverError || msg || "Unexpected error occurred";
+          handleMessage({ successStatus: false, msg: errorMsg });
+        }
+      }
+    }
+  );
+
   const handleLogin = async (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
-    cancelFetch();
+    cancelFetch(); // Cancelar cualquier fetch previo si es necesario
 
     const credentials = {
       email: values.email,
@@ -230,15 +242,12 @@ const LoginScreen = ({ navigation, route }) => {
     try {
       await performFetch({
         method: "POST",
-        body: JSON.stringify({ user: credentials }),
-        headers: {
-          "Content-Type": "application/json"
-        }
+        data: { user: credentials } // Enviar datos en `data` como en axios
       });
     } catch (error) {
       handleMessage({
         successStatus: false,
-        msg: error.message || "Error occurred"
+        msg: error.message || "An unexpected error occurred"
       });
     } finally {
       setSubmitting(false);
@@ -248,6 +257,7 @@ const LoginScreen = ({ navigation, route }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+    logInfo(`Message: ${msg}, Success Status: ${successStatus}`);
   };
 
   const saveLoginCredentials = (credentials, msg, successStatus) => {

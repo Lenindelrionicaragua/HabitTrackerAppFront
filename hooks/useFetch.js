@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 import { logInfo } from "../util/logging";
 
 const useFetch = (initialRoute, onReceived) => {
-  // Validate initial route and arguments
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
@@ -19,12 +19,12 @@ const useFetch = (initialRoute, onReceived) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
-  const [data, setData] = useState(null);
-  const controllerRef = useRef(null);
+  const [data, setData] = useState(null); // Aquí almacenaremos directamente la respuesta del servidor
+  const cancelTokenRef = useRef(null);
 
-  logInfo(`error: ${error}`);
-  logInfo(`status: ${isLoading}`);
-  logInfo(`data: ${data}`);
+  logInfo(`Error recibido: ${error ? error.message : "Sin error"}`);
+  logInfo(`Estado de carga: ${isLoading}`);
+  logInfo(`Datos recibidos: ${JSON.stringify(data, null, 2)}`); // Usamos JSON.stringify para ver bien la estructura
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
@@ -33,7 +33,6 @@ const useFetch = (initialRoute, onReceived) => {
     setError(null);
     setIsLoading(true);
 
-    // Validate URL
     if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
       setError("Invalid URL");
       setIsLoading(false);
@@ -43,55 +42,46 @@ const useFetch = (initialRoute, onReceived) => {
     const baseOptions = {
       method: "GET",
       headers: {
-        "content-type": "application/json"
+        "Content-Type": "application/json"
       },
-      credentials: "include"
+      withCredentials: true,
+      cancelToken: new axios.CancelToken(cancel => {
+        cancelTokenRef.current = cancel;
+      }),
+      ...options
     };
-
-    // Create a new AbortController for each fetch
-    const controller = new AbortController();
-    controllerRef.current = controller;
-    const signal = controller.signal;
 
     const fetchData = async () => {
       const url = `${baseApiUrl}/api${route}`;
       try {
-        const res = await fetch(url, { ...baseOptions, ...options, signal });
+        const res = await axios(url, baseOptions);
 
-        if (!res.ok) {
-          throw new Error(`Error: ${res.status} ${res.statusText}`);
-        }
+        // Aquí almacenamos directamente la respuesta en `data`
+        setData(res.data);
 
-        const jsonResult = await res.json();
-        setData(jsonResult); // Store the response data
-
-        if (jsonResult.success) {
-          onReceived(jsonResult);
+        if (res.data.success) {
+          onReceived(res.data); // Llamamos a la función para manejar los datos
         } else {
-          setData(jsonResult);
-          setError(new Error(jsonResult.msg || "Unexpected error occurred"));
+          setError(new Error(res.data.msg || "Unexpected error occurred"));
         }
       } catch (error) {
-        if (error.name === "AbortError") {
-          setError(new Error("Fetch was canceled"));
-        } else {
-          setError(error);
-        }
+        const errorMsg =
+          error.response?.data?.msg || error.message || "Unexpected error";
+        setError(new Error(errorMsg));
+        setData({ success: false, msg: errorMsg }); // Guardamos también el mensaje de error en `data`
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-
     return Promise.resolve();
   };
 
-  // Cleanup function to abort fetch on unmount
   useEffect(() => {
     return () => {
-      if (controllerRef.current) {
-        controllerRef.current.abort();
+      if (cancelTokenRef.current) {
+        cancelTokenRef.current();
       }
     };
   }, []);
@@ -100,8 +90,12 @@ const useFetch = (initialRoute, onReceived) => {
     isLoading,
     error,
     performFetch,
-    cancelFetch: () => controllerRef.current?.abort(),
-    data
+    cancelFetch: () => {
+      if (cancelTokenRef.current) {
+        cancelTokenRef.current();
+      }
+    },
+    data // Aquí `data` será la respuesta directa del servidor
   };
 };
 
