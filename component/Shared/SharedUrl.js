@@ -6,6 +6,7 @@ import {
   ANDROID_CLIENT_ID,
   WEB_CLIENT_ID
 } from "@env";
+import { logInfo } from "../../util/logging";
 
 export const baseApiUrl = API_URL_PRODUCTION;
 // export const baseApiUrl = API_URL_DEVELOPMENT;
