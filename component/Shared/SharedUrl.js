@@ -14,3 +14,10 @@ export const expoClientId = EXPO_CLIENT_ID;
 export const iosClientId = IOS_CLIENT_ID;
 export const androidClientId = ANDROID_CLIENT_ID;
 export const webClientId = WEB_CLIENT_ID;
+
+logInfo(baseApiUrl);
+logInfo(expoClientId);
+logInfo(androidClientId);
+logInfo(iosClientId);
+logInfo(webClientId);
+
