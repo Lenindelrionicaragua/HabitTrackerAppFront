@@ -14,6 +14,29 @@ describe("useFetch Hook", () => {
     jest.restoreAllMocks();
   });
 
+  it("should handle a failed fetch with a message", async () => {
+    // Mock para simular una respuesta de la API
+    const mockResponse = {
+      success: false,
+      msg: "No user was found associated with the provided email address."
+    };
+
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockResponse)
+      })
+    );
+
+    const { result } = renderHook(() => useFetch("/login", () => {}));
+
+    await act(async () => {
+      await result.current.performFetch();
+    });
+
+    expect(result.current.error).toBeDefined();
+    expect(result.current.error.message).toBe(mockResponse.msg);
+  });
+
   it("should return the correct error message when no user credentials are provided", async () => {
     const mockResponse = {
       success: false,
