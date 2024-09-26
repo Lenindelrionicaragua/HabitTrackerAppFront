@@ -19,12 +19,17 @@ const useFetch = (initialRoute, onReceived) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
-  const [data, setData] = useState(null); // Aquí almacenaremos directamente la respuesta del servidor
+  const [success, setSuccess] = useState(null);
+  const [msg, setMsg] = useState(null);
+  const [user, setUser] = useState(null);
+
   const cancelTokenRef = useRef(null);
 
-  logInfo(`Error recibido: ${error ? error.message : "Sin error"}`);
-  logInfo(`Estado de carga: ${isLoading}`);
-  logInfo(`Datos recibidos: ${JSON.stringify(data, null, 2)}`); // Usamos JSON.stringify para ver bien la estructura
+  logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
+  logInfo(`State of loading: ${isLoading}`);
+  logInfo(`Success: ${success}`);
+  logInfo(`Msg: ${msg}`);
+  logInfo(`User: ${user}`);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
@@ -34,9 +39,9 @@ const useFetch = (initialRoute, onReceived) => {
     setIsLoading(true);
 
     if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
-      setError("Invalid URL");
+      setError(new Error("Invalid URL"));
       setIsLoading(false);
-      return Promise.reject(new Error("Invalid URL"));
+      return;
     }
 
     const baseOptions = {
@@ -52,23 +57,38 @@ const useFetch = (initialRoute, onReceived) => {
     };
 
     const fetchData = async () => {
-      const url = `${baseApiUrl}/api${route}`;
       try {
-        const res = await axios(url, baseOptions);
+        const url = `${baseApiUrl}/api${route}`;
+        const response = await axios(url, baseOptions);
 
-        // Aquí almacenamos directamente la respuesta en `data`
-        setData(res.data);
+        if (response && response.data) {
+          const { success, msg, user, error: serverError } = response.data;
 
-        if (res.data.success) {
-          onReceived(res.data); // Llamamos a la función para manejar los datos
+          setSuccess(success);
+          setMsg(msg);
+          setUser(user);
+
+          if (!success || serverError) {
+            const errorMsg =
+              serverError || msg || error || "Unexpected server error";
+            setError(new Error(errorMsg));
+            throw new Error(errorMsg);
+          }
+
+          onReceived(response.data);
         } else {
-          setError(new Error(res.data.msg || "Unexpected error occurred"));
+          throw new Error("Empty response from server");
         }
       } catch (error) {
-        const errorMsg =
-          error.response?.data?.msg || error.message || "Unexpected error";
-        setError(new Error(errorMsg));
-        setData({ success: false, msg: errorMsg }); // Guardamos también el mensaje de error en `data`
+        // Ajusta aquí para manejar errores de cancelación
+        if (axios.isCancel(error)) {
+          setError(new Error(error.message)); // Aquí se usa el mensaje de cancelación
+        } else {
+          const errorMsg =
+            error.response?.data?.msg || error.message || "Unexpected error";
+          setError(new Error(errorMsg));
+          setMsg(errorMsg);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -81,7 +101,7 @@ const useFetch = (initialRoute, onReceived) => {
   useEffect(() => {
     return () => {
       if (cancelTokenRef.current) {
-        cancelTokenRef.current();
+        cancelTokenRef.current("Fetch was canceled"); // Envía el mensaje de cancelación
       }
     };
   }, []);
@@ -89,13 +109,15 @@ const useFetch = (initialRoute, onReceived) => {
   return {
     isLoading,
     error,
+    success,
+    user,
+    msg,
     performFetch,
     cancelFetch: () => {
       if (cancelTokenRef.current) {
         cancelTokenRef.current();
       }
-    },
-    data // Aquí `data` será la respuesta directa del servidor
+    }
   };
 };
 

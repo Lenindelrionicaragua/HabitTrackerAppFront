@@ -186,7 +186,7 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    const url = `${baseApiUrl}/auth/log-in`;
+    const url = `${baseApiUrl}/api/auth/log-in`;
 
     axios
       .post(url, { user: credentials })
