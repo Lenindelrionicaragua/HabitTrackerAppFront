@@ -29,7 +29,7 @@ describe("useFetch Hook", () => {
 
     act(() => {
       result.current.performFetch({
-        data: {} // No credentials provided
+        data: {}
       });
     });
 
@@ -73,6 +73,50 @@ describe("useFetch Hook", () => {
       "No user was found associated with the provided email address. Please verify your email and try again or register if you are a new user."
     );
     expect(onReceived).not.toHaveBeenCalled();
+  });
+
+  it("should return the correct response for valid credentials", async () => {
+    const credentials = {
+      user: {
+        email: "testuser@gmail.com",
+        password: "Password1234!"
+      }
+    };
+
+    const mockResponse = {
+      success: true,
+      msg: "Login successful",
+      token:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzZjFjYzM4MWY0MWJiNWVlMzhmMjYiLCJpYXQiOjE3MjczNDkzNDV9.B--8cnPu-Dho0rylhID65yQ9vVIJryUgFIEbzt0R1t0",
+      user: {
+        id: "66f3f1cc381f41bb5ee38f26",
+        email: "testuser@gmail.com",
+        name: "Len Del Rio"
+      }
+    };
+
+    axios.mockImplementationOnce(() => Promise.resolve({ data: mockResponse }));
+
+    const onReceived = jest.fn();
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useFetch("/login", onReceived)
+    );
+
+    act(() => {
+      result.current.performFetch({
+        data: credentials
+      });
+    });
+
+    await waitForNextUpdate();
+
+    // Verify there are no errors
+    expect(result.current.error).toBeNull();
+    expect(result.current.isLoading).toBe(false);
+
+    // Verify the response
+    expect(result.current.data).toEqual(mockResponse);
+    expect(onReceived).toHaveBeenCalledWith(mockResponse);
   });
 });
 
