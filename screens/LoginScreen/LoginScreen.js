@@ -56,9 +56,6 @@ const LoginScreen = ({ navigation, route }) => {
   const [success, setSuccessStatus] = useState("");
   const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
-
   // Redux-store
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
@@ -71,8 +68,30 @@ const LoginScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
-  useEffect(() => {}, []);
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
 
+  const onReceived = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      saveLoginCredentials(
+        user,
+        handleMessage({ successStatus: true, msg: msg })
+      );
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
+    } else {
+      logInfo(msg);
+      handleMessage({ successStatus: false, msg: msg });
+    }
+  };
+
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/log-in`,
+    onReceived
+  );
+
+  useEffect(() => {}, []);
   useFocusEffect(
     useCallback(() => {
       // This will run every time the screen is focused
@@ -109,6 +128,17 @@ const LoginScreen = ({ navigation, route }) => {
       setGoogleSubmitting(false);
     }
   }, [response]);
+
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      logError(errorMessage);
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+  }, [error]);
 
   const handleGoogleResponse = async authentication => {
     try {
@@ -188,42 +218,11 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    // Use the useFetch hook for the login request
-    const onReceived = response => {
-      const { success, msg, user } = response;
-      if (success) {
-        saveLoginCredentials(
-          user,
-          handleMessage({ successStatus: true, msg: msg })
-        );
-        navigation.navigate("WelcomeScreen");
-        dispatch(setActiveScreen("WelcomeScreen"));
-      } else {
-        logInfo(msg);
-        handleMessage({ successStatus: false, msg: msg });
-      }
-    };
-
-    const { performFetch, isLoading, error } = useFetch(
-      `${baseApiUrl}/api/auth/log-in`,
-      onReceived
-    );
-
     // Call performFetch to trigger the request
-    act(() => {
-      performFetch({
-        data: { user: credentials }
-      });
+    performFetch({
+      method: "POST", // Asegúrate de especificar el método HTTP
+      data: { user: credentials } // Los datos enviados en la solicitud
     });
-
-    if (error) {
-      const errorMessage = error.message || "An unexpected error occurred.";
-      logError(errorMessage);
-      handleMessage({
-        successStatus: false,
-        msg: errorMessage
-      });
-    }
 
     setSubmitting(false); // stop submitting state after response
   };
@@ -270,24 +269,13 @@ const LoginScreen = ({ navigation, route }) => {
             onSubmit={(values, { setSubmitting }) => {
               if (values.email == "" || values.password == "") {
                 handleMessage({ msg: "Please fill all the fields" });
-                setSubmitting(false);
               } else {
-                setSubmitting(true);
-                handleLogin(
-                  { email: values.email, password: values.password },
-                  setSubmitting
-                );
+                handleLogin({ email: values.email, password: values.password });
               }
             }}
             testID="login-form-formik"
           >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              isSubmitting
-            }) => (
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
                   label="Email Address"
