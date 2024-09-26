@@ -8,17 +8,44 @@ jest.mock("axios");
 describe("useFetch Hook", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock("axios");
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
+  it("should return the correct error message when no user credentials are provided", async () => {
+    const mockResponse = {
+      success: false,
+      error: "BAD REQUEST: Email and password are required."
+    };
+
+    axios.mockImplementationOnce(() => Promise.resolve({ data: mockResponse }));
+
+    const onReceived = jest.fn();
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useFetch("/test-route", onReceived)
+    );
+
+    act(() => {
+      result.current.performFetch({
+        data: {} // No credentials provided
+      });
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toMatch(
+      "BAD REQUEST: Email and password are required."
+    );
+    expect(onReceived).not.toHaveBeenCalled();
+  });
+
   it("should return the correct error message when no user is found", async () => {
     const credentials = {
-      email: "len",
-      password: "123"
+      email: "invalidUser",
+      password: "invalidPassword"
     };
 
     const mockResponse = {

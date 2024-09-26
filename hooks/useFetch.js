@@ -19,24 +19,20 @@ const useFetch = (initialRoute, onReceived) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
-  const [success, setSuccess] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [user, setUser] = useState(null);
+  const [data, setData] = useState(null);
 
   const cancelTokenRef = useRef(null);
 
   logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
   logInfo(`State of loading: ${isLoading}`);
-  logInfo(`Success: ${success}`);
-  logInfo(`Message: ${message}`);
-  logInfo(`User: ${user}`);
+  logInfo(`Data: ${JSON.stringify(data)}`);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
       setRoute(newUrl);
     }
     setError(null);
-    setMessage(null);
+    setData(null);
     setIsLoading(true);
 
     if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
@@ -63,33 +59,27 @@ const useFetch = (initialRoute, onReceived) => {
         const response = await axios(url, baseOptions);
 
         if (response && response.data) {
+          setData(response.data);
+
           const { success, msg, user, error: serverError } = response.data;
 
-          setSuccess(success);
-          setUser(user);
-
-          // Establecer mensaje dependiendo del éxito
           if (success) {
-            setMessage(msg); // Mensaje de éxito
+            onReceived(response.data);
           } else {
             const errorMsg = serverError || msg || "Unexpected server error";
             setError(new Error(errorMsg));
-            setMessage(errorMsg); // Mensaje de error
             throw new Error(errorMsg);
           }
-
-          onReceived(response.data);
         } else {
           throw new Error("Empty response from server");
         }
       } catch (error) {
         if (axios.isCancel(error)) {
-          setError(new Error("Fetch was canceled")); // Mensaje de cancelación
+          setError(new Error("Fetch was canceled"));
         } else {
           const errorMsg =
             error.response?.data?.msg || error.message || "Unexpected error";
           setError(new Error(errorMsg));
-          setMessage(errorMsg); // Mensaje de error
         }
       } finally {
         setIsLoading(false);
@@ -103,7 +93,7 @@ const useFetch = (initialRoute, onReceived) => {
   useEffect(() => {
     return () => {
       if (cancelTokenRef.current) {
-        cancelTokenRef.current("Fetch was canceled"); // Envía el mensaje de cancelación
+        cancelTokenRef.current("Fetch was canceled");
       }
     };
   }, []);
@@ -111,9 +101,7 @@ const useFetch = (initialRoute, onReceived) => {
   return {
     isLoading,
     error,
-    success,
-    user,
-    message,
+    data,
     performFetch,
     cancelFetch: () => {
       if (cancelTokenRef.current) {
