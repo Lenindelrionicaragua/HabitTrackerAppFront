@@ -16,4 +16,4 @@ export const iosClientId = IOS_CLIENT_ID;
 export const androidClientId = ANDROID_CLIENT_ID;
 export const webClientId = WEB_CLIENT_ID;
 
-logInfo(`baseApiUrl: ${baseApiUrl}`);
+logInfo(`ApiUrl: ${baseApiUrl}`);
