@@ -91,6 +91,17 @@ const LoginScreen = ({ navigation, route }) => {
     onReceived
   );
 
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      logError(errorMessage);
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+  }, [error]);
+
   useEffect(() => {}, []);
   useFocusEffect(
     useCallback(() => {
@@ -128,17 +139,6 @@ const LoginScreen = ({ navigation, route }) => {
       setGoogleSubmitting(false);
     }
   }, [response]);
-
-  useEffect(() => {
-    if (error) {
-      const errorMessage = error.message || "An unexpected error occurred.";
-      logError(errorMessage);
-      handleMessage({
-        successStatus: false,
-        msg: errorMessage
-      });
-    }
-  }, [error]);
 
   const handleGoogleResponse = async authentication => {
     try {
@@ -220,11 +220,9 @@ const LoginScreen = ({ navigation, route }) => {
 
     // Call performFetch to trigger the request
     performFetch({
-      method: "POST", // Asegúrate de especificar el método HTTP
-      data: { user: credentials } // Los datos enviados en la solicitud
+      method: "POST",
+      data: { user: credentials }
     });
-
-    setSubmitting(false); // stop submitting state after response
   };
 
   const handleMessage = ({ successStatus, msg }) => {

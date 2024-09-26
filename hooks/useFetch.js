@@ -23,9 +23,9 @@ const useFetch = (initialRoute, onReceived) => {
 
   const cancelTokenRef = useRef(null);
 
-  // logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
-  // logInfo(`State of loading: ${isLoading}`);
-  // logInfo(`Data: ${JSON.stringify(data)}`);
+  logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
+  logInfo(`State of loading: ${isLoading}`);
+  logInfo(`Data: ${JSON.stringify(data)}`);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {
