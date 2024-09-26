@@ -30,6 +30,8 @@ import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
+// Hooks
+import useFetch from "../../hooks/useFetch";
 
 // Credentials and Url
 import {
@@ -186,47 +188,44 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    const url = `${baseApiUrl}/api/auth/log-in`;
+    // Use the useFetch hook for the login request
+    const onReceived = response => {
+      const { success, msg, user } = response;
+      if (success) {
+        saveLoginCredentials(
+          user,
+          handleMessage({ successStatus: true, msg: msg })
+        );
+        navigation.navigate("WelcomeScreen");
+        dispatch(setActiveScreen("WelcomeScreen"));
+      } else {
+        logInfo(msg);
+        handleMessage({ successStatus: false, msg: msg });
+      }
+    };
 
-    axios
-      .post(url, { user: credentials })
-      .then(response => {
-        if (response && response.data) {
-          const { success, msg, user } = response.data;
+    const { performFetch, isLoading, error } = useFetch(
+      `${baseApiUrl}/api/auth/log-in`,
+      onReceived
+    );
 
-          if (success) {
-            setSuccessStatus(success);
-            saveLoginCredentials(
-              user,
-              handleMessage({ successStatus: true, msg: msg })
-            );
-            navigation.navigate("WelcomeScreen");
-            dispatch(setActiveScreen("WelcomeScreen"));
-          } else {
-            logInfo(msg);
-            handleMessage({ successStatus: true, msg: msg });
-          }
-        } else {
-          handleMessage({
-            successStatus: false,
-            msg: "Unexpected server response"
-          });
-        }
-      })
-      .catch(error => {
-        const errorMessage =
-          error.response && error.response.data
-            ? error.response.data.msg
-            : "An unexpected error occurred.";
-        logError(errorMessage);
-        handleMessage({
-          successStatus: false,
-          msg: errorMessage
-        });
-      })
-      .finally(() => {
-        setSubmitting(false);
+    // Call performFetch to trigger the request
+    act(() => {
+      performFetch({
+        data: { user: credentials }
       });
+    });
+
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      logError(errorMessage);
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+
+    setSubmitting(false); // stop submitting state after response
   };
 
   const handleMessage = ({ successStatus, msg }) => {
@@ -318,17 +317,14 @@ const LoginScreen = ({ navigation, route }) => {
                 <MsgBox type={success ? "SUCCESS" : "ERROR"} testID="msg-box">
                   {msg}
                 </MsgBox>
-                {!isSubmitting && (
-                  <StyledButton
-                    testID="login-styled-button"
-                    onPress={handleSubmit}
-                  >
-                    <ButtonText testID="login-button-text">Login</ButtonText>
+                {!isLoading && (
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Login</ButtonText>
                   </StyledButton>
                 )}
 
-                {isSubmitting && (
-                  <StyledButton disabled={true} testID="login-styled-button">
+                {isLoading && (
+                  <StyledButton disabled={true}>
                     <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
                 )}
