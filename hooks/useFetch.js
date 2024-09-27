@@ -4,6 +4,7 @@ import { baseApiUrl } from "../component/Shared/SharedUrl";
 import { logInfo, logError } from "../util/logging";
 
 const useFetch = (initialRoute, onReceived) => {
+  // Initial validations
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
@@ -20,17 +21,9 @@ const useFetch = (initialRoute, onReceived) => {
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
   const [data, setData] = useState(null);
-
   const cancelTokenRef = useRef(null);
 
-  // logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
-  // logInfo(`State of loading: ${isLoading}`);
-  // logInfo(`Data: ${JSON.stringify(data)}`);
-
-  const performFetch = (options = {}, newUrl) => {
-    if (newUrl) {
-      setRoute(newUrl);
-    }
+  const performFetch = async (options = {}) => {
     setError(null);
     setData(null);
     setIsLoading(true);
@@ -50,45 +43,38 @@ const useFetch = (initialRoute, onReceived) => {
       cancelToken: new axios.CancelToken(cancel => {
         cancelTokenRef.current = cancel;
       }),
-      ...options
+      ...options // Allows overriding base options
     };
 
-    const fetchData = async () => {
-      try {
-        const url = `${baseApiUrl}/api${route}`;
-        const response = await axios(url, baseOptions);
+    try {
+      const url = `${baseApiUrl}/api${route}`;
+      const response = await axios(url, baseOptions);
 
-        if (response && response.data) {
-          setData(response.data);
+      // Check if the response has data
+      if (response.data) {
+        const { success, msg, user, error: serverError } = response.data;
 
-          const { success, msg, user, error: serverError } = response.data;
-
-          if (success) {
-            setData(response.data);
-            onReceived(response.data);
-          } else {
-            const errorMsg = serverError || msg || "Unexpected server error";
-            // logError(errorMsg);
-            setError(new Error(errorMsg));
-          }
-        } else {
-          throw new Error("Empty response from server");
-        }
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          setError(new Error("Fetch was canceled"));
-        } else {
-          const errorMsg =
-            error.response?.data?.msg || error.message || "Unexpected error";
+        if (!success) {
+          const errorMsg = serverError || msg || "Unexpected server error";
           setError(new Error(errorMsg));
+        } else {
+          setData(response.data);
+          onReceived(response.data);
         }
-      } finally {
-        setIsLoading(false);
+      } else {
+        throw new Error("Empty response from server");
       }
-    };
-
-    fetchData();
-    return Promise.resolve();
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        setError(new Error("Fetch was canceled"));
+      } else {
+        const errorMsg =
+          error.response?.data?.msg || error.message || "Unexpected error";
+        setError(new Error(errorMsg));
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
