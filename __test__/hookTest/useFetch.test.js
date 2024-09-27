@@ -203,4 +203,22 @@ describe("useFetch Hook", () => {
 
     expect(typeof result.current.cancelFetch).toBe("function");
   });
+
+  it("should handle empty response", async () => {
+    // Mocking an API response that is an empty object
+    axios.mockImplementationOnce(() => Promise.resolve({ data: {} }));
+
+    const onReceived = jest.fn();
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useFetch("/test-route", onReceived)
+    );
+
+    await act(async () => {
+      await result.current.performFetch();
+    });
+
+    // Check that an error is set and the message indicates an empty response
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toBe("Empty response from server");
+  });
 });
