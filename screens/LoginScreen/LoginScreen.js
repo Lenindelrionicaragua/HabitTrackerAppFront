@@ -94,7 +94,7 @@ const LoginScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
-      logError(errorMessage);
+      // logError(errorMessage);
       handleMessage({
         successStatus: false,
         msg: errorMessage

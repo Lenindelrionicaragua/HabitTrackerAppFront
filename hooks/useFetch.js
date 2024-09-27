@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
-import { logInfo } from "../util/logging";
+import { logInfo, logError } from "../util/logging";
 
 const useFetch = (initialRoute, onReceived) => {
   // Validate initial inputs
@@ -21,10 +21,6 @@ const useFetch = (initialRoute, onReceived) => {
   const [data, setData] = useState(null);
 
   const cancelTokenRef = useRef(null);
-
-  logInfo(`Error msg from the server: ${error ? error.message : "not error"}`);
-  logInfo(`State of loading: ${isLoading}`);
-  logInfo(`Data: ${JSON.stringify(data)}`);
 
   const performFetch = (options = {}, newUrl) => {
     if (newUrl) {

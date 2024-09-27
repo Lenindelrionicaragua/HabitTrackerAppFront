@@ -221,4 +221,43 @@ describe("useFetch Hook", () => {
     expect(result.current.error).toBeInstanceOf(Error);
     expect(result.current.error.message).toBe("Empty response from server");
   });
+
+  it("should handle generic server error", async () => {
+    const mockErrorResponse = {
+      response: {
+        data: {
+          msg: "Internal server error."
+        }
+      }
+    };
+
+    axios.mockImplementationOnce(() => Promise.reject(mockErrorResponse));
+
+    const onReceived = jest.fn();
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useFetch("/test-route", onReceived)
+    );
+
+    await act(async () => {
+      await result.current.performFetch();
+    });
+
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toBe("Internal server error.");
+  });
+
+  it("should set isLoading to true while fetching", async () => {
+    const onReceived = jest.fn();
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useFetch("/test-route", onReceived)
+    );
+
+    expect(result.current.isLoading).toBe(false);
+
+    await act(async () => {
+      await result.current.performFetch();
+    });
+
+    expect(result.current.isLoading).toBe(false);
+  });
 });
