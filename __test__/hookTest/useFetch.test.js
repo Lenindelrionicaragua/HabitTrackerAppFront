@@ -14,27 +14,33 @@ describe("useFetch Hook", () => {
     jest.restoreAllMocks();
   });
 
-  it("should handle a failed fetch with a message", async () => {
-    // Mock para simular una respuesta de la API
-    const mockResponse = {
-      success: false,
-      msg: "No user was found associated with the provided email address."
+  it("should handle incorrect credentials", async () => {
+    // Mock to simulate an API error response
+    const mockErrorResponse = {
+      response: {
+        data: {
+          msg: "No user was found associated with the provided email address."
+        }
+      }
     };
 
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockResponse)
-      })
+    // Simulate an Axios error
+    axios.mockImplementationOnce(
+      () => Promise.reject(mockErrorResponse) // Simulates an Axios error
     );
 
     const { result } = renderHook(() => useFetch("/login", () => {}));
 
+    // Perform the fetch action
     await act(async () => {
       await result.current.performFetch();
     });
 
+    // Check that the error state is defined and contains the expected message
     expect(result.current.error).toBeDefined();
-    expect(result.current.error.message).toBe(mockResponse.msg);
+    expect(result.current.error.message).toBe(
+      mockErrorResponse.response.data.msg
+    );
   });
 
   it("should return the correct error message when no user credentials are provided", async () => {
