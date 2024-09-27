@@ -1,17 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
-import { logInfo, logError } from "../util/logging";
+import { logInfo } from "../util/logging";
 
 const useFetch = (initialRoute, onReceived) => {
+  // Validate initial inputs
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
-
   if (typeof initialRoute !== "string") {
     throw new Error("useFetch: route must be a string");
   }
-
   if (typeof onReceived !== "function") {
     throw new Error("useFetch: onReceived must be a function");
   }
@@ -35,6 +34,7 @@ const useFetch = (initialRoute, onReceived) => {
     setData(null);
     setIsLoading(true);
 
+    // Validate the route format
     if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
       setError(new Error("Invalid URL"));
       setIsLoading(false);
@@ -59,24 +59,25 @@ const useFetch = (initialRoute, onReceived) => {
         const response = await axios(url, baseOptions);
 
         // Check if response and response.data are valid
-        if (response && response.data) {
-          if (Object.keys(response.data).length === 0) {
-            setError(new Error("Empty response from server"));
-            return;
-          }
+        if (!response || !response.data) {
+          setError(new Error("Unexpected server error"));
+          return;
+        }
 
-          const { success, msg, user, error: serverError } = response.data;
-
-          if (success) {
-            setData(response.data);
-            onReceived(response.data);
-          } else {
-            const errorMsg = serverError || msg || "Unexpected server error";
-            setError(new Error(errorMsg));
-          }
-        } else {
-          // Handle empty response case here
+        // Check if response.data is empty
+        if (Object.keys(response.data).length === 0) {
           setError(new Error("Empty response from server"));
+          return;
+        }
+
+        const { success, msg, user, error: serverError } = response.data;
+
+        if (success) {
+          setData(response.data);
+          onReceived(response.data);
+        } else {
+          const errorMsg = serverError || msg || "Unexpected server error";
+          setError(new Error(errorMsg));
         }
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -92,7 +93,6 @@ const useFetch = (initialRoute, onReceived) => {
     };
 
     fetchData();
-    return Promise.resolve();
   };
 
   useEffect(() => {
