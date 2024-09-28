@@ -304,13 +304,16 @@ const LoginScreen = ({ navigation, route }) => {
                   {msg}
                 </MsgBox>
                 {!isLoading && (
-                  <StyledButton onPress={handleSubmit}>
+                  <StyledButton
+                    onPress={handleSubmit}
+                    testID="login-styled-button"
+                  >
                     <ButtonText>Login</ButtonText>
                   </StyledButton>
                 )}
 
                 {isLoading && (
-                  <StyledButton disabled={true}>
+                  <StyledButton disabled={true} testID="login-styled-button">
                     <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
                 )}
