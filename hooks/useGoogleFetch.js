@@ -49,7 +49,7 @@ const useGoogleFetch = onReceived => {
 
       // Authenticate user with backend
       const serverResponse = await axios.post(
-        `${baseApiUrl}/auth/sign-in-with-google`,
+        `${baseApiUrl}/api/auth/sign-in-with-google`,
         userData,
         {
           cancelToken: new axios.CancelToken(cancel => {
