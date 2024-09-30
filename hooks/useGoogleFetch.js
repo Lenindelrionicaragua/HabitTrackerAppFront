@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 import { Platform } from "react-native";
+import { logInfo, logError } from "../util/logging";
 
 // Custom hook to fetch user data from Google
 const useGoogleFetch = onReceived => {
@@ -9,23 +10,29 @@ const useGoogleFetch = onReceived => {
     throw new Error("useGoogleFetch: onReceived must be a function");
   }
 
-  const [error, setError] = useState(null); // Holds error messages
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const [data, setData] = useState(null); // Fetched data
-  const cancelTokenRef = useRef(null); // For request cancellation
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
+  const cancelTokenRef = useRef(null);
 
   // Gets the current platform (iOS, Android, or Web)
   const getPlatform = () => {
-    if (Platform.OS === "ios") return "iOS";
-    if (Platform.OS === "android") return "Android";
-    return "Web";
+    if (Platform.OS === "ios") {
+      return "iOS";
+    } else if (Platform.OS === "android") {
+      return "Android";
+    } else {
+      return "Web";
+    }
   };
 
   // Performs the Google fetch operation
   const performGoogleFetch = async authentication => {
     setError(null);
     setData(null);
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
+
+    logInfo("Authentication object received for Google fetch.");
 
     try {
       // Fetch user info from Google
@@ -43,9 +50,11 @@ const useGoogleFetch = onReceived => {
       const userData = {
         email,
         name,
-        token: authentication.idToken,
-        platform: getPlatform() // Store the platform
+        token: authentication.idToken || "",
+        platform: getPlatform() // Ensure platform is set
       };
+
+      logInfo("Sending user data to backend for authentication.");
 
       // Authenticate user with backend
       const serverResponse = await axios.post(
@@ -59,11 +68,13 @@ const useGoogleFetch = onReceived => {
       );
 
       // Check server response
+      logInfo("Received response from server for Google sign-in.");
       if (serverResponse.data && serverResponse.data.success) {
         setData(serverResponse.data);
-        onReceived(serverResponse.data); // Handle received data
+        onReceived(serverResponse.data);
       } else {
         const errorMsg = serverResponse.data.msg || "Unexpected server error";
+        logError("Error from server during Google sign-in: " + errorMsg);
         setError(new Error(errorMsg));
       }
     } catch (error) {
@@ -72,10 +83,11 @@ const useGoogleFetch = onReceived => {
       } else {
         const errorMsg =
           error.response?.data?.msg || error.message || "Unexpected error";
+        logError("Fetch error during Google sign-in: " + errorMsg);
         setError(new Error(errorMsg));
       }
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false);
     }
   };
 

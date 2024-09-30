@@ -23,11 +23,9 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
-
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import axios from "axios";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
@@ -44,7 +42,7 @@ import {
   webClientId
 } from "../../component/Shared/SharedUrl";
 
-// redux-store
+// Redux-store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
@@ -76,19 +74,16 @@ const LoginScreen = ({ navigation, route }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(
-        user,
-        handleMessage({ successStatus: true, msg: msg })
-      );
+      saveLoginCredentials(user, { successStatus: true, msg });
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
       logInfo(msg);
-      handleMessage({ successStatus: false, msg: msg });
+      handleMessage({ successStatus: false, msg });
     }
   };
 
-  // Fetch Api
+  // Fetch API
   const { performFetch, isLoading, error } = useFetch(
     `/auth/log-in`,
     onReceived
@@ -97,7 +92,6 @@ const LoginScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
-      // logError(errorMessage);
       handleMessage({
         successStatus: false,
         msg: errorMessage
@@ -107,16 +101,21 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch Google
   const onReceivedGoogleResponse = response => {
-    const { success, msg, user } = response;
+    const { success, message, token } = response; // Usa el campo `message` en lugar de `msg`
     if (success) {
+      // Guarda credenciales de usuario aquí
       saveLoginCredentials(
-        { email: user.email, name: user.name, photoUrl: user.photoUrl },
-        { successStatus: true, msg: msg }
+        {
+          email: response.email,
+          name: response.name,
+          photoUrl: response.picture
+        },
+        { successStatus: true, message }
       );
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
-      handleMessage({ successStatus: false, msg: msg });
+      handleMessage({ successStatus: false, message });
     }
   };
 
@@ -125,7 +124,6 @@ const LoginScreen = ({ navigation, route }) => {
     isLoading: googleLoading,
     error: googleError
   } = useGoogleFetch(onReceivedGoogleResponse);
-  useGoogleFetch(onReceivedGoogleResponse);
 
   useEffect(() => {
     if (googleError) {
@@ -137,7 +135,6 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [googleError]);
 
-  // Ensure to handle Google sign-in click properly
   const handleGoogleSignIn = () => {
     setGoogleSubmitting(true);
     promptAsync();
@@ -147,7 +144,6 @@ const LoginScreen = ({ navigation, route }) => {
     performGoogleFetch(authentication);
   };
 
-  useEffect(() => {}, []);
   useFocusEffect(
     useCallback(() => {
       // This will run every time the screen is focused
@@ -158,7 +154,6 @@ const LoginScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     useCallback(() => {
-      // This will run every time the screen is focused
       const checkStoredCredentials = async () => {
         try {
           const credentials = await AsyncStorage.getItem("zenTimerCredentials");
@@ -184,16 +179,6 @@ const LoginScreen = ({ navigation, route }) => {
       setGoogleSubmitting(false);
     }
   }, [response]);
-
-  const getPlatform = () => {
-    if (Platform.OS === "ios") {
-      return "iOS";
-    } else if (Platform.OS === "android") {
-      return "Android";
-    } else {
-      return "Web";
-    }
-  };
 
   const handleLogin = (values, setSubmitting) => {
     setMsg("");
