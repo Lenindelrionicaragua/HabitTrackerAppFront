@@ -1,25 +1,34 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
-import { logInfo, logError } from "../util/logging";
+import { Platform } from "react-native";
 
+// Custom hook to fetch user data from Google
 const useGoogleFetch = onReceived => {
   if (typeof onReceived !== "function") {
     throw new Error("useGoogleFetch: onReceived must be a function");
   }
 
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState(null);
+  const [error, setError] = useState(null); // Holds error messages
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [data, setData] = useState(null); // Fetched data
+  const cancelTokenRef = useRef(null); // For request cancellation
 
-  const cancelTokenRef = useRef(null);
+  // Gets the current platform (iOS, Android, or Web)
+  const getPlatform = () => {
+    if (Platform.OS === "ios") return "iOS";
+    if (Platform.OS === "android") return "Android";
+    return "Web";
+  };
 
+  // Performs the Google fetch operation
   const performGoogleFetch = async authentication => {
     setError(null);
     setData(null);
-    setIsLoading(true);
+    setIsLoading(true); // Start loading
 
     try {
+      // Fetch user info from Google
       const res = await axios.get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`,
         {
@@ -35,9 +44,10 @@ const useGoogleFetch = onReceived => {
         email,
         name,
         token: authentication.idToken,
-        platform: getPlatform()
+        platform: getPlatform() // Store the platform
       };
 
+      // Authenticate user with backend
       const serverResponse = await axios.post(
         `${baseApiUrl}/auth/sign-in-with-google`,
         userData,
@@ -48,10 +58,10 @@ const useGoogleFetch = onReceived => {
         }
       );
 
-      // Verificamos si la respuesta del backend fue exitosa
+      // Check server response
       if (serverResponse.data && serverResponse.data.success) {
         setData(serverResponse.data);
-        onReceived(serverResponse.data);
+        onReceived(serverResponse.data); // Handle received data
       } else {
         const errorMsg = serverResponse.data.msg || "Unexpected server error";
         setError(new Error(errorMsg));
@@ -65,10 +75,11 @@ const useGoogleFetch = onReceived => {
         setError(new Error(errorMsg));
       }
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // End loading
     }
   };
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (cancelTokenRef.current) {
@@ -76,16 +87,6 @@ const useGoogleFetch = onReceived => {
       }
     };
   }, []);
-
-  const getPlatform = () => {
-    if (Platform.OS === "ios") {
-      return "iOS";
-    } else if (Platform.OS === "android") {
-      return "Android";
-    } else {
-      return "Web";
-    }
-  };
 
   return {
     isLoading,
