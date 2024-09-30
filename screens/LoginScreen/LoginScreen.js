@@ -101,9 +101,8 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch Google
   const onReceivedGoogleResponse = response => {
-    const { success, message, token } = response; // Usa el campo `message` en lugar de `msg`
+    const { success, message, token } = response;
     if (success) {
-      // Guarda credenciales de usuario aquí
       saveLoginCredentials(
         {
           email: response.email,

@@ -54,8 +54,6 @@ const useGoogleFetch = onReceived => {
         platform: getPlatform() // Ensure platform is set
       };
 
-      logInfo("Sending user data to backend for authentication.");
-
       // Authenticate user with backend
       const serverResponse = await axios.post(
         `${baseApiUrl}/api/auth/sign-in-with-google`,
@@ -68,7 +66,6 @@ const useGoogleFetch = onReceived => {
       );
 
       // Check server response
-      logInfo("Received response from server for Google sign-in.");
       if (serverResponse.data && serverResponse.data.success) {
         setData(serverResponse.data);
         onReceived(serverResponse.data);
