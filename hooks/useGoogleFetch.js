@@ -14,13 +14,31 @@ const useGoogleFetch = onReceived => {
 
   const cancelTokenRef = useRef(null);
 
-  const performGoogleFetch = async userData => {
+  const performGoogleFetch = async authentication => {
     setError(null);
     setData(null);
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
+      const res = await axios.get(
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`,
+        {
+          cancelToken: new axios.CancelToken(cancel => {
+            cancelTokenRef.current = cancel;
+          })
+        }
+      );
+
+      const { email, name, picture } = res.data;
+
+      const userData = {
+        email,
+        name,
+        token: authentication.idToken,
+        platform: getPlatform()
+      };
+
+      const serverResponse = await axios.post(
         `${baseApiUrl}/auth/sign-in-with-google`,
         userData,
         {
@@ -30,11 +48,12 @@ const useGoogleFetch = onReceived => {
         }
       );
 
-      if (response.data && response.data.success) {
-        onReceived(response.data);
-        setData(response.data);
+      // Verificamos si la respuesta del backend fue exitosa
+      if (serverResponse.data && serverResponse.data.success) {
+        setData(serverResponse.data);
+        onReceived(serverResponse.data);
       } else {
-        const errorMsg = response.data.msg || "Unexpected server error";
+        const errorMsg = serverResponse.data.msg || "Unexpected server error";
         setError(new Error(errorMsg));
       }
     } catch (error) {
@@ -57,6 +76,16 @@ const useGoogleFetch = onReceived => {
       }
     };
   }, []);
+
+  const getPlatform = () => {
+    if (Platform.OS === "ios") {
+      return "iOS";
+    } else if (Platform.OS === "android") {
+      return "Android";
+    } else {
+      return "Web";
+    }
+  };
 
   return {
     isLoading,

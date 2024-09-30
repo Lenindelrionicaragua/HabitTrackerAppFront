@@ -30,8 +30,10 @@ import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
+
 // Hooks
 import useFetch from "../../hooks/useFetch";
+import useGoogleFetch from "../../hooks/useGoogleFetch";
 
 // Credentials and Url
 import {
@@ -86,6 +88,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
+  // Fetch Api
   const { performFetch, isLoading, error } = useFetch(
     `/auth/log-in`,
     onReceived
@@ -101,6 +104,48 @@ const LoginScreen = ({ navigation, route }) => {
       });
     }
   }, [error]);
+
+  // Fetch Google
+  const onReceivedGoogleResponse = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      saveLoginCredentials(
+        { email: user.email, name: user.name, photoUrl: user.photoUrl },
+        { successStatus: true, msg: msg }
+      );
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
+    } else {
+      handleMessage({ successStatus: false, msg: msg });
+    }
+  };
+
+  const {
+    performGoogleFetch,
+    isLoading: googleLoading,
+    error: googleError
+  } = useGoogleFetch(onReceivedGoogleResponse);
+  useGoogleFetch(onReceivedGoogleResponse);
+
+  useEffect(() => {
+    if (googleError) {
+      handleMessage({
+        successStatus: false,
+        msg: googleError.message || "Google login failed."
+      });
+      setGoogleSubmitting(false);
+    }
+  }, [googleError]);
+
+  // Ensure to handle Google sign-in click properly
+  const handleGoogleSignIn = () => {
+    setGoogleSubmitting(true);
+    promptAsync();
+  };
+
+  const handleGoogleResponse = authentication => {
+    performGoogleFetch(authentication);
+  };
 
   useEffect(() => {}, []);
   useFocusEffect(
@@ -139,65 +184,6 @@ const LoginScreen = ({ navigation, route }) => {
       setGoogleSubmitting(false);
     }
   }, [response]);
-
-  const handleGoogleResponse = async authentication => {
-    try {
-      const res = await axios.get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
-      );
-      const { email, name, picture } = res.data;
-      const platform = getPlatform();
-      await sendGoogleDataToServer({
-        email,
-        name,
-        token: authentication.idToken,
-        platform: platform
-      });
-
-      saveLoginCredentials(
-        {
-          email,
-          name,
-          photoUrl: picture
-        },
-        {
-          successStatus: true,
-          msg: "Google signin was successful"
-        }
-      );
-      navigation.navigate("WelcomeScreen");
-      dispatch(setActiveScreen("WelcomeScreen"));
-    } catch (error) {
-      handleMessage({
-        msg: "An error occurred. Check your network and try again"
-      });
-    } finally {
-      setGoogleSubmitting(false);
-    }
-  };
-
-  // Ensure to handle Google sign-in click properly
-  const handleGoogleSignIn = () => {
-    setGoogleSubmitting(true);
-    promptAsync();
-  };
-
-  const sendGoogleDataToServer = async userData => {
-    try {
-      console.log("Sending data to server:", userData);
-      const response = await axios.post(
-        `${baseApiUrl}/auth/sign-in-with-google`,
-        userData
-      );
-      const { success, msg } = response.data;
-      if (success) {
-        logInfo(msg);
-        handleMessage({ successStatus: true, msg: msg });
-      }
-    } catch (error) {
-      LogError("Error sending Google data to server:", error);
-    }
-  };
 
   const getPlatform = () => {
     if (Platform.OS === "ios") {
