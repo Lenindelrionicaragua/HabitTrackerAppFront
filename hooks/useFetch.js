@@ -8,9 +8,11 @@ const useFetch = (initialRoute, onReceived) => {
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
+
   if (typeof initialRoute !== "string") {
     throw new Error("useFetch: route must be a string");
   }
+
   if (typeof onReceived !== "function") {
     throw new Error("useFetch: onReceived must be a function");
   }
