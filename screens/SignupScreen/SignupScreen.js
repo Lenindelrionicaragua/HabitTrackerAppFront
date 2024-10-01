@@ -21,11 +21,12 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
-// API client
-import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
+
+// Hooks for data fetching
+import useFetch from "../../hooks/useFetch";
 
 // Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
@@ -66,7 +67,7 @@ const SignupScreen = ({ navigation }) => {
   };
 
   // Form handling
-  const handleSignup = (values, setSubmitting) => {
+  const handleSignup = async (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
@@ -77,48 +78,36 @@ const SignupScreen = ({ navigation }) => {
       dateOfBirth: values.dateOfBirth
     };
 
-    const url = `${baseApiUrl}/auth/sign-up`;
+    const onReceived = data => {
+      const { success, msg, user } = data;
 
-    axios
-      .post(url, { user: credentials })
-      .then(response => {
-        const { success, msg, user } = response.data;
+      if (success) {
+        setSuccessStatus(success);
+        dispatch(setActiveScreen("LinkVerificationScreen"));
+        navigation.navigate("LinkVerificationScreen", {
+          ...user
+        });
 
-        if (success) {
-          setSuccessStatus(success);
-          dispatch(setActiveScreen("LinkVerificationScreen"));
-          navigation.navigate("LinkVerificationScreen", {
-            ...user
-          });
+        return saveLoginCredentials(user, msg, true);
+      } else {
+        logInfo(msg);
+        handleMessage({ successStatus: false, msg: msg });
+      }
+    };
 
-          return saveLoginCredentials(user, msg, true);
-        } else {
-          logInfo(msg);
-          return handleMessage({ successStatus: false, msg: msg });
-        }
-      })
-      .catch(error => {
-        const status = error.response?.status;
+    const { performFetch } = useFetch("/auth/sign-up", onReceived);
 
-        if (status === 503) {
-          handleMessage({
-            successStatus: false,
-            msg: "Service is currently unavailable. Please try again later."
-          });
-        } else {
-          const errorMsg =
-            error.response?.data?.msg || error.message || "An error occurred";
-          logError("Error:", error.response?.data || error.message || error);
-          handleMessage({
-            successStatus: false,
-            msg: errorMsg
-          });
-        }
-      })
-
-      .finally(() => {
-        setSubmitting(false);
-      });
+    try {
+      await performFetch(
+        {
+          method: "POST",
+          data: { user: credentials }
+        },
+        "/auth/sign-up"
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleMessage = ({ successStatus, msg }) => {
