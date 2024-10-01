@@ -25,15 +25,14 @@ import { logError, logInfo } from "../../util/logging";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
-// Hooks
+// Hooks for data fetching
 import useFetch from "../../hooks/useFetch";
 import useGoogleFetch from "../../hooks/useGoogleFetch";
 
-// Credentials and Url
+// Credentials and URL constants
 import {
   baseApiUrl,
   expoClientId,
@@ -42,7 +41,7 @@ import {
   webClientId
 } from "../../component/Shared/SharedUrl";
 
-// Redux-store
+// Redux store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
@@ -51,15 +50,17 @@ WebBrowser.maybeCompleteAuthSession();
 const { seaGreen, infoGrey, darkGrey } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
+  // Local state for handling form interactions
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
   const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
-  // Redux-store
+  // Redux state and actions
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
+  // Google authentication request setup
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: expoClientId,
     iosClientId: iosClientId,
@@ -68,9 +69,11 @@ const LoginScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
+  // Retrieve stored credentials from context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
+  // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
@@ -83,12 +86,13 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  // Fetch API
+  // Fetch API for login request
   const { performFetch, isLoading, error } = useFetch(
     `/auth/log-in`,
     onReceived
   );
 
+  // Handle errors from API calls
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
@@ -99,7 +103,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [error]);
 
-  // Fetch Google
+  // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
     const { success, message, token } = response;
     if (success) {
@@ -124,6 +128,7 @@ const LoginScreen = ({ navigation, route }) => {
     error: googleError
   } = useGoogleFetch(onReceivedGoogleResponse);
 
+  // Handle errors from Google API
   useEffect(() => {
     if (googleError) {
       handleMessage({
@@ -134,23 +139,26 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [googleError]);
 
+  // Trigger Google sign-in
   const handleGoogleSignIn = () => {
     setGoogleSubmitting(true);
     promptAsync();
   };
 
+  // Process Google sign-in response
   const handleGoogleResponse = authentication => {
     performGoogleFetch(authentication);
   };
 
+  // Reset message and status when screen focuses
   useFocusEffect(
     useCallback(() => {
-      // This will run every time the screen is focused
       setMsg("");
       setSuccessStatus("");
     }, [])
   );
 
+  // Check for stored credentials upon screen focus
   useFocusEffect(
     useCallback(() => {
       const checkStoredCredentials = async () => {
@@ -169,6 +177,7 @@ const LoginScreen = ({ navigation, route }) => {
     }, [dispatch, setStoredCredentials])
   );
 
+  // Handle Google response based on the result type
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
@@ -179,6 +188,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [response]);
 
+  // Handle form submission for login
   const handleLogin = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
@@ -188,18 +198,20 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    // Call performFetch to trigger the request
+    // Perform login API request
     performFetch({
       method: "POST",
       data: { user: credentials }
     });
   };
 
+  // Update message box based on success or error
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
   };
 
+  // Save login credentials in AsyncStorage
   const saveLoginCredentials = (credentials, msg, successStatus) => {
     AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
       .then(() => {
