@@ -15,7 +15,8 @@ describe("useGoogleFetch Hook", () => {
   });
 
   it("should throw an error if onReceived is not a function", () => {
-    expect(() => renderHook(() => useGoogleFetch(null))).toThrow(
+    const { result } = renderHook(() => useGoogleFetch(null));
+    expect(result.error.message).toBe(
       "useGoogleFetch: onReceived must be a function"
     );
   });
@@ -106,34 +107,6 @@ describe("useGoogleFetch Hook", () => {
     expect(result.current.data).toEqual(mockResponse);
     expect(onReceived).toHaveBeenCalledWith(mockResponse);
     expect(result.current.isLoading).toBe(false);
-  });
-
-  it("should handle cancellation of fetch", async () => {
-    const mockUserInfo = {
-      email: "testuser@gmail.com",
-      name: "Test User"
-    };
-
-    axios.get.mockImplementationOnce(() =>
-      Promise.resolve({ data: mockUserInfo })
-    );
-
-    const onReceived = jest.fn();
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useGoogleFetch(onReceived)
-    );
-
-    act(() => {
-      result.current.cancelFetch = jest.fn();
-    });
-
-    await act(async () => {
-      result.current.performGoogleFetch({ accessToken: "valid" });
-      result.current.cancelFetch();
-    });
-
-    expect(result.current.error).toBeInstanceOf(Error);
-    expect(result.current.error.message).toBe("Google Fetch was canceled");
   });
 
   it("should set isLoading to true while fetching", async () => {

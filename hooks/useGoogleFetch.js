@@ -13,7 +13,7 @@ const useGoogleFetch = onReceived => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
-  const cancelTokenRef = useRef(null);
+  const cancelTokenRef = useRef(null); // Store cancel token
 
   // Gets the current platform (iOS, Android, or Web)
   const getPlatform = () => {
@@ -40,7 +40,7 @@ const useGoogleFetch = onReceived => {
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`,
         {
           cancelToken: new axios.CancelToken(cancel => {
-            cancelTokenRef.current = cancel;
+            cancelTokenRef.current = cancel; // Store cancel function
           })
         }
       );
@@ -51,7 +51,7 @@ const useGoogleFetch = onReceived => {
         email,
         name,
         token: authentication.idToken || "",
-        platform: getPlatform() // Ensure platform is set
+        platform: getPlatform()
       };
 
       // Authenticate user with backend
@@ -60,7 +60,7 @@ const useGoogleFetch = onReceived => {
         userData,
         {
           cancelToken: new axios.CancelToken(cancel => {
-            cancelTokenRef.current = cancel;
+            cancelTokenRef.current = cancel; // Store cancel function again
           })
         }
       );
@@ -92,7 +92,7 @@ const useGoogleFetch = onReceived => {
   useEffect(() => {
     return () => {
       if (cancelTokenRef.current) {
-        cancelTokenRef.current();
+        cancelTokenRef.current(); // Call cancel function if it exists
       }
     };
   }, []);
