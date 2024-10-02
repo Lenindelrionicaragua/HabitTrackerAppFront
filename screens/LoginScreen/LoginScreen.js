@@ -211,27 +211,27 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save login credentials in AsyncStorage
-  const saveLoginCredentials = async (credentials, msg, successStatus) => {
-    try {
-      await AsyncStorage.setItem(
-        "zenTimerCredentials",
-        JSON.stringify(credentials)
-      );
-      handleMessage({
-        successStatus: true,
-        msg: "Login credentials saved successfully"
-      });
-      setStoredCredentials(credentials);
-    } catch (error) {
-      logError(error);
-      handleMessage({
-        successStatus: false,
-        msg: "Failed to save login credentials"
-      });
-    } finally {
-      setGoogleSubmitting(false);
-    }
-  };
+  // const saveLoginCredentials = async (credentials, msg, successStatus) => {
+  //   try {
+  //     await AsyncStorage.setItem(
+  //       "zenTimerCredentials",
+  //       JSON.stringify(credentials)
+  //     );
+  //     handleMessage({
+  //       successStatus: true,
+  //       msg: "Login credentials saved successfully"
+  //     });
+  //     setStoredCredentials(credentials);
+  //   } catch (error) {
+  //     logError(error);
+  //     handleMessage({
+  //       successStatus: false,
+  //       msg: "Failed to save login credentials"
+  //     });
+  //   } finally {
+  //     setGoogleSubmitting(false);
+  //   }
+  // };
 
   return (
     <KeyboardAvoider>
