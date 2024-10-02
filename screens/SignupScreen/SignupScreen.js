@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -27,6 +27,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
+// Hooks for data fetching
+import useFetch from "../../hooks/useFetch";
+
 // Api url
 import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
@@ -50,7 +53,7 @@ const SignupScreen = ({ navigation }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
-  // Redux-store
+  // Redux state and actions
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
@@ -65,7 +68,41 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // Form handling
+  // Handler for receiving API responses
+  const onReceived = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      // saveLoginCredentials(user, { successStatus: true, msg });
+      dispatch(setActiveScreen("LinkVerificationScreen"));
+      navigation.navigate("LinkVerificationScreen", {
+        ...user
+      });
+
+      return saveLoginCredentials(user, msg, true);
+    } else {
+      logInfo(msg);
+      handleMessage({ successStatus: false, msg });
+    }
+  };
+
+  // Fetch API for login request
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/sign-up`,
+    onReceived
+  );
+
+  // Handle errors from API calls
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+  }, [error]);
+
+  // Handle form submission for Signup
   const handleSignup = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
@@ -77,48 +114,10 @@ const SignupScreen = ({ navigation }) => {
       dateOfBirth: values.dateOfBirth
     };
 
-    const url = `${baseApiUrl}/auth/sign-up`;
-
-    axios
-      .post(url, { user: credentials })
-      .then(response => {
-        const { success, msg, user } = response.data;
-
-        if (success) {
-          setSuccessStatus(success);
-          dispatch(setActiveScreen("LinkVerificationScreen"));
-          navigation.navigate("LinkVerificationScreen", {
-            ...user
-          });
-
-          return saveLoginCredentials(user, msg, true);
-        } else {
-          logInfo(msg);
-          return handleMessage({ successStatus: false, msg: msg });
-        }
-      })
-      .catch(error => {
-        const status = error.response?.status;
-
-        if (status === 503) {
-          handleMessage({
-            successStatus: false,
-            msg: "Service is currently unavailable. Please try again later."
-          });
-        } else {
-          const errorMsg =
-            error.response?.data?.msg || error.message || "An error occurred";
-          logError("Error:", error.response?.data || error.message || error);
-          handleMessage({
-            successStatus: false,
-            msg: errorMsg
-          });
-        }
-      })
-
-      .finally(() => {
-        setSubmitting(false);
-      });
+    performFetch({
+      method: "POST",
+      data: { user: credentials }
+    });
   };
 
   const handleMessage = ({ successStatus, msg }) => {
@@ -282,7 +281,7 @@ const SignupScreen = ({ navigation }) => {
                   {msg}
                 </MsgBox>
 
-                {!isSubmitting && (
+                {!isLoading && (
                   <StyledButton
                     testID="signup-styled-button"
                     onPress={handleSubmit}
@@ -291,7 +290,7 @@ const SignupScreen = ({ navigation }) => {
                   </StyledButton>
                 )}
 
-                {isSubmitting && (
+                {isLoading && (
                   <StyledButton disabled={true} testID="signup-styled-button">
                     <ActivityIndicator size="large" color={white} />
                   </StyledButton>

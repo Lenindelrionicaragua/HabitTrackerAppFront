@@ -23,24 +23,24 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
-
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
-import axios from "axios";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
-// Credentials and Url
+// Hooks for data fetching
+import useFetch from "../../hooks/useFetch";
+import useGoogleFetch from "../../hooks/useGoogleFetch";
+
+// Credentials
 import {
-  baseApiUrl,
   expoClientId,
   iosClientId,
   androidClientId,
   webClientId
 } from "../../component/Shared/SharedUrl";
 
-// redux-store
+// Redux store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
@@ -49,18 +49,17 @@ WebBrowser.maybeCompleteAuthSession();
 const { seaGreen, infoGrey, darkGrey } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
+  // Local state for handling form interactions
   const [hidePassword, setHidePassword] = useState(true);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
   const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
-
-  // Redux-store
+  // Redux state and actions
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
+  // Google authentication request setup
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: expoClientId,
     iosClientId: iosClientId,
@@ -69,19 +68,98 @@ const LoginScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
-  useEffect(() => {}, []);
+  // Retrieve stored credentials from context
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
 
+  // Handler for receiving API responses
+  const onReceived = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      saveLoginCredentials(user, { successStatus: true, msg });
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
+    } else {
+      logInfo(msg);
+      handleMessage({ successStatus: false, msg });
+    }
+  };
+
+  // Fetch API for login request
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/log-in`,
+    onReceived
+  );
+
+  // Handle errors from API calls
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+  }, [error]);
+
+  // Fetch handler for Google authentication response
+  const onReceivedGoogleResponse = response => {
+    const { success, message, token } = response;
+    if (success) {
+      saveLoginCredentials(
+        {
+          email: response.email,
+          name: response.name,
+          photoUrl: response.picture
+        },
+        { successStatus: true, message }
+      );
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
+    } else {
+      handleMessage({ successStatus: false, message });
+    }
+  };
+
+  const {
+    performGoogleFetch,
+    isLoading: googleLoading,
+    error: googleError
+  } = useGoogleFetch(onReceivedGoogleResponse);
+
+  // Handle errors from Google API
+  useEffect(() => {
+    if (googleError) {
+      handleMessage({
+        successStatus: false,
+        msg: googleError.message || "Google login failed."
+      });
+      setGoogleSubmitting(false);
+    }
+  }, [googleError]);
+
+  // Trigger Google sign-in
+  const handleGoogleSignIn = () => {
+    setGoogleSubmitting(true);
+    promptAsync();
+  };
+
+  // Process Google sign-in response
+  const handleGoogleResponse = authentication => {
+    performGoogleFetch(authentication);
+  };
+
+  // Reset message and status when screen focuses
   useFocusEffect(
     useCallback(() => {
-      // This will run every time the screen is focused
       setMsg("");
       setSuccessStatus("");
     }, [])
   );
 
+  // Check for stored credentials upon screen focus
   useFocusEffect(
     useCallback(() => {
-      // This will run every time the screen is focused
       const checkStoredCredentials = async () => {
         try {
           const credentials = await AsyncStorage.getItem("zenTimerCredentials");
@@ -98,6 +176,7 @@ const LoginScreen = ({ navigation, route }) => {
     }, [dispatch, setStoredCredentials])
   );
 
+  // Handle Google response based on the result type
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
@@ -108,75 +187,7 @@ const LoginScreen = ({ navigation, route }) => {
     }
   }, [response]);
 
-  const handleGoogleResponse = async authentication => {
-    try {
-      const res = await axios.get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${authentication.accessToken}`
-      );
-      const { email, name, picture } = res.data;
-      const platform = getPlatform();
-      await sendGoogleDataToServer({
-        email,
-        name,
-        token: authentication.idToken,
-        platform: platform
-      });
-
-      saveLoginCredentials(
-        {
-          email,
-          name,
-          photoUrl: picture
-        },
-        {
-          successStatus: true,
-          msg: "Google signin was successful"
-        }
-      );
-      navigation.navigate("WelcomeScreen");
-      dispatch(setActiveScreen("WelcomeScreen"));
-    } catch (error) {
-      handleMessage({
-        msg: "An error occurred. Check your network and try again"
-      });
-    } finally {
-      setGoogleSubmitting(false);
-    }
-  };
-
-  // Ensure to handle Google sign-in click properly
-  const handleGoogleSignIn = () => {
-    setGoogleSubmitting(true);
-    promptAsync();
-  };
-
-  const sendGoogleDataToServer = async userData => {
-    try {
-      console.log("Sending data to server:", userData);
-      const response = await axios.post(
-        `${baseApiUrl}/auth/sign-in-with-google`,
-        userData
-      );
-      const { success, msg } = response.data;
-      if (success) {
-        logInfo(msg);
-        handleMessage({ successStatus: true, msg: msg });
-      }
-    } catch (error) {
-      LogError("Error sending Google data to server:", error);
-    }
-  };
-
-  const getPlatform = () => {
-    if (Platform.OS === "ios") {
-      return "iOS";
-    } else if (Platform.OS === "android") {
-      return "Android";
-    } else {
-      return "Web";
-    }
-  };
-
+  // Handle form submission for login
   const handleLogin = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
@@ -186,70 +197,40 @@ const LoginScreen = ({ navigation, route }) => {
       password: values.password
     };
 
-    const url = `${baseApiUrl}/auth/log-in`;
-
-    axios
-      .post(url, { user: credentials })
-      .then(response => {
-        if (response && response.data) {
-          const { success, msg, user } = response.data;
-
-          if (success) {
-            setSuccessStatus(success);
-            saveLoginCredentials(
-              user,
-              handleMessage({ successStatus: true, msg: msg })
-            );
-            navigation.navigate("WelcomeScreen");
-            dispatch(setActiveScreen("WelcomeScreen"));
-          } else {
-            logInfo(msg);
-            handleMessage({ successStatus: true, msg: msg });
-          }
-        } else {
-          handleMessage({
-            successStatus: false,
-            msg: "Unexpected server response"
-          });
-        }
-      })
-      .catch(error => {
-        const errorMessage =
-          error.response && error.response.data
-            ? error.response.data.msg
-            : "An unexpected error occurred.";
-        logError(errorMessage);
-        handleMessage({
-          successStatus: false,
-          msg: errorMessage
-        });
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    // Perform login API request
+    performFetch({
+      method: "POST",
+      data: { user: credentials }
+    });
   };
 
+  // Update message box based on success or error
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
   };
 
-  const saveLoginCredentials = (credentials, msg, successStatus) => {
-    AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
-      .then(() => {
-        handleMessage({
-          successStatus: true,
-          msg: "Login credentials saved successfully"
-        });
-        setStoredCredentials(credentials);
-      })
-      .catch(error => {
-        logError(error);
-        handleMessage({
-          successStatus: false,
-          msg: "Failed to save login credentials"
-        });
+  // Save login credentials in AsyncStorage
+  const saveLoginCredentials = async (credentials, msg, successStatus) => {
+    try {
+      await AsyncStorage.setItem(
+        "zenTimerCredentials",
+        JSON.stringify(credentials)
+      );
+      handleMessage({
+        successStatus: true,
+        msg: "Login credentials saved successfully"
       });
+      setStoredCredentials(credentials);
+    } catch (error) {
+      logError(error);
+      handleMessage({
+        successStatus: false,
+        msg: "Failed to save login credentials"
+      });
+    } finally {
+      setGoogleSubmitting(false);
+    }
   };
 
   return (
@@ -271,24 +252,13 @@ const LoginScreen = ({ navigation, route }) => {
             onSubmit={(values, { setSubmitting }) => {
               if (values.email == "" || values.password == "") {
                 handleMessage({ msg: "Please fill all the fields" });
-                setSubmitting(false);
               } else {
-                setSubmitting(true);
-                handleLogin(
-                  { email: values.email, password: values.password },
-                  setSubmitting
-                );
+                handleLogin({ email: values.email, password: values.password });
               }
             }}
             testID="login-form-formik"
           >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              isSubmitting
-            }) => (
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
                   label="Email Address"
@@ -318,16 +288,16 @@ const LoginScreen = ({ navigation, route }) => {
                 <MsgBox type={success ? "SUCCESS" : "ERROR"} testID="msg-box">
                   {msg}
                 </MsgBox>
-                {!isSubmitting && (
+                {!isLoading && (
                   <StyledButton
-                    testID="login-styled-button"
                     onPress={handleSubmit}
+                    testID="login-styled-button"
                   >
-                    <ButtonText testID="login-button-text">Login</ButtonText>
+                    <ButtonText>Login</ButtonText>
                   </StyledButton>
                 )}
 
-                {isSubmitting && (
+                {isLoading && (
                   <StyledButton disabled={true} testID="login-styled-button">
                     <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
