@@ -1,9 +1,12 @@
 name: Deploy to Netlify
 
 on:
+  pull_request:
+    branches:
+      - main  # This will trigger on pull requests targeting the main branch
   push:
     branches:
-      - main
+      - main  # This will trigger on direct pushes to the main branch
 
 jobs:
   build:
@@ -24,6 +27,9 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: List files in the build directory
+        run: ls -la dist # Ensure this points to the correct output directory
+
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 
@@ -32,4 +38,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-     
