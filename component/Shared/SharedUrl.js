@@ -9,7 +9,6 @@ import { logInfo } from "../../util/logging";
 
 export const baseApiUrl = API_URL_PRODUCTION;
 
-
 export const expoClientId = EXPO_CLIENT_ID;
 export const iosClientId = IOS_CLIENT_ID;
 export const androidClientId = ANDROID_CLIENT_ID;
