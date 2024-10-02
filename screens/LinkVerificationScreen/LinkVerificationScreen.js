@@ -20,15 +20,15 @@ import { Octicons, Ionicons } from "@expo/vector-icons";
 // Resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
 
-// Api url
-import { baseApiUrl } from "../../component/Shared/SharedUrl";
-
 // Redux-store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
 // Credentials context
 import { CredentialsContext } from "../../context/credentialsContext";
+
+// useFetch hook
+import useFetch from "../../hooks/useFetch";
 
 // Colors
 const {
@@ -87,24 +87,40 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  const resendEmail = async () => {
-    setResendingEmail(true);
-    // make request
-    const url = `${baseApiUrl}/auth/resend-verification-link`;
-    try {
-      await axios.post(url, { email, userId });
-      setResendStatus("Sent!");
-    } catch (error) {
-      setResendStatus("Failed");
-      alert(`Resending email failed! ${error.message}`);
-    }
+  // Handler for receiving API responses
+  const onReceived = response => {
+    const { success, msg } = response;
     setResendingEmail(false);
-    // Hold on message
+
+    if (success) {
+      setResendStatus("Sent!");
+    } else {
+      setResendStatus("Failed");
+      alert(`Resending email failed! ${msg}`);
+    }
+
+    // Reset the resend button state after 5 seconds
     setTimeout(() => {
       setResendStatus("Resend");
       setActiveResend(false);
       triggerTimer();
     }, 5000);
+  };
+
+  // Fetch API for server-side resend email request
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/resend-verification-link`,
+    onReceived
+  );
+
+  const resendEmail = () => {
+    setResendingEmail(true);
+
+    // Perform the fetch request with email and userId
+    performFetch({
+      method: "POST",
+      data: { email, userId }
+    });
   };
 
   const handleProceed = () => {

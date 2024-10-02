@@ -32,9 +32,8 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/useFetch";
 import useGoogleFetch from "../../hooks/useGoogleFetch";
 
-// Credentials and URL constants
+// Credentials
 import {
-  baseApiUrl,
   expoClientId,
   iosClientId,
   androidClientId,

@@ -113,8 +113,6 @@ const WelcomeScreen = ({ navigation }) => {
       // Perform server-side logout
       performFetch({
         method: "POST"
-        // Pass data if required, otherwise omit it
-        // data: { user: credentials } // Make sure credentials are defined if needed
       });
     } catch (error) {
       logError(error);
