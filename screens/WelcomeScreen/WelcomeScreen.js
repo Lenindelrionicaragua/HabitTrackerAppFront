@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
@@ -15,16 +15,15 @@ import {
 } from "./WelcomeScreenStyles";
 
 import * as Google from "expo-auth-session/providers/google";
-import { revokeAsync, useAuthRequest } from "expo-auth-session";
+import { revokeAsync } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
-import axios from "axios";
 import { logInfo, logError } from "../../util/logging";
 
-// api url
-import { baseApiUrl } from "../../component/Shared/SharedUrl";
+// Hooks for data fetching
+import useFetch from "../../hooks/useFetch";
 
-// redux-store
+// Redux store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
@@ -36,10 +35,11 @@ import {
   WEB_CLIENT_ID
 } from "@env";
 
-const WelcomeScreen = ({ navigation, route }) => {
+const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-  //Context
+
+  // Context to get stored credentials
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
   const {
@@ -52,6 +52,7 @@ const WelcomeScreen = ({ navigation, route }) => {
     ? { uri: photoUrl }
     : require("./../../assets/logoZenTimer2.png");
 
+  // Google authentication setup
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -60,10 +61,37 @@ const WelcomeScreen = ({ navigation, route }) => {
     scopes: ["profile", "email", "openid"]
   });
 
-  // Google logout function
+  // Handler for receiving API responses
+  const onReceived = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      logInfo("User successfully logged out");
+      navigation.navigate("LoginScreen");
+      dispatch(setActiveScreen("LoginScreen"));
+    } else {
+      logInfo(msg);
+      handleMessage({ successStatus: false, msg });
+    }
+  };
+
+  // Fetch API for server-side logout request
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/log-out`,
+    onReceived
+  );
+
+  // Handle errors from API calls
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      handleMessage({ successStatus: false, msg: errorMessage });
+    }
+  }, [error]);
+
+  // Function to handle clearing user login and logout
   const clearLogin = async () => {
     try {
-      const token = storedCredentials.token;
+      const token = storedCredentials?.token;
 
       if (token) {
         await revokeAsync(
@@ -72,9 +100,9 @@ const WelcomeScreen = ({ navigation, route }) => {
         );
       }
 
-      // Clear stored credentials
+      // Clear stored credentials in AsyncStorage
       await AsyncStorage.removeItem("zenTimerCredentials");
-      setStoredCredentials("");
+      setStoredCredentials(null);
       logInfo("Logout successful");
 
       Alert.alert(
@@ -82,22 +110,26 @@ const WelcomeScreen = ({ navigation, route }) => {
         "You have been logged out successfully."
       );
 
-      // Server-side logout
-      const response = await axios.post(`${baseApiUrl}/auth/log-out`);
-      if (response.data.success) {
-        logInfo("User successfully logged out");
-      } else {
-        logError("Logout failed: " + response.data.message);
-      }
-
-      // Navigate to login screen and update redux state
-      navigation.navigate("LoginScreen");
-      dispatch(setActiveScreen("LoginScreen"));
+      // Perform server-side logout
+      performFetch({
+        method: "POST"
+        // Pass data if required, otherwise omit it
+        // data: { user: credentials } // Make sure credentials are defined if needed
+      });
     } catch (error) {
       logError(error);
-      Alert.alert("Logout failed", "An error occurred during logout.");
+      Alert.alert("Logout error", "There was an error logging out.");
     }
   };
+
+  // Handling Google auth response (if needed for login)
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { authentication } = response;
+      // Handle successful Google login (store credentials, etc.)
+      // setStoredCredentials(authentication); // example
+    }
+  }, [response]);
 
   return (
     <StyledContainer testID="styled-container">

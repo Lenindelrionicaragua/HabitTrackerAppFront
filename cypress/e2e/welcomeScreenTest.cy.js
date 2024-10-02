@@ -63,12 +63,19 @@ describe("welcomeScreen", () => {
     // Click the login button
     cy.get('[data-testId="login-styled-button"]').click();
 
+    // Verify that the welcome image exists
+    cy.get('[data-testId="welcome-image"]').should("exist");
+
     // Click the logout button
-    cy.get('[data-testId="logout-button-text"]').click();
+    cy.get('[data-testId="logout-styled-button"]').click();
 
     // Verify that the user navigate to the loginScreen after click de logout
+    cy.get('[data-testId="page-logo"]').should("exist");
+
     cy.get('[data-testId="page-title"]')
       .should("exist")
       .should("have.text", "Habit Tracker");
+
+    cy.get('[data-testId="email-input"]').should("exist");
   });
 });

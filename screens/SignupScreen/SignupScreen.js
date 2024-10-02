@@ -281,7 +281,7 @@ const SignupScreen = ({ navigation }) => {
                   {msg}
                 </MsgBox>
 
-                {!isSubmitting && (
+                {!isLoading && (
                   <StyledButton
                     testID="signup-styled-button"
                     onPress={handleSubmit}
@@ -290,7 +290,7 @@ const SignupScreen = ({ navigation }) => {
                   </StyledButton>
                 )}
 
-                {isSubmitting && (
+                {isLoading && (
                   <StyledButton disabled={true} testID="signup-styled-button">
                     <ActivityIndicator size="large" color={white} />
                   </StyledButton>
