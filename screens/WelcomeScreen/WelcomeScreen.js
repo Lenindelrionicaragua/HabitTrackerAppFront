@@ -66,6 +66,8 @@ const WelcomeScreen = ({ navigation }) => {
     const { success, msg, user } = response;
     if (success) {
       logInfo("User successfully logged out");
+      navigation.navigate("LoginScreen");
+      dispatch(setActiveScreen("LoginScreen"));
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
@@ -112,9 +114,6 @@ const WelcomeScreen = ({ navigation }) => {
       performFetch({
         method: "POST"
       });
-
-      navigation.navigate("LoginScreen");
-      dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {
       logError(error);
       Alert.alert("Logout error", "There was an error logging out.");
