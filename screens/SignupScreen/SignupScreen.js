@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -21,6 +21,8 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
+// API client
+import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
@@ -51,7 +53,7 @@ const SignupScreen = ({ navigation }) => {
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
-  // Redux-store
+  // Redux state and actions
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
@@ -66,8 +68,42 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // Form handling
-  const handleSignup = async (values, setSubmitting) => {
+  // Handler for receiving API responses
+  const onReceived = response => {
+    const { success, msg, user } = response;
+    if (success) {
+      // saveLoginCredentials(user, { successStatus: true, msg });
+      dispatch(setActiveScreen("LinkVerificationScreen"));
+      navigation.navigate("LinkVerificationScreen", {
+        ...user
+      });
+
+      return saveLoginCredentials(user, msg, true);
+    } else {
+      logInfo(msg);
+      handleMessage({ successStatus: false, msg });
+    }
+  };
+
+  // Fetch API for login request
+  const { performFetch, isLoading, error } = useFetch(
+    `/auth/sign-up`,
+    onReceived
+  );
+
+  // Handle errors from API calls
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.message || "An unexpected error occurred.";
+      handleMessage({
+        successStatus: false,
+        msg: errorMessage
+      });
+    }
+  }, [error]);
+
+  // Handle form submission for Signup
+  const handleSignup = (values, setSubmitting) => {
     setMsg("");
     setSuccessStatus("");
 
@@ -78,36 +114,10 @@ const SignupScreen = ({ navigation }) => {
       dateOfBirth: values.dateOfBirth
     };
 
-    const onReceived = data => {
-      const { success, msg, user } = data;
-
-      if (success) {
-        setSuccessStatus(success);
-        dispatch(setActiveScreen("LinkVerificationScreen"));
-        navigation.navigate("LinkVerificationScreen", {
-          ...user
-        });
-
-        return saveLoginCredentials(user, msg, true);
-      } else {
-        logInfo(msg);
-        handleMessage({ successStatus: false, msg: msg });
-      }
-    };
-
-    const { performFetch } = useFetch("/auth/sign-up", onReceived);
-
-    try {
-      await performFetch(
-        {
-          method: "POST",
-          data: { user: credentials }
-        },
-        "/auth/sign-up"
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    performFetch({
+      method: "POST",
+      data: { user: credentials }
+    });
   };
 
   const handleMessage = ({ successStatus, msg }) => {
