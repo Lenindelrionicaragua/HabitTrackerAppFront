@@ -21,17 +21,12 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
-// API client
-import axios from "axios";
-
+// Credentials Context
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/useFetch";
-
-// Api url
-import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
 // Redux-store
 import { useSelector, useDispatch } from "react-redux";
