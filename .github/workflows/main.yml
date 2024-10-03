@@ -3,10 +3,10 @@ name: Deploy to Netlify
 on:
   pull_request:
     branches:
-      - main  # This will trigger on pull requests targeting the main branch
+      - main 
   push:
     branches:
-      - main  # This will trigger on direct pushes to the main branch
+      - main  
 
 jobs:
   build:
@@ -28,13 +28,21 @@ jobs:
         run: npm run build
 
       - name: List files in the build directory
-        run: ls -la dist # Ensure this points to the correct output directory
+        run: ls -la dist 
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 
-      - name: Deploy to Netlify
-        run: netlify deploy --prod --dir=dist --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+      - name: Deploy to Netlify (PR preview)
+        if: github.event_name == 'pull_request'
+        run: netlify deploy --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Deploy preview"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Deploy to Netlify (Final build after merge)
+        if: github.event_name == 'push'
+        run: netlify deploy --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Final production deploy"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
