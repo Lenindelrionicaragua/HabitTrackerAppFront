@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -21,6 +21,9 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
+// Credentials Context
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "../../context/credentialsContext";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/useFetch";
@@ -41,6 +44,10 @@ const SignupScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
+  // Context;
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+
   // Redux state and actions
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
@@ -60,10 +67,13 @@ const SignupScreen = ({ navigation }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
+      // saveLoginCredentials(user, { successStatus: true, msg });
       dispatch(setActiveScreen("LinkVerificationScreen"));
       navigation.navigate("LinkVerificationScreen", {
         ...user
       });
+
+      return saveLoginCredentials(user, msg, true);
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
@@ -108,6 +118,24 @@ const SignupScreen = ({ navigation }) => {
   const handleMessage = ({ successStatus, msg }) => {
     setSuccessStatus(successStatus);
     setMsg(msg);
+  };
+
+  const saveLoginCredentials = (credentials, msg, successStatus) => {
+    AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
+      .then(() => {
+        handleMessage({
+          successStatus: true,
+          msg: "Login credentials saved successfully"
+        });
+        setStoredCredentials(credentials);
+      })
+      .catch(error => {
+        logError(error);
+        handleMessage({
+          successStatus: false,
+          msg: "Failed to save login credentials"
+        });
+      });
   };
 
   return (
