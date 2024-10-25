@@ -25,9 +25,12 @@ jest.mock("@env", () => ({
 // Mock Google auth request
 jest.mock("expo-auth-session/providers/google", () => ({
   useAuthRequest: () => [
-    jest.fn(), // request
-    { type: "success" }, // response
-    jest.fn() // promptAsync
+    jest.fn(), // Mock request function
+    {
+      type: "success",
+      authentication: { accessToken: "mockAccessToken", idToken: "mockIdToken" }
+    }, // Mock response
+    jest.fn() // Mock promptAsync function
   ]
 }));
 
@@ -38,6 +41,28 @@ jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
     navigate: mockNavigate
   })
+}));
+
+// Mock `useFetch` and `useGoogleFetch` hooks in your test setup file or at the top of your test file
+
+jest.mock("../../hooks/useFetch", () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => ({
+    performFetch: jest.fn(),
+    isLoading: false,
+    error: null,
+    data: null
+  }))
+}));
+
+jest.mock("../../hooks/useGoogleFetch", () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(onReceived => ({
+    performGoogleFetch: jest.fn(),
+    isLoading: false,
+    error: null,
+    data: null
+  }))
 }));
 
 // Create a mock store with initial state

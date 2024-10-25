@@ -120,6 +120,7 @@ const SignupScreen = ({ navigation }) => {
     setMsg(msg);
   };
 
+  // Save login credentials to AsyncStorage for later use
   const saveLoginCredentials = (credentials, msg, successStatus) => {
     AsyncStorage.setItem("zenTimerCredentials", JSON.stringify(credentials))
       .then(() => {
