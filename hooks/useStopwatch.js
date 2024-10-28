@@ -8,7 +8,7 @@ import {
   setTimeCompleted,
   setIsRunning,
   setHasStarted,
-  setActivityIndex,
+  setHabitCategoryIndex,
   setFirstRun
 } from "../actions/counterActions";
 import useInfoText from "../hooks/useInfoText";
@@ -21,8 +21,12 @@ function useStopwatch() {
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
-  const activityIndex = useSelector(state => state.activityIndex.activityIndex);
-  const activities = useSelector(state => state.activities.activities);
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  const habitCategories = useSelector(
+    state => state.habitCategories.habitCategories
+  );
   const firstRun = useSelector(state => state.firstRun.firstRun);
 
   const dispatch = useDispatch();
@@ -105,39 +109,41 @@ function useStopwatch() {
     }
   };
 
-  const handleNoActivityNoTime = () => {
-    dispatch(setActivityIndex(0));
+  const handleNoHabitCategoryNoTime = () => {
+    dispatch(setHabitCategoryIndex(0));
     handleTimeSelection(300);
-    updateInfoText("Default time and activity selected.");
+    updateInfoText("Default time and habit category selected.");
     dispatch(setHasStarted(true));
   };
 
-  const handleActivityNoTime = () => {
+  const handleHabitCategoryNoTime = () => {
     handleTimeSelection(300);
     updateInfoText("Default time selected.");
     dispatch(setHasStarted(true));
   };
 
-  const handleNoActivityTime = () => {
-    dispatch(setActivityIndex(0));
+  const handleNoHabitCategoryTime = () => {
+    dispatch(setHabitCategoryIndex(0));
     handleTimeSelection(remainingTime);
-    updateInfoText("Default activity selected.");
+    updateInfoText("Default habit category selected.");
     dispatch(setHasStarted(true));
   };
 
-  const handleActivityTime = () => {
+  const handleHabitCategoryTime = () => {
     startTimer(remainingTime);
-    updateInfoText("Timer started whit time and activity selected.");
+    updateInfoText("Timer started with time and habit category selected.");
     dispatch(setFirstRun(true));
     dispatch(setHasStarted(true));
   };
 
-  const handleActivityChange = () => {
+  const handleHabitCategoryChange = () => {
     const newIndex =
-      activityIndex === activities.length - 1 ? 0 : activityIndex + 1;
+      habitCategoryIndex === habitCategories.length - 1
+        ? 0
+        : habitCategoryIndex + 1;
 
     dispatch(setIsRunning(false));
-    dispatch(setActivityIndex(newIndex));
+    dispatch(setHabitCategoryIndex(newIndex));
     clearTimeoutsAndMessage();
   };
 
@@ -148,11 +154,11 @@ function useStopwatch() {
     resumeStopwatch,
     startTimer,
     handleTimeSelection,
-    handleActivityChange,
-    handleNoActivityNoTime,
-    handleActivityNoTime,
-    handleNoActivityTime,
-    handleActivityTime
+    handleHabitCategoryChange,
+    handleNoHabitCategoryNoTime,
+    handleHabitCategoryNoTime,
+    handleNoHabitCategoryTime,
+    handleHabitCategoryTime
   };
 }
 

@@ -6,7 +6,7 @@ import rootReducer from "../../reducers/rootReducer";
 import useStopwatch from "../../hooks/useStopwatch";
 import useInfoText from "../../hooks/useInfoText";
 import {
-  setActivityIndex,
+  setHabitCategoryIndex,
   setIsRunning,
   setHasStarted,
   setFirstRun,
@@ -38,12 +38,12 @@ describe("useStopwatchScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleNoActivityNoTime is called", () => {
+  it("should call setInfoTextWithTimeout with correct arguments when handleNoHabitCategoryNoTime is called", () => {
     const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
-      activityIndex: { activityIndex: null },
+      habitCategoryIndex: { habitCategoryIndex: null },
       initialTime: 300,
       remainingTime: 300
     };
@@ -62,11 +62,11 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleNoActivityNoTime();
+      result.current.handleNoHabitCategoryNoTime();
     });
 
     expect(updateInfoText).toHaveBeenCalledWith(
-      "Default time and activity selected."
+      "Default time and habit category selected."
     );
 
     act(() => {
@@ -74,12 +74,12 @@ describe("useStopwatchScreen", () => {
     });
   });
 
-  it("should call setInfoTextWithTimeout with correct arguments when handleActivityNoTime is called", () => {
+  it("should call setInfoTextWithTimeout with correct arguments when handleHabitCategoryNoTime is called", () => {
     const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
-      activityIndex: { activityIndex: null },
+      habitCategoryIndex: { habitCategoryIndex: null },
       initialTime: { initialTime: 300 },
       remainingTime: { remainingTime: 300 },
       isRunning: { isRunning: false },
@@ -101,7 +101,7 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleActivityNoTime();
+      result.current.handleHabitCategoryNoTime();
     });
 
     expect(updateInfoText).toHaveBeenCalledWith("Default time selected.");
@@ -111,12 +111,12 @@ describe("useStopwatchScreen", () => {
     });
   });
 
-  it("should call updateInfoText with correct arguments when handleNoActivityTime is called", () => {
+  it("should call updateInfoText with correct arguments when handleNoHabitCategoryTime is called", () => {
     const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
-      activityIndex: { activityIndex: null },
+      habitCategoryIndex: { habitCategoryIndex: null },
       initialTime: 300,
       remainingTime: 0
     };
@@ -135,23 +135,25 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleNoActivityTime();
+      result.current.handleNoHabitCategoryTime();
     });
 
-    expect(updateInfoText).toHaveBeenCalledWith("Default activity selected.");
+    expect(updateInfoText).toHaveBeenCalledWith(
+      "Default habit category selected."
+    );
 
     act(() => {
       jest.runAllTimers();
     });
   });
 
-  it("should call setIsRunning, setFirsRun and setHasStarted with TRUE, when ActivityTime is called", () => {
+  it("should call setIsRunning, setFirstRun, and setHasStarted with TRUE when handleHabitCategoryTime is called", () => {
     const dispatch = jest.fn();
     const updateInfoText = jest.fn();
     const clearTimeoutsAndMessage = jest.fn();
 
     const initialState = {
-      activityIndex: { activityIndex: null },
+      habitCategoryIndex: { habitCategoryIndex: null },
       initialTime: { initialTime: 300 },
       remainingTime: { remainingTime: 300 },
       isRunning: { isRunning: false },
@@ -175,7 +177,7 @@ describe("useStopwatchScreen", () => {
     const { result } = renderHook(() => useStopwatch(), { wrapper });
 
     act(() => {
-      result.current.handleActivityTime();
+      result.current.handleHabitCategoryTime();
     });
 
     expect(store.dispatch).toHaveBeenNthCalledWith(3, setFirstRun(true));

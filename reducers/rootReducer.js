@@ -12,8 +12,8 @@ import hasStartedReducer from "./hasStartedReducer";
 import circleColorReducer from "./circleColorReducer";
 import innerCircleColorReducer from "./innerCircleColorReducer";
 import firstRunReducer from "./firstRunReducer";
-import activityIndexReducer from "./activityIndexReducer";
-import activitiesReducer from "./activitiesReducer";
+import habitCategoryIndexReducer from "./habitCategoryIndexReducer";
+import habitCategoriesReducer from "./habitCategoriesReducer";
 import saveTimeButtonLabelReducer from "./saveTimeButtonLabelReducer";
 import buttonsDisabledReducer from "./buttonsDisabledReducer";
 
@@ -34,10 +34,10 @@ const rootReducer = combineReducers({
   circleColor: circleColorReducer,
   innerCircleColor: innerCircleColorReducer,
   firstRun: firstRunReducer,
-  activityIndex: activityIndexReducer,
   saveTimeButtonLabel: saveTimeButtonLabelReducer,
   buttonsDisabled: buttonsDisabledReducer,
-  activities: activitiesReducer,
+  habitCategoryIndex: habitCategoryIndexReducer,
+  habitCategories: habitCategoriesReducer,
   activeScreen: activeScreenReducer
 });
 

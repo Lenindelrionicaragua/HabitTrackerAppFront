@@ -16,8 +16,9 @@ export const SET_INNER_CIRCLE_COLOR = "SET_INNER_CIRCLE_COLOR";
 
 export const SET_BUTTONS_DISABLED = "SET_BUTTONS_DISABLED";
 export const SET_SAVE_TIME_BUTTON_LABEL = "SET_SAVE_TIME_BUTTON_LABEL";
-export const SET_ACTIVITY_INDEX = "SET_ACTIVITY_INDEX";
-export const SET_ACTIVITIES = "SET_ACTIVITIES";
+
+export const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
+export const SET_HABIT_CATEGORY_INDEX = "SET_HABIT_CATEGORY_INDEX";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
@@ -135,16 +136,16 @@ export const setButtonsDisabled = buttonsDisabled => {
   };
 };
 
-export const setActivityIndex = activityIndex => {
+export const setHabitCategoryIndex = habitCategoryIndex => {
   return {
-    type: SET_ACTIVITY_INDEX,
-    payload: activityIndex
+    type: SET_HABIT_CATEGORY_INDEX,
+    payload: habitCategoryIndex
   };
 };
 
-export const setActivities = activities => ({
-  type: SET_ACTIVITIES,
-  payload: activities
+export const setHabitCategories = habitCategories => ({
+  type: SET_HABIT_CATEGORIES,
+  payload: habitCategories
 });
 
 export const setActiveScreen = screen => {

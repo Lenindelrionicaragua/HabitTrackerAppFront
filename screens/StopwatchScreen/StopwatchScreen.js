@@ -59,10 +59,14 @@ const StopwatchScreen = () => {
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
-  const activityIndex = useSelector(state => state.activityIndex.activityIndex);
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  const habitCategories = useSelector(
+    state => state.habitCategories.habitCategories
+  );
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
-  const activities = useSelector(state => state.activities.activities);
   const buttonsDisabled = useSelector(
     state => state.buttonsDisabled.buttonsDisabled
   );
@@ -78,12 +82,12 @@ const StopwatchScreen = () => {
   const {
     pauseStopwatch,
     resumeStopwatch,
-    handleNoActivityNoTime,
-    handleActivityNoTime,
-    handleNoActivityTime,
-    handleActivityTime,
+    handleNoHabitCategoryNoTime,
+    handleHabitCategoryNoTime,
+    handleNoHabitCategoryTime,
+    handleHabitCategoryTime,
     handleTimeSelection,
-    handleActivityChange
+    handleHabitCategoryChange
   } = useStopwatch();
 
   const {
@@ -117,19 +121,19 @@ const StopwatchScreen = () => {
   // Start button// Start button handler
   const startStopwatch = () => {
     if (!hasStarted) {
-      if (activityIndex === null && remainingTime === 0) {
-        handleNoActivityNoTime();
-      } else if (activityIndex !== null && remainingTime === 0) {
-        handleActivityNoTime();
-      } else if (activityIndex === null && remainingTime > 0) {
-        handleNoActivityTime();
-      } else if (activityIndex !== null && remainingTime > 0) {
-        handleActivityTime();
+      if (habitCategoryIndex === null && remainingTime === 0) {
+        handleNoHabitCategoryNoTime();
+      } else if (habitCategoryIndex !== null && remainingTime === 0) {
+        handleHabitCategoryNoTime();
+      } else if (habitCategoryIndex === null && remainingTime > 0) {
+        handleNoHabitCategoryTime();
+      } else if (habitCategoryIndex !== null && remainingTime > 0) {
+        handleHabitCategoryTime();
       }
     } else {
-      if (activityIndex !== null && remainingTime > 0) {
+      if (habitCategoryIndex !== null && remainingTime > 0) {
         if (!firstRun) {
-          handleActivityTime();
+          handleHabitCategoryTime();
         } else {
           resumeStopwatch();
         }
@@ -334,7 +338,7 @@ const StopwatchScreen = () => {
         <FocusTitleText
           onPress={() => {
             if (!buttonsDisabled && !firstRun) {
-              handleActivityChange();
+              handleHabitCategoryChange();
               handleButtonPress(10);
             }
           }}
@@ -345,7 +349,9 @@ const StopwatchScreen = () => {
           }}
           disabled={buttonsDisabled}
         >
-          {activityIndex === null ? "Click here" : activities[activityIndex]}
+          {habitCategoryIndex === null
+            ? "Click here"
+            : habitCategories[habitCategoryIndex]}{" "}
         </FocusTitleText>
       </FocusTitleContainer>
 
