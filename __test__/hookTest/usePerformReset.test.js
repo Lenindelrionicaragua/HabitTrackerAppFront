@@ -6,7 +6,7 @@ import {
   setRemainingTime,
   setElapsedTime,
   setIsRunning,
-  setActivityIndex,
+  setHabitCategoryIndex,
   setHasStarted,
   setFirstRun,
   setResetClicks,
@@ -34,7 +34,7 @@ jest.mock("../../actions/counterActions", () => ({
   setRemainingTime: jest.fn(),
   setElapsedTime: jest.fn(),
   setIsRunning: jest.fn(),
-  setActivityIndex: jest.fn(),
+  setHabitCategoryIndex: jest.fn(),
   setHasStarted: jest.fn(),
   setFirstRun: jest.fn(),
   setResetClicks: jest.fn(),
@@ -101,8 +101,7 @@ describe("usePerformReset", () => {
     expect(dispatch).toHaveBeenCalledWith(setIsRunning(0));
   });
 
-  // setActivityIndex
-  it("should dispatch setActivityIndex with 0", () => {
+  it("should dispatch setHabitCategoryIndex with 0", () => {
     const dispatch = jest.fn();
     useDispatch.mockReturnValue(dispatch);
 
@@ -112,7 +111,7 @@ describe("usePerformReset", () => {
       result.current();
     });
 
-    expect(dispatch).toHaveBeenCalledWith(setActivityIndex(0));
+    expect(dispatch).toHaveBeenCalledWith(setHabitCategoryIndex(0));
   });
 
   // setHasStarted
@@ -144,7 +143,7 @@ describe("usePerformReset", () => {
   });
 
   // setResetClicks
-  it("should dispatch setFirstRun with 0", () => {
+  it("should dispatch setResetClicks with 0", () => {
     const dispatch = jest.fn();
     useDispatch.mockReturnValue(dispatch);
 
@@ -154,7 +153,7 @@ describe("usePerformReset", () => {
       result.current();
     });
 
-    expect(dispatch).toHaveBeenCalledWith(setFirstRun(0));
+    expect(dispatch).toHaveBeenCalledWith(setResetClicks(0));
   });
 
   // setButtonsDisabled
