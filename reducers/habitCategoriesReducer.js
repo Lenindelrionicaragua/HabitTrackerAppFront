@@ -1,12 +1,5 @@
 const initialHabitCategoriesState = {
-  habitCategories: [
-    "Study",
-    "Work",
-    "Exercise",
-    "Family time",
-    "Screen-free time",
-    "Rest"
-  ]
+  habitCategories: [], 
 };
 
 const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
