@@ -60,7 +60,7 @@ describe("StopwatchScreen", () => {
         .should("exist")
         .should(
           "contain.text",
-          "Choose your task\nand adjust the time\n to start the tracker."
+          "Choose your habit category\nand adjust the time\nto start the tracker."
         );
 
       // Info text
@@ -68,7 +68,7 @@ describe("StopwatchScreen", () => {
         .should("exist")
         .should("contain.text", "I'm focusing on");
 
-      // Focus activity button
+      // Habit category button
       cy.get('[data-testId="focus-activity-button"]')
         .should("exist")
         .should("contain.text", "Click here");
@@ -86,7 +86,7 @@ describe("StopwatchScreen", () => {
       // Select time
       cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(3).click();
 
-      // Select activity
+      // Select habit category
       cy.get('[data-testId="focus-activity-button"]')
         .click()
         .should("contain.text", "Work")
@@ -134,20 +134,22 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
-        "Default time and activity selected"
+        "Default time and habit category selected"
       );
 
       cy.get('[data-testId="start-button"]').click();
 
       cy.get('[data-testId="svg-info-text"]', { timeout: 1000 }).should(
         "contain.text",
-        "Timer started whit time and activity selected."
+        "Timer started with time and habit category selected."
       );
+
+      cy.wait(1000);
 
       // Save action
       cy.get('[data-testId="save-button"]').should("exist").click();
 
-      cy.wait(500);
+      cy.wait(1000);
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "Saving");
 
@@ -155,31 +157,31 @@ describe("StopwatchScreen", () => {
 
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
-        "Time saved successfully! Your activity has been recorded."
+        "Time saved successfully! Your habit category has been recorded."
       );
 
       cy.get('[data-testId="svg-info-text"]').should("contain.text", "");
 
-      // Change activity and time after only one click on the Start button
+      // Change habit category and time after only one click on the Start button
 
       cy.get('[data-testId="start-button"]').click();
 
       cy.get('[data-testId="svg-info-text"]').should(
         "contain.text",
-        "Default time and activity selected"
+        "Default time and habit category selected"
       );
 
       // Select time
       cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(5).click();
       cy.get('[data-testId="stopwatch-time-buttons"]').children().eq(6).click();
 
-      // Select activity
+      // Select habit category
       cy.get('[data-testId="focus-activity-button"]')
         .should("contain.text", "Study")
         .click()
         .should("contain.text", "Work");
 
-      //reset timer
+      // Reset timer
       cy.get('[data-testId="reset-button"]').should("exist").click();
 
       cy.get('[data-testId="svg-info-text"]').should(
@@ -200,7 +202,7 @@ describe("StopwatchScreen", () => {
       // Use cy.clock() to control the time
       cy.clock();
 
-      // start the timer
+      // Start the timer
       cy.get('[data-testId="start-button"]').click();
       cy.get('[data-testId="start-button"]').click();
 

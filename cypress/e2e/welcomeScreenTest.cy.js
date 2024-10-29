@@ -34,7 +34,7 @@ describe("WelcomeScreen", () => {
 
     cy.get('[data-testId="user-name"]')
       .should("exist")
-      .and("have.text", "testuser");
+      .and("have.text", "Zen User");
 
     cy.get('[data-testId="user-email"]')
       .should("exist")
