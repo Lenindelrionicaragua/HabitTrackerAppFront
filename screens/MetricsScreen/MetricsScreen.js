@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
+import { CredentialsContext } from "../../context/credentialsContext"; // Import your context
 import { useFocusEffect } from "@react-navigation/native";
 import {
   StyledContainer,
@@ -11,35 +12,9 @@ import {
 import useHabitCategories from "../../hooks/useHabitCategories";
 
 const MetricsScreen = () => {
-  const [storedCredentials, setStoredCredentials] = useState(null);
+  const { storedCredentials } = useContext(CredentialsContext); // Use context to access stored credentials
   const { habitCategories, error, isLoading, fetchHabitCategories } =
     useHabitCategories();
-
-  // Function to load stored credentials
-  const loadCredentials = async () => {
-    try {
-      const credentials = await AsyncStorage.getItem("zenTimerCredentials");
-      if (credentials !== null) {
-        setStoredCredentials(JSON.parse(credentials));
-      } else {
-        setStoredCredentials(null);
-      }
-    } catch (error) {
-      console.log("Error loading credentials", error);
-    }
-  };
-
-  // Load credentials on screen focus
-  useFocusEffect(
-    React.useCallback(() => {
-      loadCredentials();
-    }, [])
-  );
-
-  // Initial load on component mount
-  useEffect(() => {
-    loadCredentials();
-  }, []);
 
   return (
     <StyledContainer testID="metrics-container">
