@@ -6,6 +6,10 @@ Web version of the app:
 
 https://habit-tracker-app-front.netlify.app
 
+Full Server: 
+
+https://github.com/Lenindelrionicaragua/ZenTimerAppServer
+
 Habit Traker: A React Native app for effective time management. Features customizable intervals, voice control, Google authentication, and detailed statistics.
 
 ## Features
