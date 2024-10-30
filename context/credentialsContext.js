@@ -5,3 +5,5 @@ export const CredentialsContext = createContext({
   storedCredentials: {},
   setStoredCredentials: () => {}
 });
+
+logInfo(CredentialsContext);
