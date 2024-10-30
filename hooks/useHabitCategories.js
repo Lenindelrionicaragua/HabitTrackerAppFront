@@ -16,7 +16,7 @@ const useHabitCategories = () => {
   );
 
   const fetchHabitCategories = useCallback(() => {
-    performFetch(); // Aquí se llama a la función performFetch que ya incluye la cookie de sesión
+    performFetch();
   }, [performFetch]);
 
   return {

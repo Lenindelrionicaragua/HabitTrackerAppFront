@@ -162,9 +162,9 @@ const LoginScreen = ({ navigation, route }) => {
     useCallback(() => {
       const checkStoredCredentials = async () => {
         try {
-          const credentials = await AsyncStorage.getItem("zenTimerCredentials");
+          const user = await AsyncStorage.getItem("zenTimerUser");
           if (credentials) {
-            await AsyncStorage.removeItem("zenTimerCredentials");
+            await AsyncStorage.removeItem("zenTimerUser");
             setStoredCredentials(null);
             dispatch(setActiveScreen("LoginScreen"));
           }
@@ -210,23 +210,20 @@ const LoginScreen = ({ navigation, route }) => {
     setMsg(msg);
   };
 
-  // Save login credentials in AsyncStorage
-  const saveLoginCredentials = async (credentials, msg, successStatus) => {
+  // Save user-related credentials in AsyncStorage
+  const saveLoginCredentials = async (user, msg, successStatus) => {
     try {
-      await AsyncStorage.setItem(
-        "zenTimerCredentials",
-        JSON.stringify(credentials)
-      );
+      await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
         successStatus: true,
-        msg: "Login credentials saved successfully"
+        msg: "User credentials saved successfully"
       });
-      setStoredCredentials(credentials);
+      setStoredCredentials(user);
     } catch (error) {
       logError(error);
       handleMessage({
         successStatus: false,
-        msg: "Failed to save login credentials"
+        msg: "Failed to save user credentials"
       });
     } finally {
       setGoogleSubmitting(false);
