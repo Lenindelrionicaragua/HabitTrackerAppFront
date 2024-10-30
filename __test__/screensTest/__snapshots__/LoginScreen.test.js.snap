@@ -374,9 +374,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                 }
                 testID="msg-box"
                 type="ERROR"
-              >
-                An error occurred. Check your network and try again
-              </Text>
+              />
               <View
                 accessibilityState={
                   {
@@ -433,7 +431,6 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                       "fontSize": 16,
                     }
                   }
-                  testID="login-button-text"
                 >
                   Login
                 </Text>

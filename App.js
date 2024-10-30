@@ -16,14 +16,14 @@ export default function App() {
 
   const checkLoginCredentials = async () => {
     try {
-      const result = await AsyncStorage.getItem("zenTimerCredentials");
+      const result = await AsyncStorage.getItem("zenTimerUser");
       if (result !== null) {
         setStoredCredentials(JSON.parse(result));
       } else {
         setStoredCredentials(null);
       }
     } catch (error) {
-      logError(error);
+      logError("Error retrieving stored credentials:", error);
     } finally {
       setAppReady(true);
       SplashScreen.hideAsync();

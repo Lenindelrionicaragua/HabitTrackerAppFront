@@ -6,7 +6,7 @@ import {
   setRemainingTime,
   setElapsedTime,
   setIsRunning,
-  setActivityIndex,
+  setHabitCategoryIndex,
   setHasStarted,
   setFirstRun,
   setResetClicks,
@@ -27,7 +27,7 @@ export const usePerformReset = () => {
     dispatch(setRemainingTime(0));
     dispatch(setElapsedTime(0));
     dispatch(setIsRunning(false));
-    dispatch(setActivityIndex(null));
+    dispatch(setHabitCategoryIndex(null));
     dispatch(setHasStarted(false));
     dispatch(setFirstRun(false));
     dispatch(setResetClicks(0));

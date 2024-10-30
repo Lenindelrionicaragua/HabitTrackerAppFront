@@ -3,5 +3,7 @@ import { logInfo } from "../util/logging";
 
 export const CredentialsContext = createContext({
   storedCredentials: {},
-  setStoredCredentials: () => {}
+  setStoredCredentials: credentials => {
+    logInfo("Stored credentials updated:", credentials);
+  }
 });
