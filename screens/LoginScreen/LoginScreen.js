@@ -157,13 +157,13 @@ const LoginScreen = ({ navigation, route }) => {
     }, [])
   );
 
-  // Check for stored credentials upon screen focus
+  // Check for stored user credentials upon screen focus
   useFocusEffect(
     useCallback(() => {
       const checkStoredCredentials = async () => {
         try {
           const user = await AsyncStorage.getItem("zenTimerUser");
-          if (credentials) {
+          if (user) {
             await AsyncStorage.removeItem("zenTimerUser");
             setStoredCredentials(null);
             dispatch(setActiveScreen("LoginScreen"));
