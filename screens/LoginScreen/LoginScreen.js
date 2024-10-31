@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation, route }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(user, { successStatus: true, msg });
+      saveLoginCredentials(user, success, msg);
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -104,27 +104,29 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
-    const { success, message, token } = response;
+    const { success, msg, user, token } = response;
     if (success) {
       saveLoginCredentials(
         {
-          email: response.email,
-          name: response.name,
-          photoUrl: response.picture
+          email: user.email,
+          name: user.name,
+          photoUrl: user.picture
         },
-        { successStatus: true, message }
+        success,
+        msg
       );
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
-      handleMessage({ successStatus: false, message });
+      handleMessage({ successStatus: false, msg: msg });
     }
   };
 
   const {
     performGoogleFetch,
     isLoading: googleLoading,
-    error: googleError
+    error: googleError,
+    data: googleData
   } = useGoogleFetch(onReceivedGoogleResponse);
 
   // Handle errors from Google API
@@ -164,16 +166,16 @@ const LoginScreen = ({ navigation, route }) => {
         try {
           const user = await AsyncStorage.getItem("zenTimerUser");
           if (user) {
-            await AsyncStorage.removeItem("zenTimerUser");
-            setStoredCredentials(null);
-            dispatch(setActiveScreen("LoginScreen"));
+            setStoredCredentials(JSON.parse(user));
+            dispatch(setActiveScreen("WelcomeScreen"));
+            navigation.navigate("WelcomeScreen");
           }
         } catch (error) {
           logError("Error checking stored credentials:", error);
         }
       };
       checkStoredCredentials();
-    }, [dispatch, setStoredCredentials])
+    }, [dispatch, setStoredCredentials, navigation])
   );
 
   // Handle Google response based on the result type
@@ -216,7 +218,7 @@ const LoginScreen = ({ navigation, route }) => {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
         successStatus: true,
-        msg: "User credentials saved successfully"
+        msg: msg || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {
