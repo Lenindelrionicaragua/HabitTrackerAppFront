@@ -7,7 +7,6 @@ export const CredentialsProvider = ({ children }) => {
   const [storedCredentials, setStoredCredentials] = useState({});
 
   const updateCredentials = credentials => {
-    logInfo("Stored credentials updated:", credentials);
     setStoredCredentials(credentials);
   };
 

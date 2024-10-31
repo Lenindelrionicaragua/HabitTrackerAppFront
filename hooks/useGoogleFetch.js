@@ -15,7 +15,6 @@ const useGoogleFetch = onReceived => {
   const [data, setData] = useState(null);
   const cancelTokenRef = useRef(null); // Store cancel token
 
-  logInfo(data);
   // Gets the current platform (iOS, Android, or Web)
   const getPlatform = () => {
     if (Platform.OS === "ios") {
@@ -73,8 +72,8 @@ const useGoogleFetch = onReceived => {
       logInfo(`serverResponse: ${JSON.stringify(serverResponse.data)}`);
 
       if (success) {
-        setData(response.data);
-        onReceived(response.data);
+        setData(serverResponse.data);
+        onReceived(serverResponse.data);
       } else {
         const errorMsg = serverError || msg || "Unexpected server error";
         setError(new Error(errorMsg));

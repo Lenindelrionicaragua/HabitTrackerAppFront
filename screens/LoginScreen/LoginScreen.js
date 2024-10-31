@@ -104,17 +104,9 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
-    const { success, message, token, email, name, picture } = response;
-
+    const { success, msg, user, token } = response;
     if (success) {
-      saveLoginCredentials(
-        {
-          email,
-          name,
-          photoUrl: picture
-        },
-        { successStatus: true, message }
-      );
+      saveLoginCredentials({ ...user, token }, { successStatus: true, msg });
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -218,7 +210,7 @@ const LoginScreen = ({ navigation, route }) => {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
         successStatus: true,
-        msg: message || "User credentials saved successfully" // Usar el mensaje si se proporciona
+        msg: message || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {
