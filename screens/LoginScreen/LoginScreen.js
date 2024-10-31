@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation, route }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(user, { successStatus: true, msg });
+      saveLoginCredentials(user, success, msg);
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -106,11 +106,19 @@ const LoginScreen = ({ navigation, route }) => {
   const onReceivedGoogleResponse = response => {
     const { success, msg, user, token } = response;
     if (success) {
-      saveLoginCredentials({ ...user, token }, { successStatus: true, msg });
+      saveLoginCredentials(
+        {
+          email: user.email,
+          name: user.name,
+          photoUrl: user.picture
+        },
+        success,
+        msg
+      );
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
-      handleMessage({ successStatus: false, message });
+      handleMessage({ successStatus: false, msg: msg });
     }
   };
 
@@ -205,12 +213,12 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, message) => {
+  const saveLoginCredentials = async (user, msg, successStatus) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
         successStatus: true,
-        msg: message || "User credentials saved successfully"
+        msg: msg || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {

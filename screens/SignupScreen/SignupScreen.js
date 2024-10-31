@@ -73,7 +73,7 @@ const SignupScreen = ({ navigation }) => {
         ...user
       });
 
-      return saveLoginCredentials(user, msg, true);
+      return saveLoginCredentials(user, msg, success);
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });

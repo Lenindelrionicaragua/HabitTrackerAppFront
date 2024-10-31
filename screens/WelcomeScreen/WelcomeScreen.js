@@ -42,6 +42,7 @@ const WelcomeScreen = ({ navigation }) => {
   // Context to get stored credentials
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
+
   const {
     name = "Zen User",
     email = "serenity@gmail.com",
