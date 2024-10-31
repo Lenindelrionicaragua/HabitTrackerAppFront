@@ -98,22 +98,26 @@ const WelcomeScreen = ({ navigation }) => {
           { token },
           { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
         );
+        logInfo("Google token revoked successfully");
       }
 
       // Clear stored credentials in AsyncStorage
-      await AsyncStorage.removeItem("zenTimerCredentials");
+      await AsyncStorage.removeItem("zenTimerUser");
       setStoredCredentials(null);
       logInfo("Logout successful");
+
+      // Perform server-side logout
+      performFetch({
+        method: "POST"
+      });
 
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
       );
 
-      // Perform server-side logout
-      performFetch({
-        method: "POST"
-      });
+      navigation.navigate("LoginScreen");
+      dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {
       logError(error);
       Alert.alert("Logout error", "There was an error logging out.");

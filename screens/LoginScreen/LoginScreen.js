@@ -164,16 +164,16 @@ const LoginScreen = ({ navigation, route }) => {
         try {
           const user = await AsyncStorage.getItem("zenTimerUser");
           if (user) {
-            await AsyncStorage.removeItem("zenTimerUser");
-            setStoredCredentials(null);
-            dispatch(setActiveScreen("LoginScreen"));
+            setStoredCredentials(JSON.parse(user));
+            dispatch(setActiveScreen("WelcomeScreen"));
+            navigation.navigate("WelcomeScreen");
           }
         } catch (error) {
           logError("Error checking stored credentials:", error);
         }
       };
       checkStoredCredentials();
-    }, [dispatch, setStoredCredentials])
+    }, [dispatch, setStoredCredentials, navigation])
   );
 
   // Handle Google response based on the result type
@@ -211,16 +211,17 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, msg, successStatus) => {
+  const saveLoginCredentials = async (user, { successStatus, msg }) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
+      setStoredCredentials(user);
+      logInfo("User credentials saved successfully.");
       handleMessage({
-        successStatus: true,
+        successStatus,
         msg: "User credentials saved successfully"
       });
-      setStoredCredentials(user);
     } catch (error) {
-      logError(error);
+      logError("Failed to save user credentials:", error);
       handleMessage({
         successStatus: false,
         msg: "Failed to save user credentials"
