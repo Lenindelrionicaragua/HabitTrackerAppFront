@@ -104,13 +104,14 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
-    const { success, message, token } = response;
+    const { success, message, token, email, name, picture } = response;
+
     if (success) {
       saveLoginCredentials(
         {
-          email: response.email,
-          name: response.name,
-          photoUrl: response.picture
+          email,
+          name,
+          photoUrl: picture
         },
         { successStatus: true, message }
       );
@@ -124,7 +125,8 @@ const LoginScreen = ({ navigation, route }) => {
   const {
     performGoogleFetch,
     isLoading: googleLoading,
-    error: googleError
+    error: googleError,
+    data: googleData
   } = useGoogleFetch(onReceivedGoogleResponse);
 
   // Handle errors from Google API
@@ -211,17 +213,16 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, { successStatus, msg }) => {
+  const saveLoginCredentials = async (user, message) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
-      setStoredCredentials(user);
-      logInfo("User credentials saved successfully.");
       handleMessage({
-        successStatus,
-        msg: "User credentials saved successfully"
+        successStatus: true,
+        msg: message || "User credentials saved successfully" // Usar el mensaje si se proporciona
       });
+      setStoredCredentials(user);
     } catch (error) {
-      logError("Failed to save user credentials:", error);
+      logError(error);
       handleMessage({
         successStatus: false,
         msg: "Failed to save user credentials"

@@ -21,7 +21,6 @@ const useFetch = (initialRoute, onReceived) => {
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
   const [data, setData] = useState(null);
-
   const cancelTokenRef = useRef(null);
 
   const performFetch = (options = {}, newUrl) => {

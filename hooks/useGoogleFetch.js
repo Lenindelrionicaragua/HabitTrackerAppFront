@@ -15,6 +15,7 @@ const useGoogleFetch = onReceived => {
   const [data, setData] = useState(null);
   const cancelTokenRef = useRef(null); // Store cancel token
 
+  logInfo(data);
   // Gets the current platform (iOS, Android, or Web)
   const getPlatform = () => {
     if (Platform.OS === "ios") {
@@ -46,10 +47,12 @@ const useGoogleFetch = onReceived => {
       );
 
       const { email, name, picture } = res.data;
+      console.log("Google user data:", { email, name, picture });
 
       const userData = {
         email,
         name,
+        picture,
         token: authentication.idToken || "",
         platform: getPlatform()
       };
@@ -65,13 +68,15 @@ const useGoogleFetch = onReceived => {
         }
       );
 
-      // Check server response
-      if (serverResponse.data && serverResponse.data.success) {
-        setData(serverResponse.data);
-        onReceived(serverResponse.data);
+      const { success, msg, user, error: serverError } = serverResponse.data;
+
+      logInfo(`serverResponse: ${JSON.stringify(serverResponse.data)}`);
+
+      if (success) {
+        setData(response.data);
+        onReceived(response.data);
       } else {
-        const errorMsg = serverResponse.data.msg || "Unexpected server error";
-        logError("Error from server during Google sign-in: " + errorMsg);
+        const errorMsg = serverError || msg || "Unexpected server error";
         setError(new Error(errorMsg));
       }
     } catch (error) {
