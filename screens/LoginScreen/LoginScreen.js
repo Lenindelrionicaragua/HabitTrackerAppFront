@@ -104,7 +104,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
-    const { success, msg, error, user, token } = response;
+    const { success, msg, user, token } = response;
     if (success) {
       saveLoginCredentials(
         {
@@ -118,7 +118,7 @@ const LoginScreen = ({ navigation, route }) => {
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
-      handleMessage({ successStatus: success, msg: error });
+      handleMessage({ successStatus: false, msg: msg });
     }
   };
 
