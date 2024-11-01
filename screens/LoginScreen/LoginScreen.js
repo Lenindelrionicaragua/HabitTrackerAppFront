@@ -104,7 +104,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Fetch handler for Google authentication response
   const onReceivedGoogleResponse = response => {
-    const { success, msg, user, token } = response;
+    const { success, msg, error, user, token } = response;
     if (success) {
       saveLoginCredentials(
         {
@@ -118,7 +118,7 @@ const LoginScreen = ({ navigation, route }) => {
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
-      handleMessage({ successStatus: false, msg: msg });
+      handleMessage({ successStatus: success, msg: error });
     }
   };
 
@@ -213,19 +213,19 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, msg, successStatus) => {
+  const saveLoginCredentials = async (user, msg, success) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
-        successStatus: true,
+        successStatus: success,
         msg: msg || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {
       logError(error);
       handleMessage({
-        successStatus: false,
-        msg: "Failed to save user credentials"
+        successStatus: success,
+        msg: msg || "User credentials saved successfully"
       });
     } finally {
       setGoogleSubmitting(false);
