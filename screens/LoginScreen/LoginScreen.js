@@ -213,19 +213,19 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, msg, successStatus) => {
+  const saveLoginCredentials = async (user, msg, success) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
       handleMessage({
-        successStatus: true,
+        successStatus: success,
         msg: msg || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {
       logError(error);
       handleMessage({
-        successStatus: false,
-        msg: "Failed to save user credentials"
+        successStatus: success,
+        msg: msg || "User credentials saved successfully"
       });
     } finally {
       setGoogleSubmitting(false);

@@ -70,6 +70,8 @@ const useFetch = (initialRoute, onReceived) => {
 
         const { success, msg, user, error: serverError } = response.data;
 
+        logInfo(`Response Data: ${JSON.stringify(response.data)}`);
+
         if (success) {
           setData(response.data);
           onReceived(response.data);

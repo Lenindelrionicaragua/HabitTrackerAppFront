@@ -12,7 +12,6 @@ import {
   StyledButton,
   ButtonText
 } from "./LinkVerificationStyles";
-import axios from "axios";
 
 // Icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
@@ -31,20 +30,15 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/useFetch";
 
 // Colors
-const {
-  seaGreen,
-  white,
-  infoWhite,
-  lightPink,
-  lightGrey,
-  black,
-  skyBlue,
-  lightGreen
-} = Colors;
+const { white } = Colors;
 
 const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
+  // Resend timer
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
+  const [activeResend, setActiveResend] = useState(false);
 
   // Redux-store
   const dispatch = useDispatch();
@@ -53,13 +47,8 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
 
-  // Resend timer
-  const [timeLeft, setTimeLeft] = useState(null);
-  const [targetTime, setTargetTime] = useState(null);
-  const [activeResend, setActiveResend] = useState(false);
-
   const email = storedCredentials?.email;
-  const userId = storedCredentials?.userId;
+  const userId = storedCredentials?._id;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -69,6 +58,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       setTimeLeft(null);
       clearInterval(resendTimerInterval);
       setActiveResend(true);
+      setResendStatus("Resend");
     }
   };
 
@@ -89,31 +79,33 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg } = response;
-    setResendingEmail(false);
+    const { success, msg, error: serverError } = response;
 
     if (success) {
       setResendStatus("Sent!");
+      setActiveResend(false);
+      alert(msg);
     } else {
       setResendStatus("Failed");
-      alert(`Resending email failed! ${msg}`);
+      setActiveResend(false);
+      alert(`Resending email failed! ${serverError || msg}`);
     }
 
     // Reset the resend button state after 5 seconds
     setTimeout(() => {
-      setResendStatus("Resend");
-      setActiveResend(false);
+      setResendStatus("Please wait");
       triggerTimer();
     }, 5000);
   };
 
   // Fetch API for server-side resend email request
-  const { performFetch, isLoading, error } = useFetch(
+  const { performFetch, isLoading, msg, error, data } = useFetch(
     `/auth/resend-verification-link`,
     onReceived
   );
 
   const resendEmail = () => {
+    setResendStatus("Sending...");
     setResendingEmail(true);
 
     // Perform the fetch request with email and userId
@@ -127,6 +119,39 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     dispatch(setActiveScreen("LoginScreen"));
     navigation.navigate("LoginScreen", { email });
   };
+
+  // Update resend status based on loading state
+  useEffect(() => {
+    const handleTimerReset = () => {
+      setTimeout(() => {
+        setResendStatus("Please wait");
+        triggerTimer();
+      }, 5000);
+    };
+
+    if (isLoading) {
+      setResendStatus("Sending...");
+    } else if (data) {
+      if (data.success) {
+        setResendStatus("Sent!");
+        setActiveResend(false);
+        alert(data.msg);
+        handleTimerReset();
+      } else {
+        setResendStatus("Failed");
+        setActiveResend(false);
+        alert(`Error: ${data.error || "An unknown error occurred."}`);
+        handleTimerReset();
+      }
+    } else if (error) {
+      setResendStatus("Failed to send!");
+      setActiveResend(false);
+
+      const errorMessage = error.response?.data?.error || error.message;
+      alert(`Network error: ${errorMessage}`);
+      handleTimerReset();
+    }
+  }, [isLoading, data, error]);
 
   return (
     <StyledContainer
@@ -151,11 +176,12 @@ const LinkVerificationScreen = ({ navigation, route }) => {
         </StyledButton>
         <ResendTimer
           activeResend={activeResend}
-          resendingEmail={resendingEmail}
+          isLoading={isLoading}
           resendStatus={resendStatus}
           timeLeft={timeLeft}
           targetTime={targetTime}
           resendEmail={resendEmail}
+          resendingEmail={resendingEmail}
         />
       </BottomContainer>
     </StyledContainer>
