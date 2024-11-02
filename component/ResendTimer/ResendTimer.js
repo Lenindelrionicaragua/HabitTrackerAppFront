@@ -9,32 +9,30 @@ import {
 } from "./ResendTimerStyles";
 import { Colors } from "./../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoWhite,
-  lightPink,
-  lightGrey,
-  black,
-  skyBlue,
-  lightGreen,
-  darkGrey
-} = Colors;
+const { black, darkGrey, green, red } = Colors;
 
 const ResendTimer = ({
   activeResend,
   resendEmail,
-  resendingEmail,
+  isLoading,
   resendStatus,
   timeLeft,
-  targetTime
+  targetTime,
+  resendingEmail
 }) => {
+  const textColor =
+    resendStatus === "Failed" || resendStatus === "Failed to send!"
+      ? red
+      : resendStatus === "Sent!"
+        ? green
+        : black;
+
   return (
     <View>
       <InlineGroup>
         <InfoText>Didn't receive the email?</InfoText>
 
-        {!resendingEmail && (
+        {!isLoading && (
           <TextLink
             disable={!activeResend}
             onPress={activeResend ? resendEmail : null}
@@ -42,20 +40,19 @@ const ResendTimer = ({
             <TextLinkContent
               style={{
                 opacity: activeResend ? 1 : 0.5,
-                textDecorationLine: "underline"
+                textDecorationLine: "underline",
+                color: textColor
               }}
-              resendStatus={resendStatus}
             >
               {resendStatus}
             </TextLinkContent>
           </TextLink>
         )}
 
-        {resendingEmail && (
+        {isLoading && (
           <TextLink disable>
             <TextLinkContent
-              resendStatus={resendStatus}
-              style={{ textDecorationLine: "underline" }}
+              style={{ textDecorationLine: "underline", color: darkGrey }}
             >
               <ActivityIndicator color={darkGrey} />
             </TextLinkContent>

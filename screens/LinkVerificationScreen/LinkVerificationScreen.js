@@ -30,16 +30,7 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/useFetch";
 
 // Colors
-const {
-  seaGreen,
-  white,
-  infoWhite,
-  lightPink,
-  lightGrey,
-  black,
-  skyBlue,
-  lightGreen
-} = Colors;
+const { white } = Colors;
 
 const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
@@ -89,14 +80,14 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg } = response;
-    setResendingEmail(false);
+    const { success, msg, error: serverError } = response;
 
     if (success) {
       setResendStatus("Sent!");
+      alert(msg);
     } else {
       setResendStatus("Failed");
-      alert(`Resending email failed! ${msg}`);
+      alert(`Resending email failed! ${serverError || msg}`);
     }
 
     // Reset the resend button state after 5 seconds
@@ -108,26 +99,19 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   };
 
   // Fetch API for server-side resend email request
-  const { performFetch, isLoading, error } = useFetch(
+  const { performFetch, isLoading, msg, error, data } = useFetch(
     `/auth/resend-verification-link`,
     onReceived
   );
 
   const resendEmail = () => {
+    setResendStatus("Sending...");
     setResendingEmail(true);
-
-    // Set a timeout for the fetch operation
-    const timeout = setTimeout(() => {
-      setResendingEmail(false);
-      setResendStatus("Resend");
-      alert("Resend operation timed out. Please try again.");
-    }, 10000);
 
     // Perform the fetch request with email and userId
     performFetch({
       method: "POST",
-      data: { email, userId },
-      onComplete: () => clearTimeout(timeout)
+      data: { email, userId }
     });
   };
 
@@ -135,6 +119,24 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     dispatch(setActiveScreen("LoginScreen"));
     navigation.navigate("LoginScreen", { email });
   };
+
+  // Update resend status based on loading state
+  useEffect(() => {
+    if (isLoading) {
+      setResendStatus("Sending...");
+    } else if (data) {
+      if (data.success) {
+        setResendStatus("Sent!");
+        alert(data.msg);
+      } else if (data.status === "error") {
+        setResendStatus("Failed");
+        alert(`Error: ${data.error || "An unknown error occurred."}`);
+      }
+    } else if (error) {
+      setResendStatus("Failed to send!");
+      alert(`Network error: ${error.message}`);
+    }
+  }, [isLoading, data, error]);
 
   return (
     <StyledContainer
@@ -159,11 +161,12 @@ const LinkVerificationScreen = ({ navigation, route }) => {
         </StyledButton>
         <ResendTimer
           activeResend={activeResend}
-          resendingEmail={resendingEmail}
+          isLoading={isLoading}
           resendStatus={resendStatus}
           timeLeft={timeLeft}
           targetTime={targetTime}
           resendEmail={resendEmail}
+          resendingEmail={resendingEmail}
         />
       </BottomContainer>
     </StyledContainer>
