@@ -12,7 +12,6 @@ import {
   StyledButton,
   ButtonText
 } from "./LinkVerificationStyles";
-import axios from "axios";
 
 // Icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
@@ -69,6 +68,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       setTimeLeft(null);
       clearInterval(resendTimerInterval);
       setActiveResend(true);
+      setResendStatus("Resend");
     }
   };
 
@@ -116,10 +116,18 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const resendEmail = () => {
     setResendingEmail(true);
 
+    // Set a timeout for the fetch operation
+    const timeout = setTimeout(() => {
+      setResendingEmail(false);
+      setResendStatus("Resend");
+      alert("Resend operation timed out. Please try again.");
+    }, 10000);
+
     // Perform the fetch request with email and userId
     performFetch({
       method: "POST",
-      data: { email, userId }
+      data: { email, userId },
+      onComplete: () => clearTimeout(timeout)
     });
   };
 
