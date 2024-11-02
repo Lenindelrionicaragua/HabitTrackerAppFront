@@ -35,6 +35,10 @@ const { white } = Colors;
 const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
+  // Resend timer
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
+  const [activeResend, setActiveResend] = useState(false);
 
   // Redux-store
   const dispatch = useDispatch();
@@ -42,11 +46,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
-
-  // Resend timer
-  const [timeLeft, setTimeLeft] = useState(null);
-  const [targetTime, setTargetTime] = useState(null);
-  const [activeResend, setActiveResend] = useState(false);
 
   const email = storedCredentials?.email;
   const userId = storedCredentials?._id;
@@ -84,16 +83,17 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
     if (success) {
       setResendStatus("Sent!");
+      setActiveResend(false);
       alert(msg);
     } else {
       setResendStatus("Failed");
+      setActiveResend(false);
       alert(`Resending email failed! ${serverError || msg}`);
     }
 
     // Reset the resend button state after 5 seconds
     setTimeout(() => {
-      setResendStatus("Resend");
-      setActiveResend(false);
+      setResendStatus("Please wait");
       triggerTimer();
     }, 5000);
   };
@@ -122,19 +122,34 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Update resend status based on loading state
   useEffect(() => {
+    const handleTimerReset = () => {
+      setTimeout(() => {
+        setResendStatus("Please wait");
+        triggerTimer();
+      }, 5000);
+    };
+
     if (isLoading) {
       setResendStatus("Sending...");
     } else if (data) {
       if (data.success) {
         setResendStatus("Sent!");
+        setActiveResend(false);
         alert(data.msg);
-      } else if (data.status === "error") {
+        handleTimerReset();
+      } else {
         setResendStatus("Failed");
+        setActiveResend(false);
         alert(`Error: ${data.error || "An unknown error occurred."}`);
+        handleTimerReset();
       }
     } else if (error) {
       setResendStatus("Failed to send!");
-      alert(`Network error: ${error.message}`);
+      setActiveResend(false);
+
+      const errorMessage = error.response?.data?.error || error.message;
+      alert(`Network error: ${errorMessage}`);
+      handleTimerReset();
     }
   }, [isLoading, data, error]);
 

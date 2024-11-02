@@ -17,8 +17,7 @@ const ResendTimer = ({
   isLoading,
   resendStatus,
   timeLeft,
-  targetTime,
-  resendingEmail
+  targetTime
 }) => {
   const textColor =
     resendStatus === "Failed" || resendStatus === "Failed to send!"
