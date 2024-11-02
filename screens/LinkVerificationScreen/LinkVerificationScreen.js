@@ -58,7 +58,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const [activeResend, setActiveResend] = useState(false);
 
   const email = storedCredentials?.email;
-  const userId = storedCredentials?.userId;
+  const userId = storedCredentials?._id;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
