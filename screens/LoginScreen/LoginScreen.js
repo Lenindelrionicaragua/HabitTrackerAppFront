@@ -74,14 +74,17 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg, user, token, isVerified } = response;
+    const { success, msg, user, token, loginTrue } = response;
     if (success) {
-      if (!isVerified) {
-        navigation.navigate("VerificationScreen");
-      } else {
-        saveLoginCredentials(user, token, success, msg);
+      saveLoginCredentials(user, token, success, msg);
+      if (loginTrue) {
         navigation.navigate("WelcomeScreen");
         dispatch(setActiveScreen("WelcomeScreen"));
+      } else {
+        dispatch(setActiveScreen("LoginScreen"));
+        logInfo(
+          "User signed up successfully but not navigating to welcome screen."
+        );
       }
     } else {
       logInfo(msg);
