@@ -74,12 +74,15 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg, user, token } = response;
+    const { success, msg, user, token, isVerified } = response;
     if (success) {
-      saveLoginCredentials(user, token, success, msg);
-      // document.cookie = response.headers["set-cookie"];
-      navigation.navigate("WelcomeScreen");
-      dispatch(setActiveScreen("WelcomeScreen"));
+      if (!isVerified) {
+        navigation.navigate("VerificationScreen");
+      } else {
+        saveLoginCredentials(user, token, success, msg);
+        navigation.navigate("WelcomeScreen");
+        dispatch(setActiveScreen("WelcomeScreen"));
+      }
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
