@@ -168,25 +168,6 @@ const LoginScreen = ({ navigation, route }) => {
     }, [])
   );
 
-  // Check for stored user credentials upon screen focus
-  useFocusEffect(
-    useCallback(() => {
-      const checkStoredCredentials = async () => {
-        try {
-          const user = await AsyncStorage.getItem("zenTimerUser");
-          if (user) {
-            setStoredCredentials(JSON.parse(user));
-            dispatch(setActiveScreen("WelcomeScreen"));
-            navigation.navigate("WelcomeScreen");
-          }
-        } catch (error) {
-          logError("Error checking stored credentials:", error);
-        }
-      };
-      checkStoredCredentials();
-    }, [dispatch, setStoredCredentials, navigation])
-  );
-
   // Handle Google response based on the result type
   useEffect(() => {
     if (response?.type === "success") {
