@@ -102,10 +102,10 @@ const WelcomeScreen = ({ navigation }) => {
         logInfo("Google token revoked successfully");
       }
 
-      // Clear stored credentials in AsyncStorage
-      await AsyncStorage.removeItem("zenTimerUser");
+      // Clear both user and token from AsyncStorage
+      await AsyncStorage.multiRemove(["zenTimerUser", "zenTimerToken"]);
       setStoredCredentials(null);
-      logInfo("Logout successful");
+      logInfo("User and token cleared from storage");
 
       // Perform server-side logout
       performFetch({
