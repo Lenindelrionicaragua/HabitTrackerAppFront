@@ -74,18 +74,12 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg, user, token, loginTrue } = response;
+    const { success, msg, user, token } = response;
     if (success) {
       saveLoginCredentials(user, token, success, msg);
-      if (loginTrue) {
-        navigation.navigate("WelcomeScreen");
-        dispatch(setActiveScreen("WelcomeScreen"));
-      } else {
-        dispatch(setActiveScreen("LoginScreen"));
-        logInfo(
-          "User signed up successfully but not navigating to welcome screen."
-        );
-      }
+      // document.cookie = response.headers["set-cookie"];
+      navigation.navigate("WelcomeScreen");
+      dispatch(setActiveScreen("WelcomeScreen"));
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
