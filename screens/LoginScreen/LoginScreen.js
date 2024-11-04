@@ -205,7 +205,8 @@ const LoginScreen = ({ navigation, route }) => {
     // Perform login API request
     performFetch({
       method: "POST",
-      data: { user: credentials }
+      data: { user: credentials },
+      withCredentials: true
     });
   };
 
