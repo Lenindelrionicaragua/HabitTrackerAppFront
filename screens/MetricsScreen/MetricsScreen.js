@@ -13,7 +13,7 @@ import useHabitCategories from "../../hooks/useHabitCategories";
 
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext); // Use context to access stored credentials
-  const { habitCategories, error, isLoading, fetchHabitCategories } =
+  const { habitCategories, message, error, isLoading, fetchHabitCategories } =
     useHabitCategories();
 
   return (
@@ -53,6 +53,9 @@ const MetricsScreen = () => {
             Error fetching categories: {error.message}
           </Text>
         )}
+
+        {/* Mostrar el mensaje del servidor */}
+        {message && <Text style={{ color: "orange" }}>{message}</Text>}
 
         {habitCategories.length > 0 && (
           <View style={{ marginTop: 10 }}>

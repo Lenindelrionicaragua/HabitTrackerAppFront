@@ -132,12 +132,6 @@ const LoginScreen = ({ navigation, route }) => {
     data: googleData
   } = useGoogleFetch(onReceivedGoogleResponse);
 
-  performFetch({
-    method: "POST",
-    data: { user: credentials },
-    withCredentials: true
-  });
-
   // Handle errors from Google API
   useEffect(() => {
     if (googleError) {
@@ -211,8 +205,7 @@ const LoginScreen = ({ navigation, route }) => {
     // Perform login API request
     performFetch({
       method: "POST",
-      data: { user: credentials },
-      withCredentials: true
+      data: { user: credentials }
     });
   };
 

@@ -24,6 +24,7 @@ const useHabitCategories = () => {
 
   return {
     habitCategories: data?.categories || [],
+    message: data?.msg || "",
     error,
     isLoading,
     fetchHabitCategories
