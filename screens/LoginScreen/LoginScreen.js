@@ -74,9 +74,10 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg, user } = response;
+    const { success, msg, user, token } = response;
     if (success) {
-      saveLoginCredentials(user, success, msg);
+      saveLoginCredentials(user, token, success, msg);
+      document.cookie = response.headers["set-cookie"];
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -112,9 +113,11 @@ const LoginScreen = ({ navigation, route }) => {
           name: user.name,
           photoUrl: user.picture
         },
+        token,
         success,
         msg
       );
+      document.cookie = response.headers["set-cookie"];
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -213,9 +216,10 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, msg, success) => {
+  const saveLoginCredentials = async (user, token, msg, success) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
+      // await AsyncStorage.setItem("zenTimerToken", token);
       handleMessage({
         successStatus: success,
         msg: msg || "User credentials saved successfully"
@@ -225,7 +229,7 @@ const LoginScreen = ({ navigation, route }) => {
       logError(error);
       handleMessage({
         successStatus: success,
-        msg: msg || "User credentials saved successfully"
+        msg: msg || "Failed to save user credentials."
       });
     } finally {
       setGoogleSubmitting(false);

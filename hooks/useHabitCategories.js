@@ -7,11 +7,14 @@ const useHabitCategories = () => {
   const dispatch = useDispatch();
 
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
-    "/habit-categories",
+    "/habit-categories/",
     receivedData => {
       if (receivedData.success) {
         dispatch(setHabitCategories(receivedData.categories));
       }
+    },
+    {
+      withCredentials: true
     }
   );
 
