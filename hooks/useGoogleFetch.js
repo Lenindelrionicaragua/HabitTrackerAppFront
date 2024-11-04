@@ -61,6 +61,7 @@ const useGoogleFetch = onReceived => {
         `${baseApiUrl}/api/auth/sign-in-with-google`,
         userData,
         {
+          withCredentials: true,
           cancelToken: new axios.CancelToken(cancel => {
             cancelTokenRef.current = cancel; // Store cancel function again
           })

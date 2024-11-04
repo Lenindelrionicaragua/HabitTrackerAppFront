@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation, route }) => {
     const { success, msg, user, token } = response;
     if (success) {
       saveLoginCredentials(user, token, success, msg);
-      document.cookie = response.headers["set-cookie"];
+      // document.cookie = response.headers["set-cookie"];
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -117,7 +117,7 @@ const LoginScreen = ({ navigation, route }) => {
         success,
         msg
       );
-      document.cookie = response.headers["set-cookie"];
+      // document.cookie = response.headers["set-cookie"];
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -131,6 +131,12 @@ const LoginScreen = ({ navigation, route }) => {
     error: googleError,
     data: googleData
   } = useGoogleFetch(onReceivedGoogleResponse);
+
+  performFetch({
+    method: "POST",
+    data: { user: credentials },
+    withCredentials: true
+  });
 
   // Handle errors from Google API
   useEffect(() => {
