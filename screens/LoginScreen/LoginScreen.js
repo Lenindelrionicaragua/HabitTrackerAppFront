@@ -162,6 +162,29 @@ const LoginScreen = ({ navigation, route }) => {
     }, [])
   );
 
+  // Check for stored user credentials upon screen focus
+  useFocusEffect(
+    useCallback(() => {
+      const checkStoredCredentials = async () => {
+        try {
+          const userToken = await AsyncStorage.getItem("zenTimerToken");
+          const storedUser = await AsyncStorage.getItem("zenTimerUser");
+
+          if (userToken && storedUser) {
+            dispatch(setActiveScreen("WelcomeScreen"));
+            navigation.navigate("WelcomeScreen");
+          } else {
+            dispatch(setActiveScreen("LoginScreen"));
+          }
+        } catch (error) {
+          logError("Error checking stored credentials:", error);
+        }
+      };
+
+      checkStoredCredentials();
+    }, [dispatch, setStoredCredentials, navigation])
+  );
+
   // Handle Google response based on the result type
   useEffect(() => {
     if (response?.type === "success") {
@@ -197,20 +220,27 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   // Save user-related credentials in AsyncStorage
-  const saveLoginCredentials = async (user, token, msg, success) => {
+  const saveLoginCredentials = async (
+    user,
+    token = null,
+    msg = "",
+    successStatus = true
+  ) => {
     try {
       await AsyncStorage.setItem("zenTimerUser", JSON.stringify(user));
-      // await AsyncStorage.setItem("zenTimerToken", token);
+      if (token) {
+        await AsyncStorage.setItem("zenTimerToken", token);
+      }
       handleMessage({
-        successStatus: success,
+        successStatus: successStatus,
         msg: msg || "User credentials saved successfully"
       });
       setStoredCredentials(user);
     } catch (error) {
       logError(error);
       handleMessage({
-        successStatus: success,
-        msg: msg || "Failed to save user credentials."
+        successStatus: false,
+        msg: "Failed to save user credentials"
       });
     } finally {
       setGoogleSubmitting(false);

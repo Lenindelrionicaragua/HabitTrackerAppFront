@@ -12,9 +12,6 @@ const useHabitCategories = () => {
       if (receivedData.success) {
         dispatch(setHabitCategories(receivedData.categories));
       }
-    },
-    {
-      withCredentials: true
     }
   );
 
