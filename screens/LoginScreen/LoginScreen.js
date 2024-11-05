@@ -171,6 +171,7 @@ const LoginScreen = ({ navigation, route }) => {
           const storedUser = await AsyncStorage.getItem("zenTimerUser");
 
           if (userToken && storedUser) {
+            setStoredCredentials(JSON.parse(storedUser));
             dispatch(setActiveScreen("WelcomeScreen"));
             navigation.navigate("WelcomeScreen");
           } else {

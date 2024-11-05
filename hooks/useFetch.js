@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 import { logInfo, logError } from "../util/logging";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Ensure you import AsyncStorage
 
 const useFetch = (initialRoute, onReceived) => {
   // Validate initial inputs
@@ -23,7 +24,7 @@ const useFetch = (initialRoute, onReceived) => {
   const [data, setData] = useState(null);
   const cancelTokenRef = useRef(null);
 
-  const performFetch = (options = {}, newUrl) => {
+  const performFetch = async (options = {}, newUrl) => {
     if (newUrl) {
       setRoute(newUrl);
     }
@@ -38,10 +39,19 @@ const useFetch = (initialRoute, onReceived) => {
       return;
     }
 
+    // Retrieve the token from AsyncStorage
+    let token = null;
+    try {
+      token = await AsyncStorage.getItem("zenTimerToken");
+    } catch (error) {
+      logError("Failed to retrieve token", error);
+    }
+
     const baseOptions = {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}) // Add Authorization header if token exists
       },
       withCredentials: true,
       cancelToken: new axios.CancelToken(cancel => {
