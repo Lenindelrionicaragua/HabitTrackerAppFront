@@ -3,10 +3,23 @@ import { useDispatch } from "react-redux";
 import useFetch from "../hooks/useFetch";
 import { setHabitCategories } from "../actions/counterActions";
 
-const useMonthlyStats = (month, year) => {
+// Custom hook to fetch monthly stats
+const useMonthlyStats = () => {
   const dispatch = useDispatch();
 
-  // Generate the dynamic URL based on the month and year provided
+  // Utility to get the current month and year
+  const getCurrentMonthAndYear = () => {
+    const date = new Date();
+    return {
+      month: date.getMonth() + 2, // Cambiado a número de mes (1-12)
+      year: date.getFullYear() // e.g., 2024
+    };
+  };
+
+  // Retrieve current month and year
+  const { month, year } = getCurrentMonthAndYear();
+
+  // Generate the dynamic URL based on the current month and year
   const url = `/habit-categories/monthly-metrics?month=${month}&year=${year}`;
 
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(

@@ -7,26 +7,14 @@ import {
   PageTitle,
   SubTitle
 } from "./MetricsScreenStyles";
-import useHabitCategories from "../../hooks/useHabitCategories";
-
-// Utility to get the current month and year
-const getCurrentMonthAndYear = () => {
-  const date = new Date();
-  return {
-    month: date.toLocaleString("default", { month: "long" }), // "February"
-    year: date.getFullYear() // 2024
-  };
-};
+import useMonthlyStats from "../../hooks/useMonthlyStats";
 
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
 
-  // Retrieve current month and year
-  const { month, year } = getCurrentMonthAndYear();
-
-  // Pass month and year to our custom hook
-  const { habitCategories, message, error, isLoading, fetchHabitCategories } =
-    useHabitCategories(month, year);
+  // Pass no arguments; the hook calculates the current month and year
+  const { habitCategories, message, error, isLoading, fetchMonthlyStats } =
+    useMonthlyStats();
 
   return (
     <StyledContainer testID="metrics-container">
@@ -52,8 +40,8 @@ const MetricsScreen = () => {
         {/* Fetch Habit Categories Button */}
         <View style={{ marginVertical: 20 }}>
           <Button
-            onPress={fetchHabitCategories}
-            title={`Fetch Habit Categories for ${month} ${year}`}
+            onPress={fetchMonthlyStats} // This calls the updated hook
+            title="Fetch Monthly Habit Categories"
             disabled={isLoading}
           />
         </View>
