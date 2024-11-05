@@ -11,7 +11,7 @@ const useMonthlyStats = () => {
   const getCurrentMonthAndYear = () => {
     const date = new Date();
     return {
-      month: date.getMonth() + 2, // Cambiado a número de mes (1-12)
+      month: date.getMonth() + 1, // Cambiado a número de mes (1-12)
       year: date.getFullYear() // e.g., 2024
     };
   };
