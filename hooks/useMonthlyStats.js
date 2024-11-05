@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import useFetch from "../hooks/useFetch";
 import { setHabitCategories } from "../actions/counterActions";
 
-const useHabitCategories = (month, year) => {
+const useMonthlyStats = (month, year) => {
   const dispatch = useDispatch();
 
   // Generate the dynamic URL based on the month and year provided
@@ -19,7 +19,7 @@ const useHabitCategories = (month, year) => {
   );
 
   // Trigger fetch based on button click or other trigger
-  const fetchHabitCategories = useCallback(() => {
+  const fetchMonthlyStats = useCallback(() => {
     performFetch();
   }, [performFetch]);
 
@@ -28,9 +28,9 @@ const useHabitCategories = (month, year) => {
     message: data?.msg || "",
     error,
     isLoading,
-    fetchHabitCategories,
+    fetchMonthlyStats,
     cancelFetch
   };
 };
 
-export default useHabitCategories;
+export default useMonthlyStats;
