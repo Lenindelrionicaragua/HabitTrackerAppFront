@@ -8,8 +8,8 @@ import {
 } from "@env";
 import { logInfo } from "../../util/logging";
 
-// export const baseApiUrl = API_URL_PRODUCTION;
-export const baseApiUrl = API_URL_DEVELOPMENT;
+export const baseApiUrl = API_URL_PRODUCTION;
+// export const baseApiUrl = API_URL_DEVELOPMENT;
 
 export const expoClientId = EXPO_CLIENT_ID;
 export const iosClientId = IOS_CLIENT_ID;

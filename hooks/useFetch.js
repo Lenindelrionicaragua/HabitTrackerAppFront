@@ -51,7 +51,7 @@ const useFetch = (initialRoute, onReceived) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}) // Add Authorization header if token exists
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
       },
       withCredentials: true,
       cancelToken: new axios.CancelToken(cancel => {
