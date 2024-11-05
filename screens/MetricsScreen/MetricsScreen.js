@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
-import { useContext } from "react";
-import { CredentialsContext } from "../../context/credentialsContext"; // Import your context
+import { CredentialsContext } from "../../context/credentialsContext";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   StyledContainer,
@@ -12,8 +11,8 @@ import {
 import useHabitCategories from "../../hooks/useHabitCategories";
 
 const MetricsScreen = () => {
-  const { storedCredentials } = useContext(CredentialsContext); // Use context to access stored credentials
-  const { habitCategories, error, isLoading, fetchHabitCategories } =
+  const { storedCredentials } = useContext(CredentialsContext);
+  const { habitCategories, message, error, isLoading, fetchHabitCategories } =
     useHabitCategories();
 
   return (
@@ -53,6 +52,9 @@ const MetricsScreen = () => {
             Error fetching categories: {error.message}
           </Text>
         )}
+
+        {/* Mostrar el mensaje del servidor */}
+        {message && <Text style={{ color: "orange" }}>{message}</Text>}
 
         {habitCategories.length > 0 && (
           <View style={{ marginTop: 10 }}>

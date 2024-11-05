@@ -67,7 +67,7 @@ const SignupScreen = ({ navigation }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      // saveLoginCredentials(user, { successStatus: true, msg });
+      saveLoginCredentials(user, { successStatus: true, msg });
       dispatch(setActiveScreen("LinkVerificationScreen"));
       navigation.navigate("LinkVerificationScreen", {
         ...user

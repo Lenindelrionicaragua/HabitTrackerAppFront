@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseApiUrl } from "../component/Shared/SharedUrl";
 import { Platform } from "react-native";
 import { logInfo, logError } from "../util/logging";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 // Custom hook to fetch user data from Google
 const useGoogleFetch = onReceived => {
@@ -56,11 +57,23 @@ const useGoogleFetch = onReceived => {
         platform: getPlatform()
       };
 
+      // Retrieve the token from AsyncStorage
+      let token = null;
+      try {
+        token = await AsyncStorage.getItem("zenTimerToken");
+      } catch (error) {
+        logError("Failed to retrieve token", error);
+      }
+
       // Authenticate user with backend
       const serverResponse = await axios.post(
         `${baseApiUrl}/api/auth/sign-in-with-google`,
         userData,
         {
+          withCredentials: true,
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}) // Add Authorization header if token exists
+          },
           cancelToken: new axios.CancelToken(cancel => {
             cancelTokenRef.current = cancel; // Store cancel function again
           })
