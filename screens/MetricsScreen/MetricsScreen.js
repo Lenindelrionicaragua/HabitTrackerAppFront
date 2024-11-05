@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
 import { CredentialsContext } from "../../context/credentialsContext";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   StyledContainer,
   InnerContainer,
@@ -10,10 +9,24 @@ import {
 } from "./MetricsScreenStyles";
 import useHabitCategories from "../../hooks/useHabitCategories";
 
+// Utility to get the current month and year
+const getCurrentMonthAndYear = () => {
+  const date = new Date();
+  return {
+    month: date.toLocaleString("default", { month: "long" }), // "February"
+    year: date.getFullYear() // 2024
+  };
+};
+
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
+
+  // Retrieve current month and year
+  const { month, year } = getCurrentMonthAndYear();
+
+  // Pass month and year to our custom hook
   const { habitCategories, message, error, isLoading, fetchHabitCategories } =
-    useHabitCategories();
+    useHabitCategories(month, year);
 
   return (
     <StyledContainer testID="metrics-container">
@@ -40,7 +53,7 @@ const MetricsScreen = () => {
         <View style={{ marginVertical: 20 }}>
           <Button
             onPress={fetchHabitCategories}
-            title="Fetch Habit Categories"
+            title={`Fetch Habit Categories for ${month} ${year}`}
             disabled={isLoading}
           />
         </View>
@@ -53,7 +66,7 @@ const MetricsScreen = () => {
           </Text>
         )}
 
-        {/* Mostrar el mensaje del servidor */}
+        {/* Display server message */}
         {message && <Text style={{ color: "orange" }}>{message}</Text>}
 
         {habitCategories.length > 0 && (
