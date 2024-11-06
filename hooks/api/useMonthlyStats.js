@@ -7,26 +7,23 @@ import { setHabitCategories } from "../../actions/counterActions";
 const useMonthlyStats = () => {
   const dispatch = useDispatch();
 
-  // Utility to get the current month and year
   const getCurrentMonthAndYear = () => {
     const date = new Date();
     return {
-      month: date.getMonth() + 1, // Cambiado a número de mes (1-12)
-      year: date.getFullYear() // e.g., 2024
+      month: date.getMonth() + 1,
+      year: date.getFullYear()
     };
   };
 
-  // Retrieve current month and year
   const { month, year } = getCurrentMonthAndYear();
 
-  // Generate the dynamic URL based on the current month and year
   const url = `/habit-categories/monthly-metrics?month=${month}&year=${year}`;
 
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     url,
     receivedData => {
       if (receivedData.success) {
-        dispatch(setHabitCategories(receivedData.categories));
+        dispatch(setHabitCategories(receivedData.categoryData));
       }
     }
   );
@@ -37,8 +34,11 @@ const useMonthlyStats = () => {
   }, [performFetch]);
 
   return {
-    habitCategories: data?.categories || [],
-    message: data?.msg || "",
+    totalMinutes: data?.totalMinutes || 0,
+    categoryCount: data?.categoryCount || 0,
+    daysWithRecords: data?.daysWithRecords || 0,
+    totalDailyMinutes: data?.totalDailyMinutes || 0,
+    categoryData: data?.categoryData || [],
     error,
     isLoading,
     fetchMonthlyStats,

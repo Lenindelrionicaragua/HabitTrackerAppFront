@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
@@ -38,6 +38,8 @@ import {
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  const [msg, setMsg] = useState("");
+  const [success, setSuccessStatus] = useState("");
 
   // Context to get stored credentials
   const { storedCredentials, setStoredCredentials } =
@@ -88,6 +90,12 @@ const WelcomeScreen = ({ navigation }) => {
       handleMessage({ successStatus: false, msg: errorMessage });
     }
   }, [error]);
+
+  // Update message box based on success or error
+  const handleMessage = ({ successStatus, msg }) => {
+    setSuccessStatus(successStatus);
+    setMsg(msg);
+  };
 
   // Function to handle clearing user login and logout
   const clearLogin = async () => {

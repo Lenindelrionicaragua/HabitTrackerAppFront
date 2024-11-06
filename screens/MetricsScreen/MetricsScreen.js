@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
 import { CredentialsContext } from "../../context/credentialsContext";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   StyledContainer,
   InnerContainer,
@@ -12,9 +13,17 @@ import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
 
-  // Pass no arguments; the hook calculates the current month and year
-  const { habitCategories, message, error, isLoading, fetchMonthlyStats } =
-    useMonthlyStats();
+  // Get monthly stats from the custom hook
+  const {
+    totalMinutes,
+    categoryCount,
+    daysWithRecords,
+    totalDailyMinutes,
+    categoryData,
+    error,
+    isLoading,
+    fetchMonthlyStats
+  } = useMonthlyStats();
 
   return (
     <StyledContainer testID="metrics-container">
@@ -40,7 +49,7 @@ const MetricsScreen = () => {
         {/* Fetch Habit Categories Button */}
         <View style={{ marginVertical: 20 }}>
           <Button
-            onPress={fetchMonthlyStats} // This calls the updated hook
+            onPress={fetchMonthlyStats} // This triggers the stats fetch
             title="Fetch Monthly Habit Categories"
             disabled={isLoading}
           />
@@ -54,18 +63,27 @@ const MetricsScreen = () => {
           </Text>
         )}
 
-        {/* Display server message */}
-        {message && <Text style={{ color: "orange" }}>{message}</Text>}
+        {/* Displaying the overall stats */}
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            Monthly Stats:
+          </Text>
+          <Text>Total Minutes: {totalMinutes}</Text>
+          <Text>Category Count: {categoryCount}</Text>
+          <Text>Days with Records: {daysWithRecords}</Text>
+          <Text>Total Daily Minutes: {totalDailyMinutes}</Text>
+        </View>
 
-        {habitCategories.length > 0 && (
-          <View style={{ marginTop: 10 }}>
+        {/* Display categories if they exist */}
+        {categoryData.length > 0 && (
+          <View style={{ marginTop: 20 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               Categories:
             </Text>
-            {habitCategories.map(category => (
-              <Text key={category.id} style={{ paddingVertical: 5 }}>
-                - {category.name} (Created At:{" "}
-                {new Date(category.createdAt).toLocaleDateString()})
+            {categoryData.map((category, index) => (
+              <Text key={index} style={{ paddingVertical: 5 }}>
+                - {category.name}: {category.totalMinutes} minutes (
+                {category.percentage}%)
               </Text>
             ))}
           </View>
