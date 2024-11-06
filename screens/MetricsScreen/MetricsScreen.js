@@ -7,7 +7,7 @@ import {
   PageTitle,
   SubTitle
 } from "./MetricsScreenStyles";
-import useMonthlyStats from "../../hooks/useMonthlyStats";
+import useMonthlyStats from "../../hooks/..api/useMonthlyStats";
 
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);

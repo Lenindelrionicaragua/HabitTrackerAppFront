@@ -21,7 +21,7 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/api/useFetch";
 
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
