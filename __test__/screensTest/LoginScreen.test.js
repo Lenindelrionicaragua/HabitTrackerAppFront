@@ -45,7 +45,7 @@ jest.mock("@react-navigation/native", () => ({
 
 // Mock `useFetch` and `useGoogleFetch` hooks in your test setup file or at the top of your test file
 
-jest.mock("../../hooks/useFetch", () => ({
+jest.mock("../../hooks/api/useFetch", () => ({
   __esModule: true,
   default: jest.fn().mockImplementation(() => ({
     performFetch: jest.fn(),
@@ -55,7 +55,7 @@ jest.mock("../../hooks/useFetch", () => ({
   }))
 }));
 
-jest.mock("../../hooks/useGoogleFetch", () => ({
+jest.mock("../../hooks/api/useGoogleFetch", () => ({
   __esModule: true,
   default: jest.fn().mockImplementation(onReceived => ({
     performGoogleFetch: jest.fn(),

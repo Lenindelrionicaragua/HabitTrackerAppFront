@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import useFetch from "../hooks/useFetch";
-import { setHabitCategories } from "../actions/counterActions";
+import useFetch from "../../hooks/api/useFetch";
+import { setHabitCategories } from "../../actions/counterActions";
 
 const useHabitCategories = () => {
   const dispatch = useDispatch();
