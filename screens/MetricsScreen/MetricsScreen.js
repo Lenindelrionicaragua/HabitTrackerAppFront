@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
 import { CredentialsContext } from "../../context/credentialsContext";
 import { useFocusEffect } from "@react-navigation/native";
@@ -8,22 +8,12 @@ import {
   PageTitle,
   SubTitle
 } from "./MetricsScreenStyles";
-import useMonthlyStats from "../../hooks/api/useMonthlyStats";
+import useHabitCategories from "../../hooks/api/useHabitCategories";
 
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
-
-  // Get monthly stats from the custom hook
-  const {
-    totalMinutes,
-    categoryCount,
-    daysWithRecords,
-    totalDailyMinutes,
-    categoryData,
-    error,
-    isLoading,
-    fetchMonthlyStats
-  } = useMonthlyStats();
+  const { habitCategories, message, error, isLoading, fetchHabitCategories } =
+    useHabitCategories();
 
   return (
     <StyledContainer testID="metrics-container">
@@ -49,8 +39,8 @@ const MetricsScreen = () => {
         {/* Fetch Habit Categories Button */}
         <View style={{ marginVertical: 20 }}>
           <Button
-            onPress={fetchMonthlyStats} // This triggers the stats fetch
-            title="Fetch Monthly Habit Categories"
+            onPress={fetchHabitCategories}
+            title="Fetch Habit Categories"
             disabled={isLoading}
           />
         </View>
@@ -63,27 +53,18 @@ const MetricsScreen = () => {
           </Text>
         )}
 
-        {/* Displaying the overall stats */}
-        <View style={{ marginTop: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            Monthly Stats:
-          </Text>
-          <Text>Total Minutes: {totalMinutes}</Text>
-          <Text>Category Count: {categoryCount}</Text>
-          <Text>Days with Records: {daysWithRecords}</Text>
-          <Text>Total Daily Minutes: {totalDailyMinutes}</Text>
-        </View>
+        {/* Mostrar el mensaje del servidor */}
+        {message && <Text style={{ color: "orange" }}>{message}</Text>}
 
-        {/* Display categories if they exist */}
-        {categoryData.length > 0 && (
-          <View style={{ marginTop: 20 }}>
+        {habitCategories.length > 0 && (
+          <View style={{ marginTop: 10 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               Categories:
             </Text>
-            {categoryData.map((category, index) => (
-              <Text key={index} style={{ paddingVertical: 5 }}>
-                - {category.name}: {category.totalMinutes} minutes (
-                {category.percentage}%)
+            {habitCategories.map(category => (
+              <Text key={category.id} style={{ paddingVertical: 5 }}>
+                - {category.name} (Created At:{" "}
+                {new Date(category.createdAt).toLocaleDateString()})
               </Text>
             ))}
           </View>

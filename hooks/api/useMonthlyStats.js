@@ -1,12 +1,9 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/api/useFetch";
-import { setHabitCategories } from "../../actions/counterActions";
+import { logInfo } from "../../util/logging";
 
 // Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
-  const dispatch = useDispatch();
-
   const getCurrentMonthAndYear = () => {
     const date = new Date();
     return {
@@ -23,7 +20,7 @@ const useMonthlyStats = () => {
     url,
     receivedData => {
       if (receivedData.success) {
-        dispatch(setHabitCategories(receivedData.categoryData));
+        logInfo(receivedData.categoryData);
       }
     }
   );
