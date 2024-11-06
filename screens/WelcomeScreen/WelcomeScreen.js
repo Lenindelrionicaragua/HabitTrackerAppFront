@@ -93,22 +93,6 @@ const WelcomeScreen = ({ navigation }) => {
     onReceived
   );
 
-  // Hook to manage the logout process
-  const {
-    performFetch: logoutRequest,
-    isLoading: isLogoutLoading,
-    error: logoutError
-  } = useFetch(`/auth/log-out`, response => {
-    if (response.success) {
-      logInfo("User logged out successfully");
-      navigation.navigate("LoginScreen");
-      dispatch(setActiveScreen("LoginScreen"));
-    } else {
-      logInfo(response.msg);
-      handleMessage({ successStatus: false, msg: response.msg });
-    }
-  });
-
   // Fetch the token from AsyncStorage and load categories if the token is available
   useEffect(() => {
     const loadTokenAndFetchCategories = async () => {
@@ -165,8 +149,11 @@ const WelcomeScreen = ({ navigation }) => {
       setStoredCredentials(null);
       logInfo("User and token cleared from storage");
 
-      // Perform logout server-side
-      logoutRequest({ method: "POST" });
+      // Perform server-side logout
+      performFetch({
+        method: "POST"
+      });
+
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
