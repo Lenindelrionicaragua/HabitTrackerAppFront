@@ -65,6 +65,11 @@ const StopwatchScreen = () => {
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
   );
+  const selectedCategory =
+    habitCategories && habitCategories[habitCategoryIndex];
+  const categoryId = selectedCategory ? selectedCategory.id : null;
+  const categoryName = selectedCategory ? selectedCategory.name : "No Category";
+
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const buttonsDisabled = useSelector(
@@ -349,9 +354,7 @@ const StopwatchScreen = () => {
           }}
           disabled={buttonsDisabled}
         >
-          {habitCategoryIndex === null
-            ? "Click here"
-            : habitCategories[habitCategoryIndex]}{" "}
+          {habitCategoryIndex === null ? "Click here" : categoryName}{" "}
         </FocusTitleText>
       </FocusTitleContainer>
 

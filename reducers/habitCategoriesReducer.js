@@ -1,5 +1,5 @@
 const initialHabitCategoriesState = {
-  habitCategories: [], 
+  habitCategories: []
 };
 
 const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
@@ -10,7 +10,11 @@ const habitCategoriesReducer = (
 ) => {
   switch (action.type) {
     case SET_HABIT_CATEGORIES:
-      return { ...state, habitCategories: action.payload };
+      const categoriesWithIdName = action.payload.map(category => ({
+        id: category.id,
+        name: category.name
+      }));
+      return { ...state, habitCategories: categoriesWithIdName };
     default:
       return state;
   }

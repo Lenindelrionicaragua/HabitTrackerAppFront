@@ -11,16 +11,15 @@ const useHabitCategories = () => {
     "/habit-categories",
     receivedData => {
       if (receivedData.success) {
-        // Extraer solo los nombres de las categorías
-        const categoryNames = receivedData.categories.map(
-          category => category.name
+        // Extract only id and name for each category
+        const categoriesWithIdAndName = receivedData.categories.map(
+          category => ({
+            id: category.id,
+            name: category.name
+          })
         );
-
-        // Despachar solo los nombres al estado
-        dispatch(setHabitCategories(categoryNames));
-
-        // Log para verificar que se están recibiendo solo los nombres
-        logInfo(categoryNames);
+        dispatch(setHabitCategories(categoriesWithIdAndName));
+        logInfo(categoriesWithIdAndName);
       }
     }
   );

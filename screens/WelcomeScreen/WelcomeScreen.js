@@ -22,6 +22,7 @@ import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
+import useHabitCategories from "../../hooks/api/useHabitCategories";
 
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
@@ -37,13 +38,14 @@ import {
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-  const [msg, setMsg] = useState("");
-  const [success, setSuccessStatus] = useState("");
-
   // Context to get stored credentials
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
+  const [token, setToken] = useState(null);
+
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  const [msg, setMsg] = useState("");
+  const [success, setSuccessStatus] = useState("");
 
   const {
     name = "Zen User",
@@ -64,6 +66,14 @@ const WelcomeScreen = ({ navigation }) => {
     scopes: ["profile", "email", "openid"]
   });
 
+  // Hook to fetch habit categories
+  const {
+    habitCategories,
+    fetchHabitCategories,
+    isLoading: isCategoriesLoading,
+    error: categoriesError
+  } = useHabitCategories();
+
   // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user } = response;
@@ -82,6 +92,46 @@ const WelcomeScreen = ({ navigation }) => {
     `/auth/log-out`,
     onReceived
   );
+
+  // Hook to manage the logout process
+  const {
+    performFetch: logoutRequest,
+    isLoading: isLogoutLoading,
+    error: logoutError
+  } = useFetch(`/auth/log-out`, response => {
+    if (response.success) {
+      logInfo("User logged out successfully");
+      navigation.navigate("LoginScreen");
+      dispatch(setActiveScreen("LoginScreen"));
+    } else {
+      logInfo(response.msg);
+      handleMessage({ successStatus: false, msg: response.msg });
+    }
+  });
+
+  // Fetch the token from AsyncStorage and load categories if the token is available
+  useEffect(() => {
+    const loadTokenAndFetchCategories = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem("zenTimerToken");
+        if (storedToken) {
+          setToken(storedToken); // Set token state
+          fetchHabitCategories(); // Fetch categories
+        }
+      } catch (error) {
+        logError("Failed to retrieve token from storage", error);
+      }
+    };
+
+    loadTokenAndFetchCategories();
+  }, [fetchHabitCategories]); // Depend only on fetchHabitCategories to run this effect once
+
+  // Handle errors from fetching categories
+  useEffect(() => {
+    if (categoriesError) {
+      setMsg(categoriesError.message || "Error loading categories.");
+    }
+  }, [categoriesError]);
 
   // Handle errors from API calls
   useEffect(() => {
@@ -115,11 +165,8 @@ const WelcomeScreen = ({ navigation }) => {
       setStoredCredentials(null);
       logInfo("User and token cleared from storage");
 
-      // Perform server-side logout
-      performFetch({
-        method: "POST"
-      });
-
+      // Perform logout server-side
+      logoutRequest({ method: "POST" });
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
