@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
-
+import { useFocusEffect } from "@react-navigation/native";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
@@ -20,7 +20,8 @@ import { logInfo, logError } from "../../util/logging";
 // store
 import {
   setResetClicks,
-  saveTimeButtonLabel
+  saveTimeButtonLabel,
+  loadHabitCategories
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -129,6 +130,12 @@ const StopwatchScreen = () => {
       saveTimeRecords();
     }
   }, [timeCompleted]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(loadHabitCategories());
+    }, [dispatch])
+  );
 
   // Start button// Start button handler
   const startStopwatch = () => {
