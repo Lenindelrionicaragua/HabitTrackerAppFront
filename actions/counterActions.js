@@ -20,6 +20,7 @@ export const SET_SAVE_TIME_BUTTON_LABEL = "SET_SAVE_TIME_BUTTON_LABEL";
 
 export const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
 export const SET_HABIT_CATEGORY_INDEX = "SET_HABIT_CATEGORY_INDEX";
+export const RESET_HABIT_CATEGORIES = "RESET_HABIT_CATEGORIES";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
@@ -162,10 +163,14 @@ export const loadHabitCategories = () => {
   };
 };
 
-// export const setHabitCategories = habitCategories => ({
-//   type: SET_HABIT_CATEGORIES,
-//   payload: habitCategories
-// });
+export const setHabitCategories = habitCategories => ({
+  type: SET_HABIT_CATEGORIES,
+  payload: habitCategories
+});
+
+export const resetHabitCategories = () => ({
+  type: RESET_HABIT_CATEGORIES
+});
 
 export const setActiveScreen = screen => {
   return {

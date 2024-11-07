@@ -2,8 +2,12 @@ import { useCallback } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logInfo } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setHabitCategories } from "../../actions/counterActions";
+import { useDispatch } from "react-redux";
 
 const useHabitCategories = () => {
+  const dispatch = useDispatch();
+
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     "/habit-categories",
     async receivedData => {
@@ -22,6 +26,8 @@ const useHabitCategories = () => {
             "habitCategories",
             JSON.stringify(categoriesWithIdAndName)
           );
+
+          dispatch(setHabitCategories(categoriesWithIdAndName));
 
           logInfo("Categories saved to AsyncStorage:", categoriesWithIdAndName);
         } catch (e) {

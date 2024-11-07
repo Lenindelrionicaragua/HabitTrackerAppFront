@@ -27,9 +27,7 @@ const RootStack = () => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const { storedCredentials } = useContext(CredentialsContext);
-  const habitCategories = useSelector(
-    state => state.habitCategories.categories
-  );
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
   const {
     fetchHabitCategories,

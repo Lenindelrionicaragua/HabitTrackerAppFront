@@ -24,7 +24,10 @@ import { logInfo, logError } from "../../util/logging";
 import useFetch from "../../hooks/api/useFetch";
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
+import {
+  setActiveScreen,
+  resetHabitCategories
+} from "../../actions/counterActions";
 
 // Credentials
 import {
@@ -106,9 +109,14 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   const clearStorage = async () => {
-    await AsyncStorage.multiRemove(["zenTimerUser", "zenTimerToken"]);
+    await AsyncStorage.multiRemove([
+      "zenTimerUser",
+      "zenTimerToken",
+      "habitCategories"
+    ]);
+    dispatch(resetHabitCategories());
     setStoredCredentials(null);
-    logInfo("User and token cleared from storage");
+    logInfo("User, token, and categories cleared from storage");
   };
 
   const performServerLogout = async () => {

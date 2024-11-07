@@ -1,8 +1,11 @@
+// reducers/habitCategoriesReducer.js
+
 const initialHabitCategoriesState = {
   habitCategories: []
 };
 
 const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
+const RESET_HABIT_CATEGORIES = "RESET_HABIT_CATEGORIES";
 
 const habitCategoriesReducer = (
   state = initialHabitCategoriesState,
@@ -15,6 +18,10 @@ const habitCategoriesReducer = (
         name: category.name
       }));
       return { ...state, habitCategories: categoriesWithIdName };
+
+    case RESET_HABIT_CATEGORIES:
+      return { ...state, habitCategories: [] };
+
     default:
       return state;
   }

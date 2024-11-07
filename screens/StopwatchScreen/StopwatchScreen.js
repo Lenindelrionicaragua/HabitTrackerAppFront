@@ -66,11 +66,16 @@ const StopwatchScreen = () => {
     state => state.habitCategories.habitCategories
   );
   const selectedCategory =
-    habitCategories && habitCategories[habitCategoryIndex];
+    habitCategories &&
+    habitCategoryIndex >= 0 &&
+    habitCategoryIndex < habitCategories.length
+      ? habitCategories[habitCategoryIndex]
+      : null;
+
   const categoryId = selectedCategory ? selectedCategory.id : null;
   const categoryName = selectedCategory
     ? selectedCategory.name
-    : "Please log in first to access your habit categories.";
+    : "No category selected.";
 
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
