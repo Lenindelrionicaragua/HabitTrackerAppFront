@@ -1,7 +1,13 @@
-// reducers/habitCategoriesReducer.js
-
 const initialHabitCategoriesState = {
-  habitCategories: []
+  // Default categories without ids for the first view
+  habitCategories: [
+    { name: "Work" },
+    { name: "Family time" },
+    { name: "Exercise" },
+    { name: "Screen-free" },
+    { name: "Rest" },
+    { name: "Study" }
+  ]
 };
 
 const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
