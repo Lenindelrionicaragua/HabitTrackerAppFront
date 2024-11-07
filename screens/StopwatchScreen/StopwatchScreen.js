@@ -68,7 +68,9 @@ const StopwatchScreen = () => {
   const selectedCategory =
     habitCategories && habitCategories[habitCategoryIndex];
   const categoryId = selectedCategory ? selectedCategory.id : null;
-  const categoryName = selectedCategory ? selectedCategory.name : "No Category";
+  const categoryName = selectedCategory
+    ? selectedCategory.name
+    : "Please log in first to access your habit categories.";
 
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
