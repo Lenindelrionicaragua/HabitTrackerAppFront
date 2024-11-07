@@ -1,13 +1,9 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/api/useFetch";
-import { setHabitCategoryIndex } from "../../actions/counterActions";
 import { logInfo } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const useHabitCategories = () => {
-  const dispatch = useDispatch();
-
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     "/habit-categories",
     async receivedData => {
@@ -26,12 +22,8 @@ const useHabitCategories = () => {
             "habitCategories",
             JSON.stringify(categoriesWithIdAndName)
           );
-          logInfo("Categories saved to AsyncStorage:", categoriesWithIdAndName);
 
-          dispatch({
-            type: "SET_HABIT_CATEGORIES",
-            payload: categoriesWithIdAndName
-          });
+          logInfo("Categories saved to AsyncStorage:", categoriesWithIdAndName);
         } catch (e) {
           logInfo("Error saving categories to AsyncStorage:", e);
         }
@@ -39,16 +31,12 @@ const useHabitCategories = () => {
     }
   );
 
-  const fetchHabitCategories = useCallback(() => {
-    performFetch();
-  }, [performFetch]);
-
   return {
     habitCategories: data?.categories || [],
     message: data?.msg || "",
     error,
     isLoading,
-    fetchHabitCategories
+    fetchHabitCategories: performFetch
   };
 };
 

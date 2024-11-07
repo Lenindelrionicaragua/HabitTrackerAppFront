@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Colors } from "../styles/AppStyles";
 import { useSelector, useDispatch } from "react-redux";
-
 // Screens
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
@@ -12,12 +11,14 @@ import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerifi
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
 import Banner from "../component/Banner/Banner";
-
 // Redux actions
 import { setActiveScreen } from "../actions/counterActions";
-
+//Fetch hook
+import useHabitCategories from "../hooks/api/useHabitCategories";
 // Context
 import { CredentialsContext } from "../context/credentialsContext";
+//Utils
+import { logInfo, logError } from "../util/logging";
 
 const { grey, lightGrey } = Colors;
 const Stack = createNativeStackNavigator();
@@ -25,8 +26,25 @@ const Stack = createNativeStackNavigator();
 const RootStack = () => {
   const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-
   const { storedCredentials } = useContext(CredentialsContext);
+  const habitCategories = useSelector(
+    state => state.habitCategories.categories
+  );
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
+
+  const {
+    fetchHabitCategories,
+    isLoading: isCategoriesLoading,
+    error: categoriesError
+  } = useHabitCategories();
+
+  useEffect(() => {
+    if (storedCredentials && !categoriesLoaded) {
+      logInfo("Updated credentials:", storedCredentials);
+      fetchHabitCategories();
+      setCategoriesLoaded(true);
+    }
+  }, [storedCredentials, fetchHabitCategories, categoriesLoaded]);
 
   return (
     <NavigationContainer>

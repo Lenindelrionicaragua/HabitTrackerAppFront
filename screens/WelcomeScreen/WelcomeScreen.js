@@ -22,8 +22,6 @@ import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
-import useHabitCategories from "../../hooks/api/useHabitCategories";
-
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
@@ -46,7 +44,6 @@ const WelcomeScreen = ({ navigation }) => {
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
-  const [hasFetchedCategories, setHasFetchedCategories] = useState(false);
 
   const {
     name = "Zen User",
@@ -67,14 +64,6 @@ const WelcomeScreen = ({ navigation }) => {
     scopes: ["profile", "email", "openid"]
   });
 
-  // Hook to fetch habit categories
-  const {
-    habitCategories,
-    fetchHabitCategories,
-    isLoading: isCategoriesLoading,
-    error: categoriesError
-  } = useHabitCategories();
-
   // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user } = response;
@@ -93,34 +82,6 @@ const WelcomeScreen = ({ navigation }) => {
     `/auth/log-out`,
     onReceived
   );
-
-  // Fetch the token from AsyncStorage and load categories if the token is available
-  useEffect(() => {
-    const loadTokenAndFetchCategories = async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem("zenTimerToken");
-        if (storedToken) {
-          setToken(storedToken);
-
-          if (!hasFetchedCategories) {
-            fetchHabitCategories();
-            setHasFetchedCategories(true);
-          }
-        }
-      } catch (error) {
-        logError("Failed to retrieve token from storage", error);
-      }
-    };
-
-    loadTokenAndFetchCategories();
-  }, [fetchHabitCategories, hasFetchedCategories]);
-
-  // Handle errors from fetching categories
-  useEffect(() => {
-    if (categoriesError) {
-      setMsg(categoriesError.message || "Error loading categories.");
-    }
-  }, [categoriesError]);
 
   // Handle errors from API calls
   useEffect(() => {
