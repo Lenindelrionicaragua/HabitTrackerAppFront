@@ -46,6 +46,7 @@ const WelcomeScreen = ({ navigation }) => {
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
+  const [hasFetchedCategories, setHasFetchedCategories] = useState(false);
 
   const {
     name = "Zen User",
@@ -99,8 +100,12 @@ const WelcomeScreen = ({ navigation }) => {
       try {
         const storedToken = await AsyncStorage.getItem("zenTimerToken");
         if (storedToken) {
-          setToken(storedToken); // Set token state
-          fetchHabitCategories(); // Fetch categories
+          setToken(storedToken);
+
+          if (!hasFetchedCategories) {
+            fetchHabitCategories();
+            setHasFetchedCategories(true);
+          }
         }
       } catch (error) {
         logError("Failed to retrieve token from storage", error);
@@ -108,7 +113,7 @@ const WelcomeScreen = ({ navigation }) => {
     };
 
     loadTokenAndFetchCategories();
-  }, [fetchHabitCategories]); // Depend only on fetchHabitCategories to run this effect once
+  }, [fetchHabitCategories, hasFetchedCategories]);
 
   // Handle errors from fetching categories
   useEffect(() => {
@@ -131,34 +136,43 @@ const WelcomeScreen = ({ navigation }) => {
     setMsg(msg);
   };
 
+  const revokeGoogleToken = async token => {
+    await revokeAsync(
+      { token },
+      { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
+    );
+    logInfo("Google token revoked successfully");
+  };
+
+  const clearStorage = async () => {
+    await AsyncStorage.multiRemove(["zenTimerUser", "zenTimerToken"]);
+    setStoredCredentials(null);
+    logInfo("User and token cleared from storage");
+  };
+
+  const performServerLogout = async () => {
+    try {
+      performFetch({ method: "POST" });
+    } catch (error) {
+      logError("Error logging out from server", error);
+    }
+  };
+
   // Function to handle clearing user login and logout
   const clearLogin = async () => {
     try {
       const token = storedCredentials?.token;
-
       if (token) {
-        await revokeAsync(
-          { token },
-          { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
-        );
-        logInfo("Google token revoked successfully");
+        await revokeGoogleToken(token);
       }
 
-      // Clear both user and token from AsyncStorage
-      await AsyncStorage.multiRemove(["zenTimerUser", "zenTimerToken"]);
-      setStoredCredentials(null);
-      logInfo("User and token cleared from storage");
-
-      // Perform server-side logout
-      performFetch({
-        method: "POST"
-      });
+      await clearStorage();
+      await performServerLogout();
 
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
       );
-
       navigation.navigate("LoginScreen");
       dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {
