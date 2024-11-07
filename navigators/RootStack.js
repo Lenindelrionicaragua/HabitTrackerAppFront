@@ -30,7 +30,6 @@ const RootStack = () => {
   const habitCategories = useSelector(
     state => state.habitCategories.categories
   );
-  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
   const {
     fetchHabitCategories,
@@ -44,7 +43,7 @@ const RootStack = () => {
       fetchHabitCategories();
       setCategoriesLoaded(true);
     }
-  }, [storedCredentials, fetchHabitCategories, categoriesLoaded]);
+  }, [storedCredentials, fetchHabitCategories]);
 
   return (
     <NavigationContainer>
