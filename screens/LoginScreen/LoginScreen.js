@@ -29,8 +29,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // Hooks for data fetching
-import useFetch from "../../hooks/useFetch";
-import useGoogleFetch from "../../hooks/useGoogleFetch";
+import useFetch from "../../hooks/api/useFetch";
+import useGoogleFetch from "../../hooks/api/useGoogleFetch";
 
 // Credentials
 import {

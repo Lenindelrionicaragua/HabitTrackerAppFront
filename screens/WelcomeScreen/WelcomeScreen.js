@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
@@ -21,11 +21,13 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
-import useFetch from "../../hooks/useFetch";
-
+import useFetch from "../../hooks/api/useFetch";
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
+import {
+  setActiveScreen,
+  resetHabitCategories
+} from "../../actions/counterActions";
 
 // Credentials
 import {
@@ -37,11 +39,14 @@ import {
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-
   // Context to get stored credentials
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
+  const [token, setToken] = useState(null);
+
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  const [msg, setMsg] = useState("");
+  const [success, setSuccessStatus] = useState("");
 
   const {
     name = "Zen User",
@@ -89,34 +94,54 @@ const WelcomeScreen = ({ navigation }) => {
     }
   }, [error]);
 
+  // Update message box based on success or error
+  const handleMessage = ({ successStatus, msg }) => {
+    setSuccessStatus(successStatus);
+    setMsg(msg);
+  };
+
+  const revokeGoogleToken = async token => {
+    await revokeAsync(
+      { token },
+      { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
+    );
+    logInfo("Google token revoked successfully");
+  };
+
+  const clearStorage = async () => {
+    await AsyncStorage.multiRemove([
+      "zenTimerUser",
+      "zenTimerToken",
+      "habitCategories"
+    ]);
+    dispatch(resetHabitCategories());
+    setStoredCredentials(null);
+    logInfo("User, token, and categories cleared from storage");
+  };
+
+  const performServerLogout = async () => {
+    try {
+      performFetch({ method: "POST" });
+    } catch (error) {
+      logError("Error logging out from server", error);
+    }
+  };
+
   // Function to handle clearing user login and logout
   const clearLogin = async () => {
     try {
       const token = storedCredentials?.token;
-
       if (token) {
-        await revokeAsync(
-          { token },
-          { revocationEndpoint: `https://oauth2.googleapis.com/revoke` }
-        );
-        logInfo("Google token revoked successfully");
+        await revokeGoogleToken(token);
       }
 
-      // Clear both user and token from AsyncStorage
-      await AsyncStorage.multiRemove(["zenTimerUser", "zenTimerToken"]);
-      setStoredCredentials(null);
-      logInfo("User and token cleared from storage");
-
-      // Perform server-side logout
-      performFetch({
-        method: "POST"
-      });
+      await clearStorage();
+      await performServerLogout();
 
       Alert.alert(
         "Logout successful",
         "You have been logged out successfully."
       );
-
       navigation.navigate("LoginScreen");
       dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {

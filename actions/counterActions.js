@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const SET_INITIAL_TIME = "SET_INITIAL_TIME";
 export const SET_REMAINING_TIME = "SET_REMAINING_TIME";
 export const SET_ELAPSED_TIME = "SET_ELAPSED_TIME";
@@ -18,6 +20,7 @@ export const SET_SAVE_TIME_BUTTON_LABEL = "SET_SAVE_TIME_BUTTON_LABEL";
 
 export const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
 export const SET_HABIT_CATEGORY_INDEX = "SET_HABIT_CATEGORY_INDEX";
+export const RESET_HABIT_CATEGORIES = "RESET_HABIT_CATEGORIES";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
@@ -142,9 +145,31 @@ export const setHabitCategoryIndex = habitCategoryIndex => {
   };
 };
 
+// Action to load habit categories from AsyncStorage
+export const loadHabitCategories = () => {
+  return async dispatch => {
+    try {
+      const storedCategories = await AsyncStorage.getItem("habitCategories");
+      if (storedCategories) {
+        const parsedCategories = JSON.parse(storedCategories);
+        dispatch({
+          type: SET_HABIT_CATEGORIES,
+          payload: parsedCategories
+        });
+      }
+    } catch (error) {
+      console.error("Error loading categories from AsyncStorage:", error);
+    }
+  };
+};
+
 export const setHabitCategories = habitCategories => ({
   type: SET_HABIT_CATEGORIES,
   payload: habitCategories
+});
+
+export const resetHabitCategories = () => ({
+  type: RESET_HABIT_CATEGORIES
 });
 
 export const setActiveScreen = screen => {

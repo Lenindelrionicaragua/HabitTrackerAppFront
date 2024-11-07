@@ -27,7 +27,7 @@ import { setActiveScreen } from "../../actions/counterActions";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // useFetch hook
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/api/useFetch";
 
 // Colors
 const { white } = Colors;

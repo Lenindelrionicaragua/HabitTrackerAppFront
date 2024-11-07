@@ -26,7 +26,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 
 // Hooks for data fetching
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/api/useFetch";
 
 // Redux-store
 import { useSelector, useDispatch } from "react-redux";

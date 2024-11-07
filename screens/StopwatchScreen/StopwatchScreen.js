@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
-
+import { useFocusEffect } from "@react-navigation/native";
 //hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
@@ -20,7 +20,8 @@ import { logInfo, logError } from "../../util/logging";
 // store
 import {
   setResetClicks,
-  saveTimeButtonLabel
+  saveTimeButtonLabel,
+  loadHabitCategories
 } from "../../actions/counterActions";
 // Styles
 import { Colors } from "../../styles/AppStyles";
@@ -65,6 +66,18 @@ const StopwatchScreen = () => {
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
   );
+  const selectedCategory =
+    habitCategories &&
+    habitCategoryIndex >= 0 &&
+    habitCategoryIndex < habitCategories.length
+      ? habitCategories[habitCategoryIndex]
+      : null;
+
+  const categoryId = selectedCategory ? selectedCategory.id : null;
+  const categoryName = selectedCategory
+    ? selectedCategory.name
+    : "Please log in to access your habit categories.";
+
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const buttonsDisabled = useSelector(
@@ -117,6 +130,12 @@ const StopwatchScreen = () => {
       saveTimeRecords();
     }
   }, [timeCompleted]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(loadHabitCategories());
+    }, [dispatch])
+  );
 
   // Start button// Start button handler
   const startStopwatch = () => {
@@ -349,9 +368,7 @@ const StopwatchScreen = () => {
           }}
           disabled={buttonsDisabled}
         >
-          {habitCategoryIndex === null
-            ? "Click here"
-            : habitCategories[habitCategoryIndex]}{" "}
+          {habitCategoryIndex === null ? "Click here" : categoryName}{" "}
         </FocusTitleText>
       </FocusTitleContainer>
 

@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { baseApiUrl } from "../component/Shared/SharedUrl";
-import { logInfo, logError } from "../util/logging";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Ensure you import AsyncStorage
+import { baseApiUrl } from "../../component/Shared/SharedUrl";
+import { logInfo, logError } from "../../util/logging";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const useFetch = (initialRoute, onReceived) => {
   // Validate initial inputs
@@ -33,7 +33,7 @@ const useFetch = (initialRoute, onReceived) => {
     setIsLoading(true);
 
     // Validate the route format
-    if (!route || !/^\/[a-zA-Z0-9/_-]*$/.test(route)) {
+    if (!route || !/^\/[a-zA-Z0-9/_-]*(\?[a-zA-Z0-9=&]*)?$/.test(route)) {
       setError(new Error("Invalid URL"));
       setIsLoading(false);
       return;
