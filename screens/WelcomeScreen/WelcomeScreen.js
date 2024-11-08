@@ -26,7 +26,8 @@ import useFetch from "../../hooks/api/useFetch";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
-  resetHabitCategories
+  resetHabitCategories,
+  setHabitCategoryIndex
 } from "../../actions/counterActions";
 
 // Credentials
@@ -38,13 +39,17 @@ import {
 } from "@env";
 
 const WelcomeScreen = ({ navigation }) => {
+  // Redux store
   const dispatch = useDispatch();
-  // Context to get stored credentials
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
   const [token, setToken] = useState(null);
-
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  // Local state
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
@@ -115,6 +120,7 @@ const WelcomeScreen = ({ navigation }) => {
       "habitCategories"
     ]);
     dispatch(resetHabitCategories());
+    dispatch(setHabitCategoryIndex(null));
     setStoredCredentials(null);
     logInfo("User, token, and categories cleared from storage");
   };

@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logInfo } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setHabitCategories } from "../../actions/counterActions";
-import { useDispatch } from "react-redux";
+import {
+  setHabitCategories,
+  setHabitCategoryIndex
+} from "../../actions/counterActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useHabitCategories = storedCredentials => {
   const dispatch = useDispatch();
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
@@ -43,6 +49,7 @@ const useHabitCategories = storedCredentials => {
       logInfo("Fetching categories due to credentials update or initial load.");
       performFetch();
       setCategoriesLoaded(true);
+      setHabitCategoryIndex(null);
     } else if (!storedCredentials) {
       setCategoriesLoaded(false); // Reset state if credentials are removed
     }
