@@ -1,14 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { render, cleanup } from "@testing-library/react-native";
-import MockAdapter from "axios-mock-adapter";
-import axios from "axios";
+import { render, cleanup, fireEvent, act } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { CredentialsContext } from "../../context/credentialsContext"; // Import the context
+import { CredentialsContext } from "../../context/credentialsContext";
 import WelcomeScreen from "../../screens/WelcomeScreen/WelcomeScreen";
 import { StatusBar } from "react-native";
-import rootReducer from "../../reducers/rootReducer"; // Adjust the import according to your project structure
+import rootReducer from "../../reducers/rootReducer";
 
 jest.mock("@env", () => ({
   EXPO_CLIENT_ID: "mock_expo_client_id",
@@ -99,7 +97,7 @@ beforeEach(() => {
   });
 });
 
-// WelcomeScreen
+WelcomeScreen;
 describe("WelcomeScreen", () => {
   afterEach(() => {
     cleanup();
@@ -144,6 +142,25 @@ describe("WelcomeScreen", () => {
     const subTitleComponent = getByTestId("user-email");
     const textContent = subTitleComponent.props.children.toString();
     expect(textContent).toMatch("serenity@gmail.com");
+  });
+
+  test("Credentials context provides stored credentials", () => {
+    const { getByTestId } = welcomeScreenRender;
+    const nameText = getByTestId("user-name");
+    expect(nameText.props.children).toBe("Zen User");
+  });
+
+  test("Welcome image renders correctly", () => {
+    const { getByTestId } = welcomeScreenRender;
+    const welcomeImage = getByTestId("welcome-image");
+    expect(welcomeImage.props.source).toEqual(
+      require("./../../assets/ZenTimer6.png")
+    );
+  });
+
+  test("Redux activeScreen state is correctly passed", () => {
+    const { getByTestId } = welcomeScreenRender;
+    expect(getByTestId("inner-container")).toBeTruthy();
   });
 });
 
