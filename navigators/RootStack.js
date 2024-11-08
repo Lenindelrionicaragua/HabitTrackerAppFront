@@ -17,31 +17,15 @@ import { setActiveScreen } from "../actions/counterActions";
 import useHabitCategories from "../hooks/api/useHabitCategories";
 // Context
 import { CredentialsContext } from "../context/credentialsContext";
-//Utils
-import { logInfo, logError } from "../util/logging";
 
 const { grey, lightGrey } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
-  const dispatch = useDispatch();
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const { storedCredentials } = useContext(CredentialsContext);
-  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
-
-  const {
-    fetchHabitCategories,
-    isLoading: isCategoriesLoading,
-    error: categoriesError
-  } = useHabitCategories();
-
-  useEffect(() => {
-    if (storedCredentials && !categoriesLoaded) {
-      logInfo("Updated credentials:", storedCredentials);
-      fetchHabitCategories();
-      setCategoriesLoaded(true);
-    }
-  }, [storedCredentials, fetchHabitCategories]);
+  // Pass storedCredentials to the hook to trigger data fetching on app load
+  const { isLoading, error } = useHabitCategories(storedCredentials);
 
   return (
     <NavigationContainer>
