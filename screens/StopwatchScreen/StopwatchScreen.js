@@ -53,31 +53,30 @@ const { black } = Colors;
 const StopwatchScreen = () => {
   const dispatch = useDispatch();
 
-  // Store states
+  // Time-related store states
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
   const hasStarted = useSelector(state => state.hasStarted.hasStarted);
+
+  // Habit category-related store states
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
   );
-  const selectedCategory =
-    habitCategories &&
-    habitCategoryIndex >= 0 &&
-    habitCategoryIndex < habitCategories.length
-      ? habitCategories[habitCategoryIndex]
-      : null;
+  const selectedCategory = habitCategories?.[habitCategoryIndex] ?? null;
 
+  // Variables derived from store states
   const categoryId = selectedCategory ? selectedCategory.id : null;
   const categoryName = selectedCategory
     ? selectedCategory.name
     : "Please log in to access your habit categories.";
 
+  // Other store states
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const buttonsDisabled = useSelector(
