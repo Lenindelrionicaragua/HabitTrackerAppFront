@@ -87,7 +87,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   // Fetch API for server-side logout request
   const { performFetch, isLoading, error } = useFetch(
-    `/auth/log-out`,
+    `/user/log-out`,
     onReceived
   );
 
