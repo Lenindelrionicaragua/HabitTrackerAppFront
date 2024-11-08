@@ -136,13 +136,14 @@ const WelcomeScreen = ({ navigation }) => {
   // Function to handle clearing user login and logout
   const clearLogin = async () => {
     try {
+      await performServerLogout();
+
       const token = storedCredentials?.token;
       if (token) {
         await revokeGoogleToken(token);
       }
 
       await clearStorage();
-      await performServerLogout();
 
       Alert.alert(
         "Logout successful",
