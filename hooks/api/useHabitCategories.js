@@ -15,11 +15,11 @@ const useHabitCategories = storedCredentials => {
   );
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
+  // Hook to fetch the main categories
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     "/habit-categories",
     async receivedData => {
       if (receivedData.success) {
-        // Extract only id and name for each category
         const categoriesWithIdAndName = receivedData.categories.map(
           category => ({
             id: category.id,
@@ -28,18 +28,31 @@ const useHabitCategories = storedCredentials => {
         );
 
         try {
-          // Save the categories to AsyncStorage
           await AsyncStorage.setItem(
             "habitCategories",
             JSON.stringify(categoriesWithIdAndName)
           );
-
           dispatch(setHabitCategories(categoriesWithIdAndName));
-
           logInfo("Categories saved to AsyncStorage:", categoriesWithIdAndName);
         } catch (e) {
           logInfo("Error saving categories to AsyncStorage:", e);
         }
+      } else {
+        logInfo("No categories found, attempting to auto-create categories.");
+        performCreateCategories();
+      }
+    }
+  );
+
+  // Hook to create categories if none are found
+  const { performFetch: performCreateCategories } = useFetch(
+    "/habit-categories/auto-create-categories",
+    async creationData => {
+      if (creationData.success) {
+        logInfo("Categories successfully auto-created.");
+        performFetch(); // Fetch categories again after creation
+      } else {
+        logInfo("Failed to auto-create categories:", creationData);
       }
     }
   );
@@ -51,7 +64,7 @@ const useHabitCategories = storedCredentials => {
       setCategoriesLoaded(true);
       setHabitCategoryIndex(null);
     } else if (!storedCredentials) {
-      setCategoriesLoaded(false); // Reset state if credentials are removed
+      setCategoriesLoaded(false);
     }
   }, [storedCredentials, performFetch, categoriesLoaded]);
 
