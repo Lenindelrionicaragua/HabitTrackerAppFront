@@ -20,26 +20,32 @@ const useHabitCategories = storedCredentials => {
     "/habit-categories",
     async receivedData => {
       if (receivedData.success) {
-        const categoriesWithIdAndName = receivedData.categories.map(
-          category => ({
-            id: category.id,
-            name: category.name
-          })
-        );
-
-        try {
-          await AsyncStorage.setItem(
-            "habitCategories",
-            JSON.stringify(categoriesWithIdAndName)
+        // Verificar si las categorías están vacías
+        if (!receivedData.categories || receivedData.categories.length === 0) {
+          logInfo("No categories found, attempting to auto-create categories.");
+          performCreateCategories();
+        } else {
+          const categoriesWithIdAndName = receivedData.categories.map(
+            category => ({
+              id: category.id,
+              name: category.name
+            })
           );
-          dispatch(setHabitCategories(categoriesWithIdAndName));
-          logInfo("Categories saved to AsyncStorage:", categoriesWithIdAndName);
-        } catch (e) {
-          logInfo("Error saving categories to AsyncStorage:", e);
+
+          try {
+            await AsyncStorage.setItem(
+              "habitCategories",
+              JSON.stringify(categoriesWithIdAndName)
+            );
+            dispatch(setHabitCategories(categoriesWithIdAndName));
+            logInfo(
+              "Categories saved to AsyncStorage:",
+              categoriesWithIdAndName
+            );
+          } catch (e) {
+            logInfo("Error saving categories to AsyncStorage:", e);
+          }
         }
-      } else {
-        logInfo("No categories found, attempting to auto-create categories.");
-        performCreateCategories();
       }
     }
   );
