@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
+import useCreateDefaultCategories from "./useCreateDefaultCategories";
 import { logInfo } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -14,16 +15,16 @@ const useHabitCategories = storedCredentials => {
     state => state.habitCategoryIndex.habitCategoryIndex
   );
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
+  // Hook to create defaultCategories
+  const createCategories = useCreateDefaultCategories();
 
-  // Hook to fetch the main categories
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     "/habit-categories",
     async receivedData => {
       if (receivedData.success) {
-        // Verificar si las categorías están vacías
         if (!receivedData.categories || receivedData.categories.length === 0) {
           logInfo("No categories found, attempting to auto-create categories.");
-          performCreateCategories();
+          await createCategories();
         } else {
           const categoriesWithIdAndName = receivedData.categories.map(
             category => ({
@@ -46,19 +47,6 @@ const useHabitCategories = storedCredentials => {
             logInfo("Error saving categories to AsyncStorage:", e);
           }
         }
-      }
-    }
-  );
-
-  // Hook to create categories if none are found
-  const { performFetch: performCreateCategories } = useFetch(
-    "/habit-categories/auto-create-categories",
-    async creationData => {
-      if (creationData.success) {
-        logInfo("Categories successfully auto-created.");
-        performFetch(); // Fetch categories again after creation
-      } else {
-        logInfo("Failed to auto-create categories:", creationData);
       }
     }
   );
