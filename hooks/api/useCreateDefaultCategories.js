@@ -16,10 +16,7 @@ const useCreateDefaultCategories = () => {
   const createCategories = async () => {
     try {
       await performFetch({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
+        method: "POST"
       });
     } catch (error) {
       logError("Error in creating categories:", error);

@@ -60,7 +60,7 @@ const useHabitCategories = storedCredentials => {
     } else if (!storedCredentials) {
       setCategoriesLoaded(false);
     }
-  }, [storedCredentials, performFetch, categoriesLoaded]);
+  }, [storedCredentials, categoriesLoaded]);
 
   return {
     habitCategories: data?.categories || [],
