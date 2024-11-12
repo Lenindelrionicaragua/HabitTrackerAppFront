@@ -8,7 +8,7 @@ const useCreateDefaultCategories = () => {
       if (creationData.success) {
         logInfo("Categories successfully auto-created.");
       } else {
-        logError("Failed to auto-create categories:", creationData);
+        logError("Failed to auto-create categories:", creationData.message);
       }
     }
   );

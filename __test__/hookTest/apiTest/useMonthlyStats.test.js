@@ -1,9 +1,4 @@
-import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { render, waitFor } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-// import { createContext } from "react";
-// import rootReducer from "../../../reducers/rootReducer";
 import useMonthlyStats from "../../../hooks/api/useMonthlyStats";
 import axios from "axios";
 import { logError, logInfo } from "../../../util/logging";
