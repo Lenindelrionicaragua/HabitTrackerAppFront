@@ -14,13 +14,7 @@ const useCreateDefaultCategories = () => {
   );
 
   const createCategories = async () => {
-    try {
-      await performFetch({
-        method: "POST"
-      });
-    } catch (error) {
-      logError("Error in creating categories:", error);
-    }
+    await performFetch({ method: "POST" });
   };
 
   return createCategories;
