@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setHabitCategories } from "../../../actions/counterActions";
 import useCreateDefaultCategories from "../../../hooks/api/useCreateDefaultCategories";
 
-// Mockear las dependencias
 jest.mock("axios");
 jest.mock("@react-native-async-storage/async-storage");
 jest.mock("../../../hooks/api/useCreateDefaultCategories");

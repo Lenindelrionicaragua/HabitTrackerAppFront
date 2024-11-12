@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import useFetch from "../../hooks/api/useFetch";
-import { logInfo } from "../../util/logging";
+import { logError, logInfo } from "../../util/logging";
 
 // Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
