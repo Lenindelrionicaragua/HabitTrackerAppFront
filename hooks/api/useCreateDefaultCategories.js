@@ -16,7 +16,6 @@ const useCreateDefaultCategories = () => {
     }
   );
 
-  // Usar useEffect para manejar el error
   useEffect(() => {
     if (error) {
       setSuccess(false);
@@ -26,8 +25,8 @@ const useCreateDefaultCategories = () => {
   }, [error]);
 
   const createCategories = async () => {
-    setSuccess(null); // Reiniciar el estado antes de realizar la solicitud
-    setMessage(""); // Limpiar el mensaje previo
+    setSuccess(null);
+    setMessage("");
     await performFetch({ method: "POST" });
   };
 
