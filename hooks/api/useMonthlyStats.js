@@ -1,9 +1,13 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 
 // Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
+  const [success, setSuccess] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+
   const getCurrentMonthAndYear = () => {
     const date = new Date();
     return {
@@ -20,13 +24,30 @@ const useMonthlyStats = () => {
     url,
     receivedData => {
       if (receivedData.success) {
-        logInfo(receivedData.categoryData);
+        setSuccess(true);
+        setMessage("Monthly stats fetched successfully.");
+        logInfo(
+          "Monthly stats fetched successfully.",
+          receivedData.categoryData
+        );
       }
     }
   );
 
-  // Trigger fetch based on button click or other trigger
+  useEffect(() => {
+    if (error) {
+      setSuccess(false);
+      setErrorMessage(
+        error.message || "An unknown error occurred while fetching stats."
+      );
+      logError(`Error fetching monthly stats: ${error.message}`);
+    }
+  }, [error]);
+
   const fetchMonthlyStats = useCallback(() => {
+    setSuccess(null);
+    setMessage("");
+    setErrorMessage("");
     performFetch();
   }, [performFetch]);
 
@@ -36,7 +57,9 @@ const useMonthlyStats = () => {
     daysWithRecords: data?.daysWithRecords || 0,
     totalDailyMinutes: data?.totalDailyMinutes || 0,
     categoryData: data?.categoryData || [],
-    error,
+    success,
+    errorMessage,
+    message,
     isLoading,
     fetchMonthlyStats,
     cancelFetch

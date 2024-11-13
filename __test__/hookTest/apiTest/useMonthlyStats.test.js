@@ -34,7 +34,7 @@ describe("useMonthlyStats Hook", () => {
   beforeEach(() => {
     axios.mockClear();
     logInfo.mockClear();
-    logError.mockClear;
+    logError.mockClear();
   });
 
   afterEach(() => {
@@ -54,12 +54,12 @@ describe("useMonthlyStats Hook", () => {
       await result.current.fetchMonthlyStats();
     });
 
-    expect(logInfo).toHaveBeenCalledWith(
-      dataResponseWithMonthlyStats.categoryData
-    );
+    expect(result.current.success).toBe(true);
+    expect(result.current.message).toBe("Monthly stats fetched successfully.");
+    expect(result.current.errorMessage).toBe("");
   });
 
-  it("Should return an error when API call fall ", async () => {
+  it("Should return an error when API call fails", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
         data: dateResponseWithError
@@ -72,8 +72,14 @@ describe("useMonthlyStats Hook", () => {
       await result.current.fetchMonthlyStats();
     });
 
-    expect(result.current.error).toBeTruthy();
-    expect(result.current.error.message).toContain("Unexpected server error");
+    expect(result.current.success).toBe(false);
+    expect(result.current.errorMessage).toBe(
+      "Error fetching categories: BAD REQUEST: Authentication required."
+    );
+    expect(result.current.message).toBe("");
+    expect(logError).toHaveBeenCalledWith(
+      "Error fetching monthly stats: Error fetching categories: BAD REQUEST: Authentication required."
+    );
   });
 
   it("Should return an object with the expected structure", () => {
@@ -84,9 +90,49 @@ describe("useMonthlyStats Hook", () => {
     expect(result.current).toHaveProperty("daysWithRecords");
     expect(result.current).toHaveProperty("totalDailyMinutes");
     expect(result.current).toHaveProperty("categoryData");
-    expect(result.current).toHaveProperty("error");
+    expect(result.current).toHaveProperty("success");
+    expect(result.current).toHaveProperty("errorMessage");
+    expect(result.current).toHaveProperty("message");
     expect(result.current).toHaveProperty("isLoading");
     expect(result.current).toHaveProperty("fetchMonthlyStats");
     expect(result.current).toHaveProperty("cancelFetch");
+  });
+
+  it("Should reset success, message, and errorMessage before each new fetch", async () => {
+    axios.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: dataResponseWithMonthlyStats
+      })
+    );
+
+    const { result } = renderHook(() => useMonthlyStats());
+
+    expect(result.current.success).toBeNull();
+    expect(result.current.message).toBe("");
+    expect(result.current.errorMessage).toBe("");
+
+    await act(async () => {
+      await result.current.fetchMonthlyStats();
+    });
+
+    expect(result.current.success).toBe(true);
+    expect(result.current.message).toBe("Monthly stats fetched successfully.");
+    expect(result.current.errorMessage).toBe("");
+
+    axios.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: dateResponseWithError
+      })
+    );
+
+    await act(async () => {
+      await result.current.fetchMonthlyStats();
+    });
+
+    expect(result.current.success).toBe(false);
+    expect(result.current.message).toBe("");
+    expect(result.current.errorMessage).toBe(
+      "Error fetching categories: BAD REQUEST: Authentication required."
+    );
   });
 });
