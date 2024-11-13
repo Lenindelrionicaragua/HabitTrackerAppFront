@@ -34,24 +34,31 @@ describe("useSaveDailyRecords.js Hook", () => {
     jest.clearAllMocks();
   });
 
-  //   it("Should return success when DailyRecord is successfully saved", async () => {
-  //     axios.mockImplementationOnce(() =>
-  //       Promise.resolve({
-  //         data: dataResponse
-  //       })
-  //     );
+  it("should initialize with default state", () => {
+    const { result } = renderHook(() => useSaveDailyRecords());
+    expect(result.current.success).toBe(null);
+    expect(result.current.errorMessage).toBe("");
+    expect(result.current.message).toBe("");
+  });
 
-  //     const { result } = renderHook(() => useSaveDailyRecords());
+  it("Should return success when DailyRecord is successfully saved", async () => {
+    axios.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: dataResponse
+      })
+    );
 
-  //     await act(async () => {
-  //       await result.current.createDailyRecord(categoryId, totalMinutes);
-  //     });
+    const { result } = renderHook(() => useSaveDailyRecords());
 
-  //     expect(result.current.createDailyRecord).toBeTruthy();
-  //     expect(result.current.success).toBe(true);
-  //     expect(logInfo).toHaveBeenCalledWith("DailyRecord successfully saved.");
-  //     expect(logError).not.toHaveBeenCalled();
-  //   });
+    await act(async () => {
+      await result.current.createDailyRecord(categoryId, totalMinutes);
+    });
+
+    expect(result.current.createDailyRecord).toBeTruthy();
+    expect(result.current.success).toBe(true);
+    expect(logInfo).toHaveBeenCalledWith("DailyRecord successfully saved.");
+    expect(logError).not.toHaveBeenCalled();
+  });
 
   it("Should call logError when DailyRecord fails to save", async () => {
     axios.mockImplementationOnce(() =>
@@ -67,9 +74,21 @@ describe("useSaveDailyRecords.js Hook", () => {
     });
 
     expect(result.current.success).toBe(false);
-    expect(logError).toHaveBeenCalledWith(
-      "Failed to save dailyRecord: Error saving record."
-    );
-    // expect(logInfo).not.toHaveBeenCalled();
+    expect(logError).toHaveBeenCalledWith("Error: Error saving record.");
+  });
+
+  it("Should handle axios error correctly", async () => {
+    const errorMessage = "Network Error";
+    axios.mockRejectedValueOnce(new Error(errorMessage));
+
+    const { result } = renderHook(() => useSaveDailyRecords(categoryId));
+
+    await act(async () => {
+      const response = await result.current.createDailyRecord(totalMinutes);
+    });
+
+    expect(result.current.success).toBe(false);
+    expect(result.current.errorMessage).toBe("Network Error");
+    expect(logError).toHaveBeenCalledWith("Error: Network Error");
   });
 });

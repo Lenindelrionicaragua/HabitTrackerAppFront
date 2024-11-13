@@ -17,22 +17,15 @@ const useSaveDailyRecords = categoryId => {
         setSuccess(true);
         logInfo("DailyRecord successfully saved.");
         return true;
-      } else {
-        setSuccess(false);
-        const errMsg = creationData?.message || "An error occurred.";
-        setErrorMessage(errMsg);
-        logError(`Failed to save dailyRecord: ${errMsg}`);
-        return false;
       }
     }
   );
 
   useEffect(() => {
-    if (error) {
-      setSuccess(false);
-      setErrorMessage(error.message || "An unknown error occurred.");
-      logError(`Error: ${error.message}`);
-    }
+    if (!error) return;
+    setSuccess(false);
+    setErrorMessage(error.message || "An unknown error occurred.");
+    logError(`Error: ${error.message}`);
   }, [error]);
 
   const createDailyRecord = async totalMinutes => {
