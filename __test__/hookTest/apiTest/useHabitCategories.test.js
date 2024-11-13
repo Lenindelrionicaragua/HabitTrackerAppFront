@@ -51,7 +51,9 @@ describe("useHabitCategories Hook", () => {
       .spyOn(require("react-redux"), "useDispatch")
       .mockReturnValue(dispatchMock);
 
-    useCreateDefaultCategories.mockReturnValue(createCategoriesMock);
+    useCreateDefaultCategories.mockReturnValue({
+      createCategories: createCategoriesMock
+    });
   });
 
   afterEach(() => {
