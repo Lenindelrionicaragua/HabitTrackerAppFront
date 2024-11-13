@@ -26,7 +26,8 @@ import useFetch from "../../hooks/api/useFetch";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
-  resetHabitCategories
+  resetHabitCategories,
+  setHabitCategoryIndex
 } from "../../actions/counterActions";
 
 // Credentials
@@ -38,13 +39,17 @@ import {
 } from "@env";
 
 const WelcomeScreen = ({ navigation }) => {
+  // Redux store
   const dispatch = useDispatch();
-  // Context to get stored credentials
+  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
   const [token, setToken] = useState(null);
-
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  // Local state
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
@@ -82,7 +87,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   // Fetch API for server-side logout request
   const { performFetch, isLoading, error } = useFetch(
-    `/auth/log-out`,
+    `/user/log-out`,
     onReceived
   );
 
@@ -115,6 +120,7 @@ const WelcomeScreen = ({ navigation }) => {
       "habitCategories"
     ]);
     dispatch(resetHabitCategories());
+    dispatch(setHabitCategoryIndex(null));
     setStoredCredentials(null);
     logInfo("User, token, and categories cleared from storage");
   };
@@ -130,13 +136,14 @@ const WelcomeScreen = ({ navigation }) => {
   // Function to handle clearing user login and logout
   const clearLogin = async () => {
     try {
+      await performServerLogout();
+
       const token = storedCredentials?.token;
       if (token) {
         await revokeGoogleToken(token);
       }
 
       await clearStorage();
-      await performServerLogout();
 
       Alert.alert(
         "Logout successful",

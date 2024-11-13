@@ -26,7 +26,7 @@ const habitCategoriesReducer = (
       return { ...state, habitCategories: categoriesWithIdName };
 
     case RESET_HABIT_CATEGORIES:
-      return { ...state, habitCategories: [] };
+      return initialHabitCategoriesState; // Reset to the initial state
 
     default:
       return state;
