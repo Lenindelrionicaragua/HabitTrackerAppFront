@@ -65,7 +65,7 @@ const useFetch = (initialRoute, onReceived) => {
         const url = `${baseApiUrl}/api${route}`;
         const response = await axios(url, baseOptions);
 
-        logInfo(`${url}`);
+        logInfo(`Request URL: ${url}`);
         // Check if response and response.data are valid
         if (!response || !response.data) {
           setError(new Error("Unexpected server error"));
@@ -78,7 +78,13 @@ const useFetch = (initialRoute, onReceived) => {
           return;
         }
 
-        const { success, msg, user, error: serverError } = response.data;
+        const {
+          success,
+          msg,
+          message,
+          user,
+          error: serverError
+        } = response.data;
 
         logInfo(`Response Data: ${JSON.stringify(response.data)}`);
 
@@ -86,7 +92,8 @@ const useFetch = (initialRoute, onReceived) => {
           setData(response.data);
           onReceived(response.data);
         } else {
-          const errorMsg = serverError || msg || "Unexpected server error";
+          const errorMsg =
+            serverError || msg || message || "Unexpected server error";
           setError(new Error(errorMsg));
         }
       } catch (error) {

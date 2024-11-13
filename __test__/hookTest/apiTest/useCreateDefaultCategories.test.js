@@ -16,11 +16,6 @@ describe("useCreateDefaultCategories Hook", () => {
     message: "Categories created successfully."
   };
 
-  const dateResponseWithError = {
-    success: false,
-    error: "User ID is required."
-  };
-
   beforeEach(() => {
     axios.mockClear();
     logInfo.mockClear();
