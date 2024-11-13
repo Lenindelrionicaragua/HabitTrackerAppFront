@@ -40,9 +40,10 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      - name: Deploy to Netlify (Final build after merge)
+      - name: Deploy to Netlify (Final build after merge with clean cache)
         if: github.event_name == 'push'
-        run: netlify deploy --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Final production deploy"
+        run: |
+          netlify build && netlify deploy --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Final production deploy"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
