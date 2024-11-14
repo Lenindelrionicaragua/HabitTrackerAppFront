@@ -1,16 +1,30 @@
-import useFetch from "./useFetch";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useFetch from "./useFetch";
 import { logInfo, logError } from "../../util/logging";
 
-const useSaveDailyRecords = categoryId => {
+const useSaveDailyRecords = () => {
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
-  const url = `/time-records/${categoryId}`;
+  // Store
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  const habitCategories = useSelector(
+    state => state.habitCategories.habitCategories
+  );
+  const categoryId =
+    habitCategoryIndex !== null
+      ? habitCategories?.[habitCategoryIndex]?.id
+      : null;
+
+  // Hooks
+  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
 
   const { error, isLoading, data, performFetch, cancelFetch } = useFetch(
-    url,
+    `/time-records/${categoryId}`,
     async creationData => {
       if (creationData?.success) {
         setMessage("DailyRecord successfully saved.");
@@ -28,11 +42,13 @@ const useSaveDailyRecords = categoryId => {
     logError(`Error: ${error.message}`);
   }, [error]);
 
-  const createDailyRecord = async (categoryId, totalMinutes) => {
+  const createDailyRecord = async minutesUpdate => {
+    clearTimeoutsAndMessage();
+
     try {
       const isSuccessful = await performFetch({
         method: "POST",
-        data: { categoryId, totalMinutes: `${totalMinutes}` }
+        data: { minutesUpdate: `${minutesUpdate}` }
       });
       return isSuccessful;
     } catch (error) {

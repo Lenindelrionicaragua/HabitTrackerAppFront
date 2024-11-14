@@ -4,9 +4,7 @@ import { logInfo, logError } from "../util/logging";
 import {
   setIsRunning,
   setSaveTimeButtonLabel,
-  setButtonsDisabled,
-  setHabitCategories,
-  setHabitCategoryIndex
+  setButtonsDisabled
 } from "../actions/counterActions";
 import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
@@ -23,16 +21,6 @@ function useSaveTimeRecords() {
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
-  const habitCategoryIndex = useSelector(
-    state => state.habitCategoryIndex.habitCategoryIndex
-  );
-  const habitCategories = useSelector(
-    state => state.habitCategories.habitCategories
-  );
-  const categoryId =
-    habitCategoryIndex !== null
-      ? habitCategories?.[habitCategoryIndex]?.id
-      : null;
   // Hooks
   const { updateColors } = useUpdateCircleColors();
   const performReset = usePerformReset();
@@ -42,6 +30,9 @@ function useSaveTimeRecords() {
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
   const { green } = Colors;
+
+  // Convert elapsedTime (seconds) to minutes
+  const minutesUpdate = elapsedTime / 60;
 
   useEffect(() => {
     if (success) {
@@ -73,20 +64,13 @@ function useSaveTimeRecords() {
   };
 
   const processSaveAndUpdateUI = async () => {
-    if (!categoryId) {
-      updateInfoText(
-        "No category selected. Please select a category before saving."
-      );
-      return;
-    }
-
     dispatch(setSaveTimeButtonLabel("SAVING"));
     updateInfoText("Saving");
     updateColors(green, green);
     dispatch(setButtonsDisabled(true));
 
     try {
-      const recordSaved = await createDailyRecord(categoryId, elapsedTime);
+      const recordSaved = await createDailyRecord(minutesUpdate);
 
       if (recordSaved) {
         setTimeout(() => {
