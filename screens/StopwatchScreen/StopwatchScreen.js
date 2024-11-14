@@ -4,7 +4,7 @@ import Svg, { Circle, Rect, Text as SvgText } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 import { useFocusEffect } from "@react-navigation/native";
-//hooks
+// Hooks
 import useCircleParams from "../../hooks/useCircleParams";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 import useStopwatch from "../../hooks/useStopwatch";
@@ -13,11 +13,10 @@ import { useButtonHandler } from "../../hooks/useButtonHandler";
 import useUpdateCircleColors from "../../hooks/useUpdateCircleColors";
 import useInfoText from "../../hooks/useInfoText";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
-
-//utils
+// Utils
 import { formatTime } from "../../util/formatTime";
 import { logInfo, logError } from "../../util/logging";
-// store
+// Store
 import {
   setResetClicks,
   saveTimeButtonLabel,
@@ -71,7 +70,7 @@ const StopwatchScreen = () => {
   const selectedCategory = habitCategories?.[habitCategoryIndex] ?? null;
 
   // Variables derived from store states
-  const categoryId = selectedCategory ? selectedCategory.id : null;
+  // const categoryId = selectedCategory ? selectedCategory.id : null;
   const categoryName = selectedCategory
     ? selectedCategory.name
     : "Please log in to access your habit categories.";

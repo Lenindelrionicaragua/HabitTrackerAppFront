@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logInfo, logError } from "../util/logging";
 import {
   setIsRunning,
   setSaveTimeButtonLabel,
-  setButtonsDisabled
+  setButtonsDisabled,
+  setHabitCategories,
+  setHabitCategoryIndex
 } from "../actions/counterActions";
 import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
+import useSaveDailyRecords from "./api/useSaveDailyRecords";
 import { usePerformReset } from "./usePerformReset";
 import { formatTime } from "../util/formatTime";
 import { usePlayAlarm } from "./usePlayAlarm";
@@ -14,18 +18,44 @@ import { Colors } from "../styles/AppStyles";
 
 function useSaveTimeRecords() {
   const dispatch = useDispatch();
-  const performReset = usePerformReset();
-  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
+  // Store
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
+  const habitCategoryIndex = useSelector(
+    state => state.habitCategoryIndex.habitCategoryIndex
+  );
+  const habitCategories = useSelector(
+    state => state.habitCategories.habitCategories
+  );
+  const categoryId =
+    habitCategoryIndex !== null
+      ? habitCategories?.[habitCategoryIndex]?.id
+      : null;
+  // Hooks
   const { updateColors } = useUpdateCircleColors();
+  const performReset = usePerformReset();
+  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
+  const { success, errorMessage, message, createDailyRecord } =
+    useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
   const { green } = Colors;
 
-  const saveTimeRecords = () => {
+  useEffect(() => {
+    if (success) {
+      updateInfoText(
+        "Time saved successfully! Your activity has been recorded."
+      );
+    } else if (success === false) {
+      updateInfoText(
+        errorMessage || "Failed to save the record. Please try again."
+      );
+    }
+  }, [success, errorMessage, updateInfoText]);
+
+  const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
     dispatch(setIsRunning(false));
 
@@ -37,28 +67,39 @@ function useSaveTimeRecords() {
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
       logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
       logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
-      processSaveAndUpdateUI();
+      await processSaveAndUpdateUI();
       return;
     }
   };
 
-  const processSaveAndUpdateUI = () => {
-    dispatch(setSaveTimeButtonLabel("SAVING"));
+  const processSaveAndUpdateUI = async () => {
+    if (!categoryId) {
+      updateInfoText(
+        "No category selected. Please select a category before saving."
+      );
+      return;
+    }
 
+    dispatch(setSaveTimeButtonLabel("SAVING"));
     updateInfoText("Saving");
     updateColors(green, green);
     dispatch(setButtonsDisabled(true));
 
-    setTimeout(() => {
-      if (!timeCompleted) {
-        playAlarm(require("../assets/alarm_2.wav"));
-      }
+    try {
+      const recordSaved = await createDailyRecord(categoryId, elapsedTime);
 
-      performReset();
-      updateInfoText(
-        "Time saved successfully! Your activity has been recorded."
-      );
-    }, 6000);
+      if (recordSaved) {
+        setTimeout(() => {
+          if (!timeCompleted) {
+            playAlarm(require("../assets/alarm_2.wav"));
+          }
+
+          performReset();
+        }, 6000);
+      }
+    } catch (error) {
+      updateInfoText("An error occurred while saving the record.");
+    }
   };
 
   return {

@@ -28,11 +28,11 @@ const useSaveDailyRecords = categoryId => {
     logError(`Error: ${error.message}`);
   }, [error]);
 
-  const createDailyRecord = async totalMinutes => {
+  const createDailyRecord = async (categoryId, totalMinutes) => {
     try {
       const isSuccessful = await performFetch({
         method: "POST",
-        data: { totalMinutes: `${totalMinutes}` }
+        data: { categoryId, totalMinutes: `${totalMinutes}` }
       });
       return isSuccessful;
     } catch (error) {
