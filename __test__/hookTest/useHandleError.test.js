@@ -36,19 +36,15 @@ describe("useHandleError", () => {
 
     renderHook(() => useHandleError(error, setSuccess, setErrorMessage));
 
-    // Check that setSuccess and setErrorMessage were called correctly
     expect(setSuccess).toHaveBeenCalledWith(false);
     expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
 
-    // Advance timers by 3 seconds
     act(() => {
       jest.advanceTimersByTime(3000);
     });
 
-    // Ensure setErrorMessage is called with an empty string after timeout
     expect(setErrorMessage).toHaveBeenCalledWith("");
 
-    // Clean up timers
     jest.useRealTimers();
   });
 
@@ -59,7 +55,28 @@ describe("useHandleError", () => {
 
     renderHook(() => useHandleError(error, setSuccess, setErrorMessage));
 
-    // Check that logError was called with the correct message
     expect(logError).toHaveBeenCalledWith("Error: Something went wrong");
+  });
+
+  it("should reset the state when resetErrorState is called", () => {
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
+    const error = new Error("Something went wrong");
+
+    const { result } = renderHook(() =>
+      useHandleError(error, setSuccess, setErrorMessage)
+    );
+
+    expect(setSuccess).toHaveBeenCalledWith(false);
+    expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
+
+    // Act to call the resetErrorState function
+    act(() => {
+      result.current.resetErrorState();
+    });
+
+    // Check that the internal states are reset
+    expect(setSuccess).toHaveBeenCalledWith(null);
+    expect(setErrorMessage).toHaveBeenCalledWith("");
   });
 });

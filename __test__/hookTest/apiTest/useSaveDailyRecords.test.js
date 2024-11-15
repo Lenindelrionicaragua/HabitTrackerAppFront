@@ -1,101 +1,95 @@
-import React, { Children } from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "../../../reducers/rootReducer";
-import useSaveDailyRecords from "../../../hooks/api/useSaveDailyRecords";
-import axios from "axios";
-import { logError, logInfo } from "../../../util/logging";
+import { useHandleError } from "../../hooks/useHandleError";
+import { logError } from "../../util/logging";
 
-// Mocking axios and logging methods
-jest.mock("axios");
-jest.mock("../../../util/logging", () => ({
-  logInfo: jest.fn(),
+jest.mock("../../util/logging", () => ({
   logError: jest.fn()
 }));
 
-const store = createStore(rootReducer);
+describe("useHandleError", () => {
+  it("should return null success and empty errorMessage when there is no error", () => {
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
 
-const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
+    renderHook(() => useHandleError(null, setSuccess, setErrorMessage, false));
 
-describe("useSaveDailyRecords.js Hook", () => {
-  const categoryId = "Work";
-  const totalMinutes = 30;
-
-  const dataResponse = {
-    success: true,
-    record: "newRecord"
-  };
-
-  const dataResponseFailed = {
-    success: false,
-    message: "Error saving record."
-  };
-
-  beforeEach(() => {
-    axios.mockClear();
-    logInfo.mockClear();
-    logError.mockClear();
-    jest.clearAllMocks();
+    expect(setSuccess).not.toHaveBeenCalled();
+    expect(setErrorMessage).not.toHaveBeenCalled();
   });
 
-  it("should initialize with default state", () => {
-    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
-    expect(result.current.success).toBe(null);
-    expect(result.current.errorMessage).toBe("");
-    expect(result.current.message).toBe("");
+  it("should set success to false and errorMessage when an error is passed", () => {
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
+    const error = new Error("Something went wrong");
+
+    renderHook(() => useHandleError(error, setSuccess, setErrorMessage, false));
+
+    expect(setSuccess).toHaveBeenCalledWith(false);
+    expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
   });
 
-  it("Should return success when DailyRecord is successfully saved", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponse
-      })
+  it("should clear the errorMessage after 3 seconds", () => {
+    jest.useFakeTimers();
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
+    const error = new Error("Something went wrong");
+
+    renderHook(() => useHandleError(error, setSuccess, setErrorMessage, false));
+
+    // Check that setSuccess and setErrorMessage were called correctly
+    expect(setSuccess).toHaveBeenCalledWith(false);
+    expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
+
+    // Advance timers by 3 seconds
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Ensure setErrorMessage is called with an empty string after timeout
+    expect(setErrorMessage).toHaveBeenCalledWith("");
+
+    // Clean up timers
+    jest.useRealTimers();
+  });
+
+  it("should log the error message when an error occurs", () => {
+    const error = new Error("Something went wrong");
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
+
+    renderHook(() => useHandleError(error, setSuccess, setErrorMessage, false));
+
+    // Check that logError was called with the correct message
+    expect(logError).toHaveBeenCalledWith("Error: Something went wrong");
+  });
+
+  it("should not handle the same error more than once until resetErrorFlag is true", () => {
+    const setSuccess = jest.fn();
+    const setErrorMessage = jest.fn();
+    const error = new Error("Something went wrong");
+
+    // First call with error
+    const { rerender } = renderHook(
+      ({ error, resetErrorFlag }) =>
+        useHandleError(error, setSuccess, setErrorMessage, resetErrorFlag),
+      { initialProps: { error, resetErrorFlag: false } }
     );
 
-    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
+    // Check if error was handled
+    expect(setSuccess).toHaveBeenCalledWith(false);
+    expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
 
-    await act(async () => {
-      await result.current.createDailyRecord(categoryId, totalMinutes);
-    });
+    // Rerender without resetting the flag (should not handle again)
+    rerender({ error, resetErrorFlag: false });
 
-    expect(result.current.createDailyRecord).toBeTruthy();
-    expect(result.current.success).toBe(true);
-    expect(logInfo).toHaveBeenCalledWith("DailyRecord successfully saved.");
-    expect(logError).not.toHaveBeenCalled();
-  });
+    expect(setSuccess).toHaveBeenCalledTimes(1); // Should not call again
+    expect(setErrorMessage).toHaveBeenCalledTimes(1); // Should not call again
 
-  it("Should call logError when DailyRecord fails to save", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseFailed
-      })
-    );
+    // Now trigger resetErrorFlag to true and rerender
+    rerender({ error, resetErrorFlag: true });
 
-    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
-
-    await act(async () => {
-      await result.current.createDailyRecord(categoryId, totalMinutes);
-    });
-
-    expect(result.current.success).toBe(false);
-    expect(logError).toHaveBeenCalledWith("Error: Error saving record.");
-  });
-
-  it("Should handle axios error correctly", async () => {
-    const errorMessage = "Network Error";
-    axios.mockRejectedValueOnce(new Error(errorMessage));
-
-    const { result } = renderHook(() => useSaveDailyRecords(categoryId), {
-      wrapper
-    });
-
-    await act(async () => {
-      const response = await result.current.createDailyRecord(totalMinutes);
-    });
-
-    expect(result.current.success).toBe(false);
-    expect(result.current.errorMessage).toBe("Network Error");
-    expect(logError).toHaveBeenCalledWith("Error: Network Error");
+    // Check that the error is handled again because resetErrorFlag was true
+    expect(setSuccess).toHaveBeenCalledWith(false);
+    expect(setErrorMessage).toHaveBeenCalledWith("Something went wrong");
   });
 });

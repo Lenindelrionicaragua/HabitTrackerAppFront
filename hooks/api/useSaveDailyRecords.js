@@ -46,9 +46,14 @@ const useSaveDailyRecords = () => {
     }
   );
 
-  useHandleError(error, setSuccess, setErrorMessage);
+  const { resetErrorState } = useHandleError(
+    error,
+    setSuccess,
+    setErrorMessage
+  );
 
   const createDailyRecord = async () => {
+    resetErrorState();
     logInfo(`minuts in the call: ${minutesUpdate}`);
     logInfo(`errorMessage: ${errorMessage}`);
     try {
