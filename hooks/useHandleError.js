@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { logError } from "../util/logging";
 
-export const useHandleError = error => {
-  const [success, setSuccess] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-
+export const useHandleError = (error, setSuccess, setErrorMessage) => {
   useEffect(() => {
     if (!error) return;
 
@@ -17,7 +14,5 @@ export const useHandleError = error => {
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [error]);
-
-  return { success, errorMessage };
+  }, [error, setSuccess, setErrorMessage]);
 };

@@ -2,11 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "./useFetch";
 import { logInfo, logError } from "../../util/logging";
+import { useHandleError } from "../useHandleError";
 
 const useSaveDailyRecords = () => {
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  // Hooks
 
   // Store
   const habitCategoryIndex = useSelector(
@@ -43,6 +45,8 @@ const useSaveDailyRecords = () => {
       return false;
     }
   );
+
+  useHandleError(error, setSuccess, setErrorMessage);
 
   const createDailyRecord = async () => {
     logInfo(`minuts in the call: ${minutesUpdate}`);
