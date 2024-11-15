@@ -24,8 +24,12 @@ const useSaveDailyRecords = () => {
   const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
 
   const url = categoryId ? `/time-records/${categoryId}` : `/time-records/"}`;
-  // logInfo(`category: ${categoryId}`);
-  // logInfo(`url: ${url}`);
+  logInfo(`category: ${categoryId}`);
+  logInfo(`url: ${url}`);
+
+  // logInfo(`success in useSaveDailyRecords: ${success}`);
+  // logInfo(`message in useSaveDailyRecords:${message}`);
+  // logInfo(`errorMessage in useSaveDailyRecords: ${errorMessage}`);
 
   const { error, isLoading, data, performFetch, cancelFetch } = useFetch(
     url,
@@ -39,13 +43,6 @@ const useSaveDailyRecords = () => {
       return false;
     }
   );
-
-  useEffect(() => {
-    if (!error) return;
-    setSuccess(false);
-    setErrorMessage(error.message || "An unknown error occurred.");
-    logError(`Error: ${error.message}`);
-  }, [error]);
 
   const createDailyRecord = async () => {
     logInfo(`minuts in the call: ${minutesUpdate}`);

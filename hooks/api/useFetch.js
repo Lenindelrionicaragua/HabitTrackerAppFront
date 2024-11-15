@@ -26,6 +26,7 @@ const useFetch = (initialRoute, onReceived) => {
 
   const performFetch = async (options = {}, newUrl) => {
     if (newUrl) {
+      cancelFetch();
       setRoute(newUrl);
     }
     setError(null);

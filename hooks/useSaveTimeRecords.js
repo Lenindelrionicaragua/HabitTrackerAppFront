@@ -29,24 +29,37 @@ function useSaveTimeRecords() {
     useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  const { green } = Colors;
+  const { green, red, skyBlue } = Colors;
 
   // Convert elapsedTime (seconds) to minutes
   // const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
-  logInfo(`succes in useSaveTimeRecords: ${success}`);
-  logInfo(`message in useSaveTimeRecords:${message}`);
-
+  // logInfo(`success in useSaveTimeRecords: ${success}`);
+  // logInfo(`message in useSaveTimeRecords:${message}`);
+  // logInfo(`errorMessage in useSaveTimeRecords: ${errorMessage}`);
   useEffect(() => {
     if (success) {
       updateInfoText(
         message || "Time saved successfully! Your activity has been recorded."
       );
     } else if (success === false) {
+      updateColors(red, red);
       updateInfoText(
         errorMessage || "Failed to save the record. Please try again."
       );
+
+      setTimeout(() => {
+        clearTimeoutsAndMessage();
+        updateColors(skyBlue, skyBlue);
+      }, 3000);
     }
-  }, [success, errorMessage, updateInfoText]);
+  }, [
+    success,
+    errorMessage,
+    message,
+    updateInfoText,
+    updateColors,
+    clearTimeoutsAndMessage
+  ]);
 
   const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
