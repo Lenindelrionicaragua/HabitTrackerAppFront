@@ -1,4 +1,8 @@
+import React, { Children } from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "../../../reducers/rootReducer";
 import useSaveDailyRecords from "../../../hooks/api/useSaveDailyRecords";
 import axios from "axios";
 import { logError, logInfo } from "../../../util/logging";
@@ -9,6 +13,10 @@ jest.mock("../../../util/logging", () => ({
   logInfo: jest.fn(),
   logError: jest.fn()
 }));
+
+const store = createStore(rootReducer);
+
+const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
 describe("useSaveDailyRecords.js Hook", () => {
   const categoryId = "Work";
@@ -28,14 +36,11 @@ describe("useSaveDailyRecords.js Hook", () => {
     axios.mockClear();
     logInfo.mockClear();
     logError.mockClear();
-  });
-
-  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("should initialize with default state", () => {
-    const { result } = renderHook(() => useSaveDailyRecords());
+    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
     expect(result.current.success).toBe(null);
     expect(result.current.errorMessage).toBe("");
     expect(result.current.message).toBe("");
@@ -48,7 +53,7 @@ describe("useSaveDailyRecords.js Hook", () => {
       })
     );
 
-    const { result } = renderHook(() => useSaveDailyRecords());
+    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
 
     await act(async () => {
       await result.current.createDailyRecord(categoryId, totalMinutes);
@@ -67,7 +72,7 @@ describe("useSaveDailyRecords.js Hook", () => {
       })
     );
 
-    const { result } = renderHook(() => useSaveDailyRecords());
+    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
 
     await act(async () => {
       await result.current.createDailyRecord(categoryId, totalMinutes);
@@ -81,7 +86,9 @@ describe("useSaveDailyRecords.js Hook", () => {
     const errorMessage = "Network Error";
     axios.mockRejectedValueOnce(new Error(errorMessage));
 
-    const { result } = renderHook(() => useSaveDailyRecords(categoryId));
+    const { result } = renderHook(() => useSaveDailyRecords(categoryId), {
+      wrapper
+    });
 
     await act(async () => {
       const response = await result.current.createDailyRecord(totalMinutes);

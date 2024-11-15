@@ -32,12 +32,14 @@ function useSaveTimeRecords() {
   const { green } = Colors;
 
   // Convert elapsedTime (seconds) to minutes
-  const minutesUpdate = elapsedTime / 60;
+  // const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
+  logInfo(`succes in useSaveTimeRecords: ${success}`);
+  logInfo(`message in useSaveTimeRecords:${message}`);
 
   useEffect(() => {
     if (success) {
       updateInfoText(
-        "Time saved successfully! Your activity has been recorded."
+        message || "Time saved successfully! Your activity has been recorded."
       );
     } else if (success === false) {
       updateInfoText(
@@ -70,7 +72,7 @@ function useSaveTimeRecords() {
     dispatch(setButtonsDisabled(true));
 
     try {
-      const recordSaved = await createDailyRecord(minutesUpdate);
+      const recordSaved = await createDailyRecord();
 
       if (recordSaved) {
         setTimeout(() => {
@@ -83,6 +85,9 @@ function useSaveTimeRecords() {
       }
     } catch (error) {
       updateInfoText("An error occurred while saving the record.");
+    } finally {
+      dispatch(setButtonsDisabled(false));
+      updateInfoText("Save process completed");
     }
   };
 
