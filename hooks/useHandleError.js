@@ -13,11 +13,11 @@ export const useHandleError = (error, setSuccess, setErrorMessage) => {
 
     setHasHandledError(true);
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setErrorMessage("");
     }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout();
   }, [error, setSuccess, setErrorMessage, hasHandledError]);
 
   const resetErrorState = useCallback(() => {

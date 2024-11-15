@@ -7,6 +7,14 @@ jest.mock("../../util/logging", () => ({
 }));
 
 describe("useHandleError", () => {
+  beforeEach(() => {
+    jest.useFakeTimers(); // Aseguramos que los temporizadores falsos estén configurados
+  });
+
+  afterEach(() => {
+    jest.useRealTimers(); // Restauramos los temporizadores después de cada prueba
+  });
+
   it("should return null success and empty errorMessage when there is no error", () => {
     const setSuccess = jest.fn();
     const setErrorMessage = jest.fn();
@@ -29,7 +37,6 @@ describe("useHandleError", () => {
   });
 
   it("should clear the errorMessage after 3 seconds", () => {
-    jest.useFakeTimers();
     const setSuccess = jest.fn();
     const setErrorMessage = jest.fn();
     const error = new Error("Something went wrong");
@@ -43,9 +50,7 @@ describe("useHandleError", () => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(setErrorMessage).toHaveBeenCalledWith("");
-
-    jest.useRealTimers();
+    expect(setErrorMessage).toHaveBeenNthCalledWith(2, "");
   });
 
   it("should log the error message when an error occurs", () => {
