@@ -8,11 +8,11 @@ jest.mock("../../util/logging", () => ({
 
 describe("useHandleError", () => {
   beforeEach(() => {
-    jest.useFakeTimers(); // Aseguramos que los temporizadores falsos estén configurados
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.useRealTimers(); // Restauramos los temporizadores después de cada prueba
+    jest.useRealTimers();
   });
 
   it("should return null success and empty errorMessage when there is no error", () => {

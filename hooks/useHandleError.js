@@ -13,18 +13,21 @@ export const useHandleError = (error, setSuccess, setErrorMessage) => {
 
     setHasHandledError(true);
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setErrorMessage("");
+      setHasHandledError(false);
     }, 3000);
 
     return () => clearTimeout();
   }, [error, setSuccess, setErrorMessage, hasHandledError]);
 
   const resetErrorState = useCallback(() => {
-    setHasHandledError(false);
-    setSuccess(null);
-    setErrorMessage("");
-  }, [setSuccess, setErrorMessage]);
+    if (hasHandledError) {
+      setHasHandledError(false);
+      setSuccess(null);
+      setErrorMessage("");
+    }
+  }, [hasHandledError, setSuccess, setErrorMessage]);
 
   return { resetErrorState };
 };

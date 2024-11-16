@@ -29,7 +29,7 @@ function useSaveTimeRecords() {
     useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  const { green, red, skyBlue} = Colors;
+  const { green, red, skyBlue } = Colors;
 
   // Convert elapsedTime (seconds) to minutes
   // const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
@@ -46,11 +46,20 @@ function useSaveTimeRecords() {
       updateInfoText(
         errorMessage || "Failed to save the record. Please try again."
       );
-      setTimeout({
-        updateColors(red, red);
-      }, 3000)
+
+      setTimeout(() => {
+        clearTimeoutsAndMessage();
+        updateColors(skyBlue, skyBlue);
+      }, 3000);
     }
-  }, [success, errorMessage, updateInfoText]);
+  }, [
+    success,
+    errorMessage,
+    message,
+    updateInfoText,
+    updateColors,
+    clearTimeoutsAndMessage
+  ]);
 
   const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
