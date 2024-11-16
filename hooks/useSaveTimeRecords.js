@@ -29,15 +29,27 @@ function useSaveTimeRecords() {
     useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
+  // Store
+  // const habitCategoryIndex = useSelector(
+  //   state => state.habitCategoryIndex.habitCategoryIndex
+  // );
+  // const habitCategories = useSelector(
+  //   state => state.habitCategories.habitCategories
+  // );
+  // const categoryId =
+  //   habitCategoryIndex !== null
+  //     ? habitCategories?.[habitCategoryIndex]?.id
+  //     : null;
+  // const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
+
+  // const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
+
+  // const url = categoryId ? `/time-records/${categoryId}` : `/time-records/"}`;
+
   const { green, red, skyBlue } = Colors;
 
-  // Convert elapsedTime (seconds) to minutes
-  // const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
-  // logInfo(`success in useSaveTimeRecords: ${success}`);
-  // logInfo(`message in useSaveTimeRecords:${message}`);
-  // logInfo(`errorMessage in useSaveTimeRecords: ${errorMessage}`);
   useEffect(() => {
-    if (success) {
+    if (error) {
       updateInfoText(
         message || "Time saved successfully! Your activity has been recorded."
       );
@@ -71,8 +83,6 @@ function useSaveTimeRecords() {
     }
 
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-      logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
       await processSaveAndUpdateUI();
       return;
     }

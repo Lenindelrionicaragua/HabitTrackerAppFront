@@ -1,77 +1,34 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
 import useFetch from "./useFetch";
 import { logInfo, logError } from "../../util/logging";
-import { useHandleError } from "../useHandleError";
 
 const useSaveDailyRecords = () => {
-  const [success, setSuccess] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [message, setMessage] = useState("");
-  // Hooks
+  // Aquí no pasamos directamente el store, sino que dejamos que cada función gestione su propio estado.
+  const { error, performFetch } = useFetch(); // Asumimos que `url` y `minutesUpdate` serán proporcionados por el caller.
 
-  // Store
-  const habitCategoryIndex = useSelector(
-    state => state.habitCategoryIndex.habitCategoryIndex
-  );
-  const habitCategories = useSelector(
-    state => state.habitCategories.habitCategories
-  );
-  const categoryId =
-    habitCategoryIndex !== null
-      ? habitCategories?.[habitCategoryIndex]?.id
-      : null;
-  const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
-
-  const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
-
-  const url = categoryId ? `/time-records/${categoryId}` : `/time-records/"}`;
-  logInfo(`category: ${categoryId}`);
-  logInfo(`url: ${url}`);
-
-  // logInfo(`success in useSaveDailyRecords: ${success}`);
-  // logInfo(`message in useSaveDailyRecords:${message}`);
-  // logInfo(`errorMessage in useSaveDailyRecords: ${errorMessage}`);
-
-  const { error, isLoading, data, performFetch, cancelFetch } = useFetch(
-    url,
-    async creationData => {
-      if (creationData?.success) {
-        setMessage("DailyRecord successfully saved.");
-        setSuccess(true);
-        logInfo("DailyRecord successfully saved.");
-        return true;
-      }
-      return false;
-    }
-  );
-
-  const { resetErrorState } = useHandleError(
-    error,
-    setSuccess,
-    setErrorMessage
-  );
-
-  const createDailyRecord = async () => {
-    resetErrorState();
-    logInfo(`minuts in the call: ${minutesUpdate}`);
-    logInfo(`errorMessage: ${errorMessage}`);
+  const createDailyRecord = async (url, minutesUpdate) => {
     try {
+      // Pasamos directamente los parámetros aquí.
       const isSuccessful = await performFetch({
         method: "POST",
-        data: { minutesUpdate: minutesUpdate }
+        data: { minutesUpdate }, // Pasamos el valor de minutesUpdate
+        url: url // Asegúrate de que la URL esté bien formateada y válida
       });
-      return isSuccessful;
+
+      // Si la operación fue exitosa, devolvemos el resultado.
+      if (isSuccessful) {
+        logInfo("DailyRecord successfully saved.");
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
-      setSuccess(false);
       const errMsg = "Failed to save the record.";
-      setErrorMessage(errMsg);
-      logError(errMsg);
+      logError(errMsg, error); // Logueamos el error, incluyendo la excepción.
       return false;
     }
   };
 
-  return { success, errorMessage, message, createDailyRecord };
+  return { error, createDailyRecord };
 };
 
 export default useSaveDailyRecords;
