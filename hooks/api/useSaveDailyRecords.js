@@ -17,8 +17,18 @@ const useSaveDailyRecords = () => {
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
 
   const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
-  const url = categoryId ? `/time-records/${categoryId}` : "/time-records";
 
+  if (!categoryId) {
+    logError("Error: Category ID is missing.");
+    return {
+      createDailyRecord: () => ({
+        success: false,
+        error: new Error("Category ID is missing")
+      })
+    };
+  }
+
+  const url = `/time-records/${categoryId}`;
   const { error, performFetch } = useFetch(url, async creationData => {
     if (creationData?.success) {
       logInfo("DailyRecord successfully saved.");
@@ -34,13 +44,6 @@ const useSaveDailyRecords = () => {
   }, [error]);
 
   const createDailyRecord = async () => {
-    // Validation for missing categoryId or minutesUpdate
-    if (!categoryId) {
-      const errMsg = "Error: Category ID is missing.";
-      logError(errMsg);
-      return { success: false, error: new Error(errMsg) };
-    }
-
     if (!minutesUpdate || minutesUpdate <= 0) {
       const errMsg = "Error: Minutes update is missing or invalid.";
       logError(errMsg);
