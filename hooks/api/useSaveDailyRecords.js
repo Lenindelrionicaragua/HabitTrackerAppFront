@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useFetch from "./useFetch";
 import { logInfo, logError } from "../../util/logging";
@@ -18,17 +18,18 @@ const useSaveDailyRecords = () => {
 
   const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
 
-  if (!categoryId) {
-    logError("Error: Category ID is missing.");
-    return {
-      createDailyRecord: () => ({
-        success: false,
-        error: new Error("Category ID is missing")
-      })
-    };
-  }
+  // Mantén el estado del URL
+  const [url, setUrl] = useState("/time-records"); // Establece un valor por defecto
 
-  const url = `/time-records/${categoryId}`;
+  useEffect(() => {
+    // Actualiza el URL solo cuando categoryId no sea null
+    if (categoryId !== null) {
+      const newUrl = `/time-records/${categoryId}`;
+      setUrl(newUrl);
+      logInfo(`URL updated: ${newUrl}`); // Log cuando el URL se reconstruya
+    }
+  }, [categoryId]); // Este efecto se dispara cada vez que categoryId cambia
+
   const { error, performFetch } = useFetch(url, async creationData => {
     if (creationData?.success) {
       logInfo("DailyRecord successfully saved.");
@@ -37,6 +38,8 @@ const useSaveDailyRecords = () => {
     return false;
   });
 
+  logInfo(`UseSaveDaily Url: ${url}`); // Este log inicial se ejecuta siempre que se renderiza el componente
+
   useEffect(() => {
     if (error) {
       logError(error);
@@ -44,12 +47,6 @@ const useSaveDailyRecords = () => {
   }, [error]);
 
   const createDailyRecord = async () => {
-    if (!minutesUpdate || minutesUpdate <= 0) {
-      const errMsg = "Error: Minutes update is missing or invalid.";
-      logError(errMsg);
-      return { success: false, error: new Error(errMsg) };
-    }
-
     try {
       const isSuccessful = await performFetch({
         method: "POST",

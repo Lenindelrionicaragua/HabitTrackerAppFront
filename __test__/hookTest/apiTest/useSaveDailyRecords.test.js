@@ -29,7 +29,7 @@ describe("useSaveDailyRecords.js Hook", () => {
 
     let response;
     await act(async () => {
-      response = await result.current.createDailyRecord();
+      response = await result.current.createDailyRecord(); // Asegúrate que este método no esté causando una actualización infinita
     });
 
     expect(response).toBe(true);
