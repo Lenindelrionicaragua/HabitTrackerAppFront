@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logInfo, logError } from "../util/logging";
 import {
@@ -25,36 +24,10 @@ function useSaveTimeRecords() {
   const { updateColors } = useUpdateCircleColors();
   const performReset = usePerformReset();
   const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
-  const { success, errorMessage, message, createDailyRecord } =
-    useSaveDailyRecords();
+  const { error, isLoading, createDailyRecord } = useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  const { green, red, skyBlue } = Colors;
-
-  useEffect(() => {
-    if (success) {
-      updateInfoText(
-        message || "Time saved successfully! Your activity has been recorded."
-      );
-    } else if (success === false) {
-      updateColors(red, red);
-      updateInfoText(
-        errorMessage || "Failed to save the record. Please try again."
-      );
-
-      setTimeout(() => {
-        clearTimeoutsAndMessage();
-        updateColors(skyBlue, skyBlue);
-      }, 3000);
-    }
-  }, [
-    success,
-    errorMessage,
-    message,
-    updateInfoText,
-    updateColors,
-    clearTimeoutsAndMessage
-  ]);
+  const { green, red } = Colors;
 
   const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
@@ -80,22 +53,27 @@ function useSaveTimeRecords() {
     dispatch(setButtonsDisabled(true));
 
     try {
-      const recordSaved = await createDailyRecord();
+      const { success, error } = await createDailyRecord();
 
-      if (recordSaved) {
+      if (success) {
         setTimeout(() => {
           if (!timeCompleted) {
             playAlarm(require("../assets/alarm_2.wav"));
           }
-
           performReset();
-        }, 6000);
+        }, 3000);
+      } else {
+        logError("Failed to save record.", error);
+        updateInfoText("Failed to save the record.");
+        updateColors(red, red);
+        return;
       }
-    } catch (error) {
-      updateInfoText("An error occurred while saving the record.");
+    } catch (err) {
+      logError("Unexpected error occurred.", err);
+      updateInfoText("Unexpected error occurred.");
+      updateColors(red, red);
     } finally {
       dispatch(setButtonsDisabled(false));
-      updateInfoText("Save process completed");
     }
   };
 

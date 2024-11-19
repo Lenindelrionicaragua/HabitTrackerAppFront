@@ -41,11 +41,11 @@ const useSaveDailyRecords = () => {
           headers: {
             "Content-Type": "application/json",
             ...(token ? { Authorization: `Bearer ${token}` } : {})
-          }
+          },
+          withCredentials: true
         }
       );
 
-      logInfo(`Request made to /time-records/${categoryId}`);
       logInfo(`Response Data: ${JSON.stringify(response.data)}`);
 
       if (response.data.success) {

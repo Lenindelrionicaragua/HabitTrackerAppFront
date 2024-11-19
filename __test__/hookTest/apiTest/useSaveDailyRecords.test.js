@@ -124,7 +124,6 @@ describe("useSaveDailyRecords Hook", () => {
       result.current.createDailyRecord();
     });
 
-    // Usamos waitFor de react-native para esperar el cambio de estado
     await waitFor(() => {
       expect(result.current.isLoading).toBe(true);
     });
