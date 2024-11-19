@@ -56,6 +56,7 @@ function useSaveTimeRecords() {
       const { success, error } = await createDailyRecord();
 
       if (success) {
+        updateInfoText("Time saved successfully");
         setTimeout(() => {
           if (!timeCompleted) {
             playAlarm(require("../assets/alarm_2.wav"));
