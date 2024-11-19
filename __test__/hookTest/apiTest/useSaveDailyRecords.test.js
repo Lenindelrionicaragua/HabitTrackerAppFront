@@ -1,14 +1,16 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
+import { waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "../../../reducers/rootReducer";
 import useSaveDailyRecords from "../../../hooks/api/useSaveDailyRecords";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logError, logInfo } from "../../../util/logging";
 
-// Mock axios and logging methods
 jest.mock("axios");
+jest.mock("@react-native-async-storage/async-storage");
 jest.mock("../../../util/logging", () => ({
   logInfo: jest.fn(),
   logError: jest.fn()
@@ -17,53 +19,120 @@ jest.mock("../../../util/logging", () => ({
 const store = createStore(rootReducer);
 const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
-describe("useSaveDailyRecords.js Hook", () => {
+describe("useSaveDailyRecords Hook", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Should return true and log success when the record is saved successfully", async () => {
-    axios.mockResolvedValueOnce({ data: { success: true } });
+  it("should handle successful record creation", async () => {
+    AsyncStorage.getItem.mockResolvedValue("mockedToken");
+    axios.post.mockResolvedValue({
+      data: { success: true, msg: "Record saved successfully" }
+    });
 
     const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
 
-    let response;
     await act(async () => {
-      response = await result.current.createDailyRecord(); // Asegúrate que este método no esté causando una actualización infinita
+      const response = await result.current.createDailyRecord();
+      expect(response).toEqual({
+        success: true,
+        data: { success: true, msg: "Record saved successfully" }
+      });
     });
 
-    expect(response).toBe(true);
-    expect(logInfo).toHaveBeenCalledWith("DailyRecord successfully saved.");
-    expect(logError).not.toHaveBeenCalled();
+    expect(result.current.error).toBeNull();
+    expect(result.current.isLoading).toBe(false);
+    expect(axios.post).toHaveBeenCalledTimes(1);
+    expect(logInfo).toHaveBeenCalledWith(
+      expect.stringContaining("Request made to /time-records/")
+    );
   });
 
-  it("Should return false and log an error when the record save fails", async () => {
-    axios.mockResolvedValueOnce({ data: { success: false } });
+  it("should handle failed record creation with server error", async () => {
+    const mockErrorResponse = {
+      response: { data: { success: false, msg: "Error saving record." } }
+    };
+
+    AsyncStorage.getItem.mockResolvedValue("mockedToken");
+    axios.post.mockRejectedValue(mockErrorResponse);
 
     const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
 
-    let response;
     await act(async () => {
-      response = await result.current.createDailyRecord();
+      const response = await result.current.createDailyRecord();
+      expect(response).toEqual({ success: false, error: expect.any(Error) });
     });
 
-    expect(response).toBe(false);
-    expect(logError).toHaveBeenCalledWith("Failed to save the record.");
-    expect(logInfo).not.toHaveBeenCalled();
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toBe("Error saving record.");
+    expect(result.current.isLoading).toBe(false);
+    expect(logError).toHaveBeenCalledWith(
+      "Failed to save the record",
+      expect.any(Error)
+    );
   });
 
-  it("Should handle and log axios errors correctly", async () => {
-    axios.mockRejectedValueOnce(new Error("Network Error"));
+  it("should handle network errors", async () => {
+    AsyncStorage.getItem.mockResolvedValue("mockedToken");
+    axios.post.mockRejectedValue(new Error("Network Error"));
 
     const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
 
-    let response;
     await act(async () => {
-      response = await result.current.createDailyRecord();
+      const response = await result.current.createDailyRecord();
+      expect(response).toEqual({ success: false, error: expect.any(Error) });
     });
 
-    expect(response).toEqual({ success: false, error: expect.any(Error) });
-    expect(logError).toHaveBeenCalledWith("Failed to save the record.");
-    expect(logInfo).not.toHaveBeenCalled();
+    expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.error.message).toBe("Network Error");
+    expect(result.current.isLoading).toBe(false);
+    expect(logError).toHaveBeenCalledWith(
+      "Failed to save the record",
+      expect.any(Error)
+    );
+  });
+
+  it("should handle missing token gracefully", async () => {
+    AsyncStorage.getItem.mockRejectedValue(new Error("Token not found"));
+    axios.post.mockResolvedValue({ data: { success: true } });
+
+    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
+
+    await act(async () => {
+      const response = await result.current.createDailyRecord();
+      expect(response).toEqual({ success: true, data: { success: true } });
+    });
+
+    expect(logError).toHaveBeenCalledWith(
+      "Failed to retrieve token",
+      expect.any(Error)
+    );
+    expect(axios.post).toHaveBeenCalled();
+  });
+
+  it("should set isLoading to true during the request", async () => {
+    axios.post.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(() => resolve({ data: { success: true } }), 100)
+        )
+    );
+
+    const { result } = renderHook(() => useSaveDailyRecords(), { wrapper });
+
+    act(() => {
+      result.current.createDailyRecord();
+    });
+
+    // Usamos waitFor de react-native para esperar el cambio de estado
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.createDailyRecord();
+    });
+
+    expect(result.current.isLoading).toBe(false);
   });
 });

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { logInfo, logError } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -56,8 +56,12 @@ const useSaveDailyRecords = () => {
         );
       }
     } catch (error) {
-      logError("Failed to save the record", error);
-      return { success: false, error };
+      const normalizedError = new Error(
+        error.response?.data?.msg || error.message || "Unknown error"
+      );
+      logError("Failed to save the record", normalizedError);
+      setError(normalizedError);
+      return { success: false, error: normalizedError };
     } finally {
       setIsLoading(false);
     }
