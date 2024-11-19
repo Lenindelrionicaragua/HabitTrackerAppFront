@@ -1,9 +1,13 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useFetch from "./useFetch";
 import { logInfo, logError } from "../../util/logging";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const useSaveDailyRecords = () => {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
@@ -18,53 +22,48 @@ const useSaveDailyRecords = () => {
 
   const minutesUpdate = Math.round((elapsedTime / 60) * 100) / 100;
 
-  // Mantén el estado del URL
-  const [url, setUrl] = useState("/time-records"); // Establece un valor por defecto
-
-  useEffect(() => {
-    // Actualiza el URL solo cuando categoryId no sea null
-    if (categoryId !== null) {
-      const newUrl = `/time-records/${categoryId}`;
-      setUrl(newUrl);
-      logInfo(`URL updated: ${newUrl}`); // Log cuando el URL se reconstruya
-    }
-  }, [categoryId]); // Este efecto se dispara cada vez que categoryId cambia
-
-  const { error, performFetch } = useFetch(url, async creationData => {
-    if (creationData?.success) {
-      logInfo("DailyRecord successfully saved.");
-      return true;
-    }
-    return false;
-  });
-
-  logInfo(`UseSaveDaily Url: ${url}`); // Este log inicial se ejecuta siempre que se renderiza el componente
-
-  useEffect(() => {
-    if (error) {
-      logError(error);
-    }
-  }, [error]);
-
   const createDailyRecord = async () => {
     try {
-      const isSuccessful = await performFetch({
-        method: "POST",
-        data: { minutesUpdate: minutesUpdate }
-      });
+      setIsLoading(true);
+      setError(null);
 
-      if (!isSuccessful) {
-        throw new Error("Failed to save the record.");
+      let token = null;
+      try {
+        token = await AsyncStorage.getItem("zenTimerToken");
+      } catch (storageError) {
+        logError("Failed to retrieve token", storageError);
       }
-      return isSuccessful;
+
+      const response = await axios.post(
+        `http://192.168.178.182:3000/api/time-records/${categoryId}`,
+        { minutesUpdate },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
+          }
+        }
+      );
+
+      logInfo(`Request made to /time-records/${categoryId}`);
+      logInfo(`Response Data: ${JSON.stringify(response.data)}`);
+
+      if (response.data.success) {
+        return { success: true, data: response.data };
+      } else {
+        throw new Error(
+          response.data.error || response.data.msg || "Unexpected server error"
+        );
+      }
     } catch (error) {
-      const errMsg = "Failed to save the record.";
-      logError(errMsg);
+      logError("Failed to save the record", error);
       return { success: false, error };
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { createDailyRecord };
+  return { createDailyRecord, isLoading, error };
 };
 
 export default useSaveDailyRecords;
