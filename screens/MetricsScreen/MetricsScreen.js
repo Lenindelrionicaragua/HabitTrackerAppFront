@@ -4,13 +4,37 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
   InnerContainer,
+  PageLogo,
   PageTitle,
-  SubTitle
+  SubTitle,
+  StyledButton,
+  ButtonText,
+  MsgBox,
+  Line,
+  FooterView,
+  FooterText,
+  Avatar
 } from "./MetricsScreenStyles";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
+import { PieChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
+import { logInfo, logError } from "../../util/logging";
+
+const screenWidth = Dimensions.get("window").width;
 
 const MetricsScreen = () => {
-  const { storedCredentials } = useContext(CredentialsContext);
+  const { storedCredentials, setStoredCredentials } =
+    useContext(CredentialsContext);
+
+  const {
+    name = "Zen User",
+    email = "serenity@gmail.com",
+    photoUrl
+  } = storedCredentials || {};
+
+  const AvatarImg = photoUrl
+    ? { uri: photoUrl }
+    : require("./../../assets/logoZenTimer2.png");
 
   // Get monthly stats from the custom hook
   const {
@@ -29,15 +53,19 @@ const MetricsScreen = () => {
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
         <PageTitle welcome={true} testID="metrics-title">
-          Metrics Page
+          Metrics
         </PageTitle>
 
         {storedCredentials ? (
           <>
-            <SubTitle welcome={true} testID="user-greeting">
-              Welcome back, {storedCredentials.name}!
+            <SubTitle welcome={true} testID="user-name">
+              {name || "Zen User"}
             </SubTitle>
-            <Text>Email: {storedCredentials.email}</Text>
+            <Avatar
+              resizeMode="cover"
+              source={AvatarImg}
+              testID="avatar-image"
+            />
           </>
         ) : (
           <SubTitle welcome={true} testID="page-development">
@@ -61,13 +89,9 @@ const MetricsScreen = () => {
         </View>
 
         {/* Fetch Habit Categories Button */}
-        <View style={{ marginVertical: 10 }}>
-          <Button
-            onPress={fetchMonthlyStats} // This triggers the stats fetch
-            title="Fetch Monthly Habit Categories"
-            disabled={isLoading}
-          />
-        </View>
+        <StyledButton onPress={fetchMonthlyStats} disabled={isLoading}>
+          <ButtonText>Fetch Monthly Habit Categories</ButtonText>
+        </StyledButton>
 
         {/* Loading, Error, and Categories Display */}
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
