@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logInfo, logError } from "../util/logging";
 import {
@@ -12,9 +13,11 @@ import { usePerformReset } from "./usePerformReset";
 import { formatTime } from "../util/formatTime";
 import { usePlayAlarm } from "./usePlayAlarm";
 import { Colors } from "../styles/AppStyles";
+import { CredentialsContext } from "../context/credentialsContext";
 
 function useSaveTimeRecords() {
   const dispatch = useDispatch();
+  const { storedCredentials } = useContext(CredentialsContext);
   // Store
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const firstRun = useSelector(state => state.firstRun.firstRun);
@@ -32,6 +35,11 @@ function useSaveTimeRecords() {
   const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
     dispatch(setIsRunning(false));
+
+    if (storedCredentials === null) {
+      updateInfoText("Log in to save your stats and track your progress.");
+      return;
+    }
 
     if (remainingTime === 0 && !firstRun) {
       updateInfoText("No time recorded. Please start the timer before saving.");
