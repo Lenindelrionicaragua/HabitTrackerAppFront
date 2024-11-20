@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
+import { roundAllValues } from "../../util/roundingUtils";
 
 // Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  const [roundedData, setRoundedData] = useState(null);
 
   const getCurrentMonthAndYear = () => {
     const date = new Date();
@@ -26,9 +28,11 @@ const useMonthlyStats = () => {
       if (receivedData.success) {
         setSuccess(true);
         setMessage("Monthly stats fetched successfully.");
+        const processedData = roundAllValues(receivedData);
+        setRoundedData(processedData);
         logInfo(
-          "Monthly stats fetched successfully.",
-          receivedData.categoryData
+          "Monthly stats fetched and rounded successfully.",
+          processedData
         );
       }
     }
@@ -48,15 +52,16 @@ const useMonthlyStats = () => {
     setSuccess(null);
     setMessage("");
     setErrorMessage("");
+    setRoundedData(null); // Clear previous data before fetching new
     performFetch();
   }, [performFetch]);
 
   return {
-    totalMinutes: data?.totalMinutes || 0,
-    categoryCount: data?.categoryCount || 0,
-    daysWithRecords: data?.daysWithRecords || 0,
-    totalDailyMinutes: data?.totalDailyMinutes || {},
-    categoryData: data?.categoryData || [],
+    totalMinutes: roundedData?.totalMinutes || 0,
+    categoryCount: roundedData?.categoryCount || 0,
+    daysWithRecords: roundedData?.daysWithRecords || 0,
+    totalDailyMinutes: roundedData?.totalDailyMinutes || {},
+    categoryData: roundedData?.categoryData || [],
     success,
     errorMessage,
     message,
