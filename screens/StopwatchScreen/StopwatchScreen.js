@@ -233,6 +233,7 @@ const StopwatchScreen = () => {
   const debouncedSaveTimeRecords = debounce(
     () => {
       if (!buttonsDisabled) {
+        pauseStopwatch();
         saveTimeRecords();
         handleButtonPress(9);
       }
