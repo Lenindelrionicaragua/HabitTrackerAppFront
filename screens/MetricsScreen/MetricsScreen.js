@@ -19,7 +19,7 @@ const MetricsScreen = () => {
     daysWithRecords,
     totalDailyMinutes,
     categoryData,
-    error,
+    errorMessage,
     isLoading,
     fetchMonthlyStats
   } = useMonthlyStats();
@@ -71,9 +71,9 @@ const MetricsScreen = () => {
 
         {/* Loading, Error, and Categories Display */}
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
-        {error && (
+        {errorMessage && (
           <Text style={{ color: "red" }}>
-            Error fetching categories: {error.message}
+            Log in to get access to your stats and track your progress.
           </Text>
         )}
 
