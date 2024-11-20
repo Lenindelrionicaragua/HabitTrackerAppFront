@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
 import { CredentialsContext } from "../../context/credentialsContext";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   StyledContainer,
   InnerContainer,
@@ -86,7 +85,14 @@ const MetricsScreen = () => {
           <Text>Total Minutes: {totalMinutes}</Text>
           <Text>Category Count: {categoryCount}</Text>
           <Text>Days with Records: {daysWithRecords}</Text>
-          <Text>Total Daily Minutes: {totalDailyMinutes}</Text>
+          <Text>
+            Total Daily Minutes:{" "}
+            {Object.keys(totalDailyMinutes).length > 0
+              ? Object.entries(totalDailyMinutes)
+                  .map(([date, minutes]) => `${date}: ${minutes}`)
+                  .join(", ")
+              : "No data available"}
+          </Text>
         </View>
 
         {/* Display categories if they exist */}

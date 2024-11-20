@@ -16,7 +16,7 @@ const useHabitCategories = storedCredentials => {
   );
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
   // Hook to create defaultCategories
-  const createCategories = useCreateDefaultCategories();
+  const { createCategories } = useCreateDefaultCategories();
 
   const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
     "/habit-categories",

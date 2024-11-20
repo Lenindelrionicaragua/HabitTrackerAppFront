@@ -7,6 +7,7 @@ import {
 } from "../actions/counterActions";
 import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
+import useSaveDailyRecords from "./api/useSaveDailyRecords";
 import { usePerformReset } from "./usePerformReset";
 import { formatTime } from "../util/formatTime";
 import { usePlayAlarm } from "./usePlayAlarm";
@@ -14,18 +15,21 @@ import { Colors } from "../styles/AppStyles";
 
 function useSaveTimeRecords() {
   const dispatch = useDispatch();
-  const performReset = usePerformReset();
-  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
+  // Store
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
+  // Hooks
   const { updateColors } = useUpdateCircleColors();
+  const performReset = usePerformReset();
+  const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
+  const { error, isLoading, createDailyRecord } = useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
-  const { green } = Colors;
+  const { green, red } = Colors;
 
-  const saveTimeRecords = () => {
+  const saveTimeRecords = async () => {
     clearTimeoutsAndMessage();
     dispatch(setIsRunning(false));
 
@@ -37,28 +41,41 @@ function useSaveTimeRecords() {
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
       logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
       logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
-      processSaveAndUpdateUI();
+      await processSaveAndUpdateUI();
       return;
     }
   };
 
-  const processSaveAndUpdateUI = () => {
+  const processSaveAndUpdateUI = async () => {
     dispatch(setSaveTimeButtonLabel("SAVING"));
-
     updateInfoText("Saving");
     updateColors(green, green);
     dispatch(setButtonsDisabled(true));
 
-    setTimeout(() => {
-      if (!timeCompleted) {
-        playAlarm(require("../assets/alarm_2.wav"));
-      }
+    try {
+      const { success, error } = await createDailyRecord();
 
-      performReset();
-      updateInfoText(
-        "Time saved successfully! Your activity has been recorded."
-      );
-    }, 6000);
+      if (success) {
+        updateInfoText("Time saved successfully");
+        setTimeout(() => {
+          if (!timeCompleted) {
+            playAlarm(require("../assets/alarm_2.wav"));
+          }
+          performReset();
+        }, 3000);
+      } else {
+        logError("Failed to save record.", error);
+        updateInfoText("Failed to save the record.");
+        updateColors(red, red);
+        return;
+      }
+    } catch (err) {
+      logError("Unexpected error occurred.", err);
+      updateInfoText("Unexpected error occurred.");
+      updateColors(red, red);
+    } finally {
+      dispatch(setButtonsDisabled(false));
+    }
   };
 
   return {

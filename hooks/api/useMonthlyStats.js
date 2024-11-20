@@ -1,9 +1,15 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
+import { roundAllValues } from "../../util/roundingUtils";
 
 // Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
+  const [success, setSuccess] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [roundedData, setRoundedData] = useState(null);
+
   const getCurrentMonthAndYear = () => {
     const date = new Date();
     return {
@@ -20,23 +26,45 @@ const useMonthlyStats = () => {
     url,
     receivedData => {
       if (receivedData.success) {
-        logInfo(receivedData.categoryData);
+        setSuccess(true);
+        setMessage("Monthly stats fetched successfully.");
+        const processedData = roundAllValues(receivedData);
+        setRoundedData(processedData);
+        logInfo(
+          "Monthly stats fetched and rounded successfully.",
+          processedData
+        );
       }
     }
   );
 
-  // Trigger fetch based on button click or other trigger
+  useEffect(() => {
+    if (error) {
+      setSuccess(false);
+      setErrorMessage(
+        error.message || "An unknown error occurred while fetching stats."
+      );
+      logError(`Error fetching monthly stats: ${error.message}`);
+    }
+  }, [error]);
+
   const fetchMonthlyStats = useCallback(() => {
+    setSuccess(null);
+    setMessage("");
+    setErrorMessage("");
+    setRoundedData(null); // Clear previous data before fetching new
     performFetch();
   }, [performFetch]);
 
   return {
-    totalMinutes: data?.totalMinutes || 0,
-    categoryCount: data?.categoryCount || 0,
-    daysWithRecords: data?.daysWithRecords || 0,
-    totalDailyMinutes: data?.totalDailyMinutes || 0,
-    categoryData: data?.categoryData || [],
-    error,
+    totalMinutes: roundedData?.totalMinutes || 0,
+    categoryCount: roundedData?.categoryCount || 0,
+    daysWithRecords: roundedData?.daysWithRecords || 0,
+    totalDailyMinutes: roundedData?.totalDailyMinutes || {},
+    categoryData: roundedData?.categoryData || [],
+    success,
+    errorMessage,
+    message,
     isLoading,
     fetchMonthlyStats,
     cancelFetch

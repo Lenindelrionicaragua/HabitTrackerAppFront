@@ -23,6 +23,15 @@ jest.mock("../../hooks/usePlayAlarm", () => ({
   }))
 }));
 
+jest.mock("../../hooks/api/useSaveDailyRecords", () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    createDailyRecord: jest.fn(() => Promise.resolve({ success: true })),
+    error: null,
+    isLoading: false
+  }))
+}));
+
 describe("useSaveTimeRecords", () => {
   let store;
   let dispatchSpy;
@@ -58,7 +67,7 @@ describe("useSaveTimeRecords", () => {
     jest.clearAllMocks();
   });
 
-  it("saveTimeRecords should call clearTimeoutsAndMessage, and setIsRunning to false, when the timer is running", () => {
+  it("saveTimeRecords should call clearTimeoutsAndMessage, and setIsRunning to false, when the timer is running", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -78,8 +87,8 @@ describe("useSaveTimeRecords", () => {
 
     const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
 
-    act(() => {
-      result.current.saveTimeRecords();
+    await act(async () => {
+      await result.current.saveTimeRecords();
     });
 
     expect(useInfoText().clearTimeoutsAndMessage).toHaveBeenCalled();
@@ -89,7 +98,7 @@ describe("useSaveTimeRecords", () => {
     });
   });
 
-  it("saveTimeRecords should call updateInfoText with the right arguments when the time is 0 and firstRun is false", () => {
+  it("saveTimeRecords should call updateInfoText with the right arguments when the time is 0 and firstRun is false", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -109,8 +118,8 @@ describe("useSaveTimeRecords", () => {
 
     const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
 
-    act(() => {
-      result.current.saveTimeRecords();
+    await act(async () => {
+      await result.current.saveTimeRecords();
     });
 
     expect(useInfoText().updateInfoText).toHaveBeenCalledWith(
@@ -118,7 +127,7 @@ describe("useSaveTimeRecords", () => {
     );
   });
 
-  it("saveTimeRecords should not call processSaveAndUpdateUI if remaining time is 0 and firstRun is false", () => {
+  it("saveTimeRecords should not call processSaveAndUpdateUI if remaining time is 0 and firstRun is false", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -138,14 +147,14 @@ describe("useSaveTimeRecords", () => {
 
     const { result } = renderHook(() => useSaveTimeRecords(), { wrapper });
 
-    act(() => {
-      result.current.saveTimeRecords();
+    await act(async () => {
+      await result.current.saveTimeRecords();
     });
 
     expect(performReset).not.toHaveBeenCalled();
   });
 
-  it("saveTimeRecords should call performReset if remaining time is greater than 0 and firstRun is true", () => {
+  it("saveTimeRecords should call performReset if remaining time is greater than 0 and firstRun is true", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -167,18 +176,20 @@ describe("useSaveTimeRecords", () => {
 
     usePerformReset.mockReturnValue(performReset);
 
-    act(() => {
-      result.current.saveTimeRecords();
+    await act(async () => {
+      await result.current.saveTimeRecords();
     });
 
     act(() => {
       jest.runAllTimers();
     });
-
+    expect(useInfoText().updateInfoText).toHaveBeenCalledWith(
+      "Time saved successfully"
+    );
     expect(performReset).toHaveBeenCalled();
   });
 
-  it("saveTimeRecords should not call performReset if time is not completed or remaining time is 0", () => {
+  it("saveTimeRecords should not call performReset if time is not completed or remaining time is 0", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -200,8 +211,8 @@ describe("useSaveTimeRecords", () => {
 
     usePerformReset.mockReturnValue(performReset);
 
-    act(() => {
-      result.current.saveTimeRecords();
+    await act(async () => {
+      await result.current.saveTimeRecords();
     });
 
     act(() => {
@@ -211,7 +222,7 @@ describe("useSaveTimeRecords", () => {
     expect(performReset).not.toHaveBeenCalled();
   });
 
-  it("processSaveAndUpdateUI should call performReset ", () => {
+  it("processSaveAndUpdateUI should call performReset", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -233,8 +244,8 @@ describe("useSaveTimeRecords", () => {
 
     usePerformReset.mockReturnValue(performReset);
 
-    act(() => {
-      result.current.processSaveAndUpdateUI();
+    await act(async () => {
+      await result.current.processSaveAndUpdateUI();
     });
 
     act(() => {
@@ -244,7 +255,7 @@ describe("useSaveTimeRecords", () => {
     expect(performReset).toHaveBeenCalled();
   });
 
-  it("processSaveAndUpdateUI should call playAlarm is time is not completed ", () => {
+  it("processSaveAndUpdateUI should call playAlarm if time is not completed", async () => {
     const initialState = {
       isRunning: { isRunning: true },
       saveTimeButtonLabel: { saveTimeButtonLabel: "SAVE-TIME" },
@@ -266,8 +277,8 @@ describe("useSaveTimeRecords", () => {
 
     usePerformReset.mockReturnValue(performReset);
 
-    act(() => {
-      result.current.processSaveAndUpdateUI();
+    await act(async () => {
+      await result.current.processSaveAndUpdateUI();
     });
 
     act(() => {
