@@ -55,7 +55,7 @@ const useMonthlyStats = () => {
     totalMinutes: data?.totalMinutes || 0,
     categoryCount: data?.categoryCount || 0,
     daysWithRecords: data?.daysWithRecords || 0,
-    totalDailyMinutes: data?.totalDailyMinutes || 0,
+    totalDailyMinutes: data?.totalDailyMinutes || {},
     categoryData: data?.categoryData || [],
     success,
     errorMessage,
