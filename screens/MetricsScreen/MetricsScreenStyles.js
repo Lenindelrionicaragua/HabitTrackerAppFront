@@ -41,7 +41,7 @@ export const StyledHeader = styled(View)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px 35px;
+  padding: 10px 45px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
@@ -73,7 +73,7 @@ export const AvatarContainer = styled(View)`
   box-shadow: none;
 `;
 
-export const IconContainer = styled(View)`
+export const IconContainer = styled(Pressable)`
   width: ${({ size }) => size || 50}px;
   height: ${({ size }) => size || 50}px;
   border-radius: ${({ size }) => (size || 50) / 2}px;
@@ -104,6 +104,8 @@ export const PageTitle = styled(Text)`
   font-size: 20px;
   text-align: center;
   font-weight: bold;
+  padding: 0px;
+  padding-bottom: 10px;
   color: ${black};
 `;
 

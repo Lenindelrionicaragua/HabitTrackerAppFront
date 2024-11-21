@@ -21,8 +21,23 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
+import { Colors } from "../../styles/AppStyles";
 
-const MetricsScreen = ({ showBackArrow = false, navigation }) => {
+const {
+  seaGreen,
+  white,
+  infoGrey,
+  infoWhite,
+  lightPink,
+  skyBlue,
+  darkGrey,
+  black,
+  yellow,
+  red,
+  green
+} = Colors;
+
+const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
 
   const {
@@ -33,7 +48,7 @@ const MetricsScreen = ({ showBackArrow = false, navigation }) => {
 
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
-    : require("./../../assets/logoZenTimer2.png");
+    : require("./../../assets/user-icon3.jpeg");
 
   // Get monthly stats from the custom hook
   const {
@@ -49,12 +64,6 @@ const MetricsScreen = ({ showBackArrow = false, navigation }) => {
 
   const upGradeToPremium = () => {
     logInfo("User want to upgrade to premium");
-  };
-
-  const handleBackPress = () => {
-    if (navigation && navigation.goBack) {
-      navigation.goBack();
-    }
   };
 
   return (
@@ -75,8 +84,8 @@ const MetricsScreen = ({ showBackArrow = false, navigation }) => {
             </PageTitle>
             <UpgradeButton onPress={upGradeToPremium} />
           </StyledTitleContainer>
-          <IconContainer>
-            <FontAwesome name="pie-chart" size={24} color="black" />
+          <IconContainer onPress={() => console.log("Pie chart icon clicked!")}>
+            <FontAwesome name="pie-chart" size={24} color={infoGrey} />
           </IconContainer>
         </StyledHeader>
 
