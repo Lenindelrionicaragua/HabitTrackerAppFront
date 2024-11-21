@@ -12,7 +12,9 @@ const {
   skyBlue,
   darkGrey,
   black,
-  yellow
+  yellow,
+  red,
+  green
 } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
@@ -32,17 +34,19 @@ export const InnerContainer = styled(View)`
   flex: 1;
   width: 100%;
   align-items: center;
-  justify-content: center;
 `;
 
 export const StyledHeader = styled(View)`
-  width: 90%;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 0;
-  background-color: ${white};
+  padding: 20px 30px;
+
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 4;
 `;
 
 export const Line = styled(View)`
@@ -53,7 +57,7 @@ export const Line = styled(View)`
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
-  elevation: 4;
+  elevation: 2;
 `;
 
 export const AvatarContainer = styled(View)`

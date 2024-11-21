@@ -21,7 +21,7 @@ import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
 
-const MetricsScreen = () => {
+const MetricsScreen = ({ showBackArrow = false, navigation }) => {
   const { storedCredentials } = useContext(CredentialsContext);
 
   const {
@@ -48,6 +48,12 @@ const MetricsScreen = () => {
 
   const upGradeToPremium = () => {
     logInfo("User want to upgrade to premium");
+  };
+
+  const handleBackPress = () => {
+    if (navigation && navigation.goBack) {
+      navigation.goBack();
+    }
   };
 
   return (

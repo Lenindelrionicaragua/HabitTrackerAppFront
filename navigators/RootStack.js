@@ -53,6 +53,7 @@ const RootStack = () => {
         <Stack.Screen
           name="MetricsScreen"
           component={MetricsScreen}
+          options={{ headerShown: false }}
           testID="metrics-screen"
         />
         <Stack.Screen
