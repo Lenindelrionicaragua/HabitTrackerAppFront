@@ -8,7 +8,6 @@ import {
   Platform
 } from "react-native";
 import { Colors } from "../../styles/AppStyles";
-import { SafeAreaView } from "react-native";
 
 const {
   seaGreen,

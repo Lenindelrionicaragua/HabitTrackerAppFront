@@ -4,27 +4,15 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
   InnerContainer,
-  PageLogo,
   PageTitle,
   SubTitle,
-  StyledButton,
-  ButtonText,
-  MsgBox,
   Line,
-  FooterView,
-  FooterText,
   Avatar
 } from "./MetricsScreenStyles";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
-import { PieChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
-import { logInfo, logError } from "../../util/logging";
-
-const screenWidth = Dimensions.get("window").width;
 
 const MetricsScreen = () => {
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
+  const { storedCredentials } = useContext(CredentialsContext);
 
   const {
     name = "Zen User",
@@ -52,20 +40,18 @@ const MetricsScreen = () => {
     <StyledContainer testID="metrics-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
+        <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
+        <Line testID="line" />
         <PageTitle welcome={true} testID="metrics-title">
-          Metrics
+          Metrics Page
         </PageTitle>
 
         {storedCredentials ? (
           <>
-            <SubTitle welcome={true} testID="user-name">
-              {name || "Zen User"}
+            <SubTitle welcome={true} testID="user-greeting">
+              Welcome back, {storedCredentials.name}!
             </SubTitle>
-            <Avatar
-              resizeMode="cover"
-              source={AvatarImg}
-              testID="avatar-image"
-            />
+            <Text>Email: {storedCredentials.email}</Text>
           </>
         ) : (
           <SubTitle welcome={true} testID="page-development">
@@ -89,9 +75,13 @@ const MetricsScreen = () => {
         </View>
 
         {/* Fetch Habit Categories Button */}
-        <StyledButton onPress={fetchMonthlyStats} disabled={isLoading}>
-          <ButtonText>Fetch Monthly Habit Categories</ButtonText>
-        </StyledButton>
+        <View style={{ marginVertical: 10 }}>
+          <Button
+            onPress={fetchMonthlyStats} // This triggers the stats fetch
+            title="Fetch Monthly Habit Categories"
+            disabled={isLoading}
+          />
+        </View>
 
         {/* Loading, Error, and Categories Display */}
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
