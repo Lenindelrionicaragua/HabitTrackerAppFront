@@ -7,11 +7,17 @@ import {
   PageTitle,
   SubTitle,
   StyledHeader,
+  InfoMessageContainer,
+  InfoMessage,
+  StyledButton,
+  ButtonText,
   Line,
   AvatarContainer,
   Avatar
 } from "./MetricsScreenStyles";
+import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
+import { logInfo } from "../../util/logging";
 
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
@@ -38,6 +44,10 @@ const MetricsScreen = () => {
     fetchMonthlyStats
   } = useMonthlyStats();
 
+  const upGradeToPremium = () => {
+    logInfo("User want to upgrade to premium");
+  };
+
   return (
     <StyledContainer testID="metrics-container">
       <StatusBar style="light" />
@@ -54,7 +64,9 @@ const MetricsScreen = () => {
             Habit Tracker
           </PageTitle>
         </StyledHeader>
-
+        <UpgradeButton onPress={upGradeToPremium}>
+          <ButtonText>Upgrade to Premium</ButtonText>
+        </UpgradeButton>
         <Line testID="line" />
         {storedCredentials ? (
           <>
@@ -69,29 +81,16 @@ const MetricsScreen = () => {
           </SubTitle>
         )}
 
-        {/* Add a notice about the app being in development */}
-        <View
-          style={{
-            padding: 10,
-            backgroundColor: "#f9f9f9",
-            borderRadius: 5,
-            marginBottom: 10
-          }}
-        >
-          <Text style={{ fontSize: 14, color: "gray", textAlign: "center" }}>
+        <InfoMessageContainer>
+          <InfoMessage>
             Please note: This part of the app is still under development. Some
             features may be incomplete or in testing.
-          </Text>
-        </View>
+          </InfoMessage>
+        </InfoMessageContainer>
 
-        {/* Fetch Habit Categories Button */}
-        <View style={{ marginVertical: 10 }}>
-          <Button
-            onPress={fetchMonthlyStats} // This triggers the stats fetch
-            title="Fetch Monthly Habit Categories"
-            disabled={isLoading}
-          />
-        </View>
+        <StyledButton onPress={fetchMonthlyStats}>
+          <ButtonText>Fetch Monthly Habit Categories</ButtonText>
+        </StyledButton>
 
         {/* Loading, Error, and Categories Display */}
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}

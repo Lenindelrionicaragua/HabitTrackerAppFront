@@ -38,12 +38,14 @@ export const AvatarContainer = styled(View)`
   width: ${({ size }) => size || 50}px;
   height: ${({ size }) => size || 50}px;
   border-radius: ${({ size }) => (size || 50) / 2}px;
-  overflow: hidden; /* Esto es clave */
+  border-width: ${({ size }) => (size || 50) * 0.04}px;
+  overflow: hidden;
   border-width: 2px;
   border-color: ${seaGreen};
   background-color: transparent;
   align-items: center;
   justify-content: center;
+  box-shadow: none;
 `;
 
 export const Avatar = styled(Image)`
@@ -82,11 +84,45 @@ export const SubTitle = styled(Text)`
   `}
 `;
 
+export const InfoMessageContainer = styled(View)`
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+`;
+
+export const InfoMessage = styled(Text)`
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: rgba(128, 128, 128, 0.6);
+`;
+
 export const StyledHeader = styled(View)`
   width: 90%;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+`;
+
+export const StyledButton = styled(Pressable)`
+  padding: 5px 15px;
+  background-color: ${skyBlue};
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  overflow: hidden;
+`;
+
+export const ButtonText = styled(Text)`
+  color: ${white};
+  font-size: 16px;
+  transition: color 0.3s ease-in-out;
+  ${({ isClicked }) =>
+    isClicked &&
+    `
+    color: yellow; 
+  `}
 `;
 
 export const Line = styled(View)`
