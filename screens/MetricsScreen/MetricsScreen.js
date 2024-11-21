@@ -14,6 +14,7 @@ import {
   ButtonText,
   Line,
   AvatarContainer,
+  IconContainer,
   Avatar
 } from "./MetricsScreenStyles";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -61,7 +62,7 @@ const MetricsScreen = ({ showBackArrow = false, navigation }) => {
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
         <StyledHeader>
-          <AvatarContainer size={50} testID="avatar-container">
+          <AvatarContainer testID="avatar-container">
             <Avatar
               resizeMode="cover"
               source={AvatarImg}
@@ -74,7 +75,9 @@ const MetricsScreen = ({ showBackArrow = false, navigation }) => {
             </PageTitle>
             <UpgradeButton onPress={upGradeToPremium} />
           </StyledTitleContainer>
-          <FontAwesome name="pie-chart" size={24} color="black" />
+          <IconContainer>
+            <FontAwesome name="pie-chart" size={24} color="black" />
+          </IconContainer>
         </StyledHeader>
 
         <Line testID="line" />

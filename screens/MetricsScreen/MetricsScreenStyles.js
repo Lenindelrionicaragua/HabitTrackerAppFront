@@ -41,8 +41,7 @@ export const StyledHeader = styled(View)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 20px 30px;
-
+  padding: 10px 35px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
@@ -61,13 +60,27 @@ export const Line = styled(View)`
 `;
 
 export const AvatarContainer = styled(View)`
+  width: ${({ size }) => size || 45}px;
+  height: ${({ size }) => size || 45}px;
+  border-radius: ${({ size }) => (size || 50) / 2}px;
+  border-width: ${({ size }) => (size || 50) * 0.04}px;
+  overflow: hidden;
+  border-width: 2px;
+  border-color: ${white};
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+`;
+
+export const IconContainer = styled(View)`
   width: ${({ size }) => size || 50}px;
   height: ${({ size }) => size || 50}px;
   border-radius: ${({ size }) => (size || 50) / 2}px;
   border-width: ${({ size }) => (size || 50) * 0.04}px;
   overflow: hidden;
   border-width: 2px;
-  border-color: ${white};
+  border-color: transparent;
   background-color: transparent;
   align-items: center;
   justify-content: center;
