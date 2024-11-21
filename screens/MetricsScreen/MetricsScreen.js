@@ -6,7 +6,9 @@ import {
   InnerContainer,
   PageTitle,
   SubTitle,
+  StyledHeader,
   Line,
+  AvatarContainer,
   Avatar
 } from "./MetricsScreenStyles";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
@@ -40,12 +42,20 @@ const MetricsScreen = () => {
     <StyledContainer testID="metrics-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
-        <Line testID="line" />
-        <PageTitle welcome={true} testID="metrics-title">
-          Metrics Page
-        </PageTitle>
+        <StyledHeader>
+          <AvatarContainer size={50} testID="avatar-container">
+            <Avatar
+              resizeMode="cover"
+              source={AvatarImg}
+              testID="avatar-metrics-image"
+            />
+          </AvatarContainer>
+          <PageTitle welcome={true} testID="metrics-title">
+            Habit Tracker
+          </PageTitle>
+        </StyledHeader>
 
+        <Line testID="line" />
         {storedCredentials ? (
           <>
             <SubTitle welcome={true} testID="user-greeting">

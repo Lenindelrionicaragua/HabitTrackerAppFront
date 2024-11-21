@@ -1,14 +1,30 @@
 import styled from "styled-components/native";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { seaGreen, white, infoWhite, lightPink, darkGrey, black } = Colors;
+const {
+  seaGreen,
+  white,
+  infoGrey,
+  infoWhite,
+  lightPink,
+  skyBlue,
+  darkGrey,
+  black
+} = Colors;
+
+const containerHeight = Platform.OS === "web" ? "85%" : "90%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
+  width: ${containerWidth};
+  height: ${containerHeight};
   background-color: ${darkGrey};
-  width: 100%;
+  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const InnerContainer = styled(View)`
@@ -18,30 +34,27 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
-export const MetricsContainer = styled(InnerContainer)`
-  padding: 25px;
-  padding-top: 10px;
+export const AvatarContainer = styled(View)`
+  width: ${({ size }) => size || 50}px;
+  height: ${({ size }) => size || 50}px;
+  border-radius: ${({ size }) => (size || 50) / 2}px;
+  overflow: hidden; /* Esto es clave */
+  border-width: 2px;
+  border-color: ${seaGreen};
+  background-color: transparent;
+  align-items: center;
   justify-content: center;
 `;
 
 export const Avatar = styled(Image)`
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border-radius: 50px;
-  border-width: 2px;
-  border-color: ${lightPink};
-  margin-bottom: 10px;
-  margin-top: 10px;
-`;
-
-export const MetricsImage = styled(Image)`
-  height: 50%;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: transparent;
 `;
 
 export const PageTitle = styled(Text)`
-  font-size: 30px;
+  font-size: 20px;
   text-align: center;
   font-weight: bold;
   color: ${black};
@@ -50,7 +63,7 @@ export const PageTitle = styled(Text)`
   ${props =>
     props.welcome &&
     `
-    font-size: 35px;
+    font-size: 20px;
   `}
 `;
 
@@ -69,8 +82,11 @@ export const SubTitle = styled(Text)`
   `}
 `;
 
-export const StyledFormArea = styled(View)`
+export const StyledHeader = styled(View)`
   width: 90%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export const Line = styled(View)`
