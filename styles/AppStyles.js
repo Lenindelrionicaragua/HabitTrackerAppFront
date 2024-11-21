@@ -8,5 +8,7 @@ export const Colors = {
   skyBlue: "#5cbcfc",
   lightGreen: "#6c747c",
   green: "#0FF4C6",
-  red: "#FF0000"
+  red: "#FF0000",
+  orange: "#FFA500",
+  yellow: "#FFD700"
 };

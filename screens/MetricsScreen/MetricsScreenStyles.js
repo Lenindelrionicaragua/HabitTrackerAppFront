@@ -11,7 +11,8 @@ const {
   lightPink,
   skyBlue,
   darkGrey,
-  black
+  black,
+  yellow
 } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
@@ -34,6 +35,27 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
+export const StyledHeader = styled(View)`
+  width: 90%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  background-color: ${white};
+`;
+
+export const Line = styled(View)`
+  height: 1px;
+  width: 100%;
+  background-color: ${white};
+  margin-vertical: 10px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 4;
+`;
+
 export const AvatarContainer = styled(View)`
   width: ${({ size }) => size || 50}px;
   height: ${({ size }) => size || 50}px;
@@ -41,7 +63,7 @@ export const AvatarContainer = styled(View)`
   border-width: ${({ size }) => (size || 50) * 0.04}px;
   overflow: hidden;
   border-width: 2px;
-  border-color: ${seaGreen};
+  border-color: ${white};
   background-color: transparent;
   align-items: center;
   justify-content: center;
@@ -55,18 +77,17 @@ export const Avatar = styled(Image)`
   background-color: transparent;
 `;
 
+export const StyledTitleContainer = styled(View)`
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const PageTitle = styled(Text)`
   font-size: 20px;
   text-align: center;
   font-weight: bold;
   color: ${black};
-  padding: 10px;
-
-  ${props =>
-    props.welcome &&
-    `
-    font-size: 20px;
-  `}
 `;
 
 export const SubTitle = styled(Text)`
@@ -98,13 +119,6 @@ export const InfoMessage = styled(Text)`
   color: rgba(128, 128, 128, 0.6);
 `;
 
-export const StyledHeader = styled(View)`
-  width: 90%;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
 export const StyledButton = styled(Pressable)`
   padding: 5px 15px;
   background-color: ${skyBlue};
@@ -121,13 +135,6 @@ export const ButtonText = styled(Text)`
   ${({ isClicked }) =>
     isClicked &&
     `
-    color: yellow; 
+    color: ${black};
   `}
-`;
-
-export const Line = styled(View)`
-  height: 1px;
-  width: 100%;
-  background-color: ${white};
-  margin-vertical: 10px;
 `;

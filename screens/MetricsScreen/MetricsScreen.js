@@ -6,6 +6,7 @@ import {
   InnerContainer,
   PageTitle,
   SubTitle,
+  StyledTitleContainer,
   StyledHeader,
   InfoMessageContainer,
   InfoMessage,
@@ -15,6 +16,7 @@ import {
   AvatarContainer,
   Avatar
 } from "./MetricsScreenStyles";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
@@ -60,13 +62,15 @@ const MetricsScreen = () => {
               testID="avatar-metrics-image"
             />
           </AvatarContainer>
-          <PageTitle welcome={true} testID="metrics-title">
-            Habit Tracker
-          </PageTitle>
+          <StyledTitleContainer>
+            <PageTitle welcome={true} testID="metrics-title">
+              Habit Tracker
+            </PageTitle>
+            <UpgradeButton onPress={upGradeToPremium} />
+          </StyledTitleContainer>
+          <FontAwesome name="pie-chart" size={24} color="black" />
         </StyledHeader>
-        <UpgradeButton onPress={upGradeToPremium}>
-          <ButtonText>Upgrade to Premium</ButtonText>
-        </UpgradeButton>
+
         <Line testID="line" />
         {storedCredentials ? (
           <>
