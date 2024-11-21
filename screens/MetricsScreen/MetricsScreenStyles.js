@@ -138,6 +138,7 @@ export const InfoMessage = styled(Text)`
 
 export const StyledButton = styled(Pressable)`
   padding: 5px 15px;
+  flex-direction: row;
   background-color: ${skyBlue};
   justify-content: center;
   align-items: center;
@@ -154,4 +155,8 @@ export const ButtonText = styled(Text)`
     `
     color: ${black};
   `}
+`;
+
+export const RightIcon = styled(Pressable)`
+  padding-left: 10px;
 `;

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {
   StyledButton,
-  ButtonText
+  ButtonText,
+  RightIcon
 } from "../../screens/MetricsScreen/MetricsScreenStyles";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
@@ -17,7 +18,9 @@ const UpgradeButton = ({ onPress }) => {
   return (
     <StyledButton onPress={handlePress}>
       <ButtonText isClicked={isClicked}>Upgrade to Premium</ButtonText>
-      <FontAwesome5 name="chess-queen" size={24} color="gold" />
+      <RightIcon>
+        <FontAwesome5 name="chess-queen" size={20} color="gold" />
+      </RightIcon>
     </StyledButton>
   );
 };
