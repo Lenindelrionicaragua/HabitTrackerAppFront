@@ -22,6 +22,7 @@ import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
 import { Colors } from "../../styles/AppStyles";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const {
   seaGreen,
@@ -48,7 +49,7 @@ const MetricsScreen = () => {
 
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
-    : require("./../../assets/user-icon3.jpeg");
+    : require("./../../assets/user.png");
 
   // Get monthly stats from the custom hook
   const {
@@ -77,6 +78,7 @@ const MetricsScreen = () => {
               source={AvatarImg}
               testID="avatar-metrics-image"
             />
+            {/* <FontAwesome5 name="user" size={24} color="black" /> */}
           </AvatarContainer>
           <StyledTitleContainer>
             <PageTitle welcome={true} testID="metrics-title">
@@ -85,7 +87,7 @@ const MetricsScreen = () => {
             <UpgradeButton onPress={upGradeToPremium} />
           </StyledTitleContainer>
           <IconContainer onPress={() => console.log("Pie chart icon clicked!")}>
-            <FontAwesome name="pie-chart" size={24} color={infoGrey} />
+            <FontAwesome name="pie-chart" size={34} color={infoGrey} />
           </IconContainer>
         </StyledHeader>
 

@@ -19,6 +19,7 @@ const {
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
+const StyledButtonWidth = Platform.OS === "web" ? "40%" : "90%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
@@ -139,6 +140,7 @@ export const InfoMessage = styled(Text)`
 `;
 
 export const StyledButton = styled(Pressable)`
+  width: ${StyledButtonWidth};
   padding: 5px 15px;
   flex-direction: row;
   background-color: ${skyBlue};
