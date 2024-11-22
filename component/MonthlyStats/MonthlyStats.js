@@ -2,16 +2,19 @@ import React from "react";
 import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import {
+  MonthlyStatsContainer,
   SubTitle,
-  MonthlyStatsContainer
-} from "../../screens/MetricsScreen/MetricsScreenStyles";
+  InfoText
+} from "../../component/MonthlyStats/MonthlyStatsStyles";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
 
-const { white, black, orange, lightPink, skyBlue, yellow, red, green } = Colors;
+const { white, black } = Colors;
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 const screenWidth = Dimensions.get("window").width;
+
+// const containerWidth = Platform.OS === "web" ? "400px" : "400px";
 
 const MonthlyStats = () => {
   const chartData = [
@@ -80,8 +83,9 @@ const MonthlyStats = () => {
   } = useMonthlyStats();
 
   return (
-    <MonthlyStatsContainer style={{ marginTop: 20 }}>
+    <MonthlyStatsContainer>
       <SubTitle>Total Minutes</SubTitle>
+      <InfoText>Hola estamos vivos un gusto y un placer</InfoText>
       <PieChart
         data={chartData}
         width={screenWidth}

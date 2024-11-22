@@ -5,13 +5,8 @@ import {
   StyledContainer,
   InnerContainer,
   PageTitle,
-  SubTitle,
   StyledTitleContainer,
   StyledHeader,
-  InfoMessageContainer,
-  InfoMessage,
-  StyledButton,
-  ButtonText,
   Line,
   AvatarContainer,
   IconContainer,
@@ -70,12 +65,6 @@ const MetricsScreen = () => {
 
         <Line testID="line" />
 
-        <InfoMessageContainer>
-          <InfoMessage>
-            Please note: This part of the app is still under development. Some
-            features may be incomplete or in testing.
-          </InfoMessage>
-        </InfoMessageContainer>
         <MonthlyStats />
       </InnerContainer>
     </StyledContainer>
