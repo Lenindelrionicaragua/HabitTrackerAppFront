@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
+import { StatusBar } from "react-native";
 import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
@@ -15,14 +15,11 @@ import {
   Line,
   AvatarContainer,
   IconContainer,
-  Avatar,
-  MonthlyStatsContainer
+  Avatar
 } from "./MetricsScreenStyles";
-import { PieChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
+import MonthlyStats from "../../component/MonthlyStats/MonthlyStats";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
-import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
 import { Colors } from "../../styles/AppStyles";
 
@@ -41,8 +38,6 @@ const {
   orange
 } = Colors;
 
-const screenWidth = Dimensions.get("window").width;
-
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
 
@@ -57,63 +52,6 @@ const MetricsScreen = () => {
   //   : require("./../../assets/user.png");
 
   const AvatarImg = require("./../../assets/user.png");
-
-  const chartData = [
-    {
-      name: "Work",
-      population: 25,
-      color: orange,
-      legendFontColor: black,
-      legendFontSize: 12
-    },
-    {
-      name: "Family time",
-      population: 20,
-      color: lightPink,
-      legendFontColor: black,
-      legendFontSize: 12
-    },
-    {
-      name: "Exercise",
-      population: 15,
-      color: skyBlue,
-      legendFontColor: black,
-      legendFontSize: 12
-    },
-    {
-      name: "Screen-free",
-      population: 10,
-      color: yellow,
-      legendFontColor: black,
-      legendFontSize: 12
-    },
-    {
-      name: "Rest",
-      population: 20,
-      color: red,
-      legendFontColor: black,
-      legendFontSize: 12
-    },
-    {
-      name: "Study",
-      population: 10,
-      color: green,
-      legendFontColor: black,
-      legendFontSize: 12
-    }
-  ];
-
-  // Get monthly stats from the custom hook
-  const {
-    totalMinutes,
-    categoryCount,
-    daysWithRecords,
-    totalDailyMinutes,
-    categoryData,
-    errorMessage,
-    isLoading,
-    fetchMonthlyStats
-  } = useMonthlyStats();
 
   const upGradeToPremium = () => {
     logInfo("User want to upgrade to premium");
@@ -150,25 +88,7 @@ const MetricsScreen = () => {
             features may be incomplete or in testing.
           </InfoMessage>
         </InfoMessageContainer>
-        <MonthlyStatsContainer style={{ marginTop: 20 }}>
-          <SubTitle>Total Minuten</SubTitle>
-          <PieChart
-            data={chartData}
-            width={screenWidth}
-            height={220}
-            chartConfig={{
-              backgroundColor: white,
-              backgroundGradientFrom: white,
-              backgroundGradientTo: white,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
-            }}
-            accessor="population"
-            backgroundColor="transparent"
-            paddingLeft="15"
-            absolute
-          />
-        </MonthlyStatsContainer>
+        <MonthlyStats />
       </InnerContainer>
     </StyledContainer>
   );

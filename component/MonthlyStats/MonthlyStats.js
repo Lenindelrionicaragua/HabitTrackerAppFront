@@ -5,6 +5,7 @@ import {
   SubTitle,
   MonthlyStatsContainer
 } from "../../screens/MetricsScreen/MetricsScreenStyles";
+import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { Colors } from "../../styles/AppStyles";
 
 const { white, black, orange, lightPink, skyBlue, yellow, red, green } = Colors;
@@ -56,6 +57,18 @@ const MonthlyStats = () => {
       legendFontSize: 12
     }
   ];
+
+  // Get monthly stats from the custom hook
+  const {
+    totalMinutes,
+    categoryCount,
+    daysWithRecords,
+    totalDailyMinutes,
+    categoryData,
+    errorMessage,
+    isLoading,
+    fetchMonthlyStats
+  } = useMonthlyStats();
 
   return (
     <MonthlyStatsContainer style={{ marginTop: 20 }}>
