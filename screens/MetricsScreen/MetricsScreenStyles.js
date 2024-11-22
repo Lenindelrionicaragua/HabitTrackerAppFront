@@ -110,20 +110,20 @@ export const PageTitle = styled(Text)`
   color: ${black};
 `;
 
-export const SubTitle = styled(Text)`
-  font-size: 15px;
-  padding: 10px;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: ${black};
-`;
-
 export const InfoMessageContainer = styled(View)`
   padding: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
   margin-bottom: 10px;
+`;
+
+export const SubTitle = styled(Text)`
+  width: 90%;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px 5px;
+  color: ${black};
 `;
 
 export const InfoMessage = styled(Text)`

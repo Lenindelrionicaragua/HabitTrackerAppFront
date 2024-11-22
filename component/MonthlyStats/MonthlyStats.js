@@ -84,8 +84,9 @@ const MonthlyStats = () => {
 
   return (
     <MonthlyStatsContainer>
-      <SubTitle>Total Minutes</SubTitle>
-      <InfoText>Hola estamos vivos un gusto y un placer</InfoText>
+      <SubTitle>This Month</SubTitle>
+      <InfoText>Total Minutes: 1,400 | Daily Average: 40</InfoText>
+
       <PieChart
         data={chartData}
         width={screenWidth}

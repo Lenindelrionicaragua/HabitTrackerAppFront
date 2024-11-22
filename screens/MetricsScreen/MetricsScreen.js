@@ -5,8 +5,10 @@ import {
   StyledContainer,
   InnerContainer,
   PageTitle,
+  SubTitle,
   StyledTitleContainer,
   StyledHeader,
+  InfoMessageContainer,
   Line,
   AvatarContainer,
   IconContainer,
@@ -64,6 +66,9 @@ const MetricsScreen = () => {
         </StyledHeader>
 
         <Line testID="line" />
+        <SubTitle welcome={true} testID="metrics-title">
+          This Month
+        </SubTitle>
 
         <MonthlyStats />
       </InnerContainer>
