@@ -51,9 +51,11 @@ const MetricsScreen = () => {
     photoUrl
   } = storedCredentials || {};
 
-  const AvatarImg = photoUrl
-    ? { uri: photoUrl }
-    : require("./../../assets/user.png");
+  // const AvatarImg = photoUrl
+  //   ? { uri: photoUrl }
+  //   : require("./../../assets/user.png");
+
+  const AvatarImg = require("./../../assets/user.png");
 
   const chartData = [
     {
@@ -99,7 +101,6 @@ const MetricsScreen = () => {
               source={AvatarImg}
               testID="avatar-metrics-image"
             />
-            {/* <FontAwesome5 name="user" size={24} color="black" /> */}
           </AvatarContainer>
           <StyledTitleContainer>
             <PageTitle welcome={true} testID="metrics-title">
@@ -113,18 +114,6 @@ const MetricsScreen = () => {
         </StyledHeader>
 
         <Line testID="line" />
-        {storedCredentials ? (
-          <>
-            <SubTitle welcome={true} testID="user-greeting">
-              Welcome back, {storedCredentials.name}!
-            </SubTitle>
-            <Text>Email: {storedCredentials.email}</Text>
-          </>
-        ) : (
-          <SubTitle welcome={true} testID="page-development">
-            No credentials found. Please log in.
-          </SubTitle>
-        )}
 
         <InfoMessageContainer>
           <InfoMessage>
@@ -132,21 +121,8 @@ const MetricsScreen = () => {
             features may be incomplete or in testing.
           </InfoMessage>
         </InfoMessageContainer>
-
-        <StyledButton onPress={fetchMonthlyStats}>
-          <ButtonText>Fetch Monthly Habit Categories</ButtonText>
-        </StyledButton>
-
-        {/* Loading, Error, and Categories Display */}
-        {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
-        {errorMessage && (
-          <Text style={{ color: "red" }}>
-            Log in to get access to your stats and track your progress.
-          </Text>
-        )}
-        {/* PieChart Component */}
         <MonthlyStatsContainer style={{ marginTop: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Statistics</Text>
+          <SubTitle>Statistics</SubTitle>
           <PieChart
             data={chartData}
             width={screenWidth}

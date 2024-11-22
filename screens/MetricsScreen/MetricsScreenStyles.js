@@ -112,17 +112,11 @@ export const PageTitle = styled(Text)`
 
 export const SubTitle = styled(Text)`
   font-size: 15px;
+  padding: 10px;
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${infoWhite};
-
-  ${props =>
-    props.welcome &&
-    `
-    margin-bottom: 5px;
-    font-weight: normal;
-  `}
+  color: ${black};
 `;
 
 export const InfoMessageContainer = styled(View)`
@@ -166,6 +160,8 @@ export const RightIcon = styled(Pressable)`
 `;
 
 export const MonthlyStatsContainer = styled(View)`
+  width: 90%;
+  border-radius: 10px;
   background-color: ${white};
   margin-vertical: 10px;
   shadow-color: ${black};
