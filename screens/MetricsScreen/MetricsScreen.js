@@ -37,7 +37,8 @@ const {
   black,
   yellow,
   red,
-  green
+  green,
+  orange
 } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
@@ -59,16 +60,44 @@ const MetricsScreen = () => {
 
   const chartData = [
     {
-      name: "Example 1",
-      population: 40,
-      color: green,
+      name: "Work",
+      population: 25,
+      color: orange,
       legendFontColor: black,
       legendFontSize: 12
     },
     {
-      name: "Example 2",
-      population: 60,
+      name: "Family time",
+      population: 20,
+      color: lightPink,
+      legendFontColor: black,
+      legendFontSize: 12
+    },
+    {
+      name: "Exercise",
+      population: 15,
       color: skyBlue,
+      legendFontColor: black,
+      legendFontSize: 12
+    },
+    {
+      name: "Screen-free",
+      population: 10,
+      color: yellow,
+      legendFontColor: black,
+      legendFontSize: 12
+    },
+    {
+      name: "Rest",
+      population: 20,
+      color: red,
+      legendFontColor: black,
+      legendFontSize: 12
+    },
+    {
+      name: "Study",
+      population: 10,
+      color: green,
       legendFontColor: black,
       legendFontSize: 12
     }
@@ -122,7 +151,7 @@ const MetricsScreen = () => {
           </InfoMessage>
         </InfoMessageContainer>
         <MonthlyStatsContainer style={{ marginTop: 20 }}>
-          <SubTitle>Statistics</SubTitle>
+          <SubTitle>Total Minuten</SubTitle>
           <PieChart
             data={chartData}
             width={screenWidth}
