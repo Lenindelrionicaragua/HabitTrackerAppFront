@@ -15,14 +15,16 @@ import {
   Line,
   AvatarContainer,
   IconContainer,
-  Avatar
+  Avatar,
+  MonthlyStatsContainer
 } from "./MetricsScreenStyles";
+import { PieChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { logInfo } from "../../util/logging";
 import { Colors } from "../../styles/AppStyles";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const {
   seaGreen,
@@ -38,6 +40,8 @@ const {
   green
 } = Colors;
 
+const screenWidth = Dimensions.get("window").width;
+
 const MetricsScreen = () => {
   const { storedCredentials } = useContext(CredentialsContext);
 
@@ -50,6 +54,23 @@ const MetricsScreen = () => {
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
     : require("./../../assets/user.png");
+
+  const chartData = [
+    {
+      name: "Example 1",
+      population: 40,
+      color: green,
+      legendFontColor: black,
+      legendFontSize: 12
+    },
+    {
+      name: "Example 2",
+      population: 60,
+      color: skyBlue,
+      legendFontColor: black,
+      legendFontSize: 12
+    }
+  ];
 
   // Get monthly stats from the custom hook
   const {
@@ -123,39 +144,26 @@ const MetricsScreen = () => {
             Log in to get access to your stats and track your progress.
           </Text>
         )}
-
-        {/* Displaying the overall stats */}
-        <View style={{ marginTop: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            Monthly Stats:
-          </Text>
-          <Text>Total Minutes: {totalMinutes}</Text>
-          <Text>Category Count: {categoryCount}</Text>
-          <Text>Days with Records: {daysWithRecords}</Text>
-          <Text>
-            Total Daily Minutes:{" "}
-            {Object.keys(totalDailyMinutes).length > 0
-              ? Object.entries(totalDailyMinutes)
-                  .map(([date, minutes]) => `${date}: ${minutes}`)
-                  .join(", ")
-              : "No data available"}
-          </Text>
-        </View>
-
-        {/* Display categories if they exist */}
-        {categoryData.length > 0 && (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              Categories:
-            </Text>
-            {categoryData.map((category, index) => (
-              <Text key={index} style={{ paddingVertical: 5 }}>
-                - {category.name}: {category.totalMinutes} minutes (
-                {category.percentage}%)
-              </Text>
-            ))}
-          </View>
-        )}
+        {/* PieChart Component */}
+        <MonthlyStatsContainer style={{ marginTop: 20 }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Statistics</Text>
+          <PieChart
+            data={chartData}
+            width={screenWidth}
+            height={220}
+            chartConfig={{
+              backgroundColor: white,
+              backgroundGradientFrom: white,
+              backgroundGradientTo: white,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
+        </MonthlyStatsContainer>
       </InnerContainer>
     </StyledContainer>
   );
