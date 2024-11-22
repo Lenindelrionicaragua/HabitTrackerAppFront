@@ -12,3 +12,13 @@ export const Colors = {
   orange: "#FFA500" /* New orange color */,
   yellow: "#FFD700"
 };
+
+export const MonthlyStatsColors = {
+  color1: "#fb105b",
+  color2: "#ff6543",
+  color3: "#ad2bd5",
+  color4: "#ff9c97",
+  color5: "#ffe181",
+  color6: "#554865",
+  color7: "#058789"
+};

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { StatusBar } from "react-native";
-import { CredentialsContext } from "../../context/credentialsContext";
+// import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
   InnerContainer,
@@ -39,18 +39,6 @@ const {
 } = Colors;
 
 const MetricsScreen = () => {
-  const { storedCredentials } = useContext(CredentialsContext);
-
-  const {
-    name = "Zen User",
-    email = "serenity@gmail.com",
-    photoUrl
-  } = storedCredentials || {};
-
-  // const AvatarImg = photoUrl
-  //   ? { uri: photoUrl }
-  //   : require("./../../assets/user.png");
-
   const AvatarImg = require("./../../assets/user.png");
 
   const upGradeToPremium = () => {
