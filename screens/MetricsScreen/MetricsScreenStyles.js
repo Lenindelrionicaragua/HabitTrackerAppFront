@@ -159,13 +159,13 @@ export const RightIcon = styled(Pressable)`
   padding-left: 10px;
 `;
 
-export const MonthlyStatsContainer = styled(View)`
-  width: 90%;
-  border-radius: 10px;
-  background-color: ${white};
-  margin-vertical: 10px;
-  shadow-color: ${black};
-  shadow-opacity: 0.5;
-  shadow-radius: 4px;
-  elevation: 2;
-`;
+// export const MonthlyStatsContainer = styled(View)`
+//   width: 90%;
+//   border-radius: 10px;
+//   background-color: ${white};
+//   margin-vertical: 10px;
+//   shadow-color: ${black};
+//   shadow-opacity: 0.5;
+//   shadow-radius: 4px;
+//   elevation: 2;
+// `;
