@@ -200,6 +200,7 @@ const StopwatchScreen = () => {
   const debouncedResetStopwatch = debounce(
     () => {
       if (!buttonsDisabled) {
+        pauseStopwatch();
         resetStopwatch();
         handleButtonPress(6);
       }
