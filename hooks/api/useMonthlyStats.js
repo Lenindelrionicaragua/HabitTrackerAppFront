@@ -56,11 +56,23 @@ const useMonthlyStats = () => {
     performFetch();
   }, [performFetch]);
 
-  logInfo(`Monthly Stats: ${JSON.stringify(data)}`);
-
   const totalDailyMinutes = roundedData?.totalDailyMinutes || {};
-
   const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
+
+  logInfo(
+    `Monthly Stats:: ${JSON.stringify(
+      {
+        success: true,
+        totalMinutes: roundedData?.totalMinutes || 0,
+        categoryCount: roundedData?.categoryCount || 0,
+        daysWithRecords: roundedData?.daysWithRecords || 0,
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes,
+        categoryData: roundedData?.categoryData || []
+      },
+      null,
+      2
+    )}`
+  );
 
   return {
     totalMinutes: roundedData?.totalMinutes || 0,

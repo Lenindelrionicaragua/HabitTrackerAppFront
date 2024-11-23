@@ -4,6 +4,7 @@
  * @param {number} decimals - Number of decimals (default is 2).
  * @returns {number} - Rounded number.
  */
+
 const roundTo = (value, decimals = 2) => {
   const factor = Math.pow(10, decimals);
   return Math.round(value * factor) / factor;
