@@ -15,6 +15,7 @@ const roundTo = (value, decimals = 2) => {
  * @param {number} decimals - Number of decimals (default is 2).
  * @returns {object} - New object with rounded values.
  */
+
 const roundAllValues = (data, decimals = 2) => {
   if (typeof data === "number") {
     return roundTo(data, decimals);

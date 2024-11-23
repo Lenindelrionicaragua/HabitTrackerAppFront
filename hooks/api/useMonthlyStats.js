@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
+import { calculateDailyAverage } from "../../util/calculateDailyAverage";
 
 const useMonthlyStats = () => {
   const [success, setSuccess] = useState(null);
@@ -55,18 +56,17 @@ const useMonthlyStats = () => {
     performFetch();
   }, [performFetch]);
 
-
   logInfo(`Monthly Stats: ${JSON.stringify(data)}`);
 
-  const totalDailyMinutes = roundedData?.totalDailyMinutes || {},;
+  const totalDailyMinutes = roundedData?.totalDailyMinutes || {};
 
-  const dailyPercentage = roundedData; 
+  const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
   return {
     totalMinutes: roundedData?.totalMinutes || 0,
     categoryCount: roundedData?.categoryCount || 0,
     daysWithRecords: roundedData?.daysWithRecords || 0,
-    totalDailyMinutes: roundedData?.totalDailyMinutes || {},
+    dailyAverageMinutes: dailyAverageMinutes.averageMinutes,
     categoryData: roundedData?.categoryData || [],
     success,
     errorMessage,

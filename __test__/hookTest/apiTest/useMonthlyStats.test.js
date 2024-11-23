@@ -90,7 +90,7 @@ describe("useMonthlyStats Hook", () => {
     expect(result.current.success).toBe(true);
     expect(result.current.message).toBe("Monthly stats fetched successfully.");
     expect(result.current.totalMinutes).toBe(123.46);
-    expect(result.current.totalDailyMinutes["2024-11-19"]).toBe(50.56);
+    expect(result.current.dailyAverageMinutes).toBe(61.46);
     expect(result.current.categoryData[0].totalMinutes).toBe(120.12);
   });
 
@@ -142,7 +142,7 @@ describe("useMonthlyStats Hook", () => {
     expect(result.current).toHaveProperty("totalMinutes");
     expect(result.current).toHaveProperty("categoryCount");
     expect(result.current).toHaveProperty("daysWithRecords");
-    expect(result.current).toHaveProperty("totalDailyMinutes");
+    expect(result.current).toHaveProperty("dailyAverageMinutes");
     expect(result.current).toHaveProperty("categoryData");
     expect(result.current).toHaveProperty("success");
     expect(result.current).toHaveProperty("errorMessage");

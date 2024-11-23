@@ -17,7 +17,9 @@ export function calculateDailyAverage(totalDailyMinutes) {
 
   const averageMinutes = totalMinutes / dates.length;
 
+  const roundedAverage = Math.round(averageMinutes * 100) / 100;
+
   return {
-    averageMinutes
+    averageMinutes: roundedAverage
   };
 }
