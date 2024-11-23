@@ -3,7 +3,6 @@ import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 
-// Custom hook to fetch monthly stats
 const useMonthlyStats = () => {
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,6 +54,13 @@ const useMonthlyStats = () => {
     setRoundedData(null); // Clear previous data before fetching new
     performFetch();
   }, [performFetch]);
+
+
+  logInfo(`Monthly Stats: ${JSON.stringify(data)}`);
+
+  const totalDailyMinutes = roundedData?.totalDailyMinutes || {},;
+
+  const dailyPercentage = roundedData; 
 
   return {
     totalMinutes: roundedData?.totalMinutes || 0,

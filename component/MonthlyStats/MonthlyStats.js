@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import {
@@ -13,8 +13,6 @@ const { white, black } = Colors;
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 const screenWidth = Dimensions.get("window").width;
-
-// const containerWidth = Platform.OS === "web" ? "400px" : "400px";
 
 const MonthlyStats = () => {
   const chartData = [
@@ -81,6 +79,10 @@ const MonthlyStats = () => {
     isLoading,
     fetchMonthlyStats
   } = useMonthlyStats();
+
+  useEffect(() => {
+    fetchMonthlyStats();
+  }, []);
 
   return (
     <MonthlyStatsContainer>
