@@ -28,7 +28,8 @@ const useMonthlyStats = () => {
       if (receivedData.success) {
         setSuccess(true);
         setMessage("Monthly stats fetched successfully.");
-        const processedData = roundAllValues(receivedData);
+        // To change the number of decimals, simply change 0 to the desired number
+        const processedData = roundAllValues(receivedData, 0);
         setRoundedData(processedData);
         logInfo(
           "Monthly stats fetched and rounded successfully.",
@@ -56,6 +57,7 @@ const useMonthlyStats = () => {
     performFetch();
   }, [performFetch]);
 
+  // Get the daily average
   const totalDailyMinutes = roundedData?.totalDailyMinutes || {};
   const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 

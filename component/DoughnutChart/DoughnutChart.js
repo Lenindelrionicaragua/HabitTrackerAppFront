@@ -1,43 +1,34 @@
 import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { Platform } from "react-native";
 import PieChart from "react-native-pie-chart";
+import {
+  PieChartContainer,
+  InfoTextContainer,
+  InfoText,
+  SubText
+} from "./DoughnutChartStyles";
+import { Colors } from "../../styles/AppStyles";
+
+const { white, black } = Colors;
 
 const DoughnutChart = ({ series, sliceColor, text }) => {
-  const screenWidth = Dimensions.get("window").width;
-  const widthAndHeight = screenWidth * 0.6;
+  const widthAndHeight = Platform.OS === "web" ? "200" : "220";
 
   return (
-    <View style={styles.container}>
+    <PieChartContainer>
       <PieChart
-        widthAndHeight={220}
+        widthAndHeight={widthAndHeight}
         series={series}
         sliceColor={sliceColor}
         coverRadius={0.7}
-        coverFill={"#FFF"}
+        coverFill={white}
       />
-      <View style={styles.textContainer}>
-        <Text style={styles.centerText}>{text}</Text>
-      </View>
-    </View>
+      <InfoTextContainer>
+        <InfoText>{text}</InfoText>
+        <SubText>Monthly minutes</SubText>
+      </InfoTextContainer>
+    </PieChartContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  textContainer: {
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  centerText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000"
-  }
-});
 
 export default DoughnutChart;

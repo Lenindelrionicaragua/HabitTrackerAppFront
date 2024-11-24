@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Dimensions, View, Text, StyleSheet } from "react-native";
-import PieChart from "react-native-pie-chart";
+import { Dimensions } from "react-native";
 import {
   MonthlyStatsContainer,
   SubTitle,
@@ -55,10 +54,16 @@ const MonthlyStats = () => {
 
   return (
     <MonthlyStatsContainer>
-      <SubTitle>Minutes</SubTitle>
-      <InfoText>Monthly: 1,400 minutes | Daily Average: 40 minutes</InfoText>
+      <SubTitle>Time distribution</SubTitle>
+      <InfoText>
+        Monthly: 1,400 minutes | Daily Average: {dailyAverageMinutes} minutes
+      </InfoText>
 
-      <DoughnutChart series={series} sliceColor={sliceColor} text="40 min" />
+      <DoughnutChart
+        series={series}
+        sliceColor={sliceColor}
+        text={totalMinutes}
+      />
     </MonthlyStatsContainer>
   );
 };

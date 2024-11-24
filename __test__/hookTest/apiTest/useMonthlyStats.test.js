@@ -60,7 +60,7 @@ describe("useMonthlyStats Hook", () => {
     logError.mockClear();
     jest
       .spyOn(roundingUtils, "roundAllValues")
-      .mockImplementation(data => data);
+      .mockImplementation(() => roundedDataResponse);
   });
 
   afterEach(() => {
@@ -85,7 +85,8 @@ describe("useMonthlyStats Hook", () => {
     });
 
     expect(roundingUtils.roundAllValues).toHaveBeenCalledWith(
-      dataResponseWithMonthlyStats
+      dataResponseWithMonthlyStats,
+      0
     );
     expect(result.current.success).toBe(true);
     expect(result.current.message).toBe("Monthly stats fetched successfully.");
@@ -109,7 +110,8 @@ describe("useMonthlyStats Hook", () => {
 
     expect(roundingUtils.roundAllValues).toHaveBeenCalledTimes(1);
     expect(roundingUtils.roundAllValues).toHaveBeenCalledWith(
-      dataResponseWithMonthlyStats
+      dataResponseWithMonthlyStats,
+      0
     );
   });
 
