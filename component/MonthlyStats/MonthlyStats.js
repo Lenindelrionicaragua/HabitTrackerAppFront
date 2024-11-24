@@ -56,7 +56,8 @@ const MonthlyStats = () => {
     <MonthlyStatsContainer>
       <SubTitle>Time distribution</SubTitle>
       <InfoText>
-        Monthly: 1,400 minutes | Daily Average: {dailyAverageMinutes} minutes
+        Days with records: {daysWithRecords} | Daily Average:{" "}
+        {dailyAverageMinutes} minutes
       </InfoText>
 
       <DoughnutChart
