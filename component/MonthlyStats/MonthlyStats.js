@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
+import PieChart from "react-native-pie-chart";
 import {
   MonthlyStatsContainer,
   SubTitle,
@@ -39,7 +40,7 @@ const MonthlyStats = () => {
 
   const chartData = categoryData.map(category => ({
     name: category.name,
-    population: category.totalMinutes,
+    population: category.percentage,
     color: categoryColors[category.name] || color5,
     legendFontColor: black,
     legendFontSize: 12
@@ -49,26 +50,23 @@ const MonthlyStats = () => {
     fetchMonthlyStats();
   }, []);
 
+  const widthAndHeight = 250;
+  const series = [123, 321, 123, 789, 537];
+  const sliceColor = ["#fbd203", "#ffb300", "#ff9100", "#ff6c00", "#ff3c00"];
+
   return (
     <MonthlyStatsContainer>
       <SubTitle>Minutes</SubTitle>
-      <InfoText>Monthly: 1,400 minutes | Daily Average: 40 minutes</InfoText>
-
+      <InfoText>
+        Monthly: {totalMinutes} min | Daily Average: {dailyAverageMinutes}
+        min
+      </InfoText>
       <PieChart
-        data={chartData}
-        width={screenWidth}
-        height={220}
-        chartConfig={{
-          backgroundColor: white,
-          backgroundGradientFrom: white,
-          backgroundGradientTo: white,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
-        }}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute
+        widthAndHeight={widthAndHeight}
+        series={series}
+        sliceColor={sliceColor}
+        coverRadius={0.45}
+        coverFill={"#FFF"}
       />
     </MonthlyStatsContainer>
   );

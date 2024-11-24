@@ -78,7 +78,7 @@ const useMonthlyStats = () => {
     totalMinutes: roundedData?.totalMinutes || 0,
     categoryCount: roundedData?.categoryCount || 0,
     daysWithRecords: roundedData?.daysWithRecords || 0,
-    dailyAverageMinutes: dailyAverageMinutes.averageMinutes,
+    dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
     success,
     errorMessage,
