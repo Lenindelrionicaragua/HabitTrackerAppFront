@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
-// import { PieChart } from "react-native-chart-kit";
+import React, { useEffect } from "react";
+import { Dimensions, View, Text, StyleSheet } from "react-native";
 import PieChart from "react-native-pie-chart";
 import {
   MonthlyStatsContainer,
@@ -9,11 +8,15 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
+import DoughnutChart from "../DoughnutChart/DoughnutChart";
 
 const { white, black } = Colors;
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 const screenWidth = Dimensions.get("window").width;
+const widthAndHeight = 250;
+const series = [123, 321, 123, 789, 537];
+const sliceColor = ["#fbd203", "#ffb300", "#ff9100", "#ff6c00", "#ff3c00"];
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
@@ -40,7 +43,7 @@ const MonthlyStats = () => {
 
   const chartData = categoryData.map(category => ({
     name: category.name,
-    population: category.percentage,
+    population: category.totalMinutes,
     color: categoryColors[category.name] || color5,
     legendFontColor: black,
     legendFontSize: 12
@@ -50,24 +53,12 @@ const MonthlyStats = () => {
     fetchMonthlyStats();
   }, []);
 
-  const widthAndHeight = 250;
-  const series = [123, 321, 123, 789, 537];
-  const sliceColor = ["#fbd203", "#ffb300", "#ff9100", "#ff6c00", "#ff3c00"];
-
   return (
     <MonthlyStatsContainer>
       <SubTitle>Minutes</SubTitle>
-      <InfoText>
-        Monthly: {totalMinutes} min | Daily Average: {dailyAverageMinutes}
-        min
-      </InfoText>
-      <PieChart
-        widthAndHeight={widthAndHeight}
-        series={series}
-        sliceColor={sliceColor}
-        coverRadius={0.45}
-        coverFill={"#FFF"}
-      />
+      <InfoText>Monthly: 1,400 minutes | Daily Average: 40 minutes</InfoText>
+
+      <DoughnutChart series={series} sliceColor={sliceColor} text="40 min" />
     </MonthlyStatsContainer>
   );
 };
