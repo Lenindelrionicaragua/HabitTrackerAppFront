@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   MonthlyStatsContainer,
   SubTitle,
@@ -7,14 +8,15 @@ import {
 import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
+import { setMonthlyStats } from "../../actions/counterActions";
 
 // const { white, black } = Colors;
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
-const colorPalette = [color1, color2, color3, color4, color5, color6, color7];
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
+  dispatch = useDispatch();
   const {
     totalMinutes,
     categoryCount,
@@ -23,10 +25,14 @@ const MonthlyStats = () => {
     categoryData,
     series,
     sliceColors,
-    errorMessage,
-    isLoading,
-    fetchMonthlyStats
-  } = useMonthlyStats();
+    success
+  } = useSelector(state => state.monthlyStats);
+
+  useEffect(() => {
+    if (!success) {
+      dispatch(fetchMonthlyStats());
+    }
+  }, [dispatch, success]);
 
   return (
     <MonthlyStatsContainer>

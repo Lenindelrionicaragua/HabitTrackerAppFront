@@ -38,7 +38,6 @@ const useMonthlyStats = storedCredentials => {
         setMessage("Monthly stats fetched successfully.");
         const processedData = roundAllValues(receivedData, 0);
         setRoundedData(processedData);
-        logInfo("Processed and rounded data:", processedData);
       }
     }
   );
@@ -64,7 +63,6 @@ const useMonthlyStats = storedCredentials => {
   }, [error]);
 
   // Calculate derived data and update Redux store
-  // Calculate derived data and update Redux store
   useEffect(() => {
     if (roundedData) {
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
@@ -87,7 +85,10 @@ const useMonthlyStats = storedCredentials => {
 
       // Dispatch to Redux store
       dispatch(setMonthlyStats(monthlyStatsState));
-      logInfo("Dispatching monthly stats to Redux:", monthlyStatsState);
+      console.log(
+        "Dispatching monthly stats to Redux:",
+        JSON.stringify(monthlyStatsState, null, 2)
+      );
     }
   }, [roundedData, dispatch]);
 
