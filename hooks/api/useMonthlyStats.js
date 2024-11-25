@@ -3,6 +3,10 @@ import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
+import { MonthlyStatsColors } from "../../styles/AppStyles";
+
+const { color1, color2, color3, color4, color5, color6, color7 } =
+  MonthlyStatsColors;
 
 const useMonthlyStats = () => {
   const [success, setSuccess] = useState(null);
@@ -61,6 +65,23 @@ const useMonthlyStats = () => {
   const totalDailyMinutes = roundedData?.totalDailyMinutes || {};
   const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
+  // Calculate series and colors
+  const getSeriesAndColors = () => {
+    if (roundedData?.categoryData) {
+      const series = roundedData.categoryData.map(
+        category => category.totalMinutes
+      );
+      const sliceColors = roundedData.categoryData.map(
+        (_, index) =>
+          [color1, color2, color3, color4, color5, color6, color7][index % 7]
+      );
+      return { series, sliceColors };
+    }
+    return { series: [], sliceColors: [] };
+  };
+
+  const { series, sliceColors } = getSeriesAndColors();
+
   logInfo(
     `Monthly Stats:: ${JSON.stringify(
       {
@@ -69,7 +90,9 @@ const useMonthlyStats = () => {
         categoryCount: roundedData?.categoryCount || 0,
         daysWithRecords: roundedData?.daysWithRecords || 0,
         dailyAverageMinutes: dailyAverageMinutes.averageMinutes,
-        categoryData: roundedData?.categoryData || []
+        categoryData: roundedData?.categoryData || [],
+        series,
+        sliceColors
       },
       null,
       2
@@ -82,6 +105,8 @@ const useMonthlyStats = () => {
     daysWithRecords: roundedData?.daysWithRecords || 0,
     dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
+    series,
+    sliceColors,
     success,
     errorMessage,
     message,
