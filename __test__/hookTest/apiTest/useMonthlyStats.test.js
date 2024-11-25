@@ -3,12 +3,16 @@ import useMonthlyStats from "../../../hooks/api/useMonthlyStats";
 import axios from "axios";
 import { logError, logInfo } from "../../../util/logging";
 import * as roundingUtils from "../../../util/roundingUtils"; // Import for mocking
+import { MonthlyStatsColors } from "../../../styles/AppStyles";
 
 jest.mock("axios");
 jest.mock("../../../util/logging", () => ({
   logInfo: jest.fn(),
   logError: jest.fn()
 }));
+
+const { color1, color2, color3, color4, color5, color6, color7 } =
+  MonthlyStatsColors;
 
 describe("useMonthlyStats Hook", () => {
   const dataResponseWithMonthlyStats = {
@@ -146,11 +150,41 @@ describe("useMonthlyStats Hook", () => {
     expect(result.current).toHaveProperty("daysWithRecords");
     expect(result.current).toHaveProperty("dailyAverageMinutes");
     expect(result.current).toHaveProperty("categoryData");
+    expect(result.current).toHaveProperty("series");
+    expect(result.current).toHaveProperty("sliceColors");
     expect(result.current).toHaveProperty("success");
     expect(result.current).toHaveProperty("errorMessage");
     expect(result.current).toHaveProperty("message");
     expect(result.current).toHaveProperty("isLoading");
     expect(result.current).toHaveProperty("fetchMonthlyStats");
     expect(result.current).toHaveProperty("cancelFetch");
+  });
+
+  it("Should correctly calculate series and sliceColors based on categoryData", async () => {
+    axios.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: dataResponseWithMonthlyStats
+      })
+    );
+
+    const { result } = renderHook(() => useMonthlyStats());
+
+    await act(async () => {
+      await result.current.fetchMonthlyStats();
+    });
+
+    const expectedSeries = [120.12, 60.79, 50.46, 40.0, 10.56, 6.0];
+
+    const expectedSliceColors = [
+      color1,
+      color2,
+      color3,
+      color4,
+      color5,
+      color6
+    ];
+
+    expect(result.current.series).toEqual(expectedSeries);
+    expect(result.current.sliceColors).toEqual(expectedSliceColors);
   });
 });
