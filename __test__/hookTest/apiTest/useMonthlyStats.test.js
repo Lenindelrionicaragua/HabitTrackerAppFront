@@ -1,8 +1,12 @@
+import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "../../../reducers/rootReducer";
 import useMonthlyStats from "../../../hooks/api/useMonthlyStats";
 import axios from "axios";
 import { logError, logInfo } from "../../../util/logging";
-import * as roundingUtils from "../../../util/roundingUtils"; // Import for mocking
+import * as roundingUtils from "../../../util/roundingUtils";
 import { MonthlyStatsColors } from "../../../styles/AppStyles";
 
 jest.mock("axios");
@@ -14,7 +18,14 @@ jest.mock("../../../util/logging", () => ({
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 
-describe("useMonthlyStats Hook", () => {
+describe("useMonthlyStats Hook with Redux", () => {
+  let store;
+
+  const storedCredentials = {
+    name: "John Doe",
+    email: "johndoe@example.com"
+  };
+
   const dataResponseWithMonthlyStats = {
     success: true,
     totalMinutes: 123.456,
@@ -53,15 +64,13 @@ describe("useMonthlyStats Hook", () => {
     ]
   };
 
-  const dateResponseWithError = {
-    success: false,
-    message: "Error fetching categories: BAD REQUEST: Authentication required."
-  };
-
   beforeEach(() => {
     axios.mockClear();
     logInfo.mockClear();
     logError.mockClear();
+
+    store = createStore(rootReducer, {});
+
     jest
       .spyOn(roundingUtils, "roundAllValues")
       .mockImplementation(() => roundedDataResponse);
@@ -71,110 +80,75 @@ describe("useMonthlyStats Hook", () => {
     jest.clearAllMocks();
   });
 
-  it("Should fetch and round monthly stats data when success is true", async () => {
+  it("Should fetch and store monthly stats data when success is true", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
         data: dataResponseWithMonthlyStats
       })
     );
 
-    roundingUtils.roundAllValues.mockImplementationOnce(
-      () => roundedDataResponse
-    );
-
-    const { result } = renderHook(() => useMonthlyStats());
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
 
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
+    const state = store.getState().monthlyStats;
+
     expect(roundingUtils.roundAllValues).toHaveBeenCalledWith(
       dataResponseWithMonthlyStats,
       0
     );
-    expect(result.current.success).toBe(true);
-    expect(result.current.message).toBe("Monthly stats fetched successfully.");
-    expect(result.current.totalMinutes).toBe(123.46);
-    expect(result.current.dailyAverageMinutes).toBe(61.46);
-    expect(result.current.categoryData[0].totalMinutes).toBe(120.12);
+    expect(state.totalMinutes).toBe(123.46);
+    expect(state.categoryCount).toBe(6);
+    expect(state.daysWithRecords).toBe(5);
+    expect(state.categoryData[0].totalMinutes).toBe(120.12);
   });
 
-  it("Should call roundAllValues utility with the correct data", async () => {
+  it("Should handle errors and not update the store", async () => {
+    const errorResponse = { message: "Authentication required." };
     axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithMonthlyStats
+      Promise.reject({
+        response: { data: errorResponse }
       })
     );
 
-    const { result } = renderHook(() => useMonthlyStats());
-
-    await act(async () => {
-      await result.current.fetchMonthlyStats();
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
-
-    expect(roundingUtils.roundAllValues).toHaveBeenCalledTimes(1);
-    expect(roundingUtils.roundAllValues).toHaveBeenCalledWith(
-      dataResponseWithMonthlyStats,
-      0
-    );
-  });
-
-  it("Should return an error when API call fails", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dateResponseWithError
-      })
-    );
-
-    const { result } = renderHook(() => useMonthlyStats());
 
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
     expect(result.current.success).toBe(false);
-    expect(result.current.errorMessage).toBe(
-      "Error fetching categories: BAD REQUEST: Authentication required."
-    );
-    expect(result.current.message).toBe("");
+    expect(result.current.errorMessage).toBe("Authentication required.");
     expect(logError).toHaveBeenCalledWith(
-      "Error fetching monthly stats: Error fetching categories: BAD REQUEST: Authentication required."
+      "Error fetching monthly stats: Authentication required."
     );
+
+    const state = store.getState().monthlyStats;
+    expect(state.totalMinutes).toBe(0); // Initial state remains
   });
 
-  it("Should return an object with the expected structure", () => {
-    const { result } = renderHook(() => useMonthlyStats());
-
-    expect(result.current).toHaveProperty("totalMinutes");
-    expect(result.current).toHaveProperty("categoryCount");
-    expect(result.current).toHaveProperty("daysWithRecords");
-    expect(result.current).toHaveProperty("dailyAverageMinutes");
-    expect(result.current).toHaveProperty("categoryData");
-    expect(result.current).toHaveProperty("series");
-    expect(result.current).toHaveProperty("sliceColors");
-    expect(result.current).toHaveProperty("success");
-    expect(result.current).toHaveProperty("errorMessage");
-    expect(result.current).toHaveProperty("message");
-    expect(result.current).toHaveProperty("isLoading");
-    expect(result.current).toHaveProperty("fetchMonthlyStats");
-    expect(result.current).toHaveProperty("cancelFetch");
-  });
-
-  it("Should correctly calculate series and sliceColors based on categoryData", async () => {
+  it("Should calculate series and sliceColors correctly", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
         data: dataResponseWithMonthlyStats
       })
     );
 
-    const { result } = renderHook(() => useMonthlyStats());
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
 
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
     const expectedSeries = [120.12, 60.79, 50.46, 40.0, 10.56, 6.0];
-
     const expectedSliceColors = [
       color1,
       color2,

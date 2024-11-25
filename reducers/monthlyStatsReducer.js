@@ -1,4 +1,4 @@
-// reducers/monthlyStatsReducer.js
+import { logInfo } from "../util/logging";
 import {
   SET_MONTHLY_STATS,
   CLEAR_MONTHLY_STATS
@@ -21,9 +21,10 @@ const initialState = {
 const monthlyStatsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MONTHLY_STATS:
-      return { ...state, ...action.payload };
+      const newState = { ...state, ...action.payload };
+      return newState;
     case CLEAR_MONTHLY_STATS:
-      return { ...initialState };
+      return { ...initialState }; // Reset to initial state
     default:
       return state;
   }

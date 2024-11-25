@@ -1,24 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
 import { MonthlyStatsColors } from "../../styles/AppStyles";
 import { setMonthlyStats } from "../../actions/counterActions";
-import { useDispatch, useSelector } from "react-redux";
 
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 
 const useMonthlyStats = storedCredentials => {
   const dispatch = useDispatch();
+
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
   const [roundedData, setRoundedData] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
-  // Store
-  const monthlyStats = useSelector(state => state.monthlyStats.monthlyStats);
 
   const getCurrentMonthAndYear = () => {
     const date = new Date();
@@ -31,7 +30,7 @@ const useMonthlyStats = storedCredentials => {
   const { month, year } = getCurrentMonthAndYear();
   const url = `/habit-categories/monthly-metrics?month=${month}&year=${year}`;
 
-  const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
+  const { error, isLoading, performFetch, cancelFetch } = useFetch(
     url,
     receivedData => {
       if (receivedData.success) {
@@ -39,11 +38,7 @@ const useMonthlyStats = storedCredentials => {
         setMessage("Monthly stats fetched successfully.");
         const processedData = roundAllValues(receivedData, 0);
         setRoundedData(processedData);
-        dispatch(setMonthlyStats(processedData));
-        logInfo(
-          "Monthly stats fetched and rounded successfully.",
-          processedData
-        );
+        logInfo("Processed and rounded data:", processedData);
       }
     }
   );
@@ -57,6 +52,7 @@ const useMonthlyStats = storedCredentials => {
     }
   }, [storedCredentials, hasFetched, performFetch]);
 
+  // Handle errors
   useEffect(() => {
     if (error) {
       setSuccess(false);
@@ -67,13 +63,13 @@ const useMonthlyStats = storedCredentials => {
     }
   }, [error]);
 
-  // Get daily average
-  const totalDailyMinutes = roundedData?.totalDailyMinutes || {};
-  const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
+  // Calculate derived data and update Redux store
+  // Calculate derived data and update Redux store
+  useEffect(() => {
+    if (roundedData) {
+      const totalDailyMinutes = roundedData.totalDailyMinutes || {};
+      const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
-  // Calculate series and colors
-  const getSeriesAndColors = () => {
-    if (roundedData?.categoryData) {
       const series = roundedData.categoryData.map(
         category => category.totalMinutes
       );
@@ -81,38 +77,29 @@ const useMonthlyStats = storedCredentials => {
         (_, index) =>
           [color1, color2, color3, color4, color5, color6, color7][index % 7]
       );
-      return { series, sliceColors };
-    }
-    return { series: [], sliceColors: [] };
-  };
 
-  const { series, sliceColors } = getSeriesAndColors();
-
-  logInfo(
-    `Monthly Stats:: ${JSON.stringify(
-      {
-        success: true,
-        totalMinutes: roundedData?.totalMinutes || 0,
-        categoryCount: roundedData?.categoryCount || 0,
-        daysWithRecords: roundedData?.daysWithRecords || 0,
-        dailyAverageMinutes: dailyAverageMinutes.averageMinutes,
-        categoryData: roundedData?.categoryData || [],
+      const monthlyStatsState = {
+        ...roundedData,
         series,
-        sliceColors
-      },
-      null,
-      2
-    )}`
-  );
+        sliceColors,
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0
+      };
 
+      // Dispatch to Redux store
+      dispatch(setMonthlyStats(monthlyStatsState));
+      logInfo("Dispatching monthly stats to Redux:", monthlyStatsState);
+    }
+  }, [roundedData, dispatch]);
+
+  // Return the derived data
   return {
     totalMinutes: roundedData?.totalMinutes || 0,
     categoryCount: roundedData?.categoryCount || 0,
     daysWithRecords: roundedData?.daysWithRecords || 0,
-    dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0,
+    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
-    series,
-    sliceColors,
+    series: roundedData?.series || ["#ffffff"],
+    sliceColors: roundedData?.sliceColors || [1],
     success,
     errorMessage,
     message,
