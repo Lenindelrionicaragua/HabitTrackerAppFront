@@ -14,6 +14,7 @@ import innerCircleColorReducer from "./innerCircleColorReducer";
 import firstRunReducer from "./firstRunReducer";
 import habitCategoryIndexReducer from "./habitCategoryIndexReducer";
 import habitCategoriesReducer from "./habitCategoriesReducer";
+import monthlyStatsReducer from "./monthlyStatsReducer";
 import saveTimeButtonLabelReducer from "./saveTimeButtonLabelReducer";
 import buttonsDisabledReducer from "./buttonsDisabledReducer";
 
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   buttonsDisabled: buttonsDisabledReducer,
   habitCategoryIndex: habitCategoryIndexReducer,
   habitCategories: habitCategoriesReducer,
+  monthlyStats: monthlyStatsReducer,
   activeScreen: activeScreenReducer
 });
 
