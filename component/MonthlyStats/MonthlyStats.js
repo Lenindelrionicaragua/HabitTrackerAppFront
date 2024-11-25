@@ -28,10 +28,6 @@ const MonthlyStats = () => {
     fetchMonthlyStats
   } = useMonthlyStats();
 
-  useEffect(() => {
-    fetchMonthlyStats();
-  }, []);
-
   return (
     <MonthlyStatsContainer>
       <SubTitle>Time distribution</SubTitle>

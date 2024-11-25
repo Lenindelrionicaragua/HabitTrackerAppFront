@@ -22,6 +22,9 @@ export const SET_HABIT_CATEGORIES = "SET_HABIT_CATEGORIES";
 export const SET_HABIT_CATEGORY_INDEX = "SET_HABIT_CATEGORY_INDEX";
 export const RESET_HABIT_CATEGORIES = "RESET_HABIT_CATEGORIES";
 
+export const SET_MONTHLY_STATS = "SET_MONTHLY_STATS";
+export const CLEAR_MONTHLY_STATS = "CLEAR_MONTHLY_STATS";
+
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
 export const SET_ACTIVE_SCREEN = "SET_ACTIVE_SCREEN";
@@ -170,6 +173,15 @@ export const setHabitCategories = habitCategories => ({
 
 export const resetHabitCategories = () => ({
   type: RESET_HABIT_CATEGORIES
+});
+
+export const setMonthlyStats = stats => ({
+  type: SET_MONTHLY_STATS,
+  payload: stats
+});
+
+export const clearMonthlyStats = () => ({
+  type: CLEAR_MONTHLY_STATS
 });
 
 export const setActiveScreen = screen => {
