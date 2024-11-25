@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createSelector } from "reselect";
 
 export const SET_INITIAL_TIME = "SET_INITIAL_TIME";
 export const SET_REMAINING_TIME = "SET_REMAINING_TIME";
@@ -175,10 +176,16 @@ export const resetHabitCategories = () => ({
   type: RESET_HABIT_CATEGORIES
 });
 
-export const setMonthlyStats = stats => ({
-  type: SET_MONTHLY_STATS,
-  payload: stats
-});
+const selectMonthlyStats = state => state.monthlyStats;
+
+export const selectMonthlyStatsWithFallback = createSelector(
+  [selectMonthlyStats],
+  stats => ({
+    ...stats,
+    series: stats.series.length ? stats.series : [1], // Example fallback value
+    sliceColors: stats.sliceColors.length ? stats.sliceColors : ["#cccccc"] // Fallback color
+  })
+);
 
 export const clearMonthlyStats = () => ({
   type: CLEAR_MONTHLY_STATS

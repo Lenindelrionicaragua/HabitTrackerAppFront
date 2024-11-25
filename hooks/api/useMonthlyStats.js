@@ -4,16 +4,21 @@ import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
 import { MonthlyStatsColors } from "../../styles/AppStyles";
+import { setMonthlyStats } from "../../actions/counterActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 
 const useMonthlyStats = storedCredentials => {
+  const dispatch = useDispatch();
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
   const [roundedData, setRoundedData] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
+  // Store
+  const monthlyStats = useSelector(state => state.monthlyStats.monthlyStats);
 
   const getCurrentMonthAndYear = () => {
     const date = new Date();
@@ -34,6 +39,7 @@ const useMonthlyStats = storedCredentials => {
         setMessage("Monthly stats fetched successfully.");
         const processedData = roundAllValues(receivedData, 0);
         setRoundedData(processedData);
+        dispatch(setMonthlyStats(processedData));
         logInfo(
           "Monthly stats fetched and rounded successfully.",
           processedData
