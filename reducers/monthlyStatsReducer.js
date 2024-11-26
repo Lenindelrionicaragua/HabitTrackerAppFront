@@ -1,4 +1,3 @@
-import { logInfo } from "../util/logging";
 import {
   SET_MONTHLY_STATS,
   CLEAR_MONTHLY_STATS
