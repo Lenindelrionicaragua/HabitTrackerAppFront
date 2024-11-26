@@ -12,7 +12,7 @@ import { Colors } from "../../styles/AppStyles";
 const { white, black } = Colors;
 
 const DoughnutChart = ({ series, sliceColor, text }) => {
-  const widthAndHeight = Platform.OS === "web" ? "200" : "220";
+  const widthAndHeight = Platform.OS === "web" ? "200" : "180";
 
   return (
     <PieChartContainer>

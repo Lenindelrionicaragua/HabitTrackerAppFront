@@ -28,6 +28,7 @@ export const MainStatsContainer = styled(View)`
   shadow-opacity: 0.5;
   shadow-radius: 4px;
   elevation: 6;
+  justify-content: space-around;
 `;
 
 export const CategoryContainer = styled(View)`
@@ -39,12 +40,14 @@ export const CategoryContainer = styled(View)`
   shadow-opacity: 0.5;
   shadow-radius: 4px;
   elevation: 6;
+  justify-content: center;
 `;
 
 export const CategoryItem = styled(View)`
   flex-direction: row;
   align-items: center;
-  margin: 10px 0px;
+  margin: 2px 0px;
+  justify-content: space-between;
 `;
 
 export const ColorBox = styled(View)`

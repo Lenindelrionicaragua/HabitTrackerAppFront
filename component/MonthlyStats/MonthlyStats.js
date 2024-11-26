@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   MonthlyStatsContainer,
   MainStatsContainer,
@@ -10,7 +10,6 @@ import {
   SubTitle,
   InfoText
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
-import useMonthlyStats from "../../hooks/api/useMonthlyStats";
 import { MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import { setMonthlyStats } from "../../actions/counterActions";
