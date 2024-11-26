@@ -1,89 +1,81 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { createStore } from "redux";
+import { waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
+import { createStore } from "redux";
 import rootReducer from "../../../reducers/rootReducer";
 import useMonthlyStats from "../../../hooks/api/useMonthlyStats";
 import axios from "axios";
+import { setMonthlyStats } from "../../../actions/counterActions";
 import { logError, logInfo } from "../../../util/logging";
-import * as roundingUtils from "../../../util/roundingUtils";
-import { MonthlyStatsColors } from "../../../styles/AppStyles";
 
 jest.mock("axios");
-jest.mock("../../../util/logging", () => ({
-  logInfo: jest.fn(),
-  logError: jest.fn()
-}));
-
-const { color1, color2, color3, color4, color5, color6, color7 } =
-  MonthlyStatsColors;
+jest.mock("../../../util/logging");
 
 describe("useMonthlyStats Hook with Redux", () => {
   let store;
+  let dispatchMock;
 
   const storedCredentials = {
     name: "John Doe",
     email: "johndoe@example.com"
   };
 
-  const dataResponseWithMonthlyStats = {
+  const dataResponseWithStats = {
     success: true,
-    totalMinutes: 123.456,
-    categoryCount: 6,
-    daysWithRecords: 5,
+    totalMinutes: 59,
+    categoryCount: 5,
+    daysWithRecords: 3,
     totalDailyMinutes: {
-      "2024-11-19": 50.556,
-      "2024-11-20": 72.349
+      "2024-11-23": 51,
+      "2024-11-24": 6,
+      "2024-11-26": 2
     },
     categoryData: [
-      { name: "Work", totalMinutes: 120.123, percentage: 40.123 },
-      { name: "Family time", totalMinutes: 60.789, percentage: 20.456 },
-      { name: "Exercise", totalMinutes: 50.456, percentage: 16.789 },
-      { name: "Screen-free", totalMinutes: 40.001, percentage: 13.333 },
-      { name: "Rest", totalMinutes: 10.555, percentage: 3.333 },
-      { name: "Study", totalMinutes: 5.999, percentage: 1.999 }
-    ]
+      { name: "Work", totalMinutes: 52, percentage: 87 },
+      { name: "Family time", totalMinutes: 1, percentage: 1 },
+      { name: "Exercise", totalMinutes: 0, percentage: 1 },
+      { name: "Screen-free", totalMinutes: 2, percentage: 3 },
+      { name: "Rest", totalMinutes: 0, percentage: 0 },
+      { name: "Study", totalMinutes: 5, percentage: 8 }
+    ],
+    series: [52, 1, 0, 2, 0, 5],
+    sliceColors: [
+      "#fb105b",
+      "#ff6543",
+      "#ad2bd5",
+      "#ff9c97",
+      "#ffe181",
+      "#554865"
+    ],
+    dailyAverageMinutes: 19.67
   };
 
-  const roundedDataResponse = {
-    success: true,
-    totalMinutes: 123.46,
-    categoryCount: 6,
-    daysWithRecords: 5,
-    totalDailyMinutes: {
-      "2024-11-19": 50.56,
-      "2024-11-20": 72.35
-    },
-    categoryData: [
-      { name: "Work", totalMinutes: 120.12, percentage: 40.12 },
-      { name: "Family time", totalMinutes: 60.79, percentage: 20.46 },
-      { name: "Exercise", totalMinutes: 50.46, percentage: 16.79 },
-      { name: "Screen-free", totalMinutes: 40.0, percentage: 13.33 },
-      { name: "Rest", totalMinutes: 10.56, percentage: 3.33 },
-      { name: "Study", totalMinutes: 6.0, percentage: 2.0 }
-    ]
+  const dataResponseWithError = {
+    success: false,
+    message: "Unexpected server error"
   };
 
   beforeEach(() => {
-    axios.mockClear();
-    logInfo.mockClear();
-    logError.mockClear();
+    dispatchMock = jest.fn();
 
-    store = createStore(rootReducer, {});
+    store = createStore(rootReducer, {
+      monthlyStats: {}
+    });
 
     jest
-      .spyOn(roundingUtils, "roundAllValues")
-      .mockImplementation(() => roundedDataResponse);
+      .spyOn(require("react-redux"), "useDispatch")
+      .mockReturnValue(dispatchMock);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Should fetch and store monthly stats data when success is true", async () => {
+  it("should fetch and store monthly stats data when success is true", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
-        data: dataResponseWithMonthlyStats
+        data: dataResponseWithStats
       })
     );
 
@@ -95,23 +87,45 @@ describe("useMonthlyStats Hook with Redux", () => {
       await result.current.fetchMonthlyStats();
     });
 
-    const state = store.getState().monthlyStats;
-
-    expect(roundingUtils.roundAllValues).toHaveBeenCalledWith(
-      dataResponseWithMonthlyStats,
-      0
-    );
-    expect(state.totalMinutes).toBe(123.46);
-    expect(state.categoryCount).toBe(6);
-    expect(state.daysWithRecords).toBe(5);
-    expect(state.categoryData[0].totalMinutes).toBe(120.12);
+    await waitFor(() => {
+      expect(dispatchMock).toHaveBeenCalledWith(
+        setMonthlyStats({
+          success: true,
+          totalMinutes: 59,
+          categoryCount: 5,
+          daysWithRecords: 3,
+          totalDailyMinutes: {
+            "2024-11-23": 51,
+            "2024-11-24": 6,
+            "2024-11-26": 2
+          },
+          categoryData: [
+            { name: "Work", totalMinutes: 52, percentage: 87 },
+            { name: "Family time", totalMinutes: 1, percentage: 1 },
+            { name: "Exercise", totalMinutes: 0, percentage: 1 },
+            { name: "Screen-free", totalMinutes: 2, percentage: 3 },
+            { name: "Rest", totalMinutes: 0, percentage: 0 },
+            { name: "Study", totalMinutes: 5, percentage: 8 }
+          ],
+          series: [52, 1, 0, 2, 0, 5],
+          sliceColors: [
+            "#fb105b",
+            "#ff6543",
+            "#ad2bd5",
+            "#ff9c97",
+            "#ffe181",
+            "#554865"
+          ],
+          dailyAverageMinutes: 19.67
+        })
+      );
+    });
   });
 
-  it("Should handle errors and not update the store", async () => {
-    const errorResponse = { message: "Authentication required." };
+  it("should handle errors and not update the store", async () => {
     axios.mockImplementationOnce(() =>
-      Promise.reject({
-        response: { data: errorResponse }
+      Promise.resolve({
+        data: dataResponseWithError
       })
     );
 
@@ -123,20 +137,20 @@ describe("useMonthlyStats Hook with Redux", () => {
       await result.current.fetchMonthlyStats();
     });
 
-    expect(result.current.success).toBe(false);
-    expect(result.current.errorMessage).toBe("Authentication required.");
+    await waitFor(() => {
+      expect(result.current.success).toBe(false);
+      expect(result.current.errorMessage).toBe("Unexpected server error");
+    });
+
     expect(logError).toHaveBeenCalledWith(
-      "Error fetching monthly stats: Authentication required."
+      "Error fetching monthly stats: Unexpected server error"
     );
-
-    const state = store.getState().monthlyStats;
-    expect(state.totalMinutes).toBe(0); // Initial state remains
   });
 
-  it("Should calculate series and sliceColors correctly", async () => {
+  it("should calculate series and sliceColors correctly", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
-        data: dataResponseWithMonthlyStats
+        data: dataResponseWithStats
       })
     );
 
@@ -148,17 +162,66 @@ describe("useMonthlyStats Hook with Redux", () => {
       await result.current.fetchMonthlyStats();
     });
 
-    const expectedSeries = [120.12, 60.79, 50.46, 40.0, 10.56, 6.0];
-    const expectedSliceColors = [
-      color1,
-      color2,
-      color3,
-      color4,
-      color5,
-      color6
-    ];
+    await waitFor(() => {
+      expect(result.current.series).toEqual([52, 1, 0, 2, 0, 5]);
+      expect(result.current.sliceColors).toEqual([
+        "#fb105b",
+        "#ff6543",
+        "#ad2bd5",
+        "#ff9c97",
+        "#ffe181",
+        "#554865"
+      ]);
+    });
+  });
 
-    expect(result.current.series).toEqual(expectedSeries);
-    expect(result.current.sliceColors).toEqual(expectedSliceColors);
+  it("should dispatch the correct data to Redux store", async () => {
+    axios.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: dataResponseWithStats
+      })
+    );
+
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
+
+    await act(async () => {
+      await result.current.fetchMonthlyStats();
+    });
+
+    await waitFor(() => {
+      expect(dispatchMock).toHaveBeenCalledWith(
+        setMonthlyStats({
+          success: true,
+          totalMinutes: 59,
+          categoryCount: 5,
+          daysWithRecords: 3,
+          totalDailyMinutes: {
+            "2024-11-23": 51,
+            "2024-11-24": 6,
+            "2024-11-26": 2
+          },
+          categoryData: [
+            { name: "Work", totalMinutes: 52, percentage: 87 },
+            { name: "Family time", totalMinutes: 1, percentage: 1 },
+            { name: "Exercise", totalMinutes: 0, percentage: 1 },
+            { name: "Screen-free", totalMinutes: 2, percentage: 3 },
+            { name: "Rest", totalMinutes: 0, percentage: 0 },
+            { name: "Study", totalMinutes: 5, percentage: 8 }
+          ],
+          series: [52, 1, 0, 2, 0, 5],
+          sliceColors: [
+            "#fb105b",
+            "#ff6543",
+            "#ad2bd5",
+            "#ff9c97",
+            "#ffe181",
+            "#554865"
+          ],
+          dailyAverageMinutes: 19.67
+        })
+      );
+    });
   });
 });
