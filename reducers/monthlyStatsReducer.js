@@ -5,7 +5,7 @@ import {
 
 // Define fallback values for series and sliceColors
 const fallbackSeries = [1]; // Ensures there's always at least one data point
-const fallbackSliceColors = ["#ffffff"]; // Default color for the fallback
+const fallbackSliceColors = ["#bbcbde"]; // Default color for the fallback
 
 const initialState = {
   totalMinutes: 0,
