@@ -16,7 +16,7 @@ const { color1, color2, color3, color4, color5, color6, color7 } =
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
-  dispatch = useDispatch();
+  // dispatch = useDispatch();
   const {
     totalMinutes,
     categoryCount,
@@ -28,11 +28,11 @@ const MonthlyStats = () => {
     success
   } = useSelector(state => state.monthlyStats);
 
-  useEffect(() => {
-    if (!success) {
-      dispatch(fetchMonthlyStats());
-    }
-  }, [dispatch, success]);
+  // useEffect(() => {
+  //   if (!success) {
+  //     dispatch(fetchMonthlyStats());
+  //   }
+  // }, [dispatch, success]);
 
   return (
     <MonthlyStatsContainer>
