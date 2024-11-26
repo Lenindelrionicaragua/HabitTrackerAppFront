@@ -19,6 +19,46 @@ export const MonthlyStatsContainer = styled(View)`
   elevation: 6;
 `;
 
+export const MainStatsContainer = styled(View)`
+  flex-direction: row;
+  border-radius: 10px;
+  background-color: ${white};
+  margin-vertical: 10px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 6;
+`;
+
+export const CategoryContainer = styled(View)`
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: ${white};
+  margin-vertical: 10px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 6;
+`;
+
+export const CategoryItem = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0px;
+`;
+
+export const ColorBox = styled(View)`
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+`;
+
+export const CategoryText = styled(Text)`
+  font-size: 12px;
+  color: ${lightGreen};
+  margin-right: 10px;
+`;
+
 export const SubTitle = styled(Text)`
   font-size: 15px;
   padding: 0px 30px;

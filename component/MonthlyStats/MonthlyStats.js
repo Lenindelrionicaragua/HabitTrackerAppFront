@@ -2,6 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   MonthlyStatsContainer,
+  MainStatsContainer,
+  CategoryContainer,
+  CategoryItem,
+  CategoryText,
+  ColorBox,
   SubTitle,
   InfoText
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
@@ -28,12 +33,6 @@ const MonthlyStats = () => {
     success
   } = useSelector(state => state.monthlyStats);
 
-  // useEffect(() => {
-  //   if (!success) {
-  //     dispatch(fetchMonthlyStats());
-  //   }
-  // }, [dispatch, success]);
-
   return (
     <MonthlyStatsContainer>
       <SubTitle>Time distribution</SubTitle>
@@ -41,12 +40,22 @@ const MonthlyStats = () => {
         Days with records: {daysWithRecords} | Daily Average:{" "}
         {dailyAverageMinutes} minutes
       </InfoText>
-
-      <DoughnutChart
-        series={series}
-        sliceColor={sliceColors}
-        text={totalMinutes}
-      />
+      <MainStatsContainer>
+        <DoughnutChart
+          series={series}
+          sliceColor={sliceColors}
+          text={totalMinutes}
+        />
+        <CategoryContainer>
+          {/* Map through categoryData to render categories dynamically */}
+          {categoryData.map((category, index) => (
+            <CategoryItem key={category.name}>
+              <CategoryText>{category.name}</CategoryText>
+              <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+            </CategoryItem>
+          ))}
+        </CategoryContainer>
+      </MainStatsContainer>
     </MonthlyStatsContainer>
   );
 };
