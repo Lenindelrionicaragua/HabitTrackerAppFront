@@ -21,25 +21,13 @@ export const MonthlyStatsContainer = styled(View)`
 
 export const MainStatsContainer = styled(View)`
   flex-direction: row;
-  border-radius: 10px;
-  background-color: ${white};
-  margin-vertical: 10px;
-  shadow-color: ${black};
-  shadow-opacity: 0.5;
-  shadow-radius: 4px;
-  elevation: 6;
+  margin-vertical: 5px;
   justify-content: space-around;
 `;
 
 export const CategoryContainer = styled(View)`
   flex-direction: column;
-  border-radius: 10px;
-  background-color: ${white};
   margin-vertical: 10px;
-  shadow-color: ${black};
-  shadow-opacity: 0.5;
-  shadow-radius: 4px;
-  elevation: 6;
   justify-content: center;
 `;
 
@@ -47,7 +35,7 @@ export const CategoryItem = styled(View)`
   flex-direction: row;
   align-items: center;
   margin: 2px 0px;
-  justify-content: space-between;
+  justify-content: left;
 `;
 
 export const ColorBox = styled(View)`
@@ -59,7 +47,7 @@ export const ColorBox = styled(View)`
 export const CategoryText = styled(Text)`
   font-size: 12px;
   color: ${lightGreen};
-  margin-right: 10px;
+  margin-left: 10px;
 `;
 
 export const SubTitle = styled(Text)`
@@ -75,6 +63,12 @@ export const InfoText = styled(Text)`
   font-size: 12px;
   padding: 0px 30px;
   margin: 10px 0px 0px 0px;
-
   color: ${lightGreen};
+`;
+
+export const HabitsMinutesList = styled(View)`
+  flex-direction: column;
+  margin-vertical: 10px;
+  justify-content: center;
+  background-color: ${black};
 `;

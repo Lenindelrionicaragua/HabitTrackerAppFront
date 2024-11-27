@@ -6,6 +6,7 @@ import {
   CategoryContainer,
   CategoryItem,
   CategoryText,
+  HabitsMinutesList,
   ColorBox,
   SubTitle,
   InfoText
@@ -49,12 +50,24 @@ const MonthlyStats = () => {
           {/* Map through categoryData to render categories dynamically */}
           {categoryData.map((category, index) => (
             <CategoryItem key={category.name}>
-              <CategoryText>{category.name}</CategoryText>
               <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+              <CategoryText>
+                {category.name} ({category.percentage}%)
+              </CategoryText>
             </CategoryItem>
           ))}
         </CategoryContainer>
       </MainStatsContainer>
+      <SubTitle>Habits total</SubTitle>
+      <HabitsMinutesList>
+        {/* Map through categoryData to render categories dynamically */}
+        {categoryData.map((category, index) => (
+          <CategoryItem key={category.name}>
+            <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+            <CategoryText>{category.totalMinutes} minutes</CategoryText>
+          </CategoryItem>
+        ))}
+      </HabitsMinutesList>
     </MonthlyStatsContainer>
   );
 };
