@@ -13,11 +13,12 @@ const containerHeight = screenHeight * 0.3;
 export const ChartContainer = styled(View)`
   width: ${containerWidth};
   height: ${containerHeight};
-  align-items: center;
   background-color: ${white};
   border-radius: 10px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
   elevation: 6;
+  justify-content: center;
+  align-items: center;
 `;

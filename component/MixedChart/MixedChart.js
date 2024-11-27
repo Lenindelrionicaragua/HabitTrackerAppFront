@@ -8,10 +8,10 @@ const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
-  const containerWidth = screenWidth * 0.92;
-  const containerHeight = screenHeight * 0.25;
+  const containerWidth = screenWidth * 0.89;
+  const containerHeight = screenHeight * 0.26;
 
-  const { black, white } = Colors;
+  const { black, white, orange } = Colors;
 
   const chartData = {
     labels: categories,
@@ -44,7 +44,10 @@ const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
           barPercentage: 0.5
         }}
         style={{
-          margin: 10,
+          marginLeft: 0, // Prevents the chart from shifting right
+          marginRight: 0,
+          paddingLeft: 50,
+          paddingRight: 50,
           borderRadius: 10
         }}
       />

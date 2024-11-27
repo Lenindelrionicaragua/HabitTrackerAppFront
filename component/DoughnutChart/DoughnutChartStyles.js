@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { View, Text } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black } = Colors;
+const { white, black, orange } = Colors;
 
 export const PieChartContainer = styled(View)`
   position: relative;

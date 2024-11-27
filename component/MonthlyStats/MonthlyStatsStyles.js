@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { View, Text, Dimensions } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, lightGreen, green } = Colors;
+const { white, black, lightGreen, orange, green } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -12,7 +12,6 @@ const containerHeight = screenHeight * 0.7;
 
 export const StatsOverviewContainer = styled(View)`
   height: ${containerHeight};
-  background-color: ${green};
   justify-content: space-evenly;
   align-items: center;
 `;
@@ -22,7 +21,6 @@ export const MonthlyStatsContainer = styled(View)`
   background-color: ${white};
   flex-direction: center;
   border-radius: 10px;
-
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
@@ -32,6 +30,7 @@ export const MonthlyStatsContainer = styled(View)`
 export const MainStatsContainer = styled(View)`
   flex-direction: row;
   margin-vertical: 5px;
+  align-items: center;
   justify-content: space-around;
 `;
 
@@ -39,6 +38,7 @@ export const CategoryContainer = styled(View)`
   flex-direction: column;
   margin-vertical: 10px;
   justify-content: center;
+  padding: 15px;
 `;
 
 export const CategoryItem = styled(View)`
