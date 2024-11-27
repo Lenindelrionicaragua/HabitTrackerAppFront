@@ -5,7 +5,10 @@ import { Colors } from "../../styles/AppStyles";
 const { white, black, lightGreen, green } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+
 const containerWidth = screenWidth * 0.9;
+const containerHeight = screenHeight * 0.9;
 
 export const StatsOverviewContainer = styled(View)`
   background-color: ${white};
@@ -33,17 +36,16 @@ export const CategoryStatsContainer = styled(View)`
   width: ${containerWidth};
   justify-content: space-between;
   flex-direction: row;
-  background-color: ${green};
 `;
 
 export const SecondaryStatsContainer = styled(View)`
   justify-content: space-between;
-  margin-vertical: 10px;
   justify-content: left;
 `;
 
 export const MinutesList = styled(View)`
-  width: ${containerWidth / 2};
+  width: ${containerWidth / 2.03};
+  height: ${containerHeight / 3};
   background-color: ${white};
   flex-direction: center;
   padding: 0px 30px;
@@ -55,7 +57,8 @@ export const MinutesList = styled(View)`
 `;
 
 export const GoalsList = styled(View)`
-  width: ${containerWidth / 2};
+  width: ${containerWidth / 2.03};
+  height: ${containerHeight / 3};
   background-color: ${white};
   flex-direction: center;
   padding: 0px 30px;
@@ -102,7 +105,7 @@ export const SubTitle = styled(Text)`
 
 export const MinutesTitle = styled(Text)`
   font-size: 15px;
-  padding: 0px 30px;
+  padding: 10px 0px 10px 0px;
   margin: 0px 0px 0px 0px;
   letter-spacing: 1px;
   font-weight: bold;
@@ -111,7 +114,7 @@ export const MinutesTitle = styled(Text)`
 
 export const GoalsTitle = styled(Text)`
   font-size: 15px;
-  padding: 0px 0px;
+  padding: 10px 0px 10px 0px;
   margin: 0px 0px 0px 0px;
   letter-spacing: 1px;
   font-weight: bold;
