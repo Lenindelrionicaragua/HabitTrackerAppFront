@@ -74,6 +74,7 @@ const MonthlyStats = () => {
           </CategoryContainer>
         </MainStatsContainer>
       </MonthlyStatsContainer>
+
       <CategoryStatsContainer>
         <MixedChart
           categories={categories}
@@ -81,6 +82,7 @@ const MonthlyStats = () => {
           goals={goals}
           chartColors={chartColors}
         />
+
         {/* <SecondaryStatsContainer>
           <MinutesList>
             <MinutesTitle>Minutes</MinutesTitle>
