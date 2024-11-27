@@ -10,6 +10,8 @@ import {
   CategoryItem,
   CategoryText,
   MinutesList,
+  GoalsTitle,
+  MinutesTitle,
   GoalsList,
   ColorBox,
   SubTitle,
@@ -66,7 +68,7 @@ const MonthlyStats = () => {
       <CategoryStatsContainer>
         <SecondaryStatsContainer>
           <MinutesList>
-            <SubTitle>Minutes</SubTitle>
+            <MinutesTitle>Minutes</MinutesTitle>
             {categoryData.map((category, index) => (
               <CategoryItem key={category.name}>
                 <ColorBox style={{ backgroundColor: sliceColors[index] }} />
@@ -74,9 +76,10 @@ const MonthlyStats = () => {
               </CategoryItem>
             ))}
           </MinutesList>
-
+        </SecondaryStatsContainer>
+        <SecondaryStatsContainer>
           <GoalsList>
-            <SubTitle>Goals</SubTitle>
+            <GoalsTitle>Goals</GoalsTitle>
             {categoryData.map((category, index) => (
               <CategoryItem key={category.name}>
                 <ColorBox style={{ backgroundColor: sliceColors[index] }} />
