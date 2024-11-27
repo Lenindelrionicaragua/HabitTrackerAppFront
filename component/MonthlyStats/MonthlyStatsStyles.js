@@ -7,11 +7,14 @@ const { white, black, lightGreen } = Colors;
 const screenWidth = Dimensions.get("window").width;
 const containerWidth = screenWidth * 0.9;
 
+export const StatsOverviewContainer = styled(View)`
+  background-color: ${white};
+`;
+
 export const MonthlyStatsContainer = styled(View)`
   width: ${containerWidth};
   flex-direction: center;
   border-radius: 10px;
-  background-color: ${white};
   margin-vertical: 10px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
@@ -25,10 +28,45 @@ export const MainStatsContainer = styled(View)`
   justify-content: space-around;
 `;
 
+export const CategoryStatsContainer = styled(View)`
+  width: ${containerWidth};
+  flex-direction: center;
+`;
+
+export const SecondaryStatsContainer = styled(View)`
+  flex-direction: row;
+  margin-vertical: 10px;
+  justify-content: space-around;
+`;
+
+export const MinutesList = styled(View)`
+  flex-direction: center;
+  border-radius: 10px;
+  margin-vertical: 10px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 6;
+`;
+
+export const GoalsList = styled(View)`
+  flex-direction: center;
+  border-radius: 10px;
+  margin-vertical: 10px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 6;
+`;
+
 export const CategoryContainer = styled(View)`
   flex-direction: column;
   margin-vertical: 10px;
   justify-content: center;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 6;
 `;
 
 export const CategoryItem = styled(View)`
@@ -64,11 +102,4 @@ export const InfoText = styled(Text)`
   padding: 0px 30px;
   margin: 10px 0px 0px 0px;
   color: ${lightGreen};
-`;
-
-export const HabitsMinutesList = styled(View)`
-  flex-direction: column;
-  margin-vertical: 10px;
-  justify-content: center;
-  background-color: ${black};
 `;

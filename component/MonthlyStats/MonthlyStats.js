@@ -1,12 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {
+  StatsOverviewContainer,
   MonthlyStatsContainer,
+  CategoryStatsContainer,
   MainStatsContainer,
+  SecondaryStatsContainer,
   CategoryContainer,
   CategoryItem,
   CategoryText,
-  HabitsMinutesList,
+  MinutesList,
+  GoalsList,
   ColorBox,
   SubTitle,
   InfoText
@@ -34,41 +38,55 @@ const MonthlyStats = () => {
   } = useSelector(state => state.monthlyStats);
 
   return (
-    <MonthlyStatsContainer>
-      <SubTitle>Time distribution</SubTitle>
-      <InfoText>
-        Days with records: {daysWithRecords} | Daily Average:{" "}
-        {dailyAverageMinutes} minutes
-      </InfoText>
-      <MainStatsContainer>
-        <DoughnutChart
-          series={series}
-          sliceColor={sliceColors}
-          text={totalMinutes}
-        />
-        <CategoryContainer>
-          {/* Map through categoryData to render categories dynamically */}
-          {categoryData.map((category, index) => (
-            <CategoryItem key={category.name}>
-              <ColorBox style={{ backgroundColor: sliceColors[index] }} />
-              <CategoryText>
-                {category.name} ({category.percentage}%)
-              </CategoryText>
-            </CategoryItem>
-          ))}
-        </CategoryContainer>
-      </MainStatsContainer>
-      <SubTitle>Habits total</SubTitle>
-      <HabitsMinutesList>
-        {/* Map through categoryData to render categories dynamically */}
-        {categoryData.map((category, index) => (
-          <CategoryItem key={category.name}>
-            <ColorBox style={{ backgroundColor: sliceColors[index] }} />
-            <CategoryText>{category.totalMinutes} minutes</CategoryText>
-          </CategoryItem>
-        ))}
-      </HabitsMinutesList>
-    </MonthlyStatsContainer>
+    <StatsOverviewContainer>
+      <MonthlyStatsContainer>
+        <SubTitle>Time distribution</SubTitle>
+        <InfoText>
+          Days with records: {daysWithRecords} | Daily Average:{" "}
+          {dailyAverageMinutes} minutes
+        </InfoText>
+        <MainStatsContainer>
+          <DoughnutChart
+            series={series}
+            sliceColor={sliceColors}
+            text={totalMinutes}
+          />
+          <CategoryContainer>
+            {categoryData.map((category, index) => (
+              <CategoryItem key={category.name}>
+                <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+                <CategoryText>
+                  {category.name} ({category.percentage}%)
+                </CategoryText>
+              </CategoryItem>
+            ))}
+          </CategoryContainer>
+        </MainStatsContainer>
+      </MonthlyStatsContainer>
+      <CategoryStatsContainer>
+        <SecondaryStatsContainer>
+          <MinutesList>
+            <SubTitle>Minutes</SubTitle>
+            {categoryData.map((category, index) => (
+              <CategoryItem key={category.name}>
+                <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+                <CategoryText>{category.totalMinutes} minutes</CategoryText>
+              </CategoryItem>
+            ))}
+          </MinutesList>
+
+          <GoalsList>
+            <SubTitle>Goals</SubTitle>
+            {categoryData.map((category, index) => (
+              <CategoryItem key={category.name}>
+                <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+                <CategoryText>{category.dailyGoal} minutes</CategoryText>
+              </CategoryItem>
+            ))}
+          </GoalsList>
+        </SecondaryStatsContainer>
+      </CategoryStatsContainer>
+    </StatsOverviewContainer>
   );
 };
 
