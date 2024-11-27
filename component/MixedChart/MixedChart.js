@@ -1,16 +1,15 @@
 import React from "react";
 import { LineChart } from "react-native-chart-kit";
-import { Dimensions, Platform } from "react-native";
-import { ChartContainer, ChartTitle } from "./MixedChartStyles";
+import { Dimensions } from "react-native";
+import { ChartContainer } from "./MixedChartStyles";
 import { Colors } from "../../styles/AppStyles";
 
 const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
-  const containerWidth = Platform.OS === "web" ? screenWidth : screenWidth;
-  const containerHeight =
-    Platform.OS === "web" ? screenHeight : screenHeight / 4;
+  const containerWidth = screenWidth * 0.92;
+  const containerHeight = screenHeight * 0.25;
 
   const { black, white } = Colors;
 
@@ -33,11 +32,10 @@ const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
 
   return (
     <ChartContainer>
-      <ChartTitle>Achievement Flow</ChartTitle>
       <LineChart
         data={chartData}
-        width={360}
-        height={180}
+        width={containerWidth}
+        height={containerHeight}
         chartConfig={{
           backgroundGradientFrom: white,
           backgroundGradientTo: white,

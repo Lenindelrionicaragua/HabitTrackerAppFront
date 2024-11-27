@@ -40,9 +40,17 @@ const MonthlyStats = () => {
     success
   } = useSelector(state => state.monthlyStats);
 
-  const categories = ["Work", "Exercise", "Study"];
-  const recordedMinutes = [120, 90, 60]; // Example data
-  const goals = [150, 100, 80]; // Example goals
+  const categories = [
+    "Work",
+    "Exercise",
+    "Study",
+    "Yoga",
+    "Rest",
+    "Music",
+    "Family"
+  ];
+  const recordedMinutes = [120, 90, 60, 300, 400, 100]; // Example data
+  const goals = [150, 100, 80, 20, 100, 200]; // Example goals
   const chartColors = {
     bar: "rgba(75, 192, 192, 1)",
     line: "rgba(255, 99, 132, 1)"
@@ -74,16 +82,15 @@ const MonthlyStats = () => {
           </CategoryContainer>
         </MainStatsContainer>
       </MonthlyStatsContainer>
+      <MixedChart
+        categories={categories}
+        recordedMinutes={recordedMinutes}
+        goals={goals}
+        chartColors={chartColors}
+      />
+      {/* <CategoryStatsContainer> */}
 
-      <CategoryStatsContainer>
-        <MixedChart
-          categories={categories}
-          recordedMinutes={recordedMinutes}
-          goals={goals}
-          chartColors={chartColors}
-        />
-
-        {/* <SecondaryStatsContainer>
+      {/* <SecondaryStatsContainer>
           <MinutesList>
             <MinutesTitle>Minutes</MinutesTitle>
             {categoryData.map((category, index) => (
@@ -105,7 +112,7 @@ const MonthlyStats = () => {
             ))}
           </GoalsList>
         </SecondaryStatsContainer> */}
-      </CategoryStatsContainer>
+      {/* </CategoryStatsContainer> */}
     </StatsOverviewContainer>
   );
 };
