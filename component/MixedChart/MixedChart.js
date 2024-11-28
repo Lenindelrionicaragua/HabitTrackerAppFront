@@ -1,10 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { ChartContainer } from "./MixedChartStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
+const MixedChart = ({ chartColors }) => {
+  const { totalDailyMinutes, categoryData } = useSelector(
+    state => state.monthlyStats
+  );
+
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
 
@@ -13,23 +18,33 @@ const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
 
   const { black, white, orange } = Colors;
 
-  const getBarColor = index => chartColors.bar[index];
+  // Calculate average daily goal
+  const totalGoals = categoryData.reduce(
+    (sum, category) => sum + category.dailyGoal,
+    0
+  );
+  const averageDailyGoal = totalGoals / Object.keys(totalDailyMinutes).length;
+
+  const labels = Object.keys(totalDailyMinutes).map(date =>
+    new Date(date).toLocaleDateString("en-GB")
+  );
+  const dailyMinutes = Object.values(totalDailyMinutes);
 
   const chartData = {
-    labels: categories,
+    labels,
     datasets: [
       {
-        data: recordedMinutes,
-        color: (opacity = 1, index) => getBarColor(index), // Bar color
+        data: dailyMinutes,
+        color: (opacity = 1) => `rgba(75, 192, 192, ${opacity})`,
         strokeWidth: 2
       },
       {
-        data: goals,
-        color: (opacity = 1) => chartColors.line, // Line color
+        data: new Array(dailyMinutes.length).fill(averageDailyGoal),
+        color: (opacity = 1) => `rgba(255, 99, 132, ${opacity})`,
         strokeWidth: 2
       }
     ],
-    legend: ["Recorded Minutes", "Monthly Goals"]
+    legend: ["Daily Minutes", "Average Daily Goal"]
   };
 
   return (

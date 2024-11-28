@@ -20,6 +20,7 @@ import {
 import { MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import MixedChart from "../MixedChart/MixedChart";
+
 import { setMonthlyStats } from "../../actions/counterActions";
 
 // const { white, black } = Colors;
@@ -40,21 +41,10 @@ const MonthlyStats = () => {
     success
   } = useSelector(state => state.monthlyStats);
 
-  // const categories = [
-  //   "Work",
-  //   "Exercise",
-  //   "Study",
-  //   "Yoga",
-  //   "Rest",
-  //   "Music",
-  //   "Family"
-  // ];
-  // const recordedMinutes = [120, 90, 60, 300, 400, 100]; // Example data
-  // const goals = [150, 100, 80, 20, 100, 200]; // Example goals
-  const chartColors = {
-    bar: sliceColors, // Usa los colores de las categorías para las barras
-    line: "rgba(255, 99, 132, 1)" // Color para la línea (puedes cambiarlo según el diseño)
-  };
+  const colorMap = categoryData.reduce((map, category, index) => {
+    map[category.name] = sliceColors[index];
+    return map;
+  }, {});
 
   const categories = categoryData.map(category => category.name);
   const recordedMinutes = categoryData.map(category => category.totalMinutes);
@@ -91,8 +81,8 @@ const MonthlyStats = () => {
         recordedMinutes={recordedMinutes}
         goals={goals}
         chartColors={{
-          bar: sliceColors,
-          line: color3
+          bar: categories.map(name => colorMap[name]),
+          line: "rgba(255, 99, 132, 1)"
         }}
       />
     </StatsOverviewContainer>
