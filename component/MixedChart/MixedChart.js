@@ -13,12 +13,14 @@ const MixedChart = ({ categories, recordedMinutes, goals, chartColors }) => {
 
   const { black, white, orange } = Colors;
 
+  const getBarColor = index => chartColors.bar[index];
+
   const chartData = {
     labels: categories,
     datasets: [
       {
         data: recordedMinutes,
-        color: (opacity = 1) => chartColors.bar, // Bar color
+        color: (opacity = 1, index) => getBarColor(index), // Bar color
         strokeWidth: 2
       },
       {
