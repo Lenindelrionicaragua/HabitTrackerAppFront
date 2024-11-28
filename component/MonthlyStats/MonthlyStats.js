@@ -17,13 +17,13 @@ import {
   SubTitle,
   InfoText
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
-import { MonthlyStatsColors } from "../../styles/AppStyles";
+import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import MixedChart from "../MixedChart/MixedChart";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
-// const { white, black } = Colors;
+const { white, black } = Colors;
 const { color1, color2, color3, color4, color5, color6, color7 } =
   MonthlyStatsColors;
 
@@ -40,6 +40,15 @@ const MonthlyStats = () => {
     sliceColors,
     success
   } = useSelector(state => state.monthlyStats);
+
+  // Secondary fallback to handle cases where the user has no activity records.
+  // While the reducer provides fallback values for fetch failures, this ensures
+  // the DoughnutChart renders properly with placeholder values when the data
+  // fetch is successful but returns no meaningful records (e.g., a new user).
+  const seriesSum = series.reduce((sum, value) => sum + value, 0);
+  const finalSeries = seriesSum === 0 ? [1] : series;
+  const finalSliceColors =
+    seriesSum === 0 ? ["#bbcbde"] : sliceColors.slice(0, finalSeries.length);
 
   const colorMap = categoryData.reduce((map, category, index) => {
     map[category.name] = sliceColors[index];
@@ -60,8 +69,8 @@ const MonthlyStats = () => {
         </InfoText>
         <MainStatsContainer>
           <DoughnutChart
-            series={series}
-            sliceColor={sliceColors}
+            series={finalSeries}
+            sliceColor={finalSliceColors}
             text={totalMinutes}
           />
           <CategoryContainer>
@@ -77,7 +86,7 @@ const MonthlyStats = () => {
         </MainStatsContainer>
       </MonthlyStatsContainer>
       <MainStatsContainer>
-        <MixedChart
+        {/* <MixedChart
           categories={categories}
           recordedMinutes={recordedMinutes}
           goals={goals}
@@ -85,7 +94,7 @@ const MonthlyStats = () => {
             bar: categories.map(name => colorMap[name]),
             line: "rgba(255, 99, 132, 1)"
           }}
-        />
+        /> */}
       </MainStatsContainer>
     </StatsOverviewContainer>
   );

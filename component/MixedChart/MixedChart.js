@@ -16,7 +16,7 @@ const MixedChart = ({ chartColors }) => {
   const containerWidth = screenWidth * 0.89;
   const containerHeight = screenHeight * 0.26;
 
-  const { black, white, orange } = Colors;
+  const { white } = Colors;
 
   // Calculate average daily goal
   const totalGoals = categoryData.reduce(
