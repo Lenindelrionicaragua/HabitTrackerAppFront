@@ -11,7 +11,6 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@reduxjs/toolkit": "^2.2.7",
-    "@testing-library/react-hooks": "^8.0.1",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
     "expo": "51.0.8",
@@ -80,7 +79,6 @@
     "cypress": "^13.14.1",
     "cypress-real-events": "^1.13.0",
     "istanbul": "^0.4.5",
-    "jest": "^29.7.0",
     "prettier": "3.2.5",
     "react-native-svg-transformer": "^1.5.0",
     "typescript": "^5.5.4"

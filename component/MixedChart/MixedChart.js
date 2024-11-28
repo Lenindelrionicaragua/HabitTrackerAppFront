@@ -25,13 +25,13 @@ const MixedChart = ({ chartColors }) => {
   );
   const averageDailyGoal = totalGoals / Object.keys(totalDailyMinutes).length;
 
-  const labels = Object.keys(totalDailyMinutes).map(date =>
-    new Date(date).toLocaleDateString("en-GB")
-  );
+  const days = Object.keys(totalDailyMinutes); // Get days as keys
+  const dayLabels = days.map((_, index) => index + 1); // Generate incremental labels starting from 1
+
   const dailyMinutes = Object.values(totalDailyMinutes);
 
   const chartData = {
-    labels,
+    labels: dayLabels,
     datasets: [
       {
         data: dailyMinutes,
@@ -44,7 +44,7 @@ const MixedChart = ({ chartColors }) => {
         strokeWidth: 2
       }
     ],
-    legend: ["Daily Minutes", "Average Daily Goal"]
+    legend: ["Daily Minutes", "Daily Goal"]
   };
 
   return (

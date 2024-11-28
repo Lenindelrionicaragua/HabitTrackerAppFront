@@ -13,7 +13,6 @@ const containerHeight = screenHeight * 0.3;
 export const ChartContainer = styled(View)`
   width: ${containerWidth};
   height: ${containerHeight};
-  background-color: ${white};
   border-radius: 10px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
