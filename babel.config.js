@@ -17,9 +17,6 @@ module.exports = function (api) {
       "@babel/plugin-proposal-nullish-coalescing-operator",
       "@babel/plugin-proposal-optional-chaining",
       "@babel/plugin-proposal-export-default-from"
-    ],
-    transformIgnorePatterns: [
-      "node_modules/(?!react-native|react-navigation|d3-shape|react-native-pie-chart)"
     ]
   };
 };
