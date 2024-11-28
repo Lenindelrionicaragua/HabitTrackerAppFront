@@ -42,6 +42,12 @@ const useMonthlyStats = storedCredentials => {
     }
   );
 
+  useEffect(() => {
+    if (storedCredentials) {
+      setHasFetched(false);
+    }
+  }, [storedCredentials]);
+
   // Fetch categories when stored credentials are available
   useEffect(() => {
     if (storedCredentials && !hasFetched) {
