@@ -19,8 +19,7 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
-import MixedChart from "../MixedChart/MixedChart";
-// import ProgressChartComponent from "../ProgressChart/ProgressChart";
+import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
@@ -43,6 +42,39 @@ const MonthlyStats = () => {
     isDemo
   } = useSelector(state => state.monthlyStats);
 
+  const fakeData = [
+    {
+      series: [60, 40],
+      sliceColor: ["#FF5733", "#C70039"],
+      text: "Work"
+    },
+    {
+      series: [80, 20],
+      sliceColor: ["#FFC300", "#DAF7A6"],
+      text: "Exercise"
+    },
+    {
+      series: [50, 50],
+      sliceColor: ["#581845", "#900C3F"],
+      text: "Family"
+    },
+    {
+      series: [90, 10],
+      sliceColor: ["#2980B9", "#6DD5FA"],
+      text: "Study"
+    },
+    {
+      series: [30, 70],
+      sliceColor: ["#1ABC9C", "#16A085"],
+      text: "Rest"
+    },
+    {
+      series: [70, 30],
+      sliceColor: ["#8E44AD", "#9B59B6"],
+      text: "Screen-free"
+    }
+  ];
+
   // Secondary fallback to handle cases where the user has no activity records.
   // While the reducer provides fallback values for fetch failures, this ensures
   // the DoughnutChart renders properly with placeholder values when the data
@@ -57,15 +89,15 @@ const MonthlyStats = () => {
       ? ["#bbcbde"]
       : categoryColors.slice(0, finalCategoryMinutes.length);
 
-  const colorMap = categoryData.reduce((map, category, index) => {
-    map[category.name] = categoryColors[index];
-    return map;
-  }, {});
+  // const colorMap = categoryData.reduce((map, category, index) => {
+  //   map[category.name] = categoryColors[index];
+  //   return map;
+  // }, {});
 
-  const categories = categoryData.map(category => category.name);
-  const recordedMinutes = categoryData.map(category => category.totalMinutes);
+  // const categories = categoryData.map(category => category.name);
+  // const recordedMinutes = categoryData.map(category => category.totalMinutes);
 
-  const goals = categoryData.map(category => category.goal || 0);
+  // const goals = categoryData.map(category => category.goal || 0);
 
   return (
     <StatsOverviewContainer>
@@ -98,16 +130,7 @@ const MonthlyStats = () => {
         </MainStatsContainer>
       </MonthlyStatsContainer>
       <MainStatsContainer>
-        <MainStatsContainer>
-          {/* <ProgressChartComponent
-            chartColors={{
-              bar: categories.map(name => colorMap[name]),
-              line: "rgba(255, 99, 132, 1)"
-            }}
-          /> */}
-        </MainStatsContainer>
-
-        <MixedChart
+        {/* <MixedChart
           categories={categories}
           recordedMinutes={recordedMinutes}
           goals={goals}
@@ -115,7 +138,8 @@ const MonthlyStats = () => {
             bar: categories.map(name => colorMap[name]),
             line: "rgba(255, 99, 132, 1)"
           }}
-        />
+        /> */}
+        <DoughnutGrid data={fakeData} />
       </MainStatsContainer>
     </StatsOverviewContainer>
   );
