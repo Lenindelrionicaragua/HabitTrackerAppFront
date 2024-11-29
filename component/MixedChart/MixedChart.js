@@ -4,6 +4,7 @@ import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { ChartContainer } from "./MixedChartStyles";
 import { Colors } from "../../styles/AppStyles";
+import { logInfo } from "../../util/logging";
 
 const MixedChart = ({ chartColors }) => {
   const { totalDailyMinutes, categoryData } = useSelector(
@@ -29,6 +30,8 @@ const MixedChart = ({ chartColors }) => {
   const dayLabels = days.map((_, index) => index + 1); // Generate incremental labels starting from 1
 
   const dailyMinutes = Object.values(totalDailyMinutes);
+
+  logInfo(dailyMinutes);
 
   const chartData = {
     labels: dayLabels,

@@ -106,7 +106,7 @@ const useMonthlyStats = storedCredentials => {
     dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
     categoryMinutes: roundedData?.categoryMinutes || [1],
-    categoryColors: roundedData?.categoryColors || ["#ffffff"],
+    categoryColors: roundedData?.categoryColors || ["#bbcbde"],
     success,
     errorMessage,
     message,

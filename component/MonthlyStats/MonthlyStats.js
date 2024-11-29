@@ -19,7 +19,8 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
-import MixedChart from "../MixedChart/MixedChart";
+// import MixedChart from "../MixedChart/MixedChart";
+import ProgressChartComponent from "../ProgressChart/ProgressChart";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
@@ -63,6 +64,7 @@ const MonthlyStats = () => {
 
   const categories = categoryData.map(category => category.name);
   const recordedMinutes = categoryData.map(category => category.totalMinutes);
+
   const goals = categoryData.map(category => category.goal || 0);
 
   return (
@@ -96,19 +98,24 @@ const MonthlyStats = () => {
         </MainStatsContainer>
       </MonthlyStatsContainer>
       <MainStatsContainer>
-        {categoryData.length > 0 ? (
-          <MixedChart
-            categories={categories}
-            recordedMinutes={recordedMinutes}
-            goals={goals}
+        <MainStatsContainer>
+          <ProgressChartComponent
             chartColors={{
               bar: categories.map(name => colorMap[name]),
               line: "rgba(255, 99, 132, 1)"
             }}
           />
-        ) : (
-          <InfoText>No data available for MixedChart</InfoText>
-        )}
+        </MainStatsContainer>
+
+        {/* <MixedChart
+          categories={categories}
+          recordedMinutes={recordedMinutes}
+          goals={goals}
+          chartColors={{
+            bar: categories.map(name => colorMap[name]),
+            line: "rgba(255, 99, 132, 1)"
+          }}
+        /> */}
       </MainStatsContainer>
     </StatsOverviewContainer>
   );
