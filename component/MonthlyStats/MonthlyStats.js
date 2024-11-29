@@ -38,7 +38,8 @@ const MonthlyStats = () => {
     categoryData,
     series,
     sliceColors,
-    success
+    success,
+    isDemo
   } = useSelector(state => state.monthlyStats);
 
   // Secondary fallback to handle cases where the user has no activity records.
@@ -62,7 +63,11 @@ const MonthlyStats = () => {
   return (
     <StatsOverviewContainer>
       <MonthlyStatsContainer>
-        <SubTitle>Time distribution</SubTitle>
+        <SubTitle>
+          {isDemo
+            ? "Demo Mode: Example Time Distribution"
+            : "Your Time Distribution"}
+        </SubTitle>
         <InfoText>
           Days with records: {daysWithRecords} | Daily Average:{" "}
           {dailyAverageMinutes} minutes
