@@ -11,6 +11,7 @@ const containerWidth = screenWidth * 0.9;
 const containerHeight = screenHeight * 0.3;
 
 export const GridContainer = styled.View`
+  flex: 1;
   width: ${containerWidth};
   height: ${containerHeight};
   border-radius: 10px;
@@ -19,11 +20,16 @@ export const GridContainer = styled.View`
   shadow-radius: 4px;
   elevation: 6;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
+  align-content: center;
   align-items: center;
+  background-color: ${black};
 `;
 
 export const GridItem = styled.View`
-  margin-bottom: 5px;
+  width: 30%;
+
+  margin-bottom: 0px;
   align-items: center;
 `;

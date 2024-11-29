@@ -1,14 +1,15 @@
+import { View, Text, Dimensions } from "react-native";
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, orange } = Colors;
+const { white, black, green } = Colors;
 
 export const PieChartContainer = styled(View)`
-  position: relative;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 5px;
+  margin: 5px;
+  background-color: ${green};
 `;
 
 export const InfoTextContainer = styled(View)`
@@ -19,13 +20,18 @@ export const InfoTextContainer = styled(View)`
 `;
 
 export const InfoText = styled(Text)`
-  font-size: 18;
+  font-size: 10;
   font-weight: bold;
   color: ${black};
 `;
 
 export const SubText = styled(Text)`
-  font-size: 12px;
+  font-size: 8px;
   color: ${black};
-  margin-top: 5px;
+  margin-top: 3%;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;

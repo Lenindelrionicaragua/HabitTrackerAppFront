@@ -22,3 +22,18 @@ export const MonthlyStatsColors = {
   color6: "#554865",
   color7: "#058789"
 };
+
+export const FakeDataColors = {
+  primary1: "#FF5733",
+  primary2: "#FFC300",
+  primary3: "#581845",
+  primary4: "#2980B9",
+  primary5: "#1ABC9C",
+  primary6: "#8E44AD",
+  secondary1: "#C70039",
+  secondary2: "#DAF7A6",
+  secondary3: "#900C3F",
+  secondary4: "#6DD5FA",
+  secondary5: "#16A085",
+  secondary6: "#9B59B6"
+};
