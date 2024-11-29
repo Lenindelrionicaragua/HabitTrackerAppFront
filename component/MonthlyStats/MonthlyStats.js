@@ -86,15 +86,19 @@ const MonthlyStats = () => {
         </MainStatsContainer>
       </MonthlyStatsContainer>
       <MainStatsContainer>
-        {/* <MixedChart
-          categories={categories}
-          recordedMinutes={recordedMinutes}
-          goals={goals}
-          chartColors={{
-            bar: categories.map(name => colorMap[name]),
-            line: "rgba(255, 99, 132, 1)"
-          }}
-        /> */}
+        {categoryData.length > 0 ? (
+          <MixedChart
+            categories={categories}
+            recordedMinutes={recordedMinutes}
+            goals={goals}
+            chartColors={{
+              bar: categories.map(name => colorMap[name]),
+              line: "rgba(255, 99, 132, 1)"
+            }}
+          />
+        ) : (
+          <InfoText>No data available for MixedChart</InfoText>
+        )}
       </MainStatsContainer>
     </StatsOverviewContainer>
   );
