@@ -19,8 +19,8 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
-// import MixedChart from "../MixedChart/MixedChart";
-import ProgressChartComponent from "../ProgressChart/ProgressChart";
+import MixedChart from "../MixedChart/MixedChart";
+// import ProgressChartComponent from "../ProgressChart/ProgressChart";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
@@ -99,15 +99,15 @@ const MonthlyStats = () => {
       </MonthlyStatsContainer>
       <MainStatsContainer>
         <MainStatsContainer>
-          <ProgressChartComponent
+          {/* <ProgressChartComponent
             chartColors={{
               bar: categories.map(name => colorMap[name]),
               line: "rgba(255, 99, 132, 1)"
             }}
-          />
+          /> */}
         </MainStatsContainer>
 
-        {/* <MixedChart
+        <MixedChart
           categories={categories}
           recordedMinutes={recordedMinutes}
           goals={goals}
@@ -115,7 +115,7 @@ const MonthlyStats = () => {
             bar: categories.map(name => colorMap[name]),
             line: "rgba(255, 99, 132, 1)"
           }}
-        /> */}
+        />
       </MainStatsContainer>
     </StatsOverviewContainer>
   );
