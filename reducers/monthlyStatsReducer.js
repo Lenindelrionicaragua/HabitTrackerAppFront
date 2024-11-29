@@ -3,17 +3,6 @@ import {
   CLEAR_MONTHLY_STATS
 } from "../actions/counterActions";
 
-// Define fallback values for series and sliceColors
-const fallbackSeries = [54, 2, 0, 7, 5, 13]; // Ensures there's always at least one data point
-const fallbackSliceColors = [
-  "#fb105b",
-  "#ff6543",
-  "#ad2bd5",
-  "#ff9c97",
-  "#ffe181",
-  "#554865"
-]; // Default color for the fallback
-
 const initialState = {
   isDemo: true,
   totalMinutes: 81,
@@ -65,8 +54,15 @@ const initialState = {
       percentage: 16
     }
   ],
-  series: fallbackSeries,
-  sliceColors: fallbackSliceColors
+  categoryMinutes: [54, 2, 0, 7, 5, 13],
+  categoryColors: [
+    "#fb105b",
+    "#ff6543",
+    "#ad2bd5",
+    "#ff9c97",
+    "#ffe181",
+    "#554865"
+  ]
 };
 
 const monthlyStatsReducer = (state = initialState, action) => {

@@ -74,18 +74,18 @@ const useMonthlyStats = storedCredentials => {
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
       const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
-      const series = roundedData.categoryData.map(
+      const categoryMinutes = roundedData.categoryData.map(
         category => category.totalMinutes
       );
-      const sliceColors = roundedData.categoryData.map(
+      const categoryColors = roundedData.categoryData.map(
         (_, index) =>
           [color1, color2, color3, color4, color5, color6, color7][index % 7]
       );
 
       const monthlyStatsState = {
         ...roundedData,
-        series,
-        sliceColors,
+        categoryMinutes,
+        categoryColors,
         dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0
       };
 
@@ -105,8 +105,8 @@ const useMonthlyStats = storedCredentials => {
     daysWithRecords: roundedData?.daysWithRecords || 0,
     dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
-    series: roundedData?.series || [1],
-    sliceColors: roundedData?.sliceColors || ["#ffffff"],
+    categoryMinutes: roundedData?.categoryMinutes || [1],
+    categoryColors: roundedData?.categoryColors || ["#ffffff"],
     success,
     errorMessage,
     message,

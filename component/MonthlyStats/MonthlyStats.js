@@ -36,8 +36,8 @@ const MonthlyStats = () => {
     daysWithRecords,
     dailyAverageMinutes,
     categoryData,
-    series,
-    sliceColors,
+    categoryMinutes,
+    categoryColors,
     success,
     isDemo
   } = useSelector(state => state.monthlyStats);
@@ -46,13 +46,18 @@ const MonthlyStats = () => {
   // While the reducer provides fallback values for fetch failures, this ensures
   // the DoughnutChart renders properly with placeholder values when the data
   // fetch is successful but returns no meaningful records (e.g., a new user).
-  const seriesSum = series.reduce((sum, value) => sum + value, 0);
-  const finalSeries = seriesSum === 0 ? [1] : series;
-  const finalSliceColors =
-    seriesSum === 0 ? ["#bbcbde"] : sliceColors.slice(0, finalSeries.length);
+  const categoryMinutesSum = categoryMinutes.reduce(
+    (sum, value) => sum + value,
+    0
+  );
+  const finalCategoryMinutes = categoryMinutesSum === 0 ? [1] : categoryMinutes;
+  const finalCategoryColors =
+    categoryMinutesSum === 0
+      ? ["#bbcbde"]
+      : categoryColors.slice(0, finalCategoryMinutes.length);
 
   const colorMap = categoryData.reduce((map, category, index) => {
-    map[category.name] = sliceColors[index];
+    map[category.name] = categoryColors[index];
     return map;
   }, {});
 
@@ -74,14 +79,14 @@ const MonthlyStats = () => {
         </InfoText>
         <MainStatsContainer>
           <DoughnutChart
-            series={finalSeries}
-            sliceColor={finalSliceColors}
+            series={finalCategoryMinutes}
+            sliceColor={finalCategoryColors}
             text={totalMinutes}
           />
           <CategoryContainer>
             {categoryData.map((category, index) => (
               <CategoryItem key={category.name}>
-                <ColorBox style={{ backgroundColor: sliceColors[index] }} />
+                <ColorBox style={{ backgroundColor: categoryColors[index] }} />
                 <CategoryText>
                   {category.name} ({category.percentage}%)
                 </CategoryText>
