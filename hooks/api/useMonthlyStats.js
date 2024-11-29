@@ -103,7 +103,7 @@ const useMonthlyStats = storedCredentials => {
     totalMinutes: roundedData?.totalMinutes || 0,
     categoryCount: roundedData?.categoryCount || 0,
     daysWithRecords: roundedData?.daysWithRecords || 0,
-    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 15,
+    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
     series: roundedData?.series || [1],
     sliceColors: roundedData?.sliceColors || ["#ffffff"],

@@ -15,6 +15,7 @@ const fallbackSliceColors = [
 ]; // Default color for the fallback
 
 const initialState = {
+  isDemo: true,
   totalMinutes: 81,
   categoryCount: 6,
   daysWithRecords: 5,
