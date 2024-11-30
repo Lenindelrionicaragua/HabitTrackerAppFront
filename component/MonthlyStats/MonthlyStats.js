@@ -71,10 +71,12 @@ const MonthlyStats = () => {
     return map;
   }, {});
 
-  const categories = categoryData.map(category => category.name);
-  const recordedMinutes = categoryData.map(category => category.totalMinutes);
+  // const categories = categoryData.map(category => category.name);
+  // const recordedMinutes = categoryData.map(category => category.totalMinutes);
 
-  const goals = categoryData.map(category => category.goal || 0);
+  const monthlyGoals = categoryData.map(category =>
+    category.monthlyGoal === 0 ? 600 : category.monthlyGoal
+  );
 
   const primaryColors = Object.values(MonthlyStatsColors);
   const secondaryColors = Object.values(DoughnutChartSmallColors);
@@ -83,8 +85,11 @@ const MonthlyStats = () => {
     const primaryColor = primaryColors[index % primaryColors.length];
     const secondaryColor = secondaryColors[index % secondaryColors.length];
 
+    const progress = category.totalMinutes;
+    const remaining = Math.max(category.monthlyGoal - progress, 0);
+
     return {
-      series: [category.goal, category.totalMinutes],
+      series: [progress, remaining],
       sliceColor: [primaryColor, secondaryColor],
       text: category.name
     };
