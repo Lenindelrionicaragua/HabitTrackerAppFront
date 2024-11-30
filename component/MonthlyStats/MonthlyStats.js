@@ -17,15 +17,29 @@ import {
   SubTitle,
   InfoText
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
-import { Colors, MonthlyStatsColors } from "../../styles/AppStyles";
+import {
+  Colors,
+  MonthlyStatsColors,
+  DoughnutChartSmallColors
+} from "../../styles/AppStyles";
+
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
+// import MixedChart from "../MixedChart/MixedChart";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
 const { white, black } = Colors;
-const { color1, color2, color3, color4, color5, color6, color7 } =
-  MonthlyStatsColors;
+const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+
+const {
+  secondary1,
+  secondary2,
+  secondary3,
+  secondary4,
+  secondary5,
+  secondary6
+} = DoughnutChartSmallColors;
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
@@ -42,43 +56,6 @@ const MonthlyStats = () => {
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  const fakeData = [
-    {
-      series: [60, 40],
-      sliceColor: ["#FF5733", "#C70039"],
-      text: "Work"
-    },
-    {
-      series: [80, 20],
-      sliceColor: ["#FFC300", "#DAF7A6"],
-      text: "Exercise"
-    },
-    {
-      series: [50, 50],
-      sliceColor: ["#581845", "#900C3F"],
-      text: "Family"
-    },
-    {
-      series: [90, 10],
-      sliceColor: ["#2980B9", "#6DD5FA"],
-      text: "Study"
-    },
-    {
-      series: [30, 70],
-      sliceColor: ["#1ABC9C", "#16A085"],
-      text: "Rest"
-    },
-    {
-      series: [70, 30],
-      sliceColor: ["#8E44AD", "#9B59B6"],
-      text: "Screen-free"
-    }
-  ];
-
-  // Secondary fallback to handle cases where the user has no activity records.
-  // While the reducer provides fallback values for fetch failures, this ensures
-  // the DoughnutChart renders properly with placeholder values when the data
-  // fetch is successful but returns no meaningful records (e.g., a new user).
   const categoryMinutesSum = categoryMinutes.reduce(
     (sum, value) => sum + value,
     0
@@ -89,15 +66,29 @@ const MonthlyStats = () => {
       ? ["#bbcbde"]
       : categoryColors.slice(0, finalCategoryMinutes.length);
 
-  // const colorMap = categoryData.reduce((map, category, index) => {
-  //   map[category.name] = categoryColors[index];
-  //   return map;
-  // }, {});
+  const colorMap = categoryData.reduce((map, category, index) => {
+    map[category.name] = categoryColors[index];
+    return map;
+  }, {});
 
-  // const categories = categoryData.map(category => category.name);
-  // const recordedMinutes = categoryData.map(category => category.totalMinutes);
+  const categories = categoryData.map(category => category.name);
+  const recordedMinutes = categoryData.map(category => category.totalMinutes);
 
-  // const goals = categoryData.map(category => category.goal || 0);
+  const goals = categoryData.map(category => category.goal || 0);
+
+  const primaryColors = Object.values(MonthlyStatsColors);
+  const secondaryColors = Object.values(DoughnutChartSmallColors);
+
+  const dataForDoughnutGrid = categoryData.map((category, index) => {
+    const primaryColor = primaryColors[index % primaryColors.length];
+    const secondaryColor = secondaryColors[index % secondaryColors.length];
+
+    return {
+      series: [category.goal, category.totalMinutes],
+      sliceColor: [primaryColor, secondaryColor],
+      text: category.name
+    };
+  });
 
   return (
     <StatsOverviewContainer>
@@ -129,18 +120,20 @@ const MonthlyStats = () => {
           </CategoryContainer>
         </MainStatsContainer>
       </MonthlyStatsContainer>
-      <MainStatsContainer>
-        {/* <MixedChart
-          categories={categories}
-          recordedMinutes={recordedMinutes}
-          goals={goals}
-          chartColors={{
-            bar: categories.map(name => colorMap[name]),
-            line: "rgba(255, 99, 132, 1)"
-          }}
-        /> */}
-        <DoughnutGrid data={fakeData} />
-      </MainStatsContainer>
+
+      <SecondaryStatsContainer>
+        <DoughnutGrid data={dataForDoughnutGrid} />
+      </SecondaryStatsContainer>
+
+      {/* <MixedChart
+        categories={categories}
+        recordedMinutes={recordedMinutes}
+        goals={goals}
+        chartColors={{
+          bar: categories.map(name => colorMap[name]),
+          line: "rgba(255, 99, 132, 1)"
+        }}
+      /> */}
     </StatsOverviewContainer>
   );
 };

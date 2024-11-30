@@ -9,7 +9,6 @@ export const PieChartContainer = styled(View)`
   align-items: center;
   padding: 5px;
   margin: 5px;
-  background-color: ${green};
 `;
 
 export const InfoTextContainer = styled(View)`

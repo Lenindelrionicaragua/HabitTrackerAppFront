@@ -7,8 +7,7 @@ import { calculateDailyAverage } from "../../util/calculateDailyAverage";
 import { MonthlyStatsColors } from "../../styles/AppStyles";
 import { setMonthlyStats } from "../../actions/counterActions";
 
-const { color1, color2, color3, color4, color5, color6, color7 } =
-  MonthlyStatsColors;
+const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
 
 const useMonthlyStats = storedCredentials => {
   const dispatch = useDispatch();
@@ -79,7 +78,7 @@ const useMonthlyStats = storedCredentials => {
       );
       const categoryColors = roundedData.categoryData.map(
         (_, index) =>
-          [color1, color2, color3, color4, color5, color6, color7][index % 7]
+          [color1, color2, color3, color4, color5, color6][index % 6]
       );
 
       const monthlyStatsState = {

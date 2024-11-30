@@ -76,16 +76,12 @@ export const InfoText = styled(Text)`
   color: ${lightGreen};
 `;
 
-// export const CategoryStatsContainer = styled(View)`
-//   width: ${containerWidth};
-//   justify-content: space-between;
-//   flex-direction: row;
-// `;
-
-// export const SecondaryStatsContainer = styled(View)`
-//   justify-content: space-between;
-//   justify-content: left;
-// `;
+export const SecondaryStatsContainer = styled(View)`
+  width: ${containerWidth};
+  height: ${containerHeight / 2.1};
+  justify-content: space-between;
+  justify-content: left;
+`;
 
 // export const MinutesList = styled(View)`
 //   width: ${containerWidth / 2.03};

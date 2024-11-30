@@ -14,26 +14,19 @@ export const Colors = {
 };
 
 export const MonthlyStatsColors = {
-  color1: "#fb105b",
-  color2: "#ff6543",
-  color3: "#ad2bd5",
-  color4: "#ff9c97",
-  color5: "#ffe181",
-  color6: "#554865",
-  color7: "#058789"
+  color1: "#fb105b", // Intense red
+  color2: "#ff6543", // Intense orange
+  color3: "#ad2bd5", // Purple
+  color4: "#16A085", // Green
+  color5: "#ffe181", // Pastel yellow
+  color6: "#554865" // Purple-gray
 };
 
-export const FakeDataColors = {
-  primary1: "#FF5733",
-  primary2: "#FFC300",
-  primary3: "#581845",
-  primary4: "#2980B9",
-  primary5: "#1ABC9C",
-  primary6: "#8E44AD",
-  secondary1: "#C70039",
-  secondary2: "#DAF7A6",
-  secondary3: "#900C3F",
-  secondary4: "#6DD5FA",
-  secondary5: "#16A085",
-  secondary6: "#9B59B6"
+export const DoughnutChartSmallColors = {
+  secondary1: "#ffa3b0", // Light pink (matches the intense red)
+  secondary2: "#ffb59f", // Light orange (matches the intense orange)
+  secondary3: "#d7b8e9", // Lavender (matches the purple)
+  secondary4: "#DAF7A6", // Light green (matches the green)
+  secondary5: "#fff4cc", // Cream (matches the pastel yellow)
+  secondary6: "#857891" // Lavender-gray (matches the purple-gray)
 };
