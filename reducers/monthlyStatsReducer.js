@@ -21,37 +21,43 @@ const initialState = {
       name: "Example 1",
       dailyGoal: 0,
       totalMinutes: 54,
-      percentage: 66
+      percentage: 66,
+      monthlyGoal: 0
     },
     {
       name: "Example 2",
       dailyGoal: 0,
       totalMinutes: 2,
-      percentage: 3
+      percentage: 3,
+      monthlyGoal: 0
     },
     {
       name: "Example 3",
       dailyGoal: 0,
       totalMinutes: 0,
-      percentage: 0
+      percentage: 0,
+      monthlyGoal: 0
     },
     {
       name: "Example 4",
       dailyGoal: 0,
       totalMinutes: 7,
-      percentage: 9
+      percentage: 9,
+      monthlyGoal: 0
     },
     {
       name: "Example 5",
       dailyGoal: 0,
       totalMinutes: 5,
-      percentage: 6
+      percentage: 6,
+      monthlyGoal: 0
     },
     {
       name: "Example 6",
       dailyGoal: 0,
       totalMinutes: 13,
-      percentage: 16
+      percentage: 16,
+      monthlyGoal: 0
     }
   ],
   categoryMinutes: [54, 2, 0, 7, 5, 13],

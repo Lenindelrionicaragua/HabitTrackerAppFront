@@ -67,9 +67,18 @@ const useMonthlyStats = storedCredentials => {
     }
   }, [error]);
 
+  const getDaysInMonth = (month, year) => new Date(year, month, 0).getDate();
+
   // Calculate derived data and update Redux store
   useEffect(() => {
     if (roundedData) {
+      const daysInCurrentMonth = getDaysInMonth(month, year);
+
+      const categoryMonthlyGoals = roundedData.categoryData.map(category => ({
+        ...category,
+        monthlyGoal: (category.dailyGoal || 0) * daysInCurrentMonth
+      }));
+
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
       const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
@@ -83,6 +92,7 @@ const useMonthlyStats = storedCredentials => {
 
       const monthlyStatsState = {
         ...roundedData,
+        categoryData: categoryMonthlyGoals,
         categoryMinutes,
         categoryColors,
         dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0
@@ -95,7 +105,7 @@ const useMonthlyStats = storedCredentials => {
         JSON.stringify(monthlyStatsState, null, 2)
       );
     }
-  }, [roundedData, dispatch]);
+  }, [roundedData, month, year, dispatch]);
 
   // Return the derived data
   return {
