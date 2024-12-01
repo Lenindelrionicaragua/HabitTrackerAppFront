@@ -85,9 +85,18 @@ const useMonthlyStats = storedCredentials => {
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
       const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
-      const totalCategoryMinutes = roundedData.categoryData.map(
-        category => category.totalMinutes
-      );
+      // Ensure categoryData exists before processing
+      const totalCategoryMinutesInitialData = roundedData.categoryData
+        ? roundedData.categoryData.map(category => category.totalMinutes)
+        : []; // Default to an empty array if categoryData is undefined
+
+      // Process totalCategoryMinutes only if there is valid initial data
+      const totalCategoryMinutes =
+        totalCategoryMinutesInitialData.length === 0
+          ? Array(6).fill(1) // Default to [1, 1, 1, 1, 1, 1] if no data is available
+          : totalCategoryMinutesInitialData.every(min => min === 0)
+            ? Array(totalCategoryMinutesInitialData.length).fill(1) // Replace all 0s with 1s
+            : totalCategoryMinutesInitialData.map(min => (min === 0 ? 1 : min)); // Replace individual 0s with 1
 
       // const categoryColors = roundedData.categoryData.map(
       //   (_, index) =>
