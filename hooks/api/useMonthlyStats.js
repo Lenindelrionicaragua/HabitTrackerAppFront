@@ -35,7 +35,10 @@ const useMonthlyStats = storedCredentials => {
       if (receivedData.success) {
         setSuccess(true);
         setMessage("Monthly stats fetched successfully.");
+        // Round numbers to 0 decimal places by default.
+        // Optionally, you can specify the number of decimal places as the second argument.
         const processedData = roundAllValues(receivedData, 0);
+
         setRoundedData(processedData);
       }
     }

@@ -5,10 +5,10 @@ import {
 
 const initialState = {
   isDemo: true,
-  totalMinutes: 81,
+  totalMinutes: 1118,
   categoryCount: 6,
   daysWithRecords: 5,
-  dailyAverageMinutes: 16.2,
+  dailyAverageMinutes: 223.6,
   totalDailyMinutes: {
     "2024-11-23": 51,
     "2024-11-24": 6,
@@ -19,48 +19,48 @@ const initialState = {
   categoryData: [
     {
       name: "Example 1",
-      dailyGoal: 0,
-      totalMinutes: 54,
-      percentage: 66,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 254,
+      percentage: 22,
+      monthlyGoal: 450
     },
     {
       name: "Example 2",
-      dailyGoal: 0,
-      totalMinutes: 2,
-      percentage: 3,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 222,
+      percentage: 19,
+      monthlyGoal: 450
     },
     {
       name: "Example 3",
-      dailyGoal: 0,
-      totalMinutes: 0,
-      percentage: 0,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 200,
+      percentage: 17,
+      monthlyGoal: 450
     },
     {
       name: "Example 4",
-      dailyGoal: 0,
-      totalMinutes: 7,
-      percentage: 9,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 157,
+      percentage: 14,
+      monthlyGoal: 450
     },
     {
       name: "Example 5",
-      dailyGoal: 0,
-      totalMinutes: 5,
-      percentage: 6,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 155,
+      percentage: 14,
+      monthlyGoal: 450
     },
     {
       name: "Example 6",
-      dailyGoal: 0,
-      totalMinutes: 13,
-      percentage: 16,
-      monthlyGoal: 0
+      dailyGoal: 15,
+      totalMinutes: 130,
+      percentage: 12,
+      monthlyGoal: 450
     }
   ],
-  categoryMinutes: [54, 2, 0, 7, 5, 13],
+  totalCategoryMinutes: [254, 222, 200, 157, 155, 130],
   categoryColors: [
     "#fb105b",
     "#ff6543",

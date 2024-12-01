@@ -50,17 +50,18 @@ const MonthlyStats = () => {
     daysWithRecords,
     dailyAverageMinutes,
     categoryData,
-    categoryMinutes,
+    totalCategoryMinutes,
     categoryColors,
     success,
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  const categoryMinutesSum = categoryMinutes.reduce(
+  const categoryMinutesSum = totalCategoryMinutes.reduce(
     (sum, value) => sum + value,
     0
   );
-  const finalCategoryMinutes = categoryMinutesSum === 0 ? [1] : categoryMinutes;
+  const finalCategoryMinutes =
+    categoryMinutesSum === 0 ? [1] : totalCategoryMinutes;
   const finalCategoryColors =
     categoryMinutesSum === 0
       ? ["#bbcbde"]
