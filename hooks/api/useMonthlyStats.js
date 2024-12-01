@@ -85,19 +85,20 @@ const useMonthlyStats = storedCredentials => {
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
       const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
-      const categoryMinutes = roundedData.categoryData.map(
+      const totalCategoryMinutes = roundedData.categoryData.map(
         category => category.totalMinutes
       );
-      const categoryColors = roundedData.categoryData.map(
-        (_, index) =>
-          [color1, color2, color3, color4, color5, color6][index % 6]
-      );
+
+      // const categoryColors = roundedData.categoryData.map(
+      //   (_, index) =>
+      //     [color1, color2, color3, color4, color5, color6][index % 6]
+      // );
 
       const monthlyStatsState = {
         ...roundedData,
         categoryData: categoryMonthlyGoals,
-        categoryMinutes,
-        categoryColors,
+        totalCategoryMinutes,
+        // categoryColors,
         dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0
       };
 
@@ -113,12 +114,11 @@ const useMonthlyStats = storedCredentials => {
   // Return the derived data
   return {
     totalMinutes: roundedData?.totalMinutes || 0,
-    categoryCount: roundedData?.categoryCount || 0,
     daysWithRecords: roundedData?.daysWithRecords || 0,
     dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
     categoryData: roundedData?.categoryData || [],
-    categoryMinutes: roundedData?.categoryMinutes || [1],
-    categoryColors: roundedData?.categoryColors || ["#bbcbde"],
+    totalCategoryMinutes: roundedData?.totalCategoryMinutes || [1],
+    // categoryColors: roundedData?.categoryColors || ["#bbcbde"],
     success,
     errorMessage,
     message,
