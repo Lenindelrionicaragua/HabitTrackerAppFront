@@ -4,6 +4,7 @@
  * @param {Object} data - The input object to process (e.g., Redux state).
  * @returns {Object} A new object with adjustments suitable for charts.
  */
+
 export const prepareChartData = data => {
   // Utility function to replace 0 with 1
   const replaceZero = value => (value === 0 ? 1 : value);

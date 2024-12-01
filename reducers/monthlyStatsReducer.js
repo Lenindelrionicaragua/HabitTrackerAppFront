@@ -5,62 +5,58 @@ import {
 
 const initialState = {
   isDemo: true,
-  totalMinutes: 1118,
-  categoryCount: 6,
-  daysWithRecords: 5,
-  dailyAverageMinutes: 223.6,
+  totalMinutes: 1,
+  categoryCount: 1,
+  daysWithRecords: 1,
+  totalDailyMinutes: 1,
   totalDailyMinutes: {
-    "2024-11-23": 51,
-    "2024-11-24": 6,
-    "2024-11-26": 6,
-    "2024-11-27": 5,
-    "2024-11-28": 13
+    "2024-11-23": 1
   },
   categoryData: [
     {
-      name: "Example 1",
-      dailyGoal: 15,
-      totalMinutes: 254,
-      percentage: 22,
-      monthlyGoal: 450
+      name: "Work",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     },
     {
-      name: "Example 2",
-      dailyGoal: 15,
-      totalMinutes: 222,
-      percentage: 19,
-      monthlyGoal: 450
+      name: "Family time",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     },
     {
-      name: "Example 3",
-      dailyGoal: 15,
-      totalMinutes: 200,
-      percentage: 17,
-      monthlyGoal: 450
+      name: "Exercise",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     },
     {
-      name: "Example 4",
-      dailyGoal: 15,
-      totalMinutes: 157,
-      percentage: 14,
-      monthlyGoal: 450
+      name: "Screen-free",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     },
     {
-      name: "Example 5",
-      dailyGoal: 15,
-      totalMinutes: 155,
-      percentage: 14,
-      monthlyGoal: 450
+      name: "Rest",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     },
     {
-      name: "Example 6",
-      dailyGoal: 15,
-      totalMinutes: 130,
-      percentage: 12,
-      monthlyGoal: 450
+      name: "Study",
+      dailyGoal: 1,
+      totalMinutes: 1,
+      percentage: 1,
+      monthlyGoal: 31
     }
   ],
-  totalCategoryMinutes: [254, 222, 200, 157, 155, 130],
+  totalCategoryMinutes: [1, 1, 1, 1, 1, 1],
   categoryColors: [
     "#fb105b",
     "#ff6543",

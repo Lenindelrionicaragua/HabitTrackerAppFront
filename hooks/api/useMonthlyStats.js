@@ -4,10 +4,11 @@ import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
-import { MonthlyStatsColors } from "../../styles/AppStyles";
+// import { MonthlyStatsColors } from "../../styles/AppStyles";
 import { setMonthlyStats } from "../../actions/counterActions";
+import { prepareChartData } from "../../util/prepareChartData";
 
-const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+// const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
 
 const useMonthlyStats = storedCredentials => {
   const dispatch = useDispatch();
@@ -38,8 +39,10 @@ const useMonthlyStats = storedCredentials => {
         // Round numbers to 0 decimal places by default.
         // Optionally, you can specify the number of decimal places as the second argument.
         const processedData = roundAllValues(receivedData, 0);
+        // Format data for charts
+        const preparedData = prepareChartData(processedData);
 
-        setRoundedData(processedData);
+        setRoundedData(preparedData);
       }
     }
   );
