@@ -4,11 +4,23 @@ import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
-import { MonthlyStatsColors } from "../../styles/AppStyles";
+import {
+  MonthlyStatsColors,
+  DoughnutChartSmallColors
+} from "../../styles/AppStyles";
 import { setMonthlyStats } from "../../actions/counterActions";
 import { prepareChartData } from "../../util/prepareChartData";
 
+// Colors
 const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+const {
+  secondary1,
+  secondary2,
+  secondary3,
+  secondary4,
+  secondary5,
+  secondary6
+} = DoughnutChartSmallColors;
 
 const useMonthlyStats = storedCredentials => {
   const dispatch = useDispatch();
@@ -88,32 +100,30 @@ const useMonthlyStats = storedCredentials => {
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
       const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
 
-      // Ensure categoryData exists before processing
-      const totalCategoryMinutesInitialData = roundedData.categoryData
-        ? roundedData.categoryData.map(category => category.totalMinutes)
-        : []; // Default to an empty array if categoryData is undefined
+      const categoryColors = roundedData.categoryData.map((_, index) => ({
+        primary: [color1, color2, color3, color4, color5, color6][index % 6],
+        secondary: [
+          secondary1,
+          secondary2,
+          secondary3,
+          secondary4,
+          secondary5,
+          secondary6
+        ][index % 6]
+      }));
 
-      // Process totalCategoryMinutes only if there is valid initial data
-      const totalCategoryMinutes =
-        totalCategoryMinutesInitialData.length === 0
-          ? Array(6).fill(0.01) // Default to [0.01, 0.01, 0.01, 0.01, 0.01, 0.01] if no data is available
-          : totalCategoryMinutesInitialData.every(min => min === 0)
-            ? Array(totalCategoryMinutesInitialData.length).fill(0.01) // Replace all 0s with 1s
-            : totalCategoryMinutesInitialData.map(min =>
-                min === 0 ? 0.01 : min
-              ); // Replace individual 0s with 0.01
-
-      const categoryColors = roundedData.categoryData.map(
-        (_, index) =>
-          [color1, color2, color3, color4, color5, color6][index % 6]
+      const categoryDataWithColors = roundedData.categoryData.map(
+        (category, index) => ({
+          ...category,
+          monthlyGoal: categoryMonthlyGoals[index].monthlyGoal,
+          colors: categoryColors[index]
+        })
       );
 
       const monthlyStatsState = {
         ...roundedData,
-        categoryData: categoryMonthlyGoals,
-        totalCategoryMinutes,
-        categoryColors,
-        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0.01
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0.01,
+        categoryData: categoryDataWithColors
       };
 
       // Dispatch to Redux store
@@ -127,12 +137,6 @@ const useMonthlyStats = storedCredentials => {
 
   // Return the derived data
   return {
-    totalMinutes: roundedData?.totalMinutes || 0.01,
-    daysWithRecords: roundedData?.daysWithRecords || 0.01,
-    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0.01,
-    categoryData: roundedData?.categoryData || [],
-    totalCategoryMinutes: roundedData?.totalCategoryMinutes || [0.01],
-    categoryColors: roundedData?.categoryColors || ["#bbcbde"],
     success,
     errorMessage,
     message,

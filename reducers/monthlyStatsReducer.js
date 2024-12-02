@@ -61,7 +61,7 @@ const initialState = {
     "#fb105b",
     "#ff6543",
     "#ad2bd5",
-    "#ff9c97",
+    "#16A085",
     "#ffe181",
     "#554865"
   ]
