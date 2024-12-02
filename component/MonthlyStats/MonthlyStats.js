@@ -3,16 +3,11 @@ import { useSelector } from "react-redux";
 import {
   StatsOverviewContainer,
   MonthlyStatsContainer,
-  CategoryStatsContainer,
   MainStatsContainer,
   SecondaryStatsContainer,
   CategoryContainer,
   CategoryItem,
   CategoryText,
-  MinutesList,
-  GoalsTitle,
-  MinutesTitle,
-  GoalsList,
   ColorBox,
   SubTitle,
   InfoText
@@ -29,9 +24,8 @@ import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
 
 import { setMonthlyStats } from "../../actions/counterActions";
 
-const { white, black } = Colors;
+// Colors
 const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
-
 const {
   secondary1,
   secondary2,
@@ -54,31 +48,7 @@ const MonthlyStats = () => {
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  // const categoryMinutesSum = totalCategoryMinutes.reduce(
-  //   (sum, value) => sum + value,
-  //   0
-  // );
-
-  // const finalCategoryMinutes =
-  //   categoryMinutesSum === 0 ? [1] : totalCategoryMinutes;
-  const finalCategoryColors = categoryColors.slice(
-    0,
-    totalCategoryMinutes.length
-  );
-
-  // const colorMap = categoryData.reduce((map, category, index) => {
-  //   map[category.name] = categoryColors[index];
-  //   return map;
-  // }, {});
-
-  // const categories = categoryData.map(category => category.name);
-  // const recordedMinutes = categoryData.map(category => category.totalMinutes);
-
-  // const monthlyGoals = categoryData.map(category =>
-  //   category.monthlyGoal === 0 ? 600 : category.monthlyGoal
-  // );
-
-  const primaryColors = Object.values(MonthlyStatsColors);
+  const primaryColors = categoryColors;
   const secondaryColors = Object.values(DoughnutChartSmallColors);
 
   const dataForDoughnutGrid = categoryData.map((category, index) => {
@@ -110,7 +80,7 @@ const MonthlyStats = () => {
         <MainStatsContainer>
           <DoughnutChart
             series={totalCategoryMinutes}
-            sliceColor={finalCategoryColors}
+            sliceColor={categoryColors}
             text={totalMinutes}
           />
           <CategoryContainer>
