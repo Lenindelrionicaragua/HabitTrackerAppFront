@@ -46,38 +46,37 @@ const MonthlyStats = () => {
   // dispatch = useDispatch();
   const {
     totalMinutes,
-    categoryCount,
     daysWithRecords,
     dailyAverageMinutes,
     categoryData,
     totalCategoryMinutes,
     categoryColors,
-    success,
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  const categoryMinutesSum = totalCategoryMinutes.reduce(
-    (sum, value) => sum + value,
-    0
-  );
-  const finalCategoryMinutes =
-    categoryMinutesSum === 0 ? [1] : totalCategoryMinutes;
-  const finalCategoryColors =
-    categoryMinutesSum === 0
-      ? ["#bbcbde"]
-      : categoryColors.slice(0, finalCategoryMinutes.length);
+  // const categoryMinutesSum = totalCategoryMinutes.reduce(
+  //   (sum, value) => sum + value,
+  //   0
+  // );
 
-  const colorMap = categoryData.reduce((map, category, index) => {
-    map[category.name] = categoryColors[index];
-    return map;
-  }, {});
+  // const finalCategoryMinutes =
+  //   categoryMinutesSum === 0 ? [1] : totalCategoryMinutes;
+  const finalCategoryColors = categoryColors.slice(
+    0,
+    totalCategoryMinutes.length
+  );
+
+  // const colorMap = categoryData.reduce((map, category, index) => {
+  //   map[category.name] = categoryColors[index];
+  //   return map;
+  // }, {});
 
   // const categories = categoryData.map(category => category.name);
   // const recordedMinutes = categoryData.map(category => category.totalMinutes);
 
-  const monthlyGoals = categoryData.map(category =>
-    category.monthlyGoal === 0 ? 600 : category.monthlyGoal
-  );
+  // const monthlyGoals = categoryData.map(category =>
+  //   category.monthlyGoal === 0 ? 600 : category.monthlyGoal
+  // );
 
   const primaryColors = Object.values(MonthlyStatsColors);
   const secondaryColors = Object.values(DoughnutChartSmallColors);
@@ -110,7 +109,7 @@ const MonthlyStats = () => {
         </InfoText>
         <MainStatsContainer>
           <DoughnutChart
-            series={finalCategoryMinutes}
+            series={totalCategoryMinutes}
             sliceColor={finalCategoryColors}
             text={totalMinutes}
           />

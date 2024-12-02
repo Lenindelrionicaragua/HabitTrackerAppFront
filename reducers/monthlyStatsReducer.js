@@ -6,8 +6,8 @@ import {
 const initialState = {
   isDemo: true,
   totalMinutes: 0.01,
-  categoryCount: 0.01,
-  daysWithRecords: 0.01,
+  categoryCount: 6,
+  daysWithRecords: 0,
   dailyAverageMinutes: 0.01,
   totalDailyMinutes: {
     "2024-11-23": 0.01
@@ -36,9 +36,9 @@ const initialState = {
     },
     {
       name: "Screen-free",
-      dailyGoal: 1,
-      totalMinutes: 1,
-      percentage: 1,
+      dailyGoal: 0.01,
+      totalMinutes: 0.01,
+      percentage: 0.01,
       monthlyGoal: 0.31
     },
     {

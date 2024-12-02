@@ -82,7 +82,7 @@ const useMonthlyStats = storedCredentials => {
 
       const categoryMonthlyGoals = roundedData.categoryData.map(category => ({
         ...category,
-        monthlyGoal: (category.dailyGoal || 0) * daysInCurrentMonth
+        monthlyGoal: (category.dailyGoal || 55) * daysInCurrentMonth // default 55 minutes
       }));
 
       const totalDailyMinutes = roundedData.totalDailyMinutes || {};
