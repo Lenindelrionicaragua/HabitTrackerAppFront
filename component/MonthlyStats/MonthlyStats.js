@@ -25,15 +25,15 @@ import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
 import { setMonthlyStats } from "../../actions/counterActions";
 
 // Colors
-const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
-const {
-  secondary1,
-  secondary2,
-  secondary3,
-  secondary4,
-  secondary5,
-  secondary6
-} = DoughnutChartSmallColors;
+// const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+// const {
+//   secondary1,
+//   secondary2,
+//   secondary3,
+//   secondary4,
+//   secondary5,
+//   secondary6
+// } = DoughnutChartSmallColors;
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
@@ -43,17 +43,12 @@ const MonthlyStats = () => {
     daysWithRecords,
     dailyAverageMinutes,
     categoryData,
-    totalCategoryMinutes,
-    categoryColors,
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  const primaryColors = categoryColors;
-  const secondaryColors = Object.values(DoughnutChartSmallColors);
-
   const dataForDoughnutGrid = categoryData.map((category, index) => {
-    const primaryColor = primaryColors[index % primaryColors.length];
-    const secondaryColor = secondaryColors[index % secondaryColors.length];
+    const primaryColor = category.colors.primary;
+    const secondaryColor = category.colors.secondary;
 
     const progress = category.totalMinutes;
     const remaining = Math.max(category.monthlyGoal - progress, 0);
@@ -79,14 +74,16 @@ const MonthlyStats = () => {
         </InfoText>
         <MainStatsContainer>
           <DoughnutChart
-            series={totalCategoryMinutes}
-            sliceColor={categoryColors}
+            series={categoryData.map(category => category.totalMinutes)}
+            sliceColor={categoryData.map(category => category.colors.primary)}
             text={totalMinutes}
           />
           <CategoryContainer>
             {categoryData.map((category, index) => (
               <CategoryItem key={category.name}>
-                <ColorBox style={{ backgroundColor: categoryColors[index] }} />
+                <ColorBox
+                  style={{ backgroundColor: category.colors.primary }}
+                />
                 <CategoryText>
                   {category.name} ({category.percentage}%)
                 </CategoryText>
