@@ -7,7 +7,7 @@ const initialState = {
   isDemo: true,
   totalMinutes: 0.01,
   categoryCount: 6,
-  daysWithRecords: 0,
+  daysWithRecords: 0.01,
   dailyAverageMinutes: 0.01,
   totalDailyMinutes: {
     "2024-11-23": 0.01
@@ -15,56 +15,72 @@ const initialState = {
   categoryData: [
     {
       name: "Work",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#fb105b",
+        secondary: "#ffa3b0"
+      }
     },
     {
       name: "Family time",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#ff6543",
+        secondary: "#ffb59f"
+      }
     },
     {
       name: "Exercise",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 0.31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#ad2bd5",
+        secondary: "#d7b8e9"
+      }
     },
     {
       name: "Screen-free",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 0.31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#16A085",
+        secondary: "#DAF7A6"
+      }
     },
     {
       name: "Rest",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 0.31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#ffe181",
+        secondary: "#fff4cc"
+      }
     },
     {
       name: "Study",
-      dailyGoal: 0.01,
+      dailyGoal: 55,
       totalMinutes: 0.01,
       percentage: 0.01,
-      monthlyGoal: 0.31
+      monthlyGoal: 1705,
+      colors: {
+        primary: "#554865",
+        secondary: "#857891"
+      }
     }
   ],
-  totalCategoryMinutes: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01],
-  categoryColors: [
-    "#fb105b",
-    "#ff6543",
-    "#ad2bd5",
-    "#16A085",
-    "#ffe181",
-    "#554865"
-  ]
+  dailyAverageMinutes: 0.01
 };
 
 const monthlyStatsReducer = (state = initialState, action) => {
