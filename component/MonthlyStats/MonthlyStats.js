@@ -87,7 +87,7 @@ const MonthlyStats = () => {
     const secondaryColor = secondaryColors[index % secondaryColors.length];
 
     const progress = category.totalMinutes;
-    const remaining = Math.max(category.monthlyGoal - progress, 0);
+    const remaining = Math.max(category.monthlyGoal - progress, 1);
 
     return {
       series: [progress, remaining],
@@ -126,20 +126,9 @@ const MonthlyStats = () => {
           </CategoryContainer>
         </MainStatsContainer>
       </MonthlyStatsContainer>
-
       <SecondaryStatsContainer>
         <DoughnutGrid data={dataForDoughnutGrid} />
       </SecondaryStatsContainer>
-
-      {/* <MixedChart
-        categories={categories}
-        recordedMinutes={recordedMinutes}
-        goals={goals}
-        chartColors={{
-          bar: categories.map(name => colorMap[name]),
-          line: "rgba(255, 99, 132, 1)"
-        }}
-      /> */}
     </StatsOverviewContainer>
   );
 };
