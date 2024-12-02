@@ -8,7 +8,7 @@ const initialState = {
   totalMinutes: 1,
   categoryCount: 1,
   daysWithRecords: 1,
-  totalDailyMinutes: 1,
+  dailyAverageMinutes: 1,
   totalDailyMinutes: {
     "2024-11-23": 1
   },

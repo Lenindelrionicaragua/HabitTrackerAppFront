@@ -7,7 +7,7 @@
 
 export const prepareChartData = data => {
   // Utility function to replace 0 with 1
-  const replaceZero = value => (value === 0 ? 1 : value);
+  const replaceZero = value => (value === 0 ? 0.01 : value);
 
   // Deep copy to avoid mutation
   const processedData = JSON.parse(JSON.stringify(data));

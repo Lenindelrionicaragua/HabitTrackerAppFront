@@ -4,11 +4,11 @@ import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
 import { calculateDailyAverage } from "../../util/calculateDailyAverage";
-// import { MonthlyStatsColors } from "../../styles/AppStyles";
+import { MonthlyStatsColors } from "../../styles/AppStyles";
 import { setMonthlyStats } from "../../actions/counterActions";
 import { prepareChartData } from "../../util/prepareChartData";
 
-// const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
 
 const useMonthlyStats = storedCredentials => {
   const dispatch = useDispatch();
@@ -101,17 +101,17 @@ const useMonthlyStats = storedCredentials => {
             ? Array(totalCategoryMinutesInitialData.length).fill(1) // Replace all 0s with 1s
             : totalCategoryMinutesInitialData.map(min => (min === 0 ? 1 : min)); // Replace individual 0s with 1
 
-      // const categoryColors = roundedData.categoryData.map(
-      //   (_, index) =>
-      //     [color1, color2, color3, color4, color5, color6][index % 6]
-      // );
+      const categoryColors = roundedData.categoryData.map(
+        (_, index) =>
+          [color1, color2, color3, color4, color5, color6][index % 6]
+      );
 
       const monthlyStatsState = {
         ...roundedData,
         categoryData: categoryMonthlyGoals,
         totalCategoryMinutes,
-        // categoryColors,
-        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0
+        categoryColors,
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 1
       };
 
       // Dispatch to Redux store
@@ -125,12 +125,12 @@ const useMonthlyStats = storedCredentials => {
 
   // Return the derived data
   return {
-    totalMinutes: roundedData?.totalMinutes || 0,
-    daysWithRecords: roundedData?.daysWithRecords || 0,
-    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0,
+    totalMinutes: roundedData?.totalMinutes || 1,
+    daysWithRecords: roundedData?.daysWithRecords || 1,
+    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 1,
     categoryData: roundedData?.categoryData || [],
     totalCategoryMinutes: roundedData?.totalCategoryMinutes || [1],
-    // categoryColors: roundedData?.categoryColors || ["#bbcbde"],
+    categoryColors: roundedData?.categoryColors || ["#bbcbde"],
     success,
     errorMessage,
     message,

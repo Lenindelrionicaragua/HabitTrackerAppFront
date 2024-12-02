@@ -1,7 +1,7 @@
 import { prepareChartData } from "../../util/prepareChartData";
 
 describe("prepareChartData", () => {
-  it("should replace 0 with 1 in top-level fields", () => {
+  it("should replace 0 with 0.01 in top-level fields", () => {
     const input = {
       totalMinutes: 0,
       categoryCount: 0,
@@ -26,22 +26,22 @@ describe("prepareChartData", () => {
     };
 
     const expectedOutput = {
-      totalMinutes: 1,
-      categoryCount: 1,
-      daysWithRecords: 1,
-      totalDailyMinutes: { day1: 1, day2: 15 },
+      totalMinutes: 0.01,
+      categoryCount: 0.01,
+      daysWithRecords: 0.01,
+      totalDailyMinutes: { day1: 0.01, day2: 15 },
       categoryData: [
         {
           name: "Work",
-          dailyGoal: 1,
-          totalMinutes: 1,
-          percentage: 1,
-          monthlyGoal: 1
+          dailyGoal: 0.01,
+          totalMinutes: 0.01,
+          percentage: 0.01,
+          monthlyGoal: 0.01
         },
         {
           name: "Exercise",
           dailyGoal: 30,
-          totalMinutes: 1,
+          totalMinutes: 0.01,
           percentage: 90,
           monthlyGoal: 300
         }
@@ -80,10 +80,10 @@ describe("prepareChartData", () => {
     };
 
     const expectedOutput = {
-      totalMinutes: 1,
-      categoryCount: 1,
-      daysWithRecords: 1,
-      totalDailyMinutes: { day1: 1, day2: 1 }
+      totalMinutes: 0.01,
+      categoryCount: 0.01,
+      daysWithRecords: 0.01,
+      totalDailyMinutes: { day1: 0.01, day2: 0.01 }
     };
 
     expect(prepareChartData(input)).toEqual(expectedOutput);
@@ -95,7 +95,7 @@ describe("prepareChartData", () => {
     };
 
     const expectedOutput = {
-      totalDailyMinutes: { day1: 1, day2: 1, day3: 10 }
+      totalDailyMinutes: { day1: 0.01, day2: 0.01, day3: 10 }
     };
 
     expect(prepareChartData(input)).toEqual(expectedOutput);
