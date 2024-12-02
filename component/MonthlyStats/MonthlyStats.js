@@ -12,32 +12,12 @@ import {
   SubTitle,
   InfoText
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
-import {
-  Colors,
-  MonthlyStatsColors,
-  DoughnutChartSmallColors
-} from "../../styles/AppStyles";
-
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
-// import MixedChart from "../MixedChart/MixedChart";
-
 import { setMonthlyStats } from "../../actions/counterActions";
-
-// Colors
-// const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
-// const {
-//   secondary1,
-//   secondary2,
-//   secondary3,
-//   secondary4,
-//   secondary5,
-//   secondary6
-// } = DoughnutChartSmallColors;
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
-  // dispatch = useDispatch();
   const {
     totalMinutes,
     daysWithRecords,

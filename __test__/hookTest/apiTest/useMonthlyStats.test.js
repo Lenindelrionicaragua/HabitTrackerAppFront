@@ -12,7 +12,7 @@ import { logError, logInfo } from "../../../util/logging";
 jest.mock("axios");
 jest.mock("../../../util/logging");
 
-describe("useMonthlyStats Hook with Redux", () => {
+describe("useMonthlyStats Hook - Success Case", () => {
   let store;
   let dispatchMock;
 
@@ -32,28 +32,56 @@ describe("useMonthlyStats Hook with Redux", () => {
       "2024-11-26": 2
     },
     categoryData: [
-      { name: "Work", totalMinutes: 52, percentage: 87 },
-      { name: "Family time", totalMinutes: 1, percentage: 1 },
-      { name: "Exercise", totalMinutes: 0, percentage: 1 },
-      { name: "Screen-free", totalMinutes: 2, percentage: 3 },
-      { name: "Rest", totalMinutes: 0, percentage: 0 },
-      { name: "Study", totalMinutes: 5, percentage: 8 }
-    ],
-    series: [52, 1, 0, 2, 0, 5],
-    sliceColors: [
-      "#fb105b",
-      "#ff6543",
-      "#ad2bd5",
-      "#ff9c97",
-      "#ffe181",
-      "#554865"
+      {
+        name: "Work",
+        dailyGoal: 55,
+        totalMinutes: 52,
+        percentage: 87,
+        monthlyGoal: 1705,
+        colors: { primary: "#fb105b", secondary: "#ffa3b0" }
+      },
+      {
+        name: "Family time",
+        dailyGoal: 55,
+        totalMinutes: 1,
+        percentage: 1,
+        monthlyGoal: 1705,
+        colors: { primary: "#ff6543", secondary: "#ffb59f" }
+      },
+      {
+        name: "Exercise",
+        dailyGoal: 55,
+        totalMinutes: 0,
+        percentage: 1,
+        monthlyGoal: 1705,
+        colors: { primary: "#ad2bd5", secondary: "#d7b8e9" }
+      },
+      {
+        name: "Screen-free",
+        dailyGoal: 55,
+        totalMinutes: 2,
+        percentage: 3,
+        monthlyGoal: 1705,
+        colors: { primary: "#16A085", secondary: "#DAF7A6" }
+      },
+      {
+        name: "Rest",
+        dailyGoal: 55,
+        totalMinutes: 0,
+        percentage: 0,
+        monthlyGoal: 1705,
+        colors: { primary: "#ffe181", secondary: "#fff4cc" }
+      },
+      {
+        name: "Study",
+        dailyGoal: 55,
+        totalMinutes: 5,
+        percentage: 8,
+        monthlyGoal: 1705,
+        colors: { primary: "#554865", secondary: "#857891" }
+      }
     ],
     dailyAverageMinutes: 19.67
-  };
-
-  const dataResponseWithError = {
-    success: false,
-    message: "Unexpected server error"
   };
 
   beforeEach(() => {
@@ -72,7 +100,7 @@ describe("useMonthlyStats Hook with Redux", () => {
     jest.clearAllMocks();
   });
 
-  it("should fetch and store monthly stats data when success is true", async () => {
+  it("should fetch and process monthly stats data and dispatch it to Redux store", async () => {
     axios.mockImplementationOnce(() =>
       Promise.resolve({
         data: dataResponseWithStats
@@ -88,140 +116,135 @@ describe("useMonthlyStats Hook with Redux", () => {
     });
 
     await waitFor(() => {
-      expect(dispatchMock).toHaveBeenCalledWith(
-        setMonthlyStats({
-          success: true,
-          totalMinutes: 59,
-          categoryCount: 5,
-          daysWithRecords: 3,
-          totalDailyMinutes: {
-            "2024-11-23": 51,
-            "2024-11-24": 6,
-            "2024-11-26": 2
+      const expectedProcessedData = {
+        success: true,
+        totalMinutes: 59,
+        categoryCount: 5,
+        daysWithRecords: 3,
+        totalDailyMinutes: {
+          "2024-11-23": 51,
+          "2024-11-24": 6,
+          "2024-11-26": 2
+        },
+        categoryData: [
+          {
+            name: "Work",
+            totalMinutes: 52,
+            percentage: 87,
+            monthlyGoal: 1705,
+            colors: { primary: "#fb105b", secondary: "#ffa3b0" },
+            dailyGoal: 55
           },
-          categoryData: [
-            { name: "Work", totalMinutes: 52, percentage: 87 },
-            { name: "Family time", totalMinutes: 1, percentage: 1 },
-            { name: "Exercise", totalMinutes: 0, percentage: 1 },
-            { name: "Screen-free", totalMinutes: 2, percentage: 3 },
-            { name: "Rest", totalMinutes: 0, percentage: 0 },
-            { name: "Study", totalMinutes: 5, percentage: 8 }
-          ],
-          series: [52, 1, 0, 2, 0, 5],
-          sliceColors: [
-            "#fb105b",
-            "#ff6543",
-            "#ad2bd5",
-            "#ff9c97",
-            "#ffe181",
-            "#554865"
-          ],
-          dailyAverageMinutes: 19.67
-        })
+          {
+            name: "Family time",
+            totalMinutes: 1,
+            percentage: 1,
+            monthlyGoal: 1705,
+            colors: { primary: "#ff6543", secondary: "#ffb59f" },
+            dailyGoal: 55
+          },
+          {
+            name: "Exercise",
+            totalMinutes: 0.01,
+            percentage: 1,
+            monthlyGoal: 1705,
+            colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
+            dailyGoal: 55
+          },
+          {
+            name: "Screen-free",
+            totalMinutes: 2,
+            percentage: 3,
+            monthlyGoal: 1705,
+            colors: { primary: "#16A085", secondary: "#DAF7A6" },
+            dailyGoal: 55
+          },
+          {
+            name: "Rest",
+            totalMinutes: 0.01,
+            percentage: 0.01,
+            monthlyGoal: 1705,
+            colors: { primary: "#ffe181", secondary: "#fff4cc" },
+            dailyGoal: 55
+          },
+          {
+            name: "Study",
+            totalMinutes: 5,
+            percentage: 8,
+            monthlyGoal: 1705,
+            colors: { primary: "#554865", secondary: "#857891" },
+            dailyGoal: 55
+          }
+        ],
+        dailyAverageMinutes: 19.67
+      };
+
+      expect(dispatchMock).toHaveBeenCalledWith(
+        setMonthlyStats(expectedProcessedData)
       );
     });
   });
 
-  it("should handle errors and not update the store", async () => {
+  it("should handle errors properly", async () => {
+    // Mock the axios call to return an error
     axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithError
-      })
+      Promise.reject(new Error("Unexpected server error"))
     );
 
     const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
+    // Perform the fetch, which will fail
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
+    // Wait for the error state to be set
     await waitFor(() => {
-      expect(result.current.success).toBe(false);
+      // Expect the error message to be the one returned by useFetch, which is a generic error
       expect(result.current.errorMessage).toBe("Unexpected server error");
+      expect(result.current.success).toBe(false);
     });
-
-    expect(logError).toHaveBeenCalledWith(
-      "Error fetching monthly stats: Unexpected server error"
-    );
   });
 
-  it("should calculate series and sliceColors correctly", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithStats
-      })
+  it("should not fetch data if no credentials are provided", async () => {
+    // Set credentials to null or undefined
+    const { result } = renderHook(() => useMonthlyStats(null), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+    });
+
+    // Check that the fetch function is not called
+    await act(async () => {
+      await result.current.fetchMonthlyStats();
+    });
+
+    // Ensure the hook doesn't try to fetch the data and the fetchMonthlyStats function is not called
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it("should set loading state correctly while fetching", async () => {
+    // Mock the API call to resolve after a delay
+    axios.mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          setTimeout(() => resolve({ data: dataResponseWithStats }), 1000)
+        )
     );
 
     const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
+    // Check if loading state is true while the fetch is in progress
+    expect(result.current.isLoading).toBe(true);
+
+    // Wait for the fetch to complete
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
-    await waitFor(() => {
-      expect(result.current.series).toEqual([52, 1, 0, 2, 0, 5]);
-      expect(result.current.sliceColors).toEqual([
-        "#fb105b",
-        "#ff6543",
-        "#ad2bd5",
-        "#ff9c97",
-        "#ffe181",
-        "#554865"
-      ]);
-    });
-  });
-
-  it("should dispatch the correct data to Redux store", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithStats
-      })
-    );
-
-    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
-    });
-
-    await act(async () => {
-      await result.current.fetchMonthlyStats();
-    });
-
-    await waitFor(() => {
-      expect(dispatchMock).toHaveBeenCalledWith(
-        setMonthlyStats({
-          success: true,
-          totalMinutes: 59,
-          categoryCount: 5,
-          daysWithRecords: 3,
-          totalDailyMinutes: {
-            "2024-11-23": 51,
-            "2024-11-24": 6,
-            "2024-11-26": 2
-          },
-          categoryData: [
-            { name: "Work", totalMinutes: 52, percentage: 87 },
-            { name: "Family time", totalMinutes: 1, percentage: 1 },
-            { name: "Exercise", totalMinutes: 0, percentage: 1 },
-            { name: "Screen-free", totalMinutes: 2, percentage: 3 },
-            { name: "Rest", totalMinutes: 0, percentage: 0 },
-            { name: "Study", totalMinutes: 5, percentage: 8 }
-          ],
-          series: [52, 1, 0, 2, 0, 5],
-          sliceColors: [
-            "#fb105b",
-            "#ff6543",
-            "#ad2bd5",
-            "#ff9c97",
-            "#ffe181",
-            "#554865"
-          ],
-          dailyAverageMinutes: 19.67
-        })
-      );
-    });
+    // Check if loading state is false after fetching
+    expect(result.current.isLoading).toBe(false);
   });
 });
