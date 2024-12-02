@@ -87,7 +87,7 @@ const MonthlyStats = () => {
     const secondaryColor = secondaryColors[index % secondaryColors.length];
 
     const progress = category.totalMinutes;
-    const remaining = Math.max(category.monthlyGoal - progress, 1);
+    const remaining = Math.max(category.monthlyGoal - progress, 0);
 
     return {
       series: [progress, remaining],

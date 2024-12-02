@@ -96,10 +96,12 @@ const useMonthlyStats = storedCredentials => {
       // Process totalCategoryMinutes only if there is valid initial data
       const totalCategoryMinutes =
         totalCategoryMinutesInitialData.length === 0
-          ? Array(6).fill(1) // Default to [1, 1, 1, 1, 1, 1] if no data is available
+          ? Array(6).fill(0.01) // Default to [0.01, 0.01, 0.01, 0.01, 0.01, 0.01] if no data is available
           : totalCategoryMinutesInitialData.every(min => min === 0)
-            ? Array(totalCategoryMinutesInitialData.length).fill(1) // Replace all 0s with 1s
-            : totalCategoryMinutesInitialData.map(min => (min === 0 ? 1 : min)); // Replace individual 0s with 1
+            ? Array(totalCategoryMinutesInitialData.length).fill(0.01) // Replace all 0s with 1s
+            : totalCategoryMinutesInitialData.map(min =>
+                min === 0 ? 0.01 : min
+              ); // Replace individual 0s with 0.01
 
       const categoryColors = roundedData.categoryData.map(
         (_, index) =>
@@ -111,7 +113,7 @@ const useMonthlyStats = storedCredentials => {
         categoryData: categoryMonthlyGoals,
         totalCategoryMinutes,
         categoryColors,
-        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 1
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0.01
       };
 
       // Dispatch to Redux store
@@ -125,11 +127,11 @@ const useMonthlyStats = storedCredentials => {
 
   // Return the derived data
   return {
-    totalMinutes: roundedData?.totalMinutes || 1,
-    daysWithRecords: roundedData?.daysWithRecords || 1,
-    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 1,
+    totalMinutes: roundedData?.totalMinutes || 0.01,
+    daysWithRecords: roundedData?.daysWithRecords || 0.01,
+    dailyAverageMinutes: roundedData?.dailyAverageMinutes || 0.01,
     categoryData: roundedData?.categoryData || [],
-    totalCategoryMinutes: roundedData?.totalCategoryMinutes || [1],
+    totalCategoryMinutes: roundedData?.totalCategoryMinutes || [0.01],
     categoryColors: roundedData?.categoryColors || ["#bbcbde"],
     success,
     errorMessage,
