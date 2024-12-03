@@ -20,20 +20,7 @@ import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
 import { logInfo } from "../../util/logging";
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoGrey,
-  infoWhite,
-  lightPink,
-  skyBlue,
-  darkGrey,
-  black,
-  yellow,
-  red,
-  green,
-  orange
-} = Colors;
+const { infoGrey } = Colors;
 
 const MetricsScreen = () => {
   const AvatarImg = require("./../../assets/user.png");
@@ -46,7 +33,7 @@ const MetricsScreen = () => {
     <StyledContainer testID="metrics-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <StyledHeader>
+        <StyledHeader testID="header">
           <AvatarContainer testID="avatar-container">
             <Avatar
               resizeMode="cover"
@@ -54,13 +41,16 @@ const MetricsScreen = () => {
               testID="avatar-metrics-image"
             />
           </AvatarContainer>
-          <StyledTitleContainer>
+          <StyledTitleContainer testID="title-container">
             <PageTitle welcome={true} testID="metrics-title">
               Habit Tracker
             </PageTitle>
-            <UpgradeButton onPress={upGradeToPremium} />
+            <UpgradeButton onPress={upGradeToPremium} testID="upgrade-button" />
           </StyledTitleContainer>
-          <IconContainer onPress={() => console.log("Pie chart icon clicked!")}>
+          <IconContainer
+            onPress={() => console.log("Pie chart icon clicked!")}
+            testID="pie-chart-icon"
+          >
             <FontAwesome name="pie-chart" size={34} color={infoGrey} />
           </IconContainer>
         </StyledHeader>
@@ -70,7 +60,7 @@ const MetricsScreen = () => {
           This Month
         </SubTitle>
 
-        <MonthlyStats />
+        <MonthlyStats testID="monthly-stats" />
       </InnerContainer>
     </StyledContainer>
   );
