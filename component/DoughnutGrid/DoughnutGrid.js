@@ -18,7 +18,8 @@ const DoughnutGrid = ({ data }) => {
             <DoughnutChartSmall
               series={item.series}
               sliceColor={item.sliceColor}
-              text={item.text}
+              name={item.name}
+              progress={item.progress}
             />
           </GridItem>
         ))}

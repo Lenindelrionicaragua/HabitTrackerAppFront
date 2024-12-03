@@ -8,10 +8,11 @@ import {
   SubText
 } from "../DoughnutChartSmall/DoughnutChartSmallStyles";
 import { Colors } from "../../styles/AppStyles";
+import MonthlyStats from "../MonthlyStats/MonthlyStats";
 
 const { white, black } = Colors;
 
-const DoughnutChartSmall = ({ series, sliceColor, text }) => {
+const DoughnutChartSmall = ({ series, sliceColor, name, progress }) => {
   const widthAndHeight = Platform.OS === "web" ? "80" : "80";
 
   return (
@@ -24,8 +25,8 @@ const DoughnutChartSmall = ({ series, sliceColor, text }) => {
         coverFill={white}
       />
       <InfoTextContainer>
-        <InfoText>{text}</InfoText>
-        <SubText>Monthly minutes</SubText>
+        <InfoText>{name}</InfoText>
+        <SubText>{progress}</SubText>
       </InfoTextContainer>
     </PieChartContainer>
   );

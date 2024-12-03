@@ -2,7 +2,7 @@ import { View, Text, Dimensions } from "react-native";
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, green } = Colors;
+const { white, black, green, orange } = Colors;
 
 export const PieChartContainer = styled(View)`
   justify-content: center;
@@ -27,8 +27,7 @@ export const InfoText = styled(Text)`
 export const SubText = styled(Text)`
   font-size: 8px;
   color: ${black};
-  margin-top: 3%;
-  width: 60%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;

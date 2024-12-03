@@ -36,7 +36,8 @@ const MonthlyStats = () => {
     return {
       series: [progress, remaining],
       sliceColor: [primaryColor, secondaryColor],
-      text: category.name
+      name: category.name,
+      progress: category.totalMinutes
     };
   });
 
