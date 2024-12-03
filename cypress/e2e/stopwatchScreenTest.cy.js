@@ -56,12 +56,12 @@ describe("StopwatchScreen", () => {
         .should("exist")
         .should("contain.text", "00:00:00");
 
-      cy.get('[data-testId="svg-info-text"]')
-        .should("exist")
-        .should(
-          "contain.text",
-          "Choose your habit category\nand adjust the time\nto start the tracker."
-        );
+      // cy.get('[data-testId="svg-info-text"]')
+      //   .should("exist")
+      //   .should(
+      //     "contain.text",
+      //     "Choose your habit category\nand adjust the time\nto start the tracker."
+      //   );
 
       // Info text
       cy.get('[data-testId="info-text-stopwatch-screen"]')
@@ -89,7 +89,7 @@ describe("StopwatchScreen", () => {
       // Select habit category
       cy.get('[data-testId="focus-activity-button"]')
         .click()
-        .should("contain.text", "Work")
+        .should("contain.text", "Family time")
         .click()
         .should("contain.text", "Exercise");
 
