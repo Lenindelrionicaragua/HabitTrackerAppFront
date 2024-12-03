@@ -1,8 +1,8 @@
 import styled from "styled-components/native";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, Platform } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, lightGreen, orange, green } = Colors;
+const { white, black, lightGreen, orange, green, red } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -30,15 +30,15 @@ export const MonthlyStatsContainer = styled(View)`
 export const MainStatsContainer = styled(View)`
   flex-direction: row;
   margin-vertical: 5px;
+  padding: 0px 0px 5px 0px;
   align-items: center;
   justify-content: space-around;
 `;
 
 export const CategoryContainer = styled(View)`
   flex-direction: column;
-  margin-vertical: 10px;
   justify-content: center;
-  padding: 15px;
+  padding: 5px;
 `;
 
 export const CategoryItem = styled(View)`
@@ -62,8 +62,8 @@ export const CategoryText = styled(Text)`
 
 export const SubTitle = styled(Text)`
   font-size: 15px;
-  padding: 0px 30px;
-  margin: 10px 0px 0px 0px;
+  width: 100%;
+  padding: 5px 10px 0px 20px;
   letter-spacing: 1px;
   font-weight: bold;
   color: ${black};
@@ -71,14 +71,14 @@ export const SubTitle = styled(Text)`
 
 export const InfoText = styled(Text)`
   font-size: 12px;
-  padding: 0px 30px;
-  margin: 10px 0px 0px 0px;
+  padding: 2px 10px 0px 30px;
   color: ${lightGreen};
 `;
 
 export const SecondaryStatsContainer = styled(View)`
   width: ${containerWidth};
   height: ${containerHeight / 2.1};
+  background-color: ${white};
   justify-content: space-between;
   justify-content: left;
 `;

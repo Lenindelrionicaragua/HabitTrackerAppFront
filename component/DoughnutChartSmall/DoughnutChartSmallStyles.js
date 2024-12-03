@@ -7,8 +7,8 @@ const { white, black, green, orange } = Colors;
 export const PieChartContainer = styled(View)`
   justify-content: center;
   align-items: center;
-  padding: 5px;
-  margin: 5px;
+  padding: 5px 0px 5px 0px;
+  margin: 5px 0px 5px 0px;
 `;
 
 export const InfoTextContainer = styled(View)`

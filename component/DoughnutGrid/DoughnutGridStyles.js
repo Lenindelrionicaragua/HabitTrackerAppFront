@@ -2,7 +2,7 @@ import { View, Text, Dimensions } from "react-native";
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, green } = Colors;
+const { white, black, green, orange } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -15,22 +15,23 @@ export const MainStatsContainer = styled(View)`
   width: ${containerWidth};
   height: ${containerHeight};
   background-color: ${white};
-  flex-direction: center;
   border-radius: 10px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
   elevation: 6;
+  flex-direction: center;
 `;
 
+//
 export const GridContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   margin-vertical: 5px;
+  margin: 10px;
   align-content: center;
   align-items: center;
   justify-content: space-around;
-  background-color: ${white};
 `;
 
 export const GridItem = styled.View`

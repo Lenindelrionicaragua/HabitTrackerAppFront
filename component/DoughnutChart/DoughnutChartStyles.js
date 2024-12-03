@@ -2,13 +2,13 @@ import styled from "styled-components/native";
 import { View, Text } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, orange } = Colors;
+const { white, black, orange, red } = Colors;
 
 export const PieChartContainer = styled(View)`
   position: relative;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 5px;
 `;
 
 export const InfoTextContainer = styled(View)`

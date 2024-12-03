@@ -45,9 +45,7 @@ const MonthlyStats = () => {
     <StatsOverviewContainer>
       <MonthlyStatsContainer>
         <SubTitle>
-          {isDemo
-            ? "Demo Mode: Example Time Distribution"
-            : "Your Time Distribution"}
+          {isDemo ? "Demo Mode: Time Distribution" : "Your Time Distribution"}
         </SubTitle>
         <InfoText>
           Days with records: {daysWithRecords} | Daily Average:{" "}

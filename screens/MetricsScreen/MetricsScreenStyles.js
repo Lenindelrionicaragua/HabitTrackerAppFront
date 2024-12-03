@@ -45,19 +45,19 @@ export const StyledHeader = styled(View)`
   padding: 10px 45px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
-  shadow-radius: 4px;
-  elevation: 4;
+  shadow-radius: 2px;
+  elevation: 2;
 `;
 
 export const Line = styled(View)`
   height: 1px;
   width: 100%;
   background-color: ${white};
-  margin-vertical: 10px;
+  margin-vertical: 5px;
   shadow-color: ${black};
   shadow-opacity: 0.5;
   shadow-radius: 4px;
-  elevation: 2;
+  elevation: 3;
 `;
 
 export const AvatarContainer = styled(View)`
@@ -122,7 +122,8 @@ export const SubTitle = styled(Text)`
   justify-content: center;
   font-size: 20px;
   font-weight: bold;
-  padding: 0px 5px;
+  padding: 5px;
+  margin-top: 5px;
   color: ${black};
 `;
 
@@ -158,14 +159,3 @@ export const ButtonText = styled(Text)`
 export const RightIcon = styled(Pressable)`
   padding-left: 10px;
 `;
-
-// export const MonthlyStatsContainer = styled(View)`
-//   width: 90%;
-//   border-radius: 10px;
-//   background-color: ${white};
-//   margin-vertical: 10px;
-//   shadow-color: ${black};
-//   shadow-opacity: 0.5;
-//   shadow-radius: 4px;
-//   elevation: 2;
-// `;
