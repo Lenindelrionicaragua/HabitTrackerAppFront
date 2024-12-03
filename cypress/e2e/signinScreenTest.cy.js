@@ -114,7 +114,7 @@ describe("SigninScreen", () => {
       .should("exist")
       .should(
         "have.text",
-        "Name, email, password, and date of birth are required."
+        "BAD REQUEST: Password must contain at least one uppercase letter, Password must contain at least one special character., Date Of Birth is a required field., Date Of Birth is a required field with valid format (e.g., 'Tue Feb 01 2022')."
       );
   });
 
