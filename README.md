@@ -4,6 +4,8 @@ Web version of the app:
 
 [https://habit-tracker-app-front.netlify.app](https://habit-tracker-app-front.netlify.app)
 
+![1](https://github.com/user-attachments/assets/08718064-f7bc-42ec-9459-04d4cc09beaf)
+
 Full Server:
 
 [https://github.com/Lenindelrionicaragua/ZenTimerAppServer](https://github.com/Lenindelrionicaragua/ZenTimerAppServer)
