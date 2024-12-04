@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { logInfo, logError } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { baseApiUrl } from "../../component/Shared/SharedUrl";
 
 const useSaveDailyRecords = () => {
   const [error, setError] = useState(null);
@@ -35,7 +36,7 @@ const useSaveDailyRecords = () => {
       }
 
       const response = await axios.post(
-        `http://192.168.178.182:3000/api/time-records/${categoryId}`,
+        `${baseApiUrl}/api/time-records/${categoryId}`,
         { minutesUpdate },
         {
           headers: {
