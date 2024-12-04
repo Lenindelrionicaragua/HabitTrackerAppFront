@@ -34,9 +34,36 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
-export const WelcomeContainer = styled(InnerContainer)`
-  padding-top: 10px;
+export const Line = styled(View)`
+  height: 1px;
+  width: 100%;
+  background-color: ${white};
+  margin-vertical: 5px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 4px;
+  elevation: 3;
+`;
+
+// export const Line = styled(View)`
+//   height: 1px;
+//   width: 100%;
+//   background-color: ${white};
+//   margin-vertical: 5px;
+// `;
+
+export const AvatarContainer = styled(View)`
+  width: ${({ size }) => size || 45}px;
+  height: ${({ size }) => size || 45}px;
+  border-radius: ${({ size }) => (size || 50) / 2}px;
+  border-width: ${({ size }) => (size || 50) * 0.04}px;
+  overflow: hidden;
+  border-width: 2px;
+  border-color: ${white};
+  background-color: transparent;
+  align-items: center;
   justify-content: center;
+  box-shadow: none;
 `;
 
 export const Avatar = styled(Image)`
@@ -53,24 +80,41 @@ export const Avatar = styled(Image)`
   box-shadow: none;
 `;
 
+export const StyledHeader = styled(View)`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 45px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 2px;
+  elevation: 2;
+`;
+
+export const WelcomeContainer = styled(InnerContainer)`
+  padding-top: 10px;
+  justify-content: center;
+`;
+
 export const WelcomeImage = styled(Image)`
   height: 50%;
   width: 100%;
 `;
 
-export const PageTitle = styled(Text)`
-  font-size: 30px;
-  text-align: center;
-  font-weight: bold;
-  color: ${black};
-  padding: 10px;
+// export const PageTitle = styled(Text)`
+//   font-size: 30px;
+//   text-align: center;
+//   font-weight: bold;
+//   color: ${black};
+//   padding: 10px;
 
-  ${props =>
-    props.welcome &&
-    `
-    font-size: 35px;
-  `}
-`;
+//   ${props =>
+//     props.welcome &&
+//     `
+//     font-size: 35px;
+//   `}
+// `;
 
 export const SubTitle = styled(Text)`
   font-size: 15px;
@@ -119,11 +163,4 @@ export const ButtonText = styled(Text)`
     padding: 25px;
     color: ${black}
   `}
-`;
-
-export const Line = styled(View)`
-  height: 1px;
-  width: 100%;
-  background-color: ${white};
-  margin-vertical: 5px;
 `;
