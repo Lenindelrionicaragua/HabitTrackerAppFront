@@ -16,6 +16,7 @@ const {
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
+const StyledButtonWidth = Platform.OS === "web" ? "30%" : "90%";
 
 export const StyledContainer = styled(SafeAreaView)`
   background-color: ${darkGrey};
@@ -39,14 +40,17 @@ export const WelcomeContainer = styled(InnerContainer)`
 `;
 
 export const Avatar = styled(Image)`
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border-radius: 50px;
+  width: ${({ size }) => size || 45}px;
+  height: ${({ size }) => size || 45}px;
+  border-radius: ${({ size }) => (size || 50) / 2}px;
+  border-width: ${({ size }) => (size || 50) * 0.04}px;
+  overflow: hidden;
   border-width: 2px;
-  border-color: ${black};
-  margin-bottom: 10px;
-  margin-top: 10px;
+  border-color: ${white};
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
 `;
 
 export const WelcomeImage = styled(Image)`

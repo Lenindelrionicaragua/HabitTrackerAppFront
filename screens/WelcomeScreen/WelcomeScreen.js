@@ -62,7 +62,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   const AvatarImg = photoUrl
     ? { uri: photoUrl }
-    : require("./../../assets/logoZenTimer2.png");
+    : require("./../../assets/user.png");
 
   // Google authentication setup
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -163,12 +163,6 @@ const WelcomeScreen = ({ navigation }) => {
     <StyledContainer testID="styled-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <WelcomeImage
-          resizeMode="cover"
-          source={require("./../../assets/ZenTimer6.png")}
-          testID="welcome-image"
-        />
-
         <WelcomeContainer testID="welcome-container">
           <PageTitle welcome={true} testID="welcome-title">
             Welcome!
