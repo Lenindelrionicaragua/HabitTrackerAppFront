@@ -7,8 +7,8 @@ import {
   Pressable,
   Platform
 } from "react-native";
-import { Colors } from "../../styles/AppStyles";
 import { SafeAreaView } from "react-native";
+import { Colors } from "../../styles/AppStyles";
 
 const {
   seaGreen,

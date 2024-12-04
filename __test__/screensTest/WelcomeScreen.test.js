@@ -1,12 +1,19 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { render, cleanup, fireEvent, act } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
 import { CredentialsContext } from "../../context/credentialsContext";
 import WelcomeScreen from "../../screens/WelcomeScreen/WelcomeScreen";
 import { StatusBar } from "react-native";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
+import { useDispatch } from "react-redux";
+import { logInfo, logError } from "../../util/logging";
+
+jest.mock("../../util/logging", () => ({
+  logInfo: jest.fn(),
+  logError: jest.fn()
+}));
 
 jest.mock("@env", () => ({
   EXPO_CLIENT_ID: "mock_expo_client_id",
@@ -37,6 +44,14 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
+jest.mock("react-redux", () => {
+  const actual = jest.requireActual("react-redux");
+  return {
+    ...actual,
+    useDispatch: jest.fn()
+  };
+});
+
 // Mock context
 const mockStoredCredentials = {
   name: "Zen User",
@@ -51,7 +66,7 @@ const Wrapper = ({ children }) => {
   // Create a mock Redux store
   const store = createStore(rootReducer, {
     activeScreen: {
-      activeScreen: "WelcomeScreen" // Adjust according to your Redux state structure
+      activeScreen: "WelcomeScreen"
     }
   });
 
@@ -97,7 +112,6 @@ beforeEach(() => {
   });
 });
 
-WelcomeScreen;
 describe("WelcomeScreen", () => {
   afterEach(() => {
     cleanup();
@@ -193,14 +207,23 @@ describe("AvatarImage", () => {
 // Logout ButtonText
 describe("Logout ButtonText", () => {
   afterEach(() => {
-    cleanup();
+    jest.clearAllMocks();
   });
 
   test("Renders ButtonText with the correct text", () => {
     const { getByTestId } = welcomeScreenRender;
     const styledButtonElement = getByTestId("logout-button-text");
+    const logoutButton = getByTestId("logout-styled-button");
     const textContent = styledButtonElement.toString();
+
+    // Verify that the button is present
+    expect(logoutButton).toBeTruthy();
     expect(styledButtonElement).toBeTruthy();
+
+    act(() => {
+      fireEvent.press(logoutButton);
+    });
+
     expect(textContent).toMatchSnapshot("Logout");
   });
 });

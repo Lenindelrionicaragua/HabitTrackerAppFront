@@ -15,6 +15,7 @@ import Banner from "../component/Banner/Banner";
 import { setActiveScreen } from "../actions/counterActions";
 //Fetch hook
 import useHabitCategories from "../hooks/api/useHabitCategories";
+import useMonthlyStats from "../hooks/api/useMonthlyStats";
 // Context
 import { CredentialsContext } from "../context/credentialsContext";
 
@@ -25,7 +26,9 @@ const RootStack = () => {
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const { storedCredentials } = useContext(CredentialsContext);
   // Pass storedCredentials to the hook to trigger data fetching on app load
-  const { isLoading, error } = useHabitCategories(storedCredentials);
+  const { isLoading: categoriesLoading } =
+    useHabitCategories(storedCredentials);
+  const { isLoading: monthlyStatsLoading } = useMonthlyStats(storedCredentials);
 
   return (
     <NavigationContainer>
@@ -53,6 +56,7 @@ const RootStack = () => {
         <Stack.Screen
           name="MetricsScreen"
           component={MetricsScreen}
+          options={{ headerShown: false }}
           testID="metrics-screen"
         />
         <Stack.Screen

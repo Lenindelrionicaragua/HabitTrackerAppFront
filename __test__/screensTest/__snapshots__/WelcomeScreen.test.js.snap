@@ -7,7 +7,7 @@ exports[`WelcomeScreen Renders correctly the WelcomeScreen Component 1`] = `
   style={
     {
       "alignItems": "stretch",
-      "backgroundColor": "#fffff",
+      "backgroundColor": "#ffffff",
       "height": "90%",
       "marginLeft": "auto",
       "marginRight": "auto",

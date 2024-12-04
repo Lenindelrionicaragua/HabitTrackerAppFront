@@ -1,114 +1,66 @@
 import React, { useContext } from "react";
-import { StatusBar, Text, Button, View, ActivityIndicator } from "react-native";
-import { CredentialsContext } from "../../context/credentialsContext";
+import { StatusBar } from "react-native";
+// import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
   InnerContainer,
   PageTitle,
-  SubTitle
+  SubTitle,
+  StyledTitleContainer,
+  StyledHeader,
+  InfoMessageContainer,
+  Line,
+  AvatarContainer,
+  IconContainer,
+  Avatar
 } from "./MetricsScreenStyles";
-import useMonthlyStats from "../../hooks/api/useMonthlyStats";
+import MonthlyStats from "../../component/MonthlyStats/MonthlyStats";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import UpgradeButton from "../../component/UpgradeButton/UpgradeButton";
+import { logInfo } from "../../util/logging";
+import { Colors } from "../../styles/AppStyles";
+
+const { infoGrey } = Colors;
 
 const MetricsScreen = () => {
-  const { storedCredentials } = useContext(CredentialsContext);
+  const AvatarImg = require("./../../assets/user.png");
 
-  // Get monthly stats from the custom hook
-  const {
-    totalMinutes,
-    categoryCount,
-    daysWithRecords,
-    totalDailyMinutes,
-    categoryData,
-    errorMessage,
-    isLoading,
-    fetchMonthlyStats
-  } = useMonthlyStats();
+  const upGradeToPremium = () => {
+    logInfo("User want to upgrade to premium");
+  };
 
   return (
     <StyledContainer testID="metrics-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <PageTitle welcome={true} testID="metrics-title">
-          Metrics Page
-        </PageTitle>
+        <StyledHeader testID="header">
+          <AvatarContainer testID="avatar-container">
+            <Avatar
+              resizeMode="cover"
+              source={AvatarImg}
+              testID="avatar-metrics-image"
+            />
+          </AvatarContainer>
+          <StyledTitleContainer testID="title-container">
+            <PageTitle welcome={true} testID="metrics-title">
+              Habit Tracker
+            </PageTitle>
+            <UpgradeButton onPress={upGradeToPremium} testID="upgrade-button" />
+          </StyledTitleContainer>
+          <IconContainer
+            onPress={() => console.log("Pie chart icon clicked!")}
+            testID="pie-chart-icon"
+          >
+            <FontAwesome name="pie-chart" size={34} color={infoGrey} />
+          </IconContainer>
+        </StyledHeader>
 
-        {storedCredentials ? (
-          <>
-            <SubTitle welcome={true} testID="user-greeting">
-              Welcome back, {storedCredentials.name}!
-            </SubTitle>
-            <Text>Email: {storedCredentials.email}</Text>
-          </>
-        ) : (
-          <SubTitle welcome={true} testID="page-development">
-            No credentials found. Please log in.
-          </SubTitle>
-        )}
+        <Line testID="line" />
+        <SubTitle welcome={true} testID="metrics-title">
+          This Month
+        </SubTitle>
 
-        {/* Add a notice about the app being in development */}
-        <View
-          style={{
-            padding: 10,
-            backgroundColor: "#f9f9f9",
-            borderRadius: 5,
-            marginBottom: 10
-          }}
-        >
-          <Text style={{ fontSize: 14, color: "gray", textAlign: "center" }}>
-            Please note: This part of the app is still under development. Some
-            features may be incomplete or in testing.
-          </Text>
-        </View>
-
-        {/* Fetch Habit Categories Button */}
-        <View style={{ marginVertical: 10 }}>
-          <Button
-            onPress={fetchMonthlyStats} // This triggers the stats fetch
-            title="Fetch Monthly Habit Categories"
-            disabled={isLoading}
-          />
-        </View>
-
-        {/* Loading, Error, and Categories Display */}
-        {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
-        {errorMessage && (
-          <Text style={{ color: "red" }}>
-            Log in to get access to your stats and track your progress.
-          </Text>
-        )}
-
-        {/* Displaying the overall stats */}
-        <View style={{ marginTop: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            Monthly Stats:
-          </Text>
-          <Text>Total Minutes: {totalMinutes}</Text>
-          <Text>Category Count: {categoryCount}</Text>
-          <Text>Days with Records: {daysWithRecords}</Text>
-          <Text>
-            Total Daily Minutes:{" "}
-            {Object.keys(totalDailyMinutes).length > 0
-              ? Object.entries(totalDailyMinutes)
-                  .map(([date, minutes]) => `${date}: ${minutes}`)
-                  .join(", ")
-              : "No data available"}
-          </Text>
-        </View>
-
-        {/* Display categories if they exist */}
-        {categoryData.length > 0 && (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-              Categories:
-            </Text>
-            {categoryData.map((category, index) => (
-              <Text key={index} style={{ paddingVertical: 5 }}>
-                - {category.name}: {category.totalMinutes} minutes (
-                {category.percentage}%)
-              </Text>
-            ))}
-          </View>
-        )}
+        <MonthlyStats testID="monthly-stats" />
       </InnerContainer>
     </StyledContainer>
   );

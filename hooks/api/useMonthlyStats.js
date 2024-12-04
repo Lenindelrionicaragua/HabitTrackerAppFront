@@ -1,14 +1,35 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/api/useFetch";
 import { logError, logInfo } from "../../util/logging";
 import { roundAllValues } from "../../util/roundingUtils";
+import { calculateDailyAverage } from "../../util/calculateDailyAverage";
+import {
+  MonthlyStatsColors,
+  DoughnutChartSmallColors
+} from "../../styles/AppStyles";
+import { setMonthlyStats } from "../../actions/counterActions";
+import { prepareChartData } from "../../util/prepareChartData";
 
-// Custom hook to fetch monthly stats
-const useMonthlyStats = () => {
+// Colors
+const { color1, color2, color3, color4, color5, color6 } = MonthlyStatsColors;
+const {
+  secondary1,
+  secondary2,
+  secondary3,
+  secondary4,
+  secondary5,
+  secondary6
+} = DoughnutChartSmallColors;
+
+const useMonthlyStats = storedCredentials => {
+  const dispatch = useDispatch();
+
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
   const [roundedData, setRoundedData] = useState(null);
+  const [hasFetched, setHasFetched] = useState(false);
 
   const getCurrentMonthAndYear = () => {
     const date = new Date();
@@ -19,25 +40,41 @@ const useMonthlyStats = () => {
   };
 
   const { month, year } = getCurrentMonthAndYear();
-
   const url = `/habit-categories/monthly-metrics?month=${month}&year=${year}`;
 
-  const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
+  const { error, isLoading, performFetch, cancelFetch } = useFetch(
     url,
     receivedData => {
       if (receivedData.success) {
         setSuccess(true);
         setMessage("Monthly stats fetched successfully.");
-        const processedData = roundAllValues(receivedData);
-        setRoundedData(processedData);
-        logInfo(
-          "Monthly stats fetched and rounded successfully.",
-          processedData
-        );
+        // Round numbers to 0 decimal places by default.
+        // Optionally, you can specify the number of decimal places as the second argument.
+        const processedData = roundAllValues(receivedData, 0);
+        // Format data for charts
+        const preparedData = prepareChartData(processedData);
+
+        setRoundedData(preparedData);
       }
     }
   );
 
+  useEffect(() => {
+    if (storedCredentials) {
+      setHasFetched(false);
+    }
+  }, [storedCredentials]);
+
+  // Fetch categories when stored credentials are available
+  useEffect(() => {
+    if (storedCredentials && !hasFetched) {
+      logInfo("Fetching categories due to credentials update or initial load.");
+      performFetch();
+      setHasFetched(true);
+    }
+  }, [storedCredentials, hasFetched, performFetch]);
+
+  // Handle errors
   useEffect(() => {
     if (error) {
       setSuccess(false);
@@ -48,25 +85,63 @@ const useMonthlyStats = () => {
     }
   }, [error]);
 
-  const fetchMonthlyStats = useCallback(() => {
-    setSuccess(null);
-    setMessage("");
-    setErrorMessage("");
-    setRoundedData(null); // Clear previous data before fetching new
-    performFetch();
-  }, [performFetch]);
+  const getDaysInMonth = (month, year) => new Date(year, month, 0).getDate();
 
+  // Calculate derived data and update Redux store
+  useEffect(() => {
+    if (roundedData) {
+      const daysInCurrentMonth = getDaysInMonth(month, year);
+
+      const categoryMonthlyGoals = roundedData.categoryData.map(category => ({
+        ...category,
+        monthlyGoal: (category.dailyGoal || 55) * daysInCurrentMonth // default 55 minutes
+      }));
+
+      const totalDailyMinutes = roundedData.totalDailyMinutes || {};
+      const dailyAverageMinutes = calculateDailyAverage(totalDailyMinutes);
+
+      const categoryColors = roundedData.categoryData.map((_, index) => ({
+        primary: [color1, color2, color3, color4, color5, color6][index % 6],
+        secondary: [
+          secondary1,
+          secondary2,
+          secondary3,
+          secondary4,
+          secondary5,
+          secondary6
+        ][index % 6]
+      }));
+
+      const categoryDataWithColors = roundedData.categoryData.map(
+        (category, index) => ({
+          ...category,
+          monthlyGoal: categoryMonthlyGoals[index].monthlyGoal,
+          colors: categoryColors[index]
+        })
+      );
+
+      const monthlyStatsState = {
+        ...roundedData,
+        dailyAverageMinutes: dailyAverageMinutes.averageMinutes || 0.01,
+        categoryData: categoryDataWithColors
+      };
+
+      // Dispatch to Redux store
+      dispatch(setMonthlyStats(monthlyStatsState));
+      console.log(
+        "Dispatching monthly stats to Redux:",
+        JSON.stringify(monthlyStatsState, null, 2)
+      );
+    }
+  }, [roundedData, month, year, dispatch]);
+
+  // Return the derived data
   return {
-    totalMinutes: roundedData?.totalMinutes || 0,
-    categoryCount: roundedData?.categoryCount || 0,
-    daysWithRecords: roundedData?.daysWithRecords || 0,
-    totalDailyMinutes: roundedData?.totalDailyMinutes || {},
-    categoryData: roundedData?.categoryData || [],
     success,
     errorMessage,
     message,
     isLoading,
-    fetchMonthlyStats,
+    fetchMonthlyStats: performFetch,
     cancelFetch
   };
 };

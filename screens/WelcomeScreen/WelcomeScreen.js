@@ -27,7 +27,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
   resetHabitCategories,
-  setHabitCategoryIndex
+  setHabitCategoryIndex,
+  clearMonthlyStats
 } from "../../actions/counterActions";
 
 // Credentials
@@ -120,6 +121,7 @@ const WelcomeScreen = ({ navigation }) => {
       "habitCategories"
     ]);
     dispatch(resetHabitCategories());
+    dispatch(clearMonthlyStats());
     dispatch(setHabitCategoryIndex(null));
     setStoredCredentials(null);
     logInfo("User, token, and categories cleared from storage");
