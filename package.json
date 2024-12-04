@@ -27,6 +27,7 @@
     "expo-web-browser": "~13.0.3",
     "formik": "^2.4.5",
     "install": "^0.13.0",
+    "jest": "^29.7.0",
     "jest-expo": "~51.0.2",
     "jslint": "^0.12.1",
     "lodash.debounce": "^4.0.8",

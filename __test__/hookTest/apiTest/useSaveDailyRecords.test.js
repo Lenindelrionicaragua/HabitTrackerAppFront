@@ -44,7 +44,9 @@ describe("useSaveDailyRecords Hook", () => {
     expect(result.current.isLoading).toBe(false);
     expect(axios.post).toHaveBeenCalledTimes(1);
     expect(logInfo).toHaveBeenCalledWith(
-      expect.stringContaining("Request made to /time-records/")
+      expect.stringContaining(
+        'Response Data: {"success":true,"msg":"Record saved successfully"}'
+      )
     );
   });
 
