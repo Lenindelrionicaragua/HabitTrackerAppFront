@@ -191,6 +191,15 @@ export const triggerMetricsUpdate = () => {
   };
 };
 
+export const triggerMetricsUpdateWithReset = () => {
+  return dispatch => {
+    dispatch(triggerMetricsUpdate());
+    setTimeout(() => {
+      dispatch(triggerMetricsUpdate());
+    }, 10000);
+  };
+};
+
 export const setActiveScreen = screen => {
   return {
     type: SET_ACTIVE_SCREEN,
