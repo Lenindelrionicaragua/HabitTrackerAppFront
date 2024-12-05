@@ -2,9 +2,9 @@ const initialMetricsState = {
   needsMetricsUpdate: false
 };
 
-const metricsReducer = (state = initialMetricsState, action) => {
+const metricsUpdateReducer = (state = initialMetricsState, action) => {
   switch (action.type) {
-    case TRIGGER_METRICS_UPDATE:
+    case "TRIGGER_METRICS_UPDATE":
       return {
         ...state,
         needsMetricsUpdate: !state.needsMetricsUpdate
@@ -14,4 +14,4 @@ const metricsReducer = (state = initialMetricsState, action) => {
   }
 };
 
-export default metricsReducer;
+export default metricsUpdateReducer;
