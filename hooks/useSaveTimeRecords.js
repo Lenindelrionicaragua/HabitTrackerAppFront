@@ -4,7 +4,8 @@ import { logInfo, logError } from "../util/logging";
 import {
   setIsRunning,
   setSaveTimeButtonLabel,
-  setButtonsDisabled
+  setButtonsDisabled,
+  triggerMetricsUpdateWithReset
 } from "../actions/counterActions";
 import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
@@ -59,6 +60,7 @@ function useSaveTimeRecords() {
     updateInfoText("Saving");
     updateColors(green, green);
     dispatch(setButtonsDisabled(true));
+    dispatch(triggerMetricsUpdateWithReset());
 
     try {
       const { success, error } = await createDailyRecord();

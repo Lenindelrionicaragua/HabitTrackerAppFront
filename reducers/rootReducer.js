@@ -41,7 +41,7 @@ const rootReducer = combineReducers({
   habitCategoryIndex: habitCategoryIndexReducer,
   habitCategories: habitCategoriesReducer,
   monthlyStats: monthlyStatsReducer,
-  metricsUpdateReducer: metricsUpdateReducer,
+  metricsUpdate: metricsUpdateReducer,
   activeScreen: activeScreenReducer
 });
 
