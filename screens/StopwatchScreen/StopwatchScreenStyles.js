@@ -11,7 +11,8 @@ const {
   darkGrey,
   black,
   skyBlue,
-  lightGreen
+  lightGreen,
+  softGray
 } = Colors;
 
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
@@ -21,7 +22,7 @@ const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${darkGrey};
+  background-color: ${softGray};
   justify-content: center;
   align-items: center;
   width: ${containerWidth};

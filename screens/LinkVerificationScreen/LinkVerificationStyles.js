@@ -18,7 +18,8 @@ const {
   black,
   skyBlue,
   lightGreen,
-  darkGrey
+  darkGrey,
+  softGray
 } = Colors;
 
 const green = "#00ff00";
@@ -29,7 +30,7 @@ const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const marginTopTopContainer = Platform.OS === "web" ? "80px" : "120px";
 
 export const StyledContainer = styled(SafeAreaView)`
-  background-color: ${lightGrey};
+  background-color: ${softGray};
   width: ${containerWidth};
   height: ${containerHeight};
   align-items: ${Platform.OS === "web" ? "center" : "stretch"};
