@@ -46,7 +46,7 @@ import { setActiveScreen } from "../../actions/counterActions";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const { seaGreen, infoGrey, darkGrey } = Colors;
+const { seaGreen, infoGrey, darkGrey, lightGrey } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
   // Local state for handling form interactions
@@ -279,7 +279,7 @@ const LoginScreen = ({ navigation, route }) => {
                   label="Email Address"
                   icon="mail"
                   placeholder="serenity@gmail.com"
-                  placeholderTextColor={darkGrey}
+                  placeholderTextColor={lightGrey}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
@@ -290,7 +290,7 @@ const LoginScreen = ({ navigation, route }) => {
                   label="Password"
                   icon="lock"
                   placeholder="* * * * * * *"
-                  placeholderTextColor={darkGrey}
+                  placeholderTextColor={lightGrey}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
