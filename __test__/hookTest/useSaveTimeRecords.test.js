@@ -2,7 +2,6 @@ import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 import { usePerformReset } from "../../hooks/usePerformReset";
