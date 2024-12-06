@@ -1,5 +1,5 @@
 import { useRef } from "react";
-// import { Audio } from "expo-av";
+import { Audio } from "expo-av";
 import { logInfo, logError } from "../util/logging";
 
 export const usePlayAlarm = (logInfo, logError) => {
