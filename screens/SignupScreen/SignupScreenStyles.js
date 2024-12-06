@@ -20,10 +20,10 @@ const {
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "0%" : "5%";
-const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
 const containerHeight = Platform.OS === "web" ? "75%" : "100%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
+const paddingTop = Platform.OS === "web" ? "0%" : "5%";
+const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
 
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
@@ -117,7 +117,7 @@ export const StyledButton = styled(Pressable)`
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${seaGreen};
+  color: ${white};
   font-size: 15px;
 `;
 

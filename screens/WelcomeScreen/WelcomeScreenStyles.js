@@ -11,14 +11,17 @@ const {
   lightPink,
   skyBlue,
   darkGrey,
-  black
+  black,
+  softGray
 } = Colors;
 
-const containerHeight = Platform.OS === "web" ? "85%" : "90%";
+const containerHeight = Platform.OS === "web" ? "90%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
+const paddingTop = Platform.OS === "web" ? "0%" : "5%";
+const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
 
 export const StyledContainer = styled(SafeAreaView)`
-  background-color: ${darkGrey};
+  background-color: ${softGray};
   width: ${containerWidth};
   height: ${containerHeight};
   align-items: ${Platform.OS === "web" ? "center" : "stretch"};
@@ -29,6 +32,7 @@ export const StyledContainer = styled(SafeAreaView)`
 export const InnerContainer = styled(View)`
   flex: 1;
   width: 100%;
+  padding-bottom: ${paddingBottom};
   align-items: center;
   justify-content: center;
 `;
@@ -106,7 +110,7 @@ export const StyledButton = styled(Pressable)`
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${seaGreen};
+  color: ${white};
   font-size: 16px;
 
   ${props =>
