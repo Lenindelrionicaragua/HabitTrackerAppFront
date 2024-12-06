@@ -33,7 +33,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
 // Colors
-const { white, lightGrey } = Colors;
+const { white, lightGreen } = Colors;
 
 const SignupScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -211,7 +211,7 @@ const SignupScreen = ({ navigation }) => {
                   label="Name"
                   icon="person"
                   placeholder="Zen User"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={lightGreen}
                   onChangeText={handleChange("name")}
                   onBlur={handleBlur("name")}
                   value={values.name}
@@ -222,7 +222,7 @@ const SignupScreen = ({ navigation }) => {
                   label="Email Address"
                   icon="mail"
                   placeholder="serenity@gmail.com"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={lightGreen}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
@@ -234,7 +234,7 @@ const SignupScreen = ({ navigation }) => {
                   label="Date of Birth"
                   icon="calendar"
                   placeholder="Tue Feb 01 1984"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={lightGreen}
                   onChangeText={handleChange("dateOfBirth")}
                   onBlur={handleBlur("dateOfBirth")}
                   value={userBirthDay ? userBirthDay.toDateString() : ""}
@@ -248,7 +248,7 @@ const SignupScreen = ({ navigation }) => {
                   label="Password"
                   icon="lock"
                   placeholder="* * * * * * *"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={lightGreen}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
@@ -263,7 +263,7 @@ const SignupScreen = ({ navigation }) => {
                   label="Confirm Password"
                   icon="lock"
                   placeholder="* * * * * * *"
-                  placeholderTextColor={lightGrey}
+                  placeholderTextColor={lightGreen}
                   onChangeText={handleChange("confirmPassword")}
                   onBlur={handleBlur("confirmPassword")}
                   value={values.confirmPassword}

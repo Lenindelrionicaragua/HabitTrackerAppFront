@@ -9,7 +9,7 @@ import {
 } from "../../screens/SignupScreen/SignupScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const { darkGrey, black } = Colors;
+const { darkGrey, black, lightGreen } = Colors;
 
 const iconSize = Platform.OS === "web" ? 22 : 25;
 const rightIconSize = Platform.OS === "web" ? 20 : 22;
