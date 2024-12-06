@@ -54,7 +54,7 @@ const TextInputSignupScreen = props => {
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
             size={rightIconSize}
-            color={lightGreen}
+            color={darkGrey}
           />
         </RightIcon>
       )}
