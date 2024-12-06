@@ -10,7 +10,8 @@ export const Colors = {
   green: "#0FF4C6",
   red: "#FF0000",
   orange: "#FFA500",
-  yellow: "#FFD700"
+  yellow: "#FFD700",
+  softGray: "#f5f5f5"
 };
 
 export const MonthlyStatsColors = {

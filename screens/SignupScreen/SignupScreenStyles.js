@@ -12,7 +12,8 @@ const {
   black,
   infoGrey,
   skyBlue,
-  lightGreen
+  lightGreen,
+  softGray
 } = Colors;
 
 const green = "#00ff00";
@@ -33,7 +34,7 @@ const footerPaddingTop = Platform.OS === "web" ? "12px" : "4px";
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
   padding: 15px;
-  background-color: ${darkGrey};
+  background-color: ${softGray};
   width: ${containerWidth};
   height: ${containerHeight};
   padding-top: ${paddingTop};
@@ -44,7 +45,7 @@ export const StyledContainer = styled(SafeAreaView)`
 `;
 
 export const InnerContainer = styled(View)`
-  background-color: ${darkGrey};
+  background-color: ${softGray};
   flex: 1;
   width: 100%;
   align-items: center;

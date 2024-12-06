@@ -19,7 +19,7 @@ import useMonthlyStats from "../hooks/api/useMonthlyStats";
 // Context
 import { CredentialsContext } from "../context/credentialsContext";
 
-const { grey, lightGrey } = Colors;
+const { softGray, black } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
@@ -37,7 +37,7 @@ const RootStack = () => {
           headerStyle: {
             backgroundColor: "transparent"
           },
-          headerTintColor: lightGrey,
+          headerTintColor: softGray,
           headerTransparent: true,
           headerTitle: "",
           headerLeftContainerStyle: {
@@ -65,7 +65,7 @@ const RootStack = () => {
           testID="login-screen"
         />
         <Stack.Screen
-          options={{ headerTintColor: grey }}
+          options={{ headerTintColor: black }}
           name="SignupScreen"
           component={SignupScreen}
           testID="signup-screen"

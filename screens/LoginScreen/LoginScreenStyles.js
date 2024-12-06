@@ -18,7 +18,9 @@ const {
   darkGrey,
   black,
   skyBlue,
-  lightGreen
+  lightGreen,
+  softGray,
+  orange
 } = Colors;
 
 const green = "#00ff00";
@@ -42,7 +44,6 @@ export const StyledContainer = styled(
 )`
   flex: 1;
   padding: 15px;
-  background-color: ${darkGrey};
   width: ${containerWidth};
   height: ${containerHeight};
   margin-top: ${paddingTop};
@@ -53,7 +54,7 @@ export const StyledContainer = styled(
 `;
 
 export const InnerContainer = styled(View)`
-  background-color: ${darkGrey};
+  background-color: ${softGray};
   flex: 1;
   padding-top: 15px;
   width: 100%;
@@ -135,9 +136,11 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${white};
+    background-color: ${skyBlue};
     flex-direction: row;
     justify-content: center;
+    border-width: 0.5px;
+    border-color:${black};
   `}
 `;
 
