@@ -24,6 +24,7 @@ export const RESET_HABIT_CATEGORIES = "RESET_HABIT_CATEGORIES";
 
 export const SET_MONTHLY_STATS = "SET_MONTHLY_STATS";
 export const CLEAR_MONTHLY_STATS = "CLEAR_MONTHLY_STATS";
+export const TRIGGER_METRICS_UPDATE = "TRIGGER_METRICS_UPDATE";
 
 export const SET_PAUSE_TIME = "SET_PAUSE_TIME";
 
@@ -183,6 +184,20 @@ export const setMonthlyStats = stats => ({
 export const clearMonthlyStats = () => ({
   type: CLEAR_MONTHLY_STATS
 });
+
+export const triggerMetricsUpdateWithReset = () => {
+  return dispatch => {
+    dispatch({
+      type: "TRIGGER_METRICS_UPDATE"
+    });
+
+    setTimeout(() => {
+      dispatch({
+        type: "TRIGGER_METRICS_UPDATE"
+      });
+    }, 10000);
+  };
+};
 
 export const setActiveScreen = screen => {
   return {

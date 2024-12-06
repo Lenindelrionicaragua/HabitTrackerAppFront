@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StatusBar } from "react-native";
-// import { CredentialsContext } from "../../context/credentialsContext";
 import {
   StyledContainer,
   InnerContainer,

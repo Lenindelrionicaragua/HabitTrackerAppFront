@@ -1,7 +1,7 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "../../reducers/rootReducer";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 import { usePerformReset } from "../../hooks/usePerformReset";
@@ -33,7 +33,6 @@ jest.mock("../../hooks/api/useSaveDailyRecords", () => ({
 }));
 
 describe("useSaveTimeRecords", () => {
-  let store;
   let dispatchSpy;
   let updateInfoText;
   let clearTimeoutsAndMessage;
@@ -67,6 +66,13 @@ describe("useSaveTimeRecords", () => {
     jest.clearAllMocks();
   });
 
+  const initializeStore = initialState => {
+    return configureStore({
+      reducer: rootReducer,
+      preloadedState: initialState
+    });
+  };
+
   it("saveTimeRecords should call clearTimeoutsAndMessage, and setIsRunning to false, when the timer is running", async () => {
     const initialState = {
       isRunning: { isRunning: true },
@@ -75,10 +81,12 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: false },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
+
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -106,10 +114,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: false },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -135,10 +144,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: false },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -162,10 +172,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 10 },
       firstRun: { firstRun: true },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -183,6 +194,7 @@ describe("useSaveTimeRecords", () => {
     act(() => {
       jest.runAllTimers();
     });
+
     expect(useInfoText().updateInfoText).toHaveBeenCalledWith(
       "Time saved successfully"
     );
@@ -197,10 +209,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: false },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -230,10 +243,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: true },
       timeCompleted: { timeCompleted: true },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (
@@ -263,10 +277,11 @@ describe("useSaveTimeRecords", () => {
       remainingTime: { remainingTime: 0 },
       firstRun: { firstRun: true },
       timeCompleted: { timeCompleted: false },
-      elapsedTime: { elapsedTime: 0 }
+      elapsedTime: { elapsedTime: 0 },
+      metricsUpdate: { needsMetricsUpdate: false }
     };
 
-    store = createStore(rootReducer, initialState);
+    const store = initializeStore(initialState);
     dispatchSpy = jest.spyOn(store, "dispatch");
 
     const wrapper = ({ children }) => (

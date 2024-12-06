@@ -8,7 +8,10 @@ import {
   MonthlyStatsColors,
   DoughnutChartSmallColors
 } from "../../styles/AppStyles";
-import { setMonthlyStats } from "../../actions/counterActions";
+import {
+  setMonthlyStats,
+  triggerMetricsUpdateWithReset
+} from "../../actions/counterActions";
 import { prepareChartData } from "../../util/prepareChartData";
 
 // Colors
@@ -30,6 +33,10 @@ const useMonthlyStats = storedCredentials => {
   const [message, setMessage] = useState("");
   const [roundedData, setRoundedData] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
+
+  const needsMetricsUpdate = useSelector(
+    state => state.metricsUpdate.needsMetricsUpdate
+  );
 
   const getCurrentMonthAndYear = () => {
     const date = new Date();
@@ -58,6 +65,13 @@ const useMonthlyStats = storedCredentials => {
       }
     }
   );
+
+  useEffect(() => {
+    if (needsMetricsUpdate) {
+      logInfo("MetricsScreen: Refreshing data");
+      performFetch();
+    }
+  }, [needsMetricsUpdate]);
 
   useEffect(() => {
     if (storedCredentials) {
