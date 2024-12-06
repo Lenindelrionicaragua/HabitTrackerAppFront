@@ -18,13 +18,15 @@ const {
   darkGrey,
   black,
   skyBlue,
-  lightGreen
+  lightGreen,
+  softGray,
+  orange
 } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "7%" : "0%";
+const paddingTop = Platform.OS === "web" ? "7%" : "7%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
@@ -41,21 +43,19 @@ export const StyledContainer = styled(
   Platform.OS === "web" ? View : SafeAreaView
 )`
   flex: 1;
-  padding: 15px;
-  background-color: ${darkGrey};
+  padding: 0px;
+  background-color: ${softGray};
   width: ${containerWidth};
   height: ${containerHeight};
-  margin-top: ${paddingTop};
-  margin-bottom: ${paddingBottom};
   align-items: ${Platform.OS === "web" ? "center" : "stretch"};
   margin-left: auto;
   margin-right: auto;
 `;
 
 export const InnerContainer = styled(View)`
-  background-color: ${darkGrey};
   flex: 1;
-  padding-top: 15px;
+  padding-top: ${paddingTop};
+  padding-bottom: ${paddingBottom};
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -135,14 +135,16 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${white};
+    background-color: ${orange};
     flex-direction: row;
     justify-content: center;
+    border-width: 1px;
+    border-color: ${white};
   `}
 `;
 
 export const ButtonText = styled(Text)`
-  color: ${props => (props.google ? black : seaGreen)};
+  color: ${props => (props.google ? black : white)};
   font-size: 16px;
 
   ${props =>
