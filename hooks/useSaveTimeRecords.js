@@ -48,8 +48,8 @@ function useSaveTimeRecords() {
     }
 
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-      logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
+      // logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
+      // logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
       await processSaveAndUpdateUI();
       return;
     }
@@ -60,17 +60,18 @@ function useSaveTimeRecords() {
     updateInfoText("Saving");
     updateColors(green, green);
     dispatch(setButtonsDisabled(true));
-    dispatch(triggerMetricsUpdateWithReset());
 
     try {
       const { success, error } = await createDailyRecord();
 
       if (success) {
         updateInfoText("Time saved successfully");
+
         setTimeout(() => {
           if (!timeCompleted) {
             playAlarm(require("../assets/alarm_2.wav"));
           }
+          dispatch(triggerMetricsUpdateWithReset()); // turn off to run the test
           performReset();
         }, 3000);
       } else {

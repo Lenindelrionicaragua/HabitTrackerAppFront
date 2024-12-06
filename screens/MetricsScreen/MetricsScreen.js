@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { StatusBar } from "react-native";
-import { useSelector } from "react-redux";
 import {
   StyledContainer,
   InnerContainer,
@@ -23,20 +22,11 @@ import { Colors } from "../../styles/AppStyles";
 const { infoGrey } = Colors;
 
 const MetricsScreen = () => {
-  const needsMetricsUpdate = useSelector(
-    state => state.metricsUpdateReducer.needsMetricsUpdate
-  );
   const AvatarImg = require("./../../assets/user.png");
 
   const upGradeToPremium = () => {
     logInfo("User want to upgrade to premium");
   };
-
-  useEffect(() => {
-    if (needsMetricsUpdate) {
-      logInfo("MetricsScreen: Refreshing data");
-    }
-  }, [needsMetricsUpdate]);
 
   return (
     <StyledContainer testID="metrics-container">

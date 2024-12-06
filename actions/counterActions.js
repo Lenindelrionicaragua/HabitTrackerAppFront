@@ -185,17 +185,16 @@ export const clearMonthlyStats = () => ({
   type: CLEAR_MONTHLY_STATS
 });
 
-export const triggerMetricsUpdate = () => {
-  return {
-    type: TRIGGER_METRICS_UPDATE
-  };
-};
-
 export const triggerMetricsUpdateWithReset = () => {
   return dispatch => {
-    dispatch(triggerMetricsUpdate());
+    dispatch({
+      type: "TRIGGER_METRICS_UPDATE"
+    });
+
     setTimeout(() => {
-      dispatch(triggerMetricsUpdate());
+      dispatch({
+        type: "TRIGGER_METRICS_UPDATE"
+      });
     }, 10000);
   };
 };
