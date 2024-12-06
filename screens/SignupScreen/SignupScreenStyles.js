@@ -13,14 +13,15 @@ const {
   infoGrey,
   skyBlue,
   lightGreen,
-  softGray
+  softGray,
+  orange
 } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "5%" : "5%";
-const paddingBottom = Platform.OS === "web" ? "10%" : "20%";
+const paddingTop = Platform.OS === "web" ? "0%" : "5%";
+const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
 const containerHeight = Platform.OS === "web" ? "75%" : "100%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 
@@ -33,12 +34,11 @@ const footerPaddingTop = Platform.OS === "web" ? "12px" : "4px";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;
-  padding: 15px;
-  background-color: ${softGray};
+  padding: 0px;
+  background-color: ${orange};
   width: ${containerWidth};
   height: ${containerHeight};
-  padding-top: ${paddingTop};
-  padding-bottom: ${paddingBottom};
+
   align-items: ${Platform.OS === "web" ? "center" : "stretch"};
   margin-left: auto;
   margin-right: auto;
@@ -48,6 +48,8 @@ export const InnerContainer = styled(View)`
   background-color: ${softGray};
   flex: 1;
   width: 100%;
+  padding-top: ${paddingTop};
+  padding-bottom: ${paddingBottom};
   align-items: center;
   justify-content: center;
 `;

@@ -26,7 +26,7 @@ const {
 const green = "#00ff00";
 const red = "#ff0000";
 
-const paddingTop = Platform.OS === "web" ? "7%" : "0%";
+const paddingTop = Platform.OS === "web" ? "7%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "10%" : "10%";
 const containerHeight = Platform.OS === "web" ? "80%" : "100%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
@@ -43,7 +43,8 @@ export const StyledContainer = styled(
   Platform.OS === "web" ? View : SafeAreaView
 )`
   flex: 1;
-  padding: 15px;
+  padding: 0px;
+  background-color: ${orange};
   width: ${containerWidth};
   height: ${containerHeight};
   margin-top: ${paddingTop};
@@ -136,11 +137,9 @@ export const StyledButton = styled(Pressable)`
   ${props =>
     props.google == true &&
     `
-    background-color: ${skyBlue};
+    background-color: ${orange};
     flex-direction: row;
     justify-content: center;
-    border-width: 0.5px;
-    border-color:${black};
   `}
 `;
 
