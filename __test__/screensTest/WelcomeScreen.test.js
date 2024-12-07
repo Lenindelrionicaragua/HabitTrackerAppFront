@@ -131,63 +131,35 @@ describe("WelcomeScreen", () => {
   test("Render UI components correctly", () => {
     const { getByTestId } = welcomeScreenRender;
     expect(getByTestId("inner-container")).toBeTruthy();
-    expect(getByTestId("welcome-container")).toBeTruthy();
     expect(getByTestId("welcome-title")).toBeTruthy();
-    expect(getByTestId("user-name")).toBeTruthy();
-    expect(getByTestId("user-email")).toBeTruthy();
+    expect(getByTestId("avatar-image")).toBeTruthy();
+    expect(getByTestId("logout-styled-button")).toBeTruthy();
   });
 
-  test("PageTitle should render a string of letters, numbers, or spaces", () => {
+  test("PageTitle should render the name of the user", () => {
     const { getByTestId } = welcomeScreenRender;
     const pageTitleComponent = getByTestId("welcome-title");
     const textContent = pageTitleComponent.props.children.toString();
-    expect(textContent).toMatch("Welcome!");
-  });
-
-  test("SubTitle should render a string of letters, numbers or spaces", () => {
-    const { getByTestId } = welcomeScreenRender;
-    const subTitleComponent = getByTestId("user-name");
-    const textContent = subTitleComponent.props.children.toString();
     expect(textContent).toMatch("Zen User");
-  });
-
-  test("SubTitle should render a string of letters, numbers or spaces", () => {
-    const { getByTestId } = welcomeScreenRender;
-    const subTitleComponent = getByTestId("user-email");
-    const textContent = subTitleComponent.props.children.toString();
-    expect(textContent).toMatch("serenity@gmail.com");
   });
 
   test("Credentials context provides stored credentials", () => {
     const { getByTestId } = welcomeScreenRender;
-    const nameText = getByTestId("user-name");
+    const nameText = getByTestId("welcome-title");
     expect(nameText.props.children).toBe("Zen User");
   });
 
-  test("Welcome image renders correctly", () => {
+  test("Avatar image renders correctly", () => {
     const { getByTestId } = welcomeScreenRender;
-    const welcomeImage = getByTestId("welcome-image");
-    expect(welcomeImage.props.source).toEqual(
-      require("./../../assets/ZenTimer6.png")
+    const avatarImage = getByTestId("avatar-image");
+    expect(avatarImage.props.source).toEqual(
+      require("./../../assets/user.png")
     );
   });
 
   test("Redux activeScreen state is correctly passed", () => {
     const { getByTestId } = welcomeScreenRender;
     expect(getByTestId("inner-container")).toBeTruthy();
-  });
-});
-
-// WelcomeImage
-describe("WelcomeImage", () => {
-  afterEach(() => {
-    cleanup();
-  });
-
-  test("Render the WelcomePage component correctly and has a valid image source", () => {
-    const { getByTestId } = welcomeScreenRender;
-    const welcomeImageComponent = getByTestId("welcome-image");
-    expect(welcomeImageComponent).toBeTruthy();
   });
 });
 

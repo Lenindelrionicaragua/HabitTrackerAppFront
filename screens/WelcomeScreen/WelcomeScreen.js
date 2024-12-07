@@ -161,23 +161,17 @@ const WelcomeScreen = ({ navigation }) => {
     <StyledContainer testID="styled-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <WelcomeContainer testID="welcome-container">
-          <PageTitle welcome={true} testID="user-name">
-            {name || "Zen User"}
-          </PageTitle>
+        <PageTitle welcome={true} testID="welcome-title">
+          {name || "Zen User"}
+        </PageTitle>
 
-          <StyledFormArea>
-            <Avatar
-              resizeMode="cover"
-              source={AvatarImg}
-              testID="avatar-image"
-            />
-            <Line testID="line" />
-            <StyledButton onPress={clearLogin} testID="logout-styled-button">
-              <ButtonText testID="logout-button-text">Logout</ButtonText>
-            </StyledButton>
-          </StyledFormArea>
-        </WelcomeContainer>
+        <StyledFormArea>
+          <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
+          <Line testID="line" />
+          <StyledButton onPress={clearLogin} testID="logout-styled-button">
+            <ButtonText testID="logout-button-text">Logout</ButtonText>
+          </StyledButton>
+        </StyledFormArea>
       </InnerContainer>
     </StyledContainer>
   );

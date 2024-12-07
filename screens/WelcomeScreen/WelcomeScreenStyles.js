@@ -37,10 +37,10 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
-export const WelcomeContainer = styled(InnerContainer)`
-  padding-top: 10px;
-  justify-content: center;
-`;
+// export const WelcomeContainer = styled(InnerContainer)`
+//   padding-top: 10px;
+//   justify-content: center;
+// `;
 
 export const Avatar = styled(Image)`
   width: 100px;
@@ -72,20 +72,20 @@ export const PageTitle = styled(Text)`
   `}
 `;
 
-export const SubTitle = styled(Text)`
-  font-size: 15px;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: ${infoGrey};
+// export const SubTitle = styled(Text)`
+//   font-size: 15px;
+//   margin-bottom: 20px;
+//   letter-spacing: 1px;
+//   font-weight: bold;
+//   color: ${infoGrey};
 
-  ${props =>
-    props.welcome &&
-    `
-    margin-bottom: 5px;
-    font-weight: normal;
-  `}
-`;
+//   ${props =>
+//     props.welcome &&
+//     `
+//     margin-bottom: 5px;
+//     font-weight: normal;
+//   `}
+// `;
 
 export const StyledFormArea = styled(View)`
   width: 90%;
