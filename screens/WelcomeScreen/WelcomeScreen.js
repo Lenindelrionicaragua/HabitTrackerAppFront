@@ -161,22 +161,11 @@ const WelcomeScreen = ({ navigation }) => {
     <StyledContainer testID="styled-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        {/* <WelcomeImage
-          resizeMode="cover"
-          source={require("./../../assets/ZenTimer6.png")}
-          testID="welcome-image"
-        /> */}
-
         <WelcomeContainer testID="welcome-container">
-          <PageTitle welcome={true} testID="welcome-title">
-            Welcome!
-          </PageTitle>
-          <SubTitle welcome={true} testID="user-name">
+          <PageTitle welcome={true} testID="user-name">
             {name || "Zen User"}
-          </SubTitle>
-          <SubTitle welcome={true} testID="user-email">
-            {email || "serenity@gmail.com"}
-          </SubTitle>
+          </PageTitle>
+
           <StyledFormArea>
             <Avatar
               resizeMode="cover"

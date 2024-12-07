@@ -48,15 +48,15 @@ export const Avatar = styled(Image)`
   margin: auto;
   border-radius: 50px;
   border-width: 2px;
-  border-color: ${black};
+  border-color: ${white};
   margin-bottom: 10px;
   margin-top: 10px;
 `;
 
-export const WelcomeImage = styled(Image)`
-  height: 50%;
-  width: 100%;
-`;
+// export const WelcomeImage = styled(Image)`
+//   height: 50%;
+//   width: 100%;
+// `;
 
 export const PageTitle = styled(Text)`
   font-size: 30px;
