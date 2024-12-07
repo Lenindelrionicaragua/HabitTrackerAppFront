@@ -20,7 +20,7 @@ const {
 
 const containerHeight = Platform.OS === "web" ? "85%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
-const StyledButtonWidth = Platform.OS === "web" ? "30%" : "90%";
+const StyledButtonWidth = Platform.OS === "web" ? "250px" : "90%";
 
 export const StyledContainer = styled(SafeAreaView)`
   flex: 1;

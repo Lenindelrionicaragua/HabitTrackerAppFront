@@ -12,7 +12,8 @@ const {
   skyBlue,
   darkGrey,
   black,
-  softGray
+  softGray,
+  orange
 } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "90%" : "90%";
@@ -40,13 +41,10 @@ export const InnerContainer = styled(View)`
 export const StyledHeader = styled(View)`
   width: 100%;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  padding: 10px 45px;
-  shadow-color: ${black};
-  shadow-opacity: 0.5;
-  shadow-radius: 2px;
-  elevation: 2;
+  padding: 35px 20px;
+  background-color: ${orange};
 `;
 
 // export const WelcomeContainer = styled(InnerContainer)`
@@ -55,14 +53,17 @@ export const StyledHeader = styled(View)`
 // `;
 
 export const Avatar = styled(Image)`
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border-radius: 50px;
+  width: ${({ size }) => size || 45}px;
+  height: ${({ size }) => size || 45}px;
+  border-radius: ${({ size }) => (size || 50) / 2}px;
+  border-width: ${({ size }) => (size || 50) * 0.04}px;
+  overflow: hidden;
   border-width: 2px;
   border-color: ${white};
-  margin-bottom: 10px;
-  margin-top: 10px;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
 `;
 
 // export const WelcomeImage = styled(Image)`
@@ -71,16 +72,16 @@ export const Avatar = styled(Image)`
 // `;
 
 export const PageTitle = styled(Text)`
-  font-size: 30px;
+  font-size: 10px;
   text-align: center;
   font-weight: bold;
   color: ${black};
-  padding: 10px;
+  padding: 0px 15px;
 
   ${props =>
     props.welcome &&
     `
-    font-size: 35px;
+    font-size: 20px;
   `}
 `;
 
@@ -135,7 +136,11 @@ export const ButtonText = styled(Text)`
 
 export const Line = styled(View)`
   height: 2px;
-  width: 100%;
+  width: 98%;
   background-color: ${white};
   margin-vertical: 5px;
+  shadow-color: ${infoGrey};
+  shadow-opacity: 0.5;
+  shadow-radius: 2px;
+  elevation: 2;
 `;

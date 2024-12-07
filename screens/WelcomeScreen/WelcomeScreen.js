@@ -168,9 +168,9 @@ const WelcomeScreen = ({ navigation }) => {
             {name || "Zen User"}
           </PageTitle>
         </StyledHeader>
+        <Line testID="line" />
 
         <StyledFormArea>
-          <Line testID="line" />
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
           </StyledButton>
