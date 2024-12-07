@@ -37,6 +37,18 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
+export const StyledHeader = styled(View)`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 45px;
+  shadow-color: ${black};
+  shadow-opacity: 0.5;
+  shadow-radius: 2px;
+  elevation: 2;
+`;
+
 // export const WelcomeContainer = styled(InnerContainer)`
 //   padding-top: 10px;
 //   justify-content: center;
@@ -122,7 +134,7 @@ export const ButtonText = styled(Text)`
 `;
 
 export const Line = styled(View)`
-  height: 1px;
+  height: 2px;
   width: 100%;
   background-color: ${white};
   margin-vertical: 5px;

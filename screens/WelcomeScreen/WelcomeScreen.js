@@ -4,6 +4,7 @@ import {
   StyledContainer,
   InnerContainer,
   PageTitle,
+  StyledHeader,
   SubTitle,
   StyledFormArea,
   StyledButton,
@@ -161,12 +162,14 @@ const WelcomeScreen = ({ navigation }) => {
     <StyledContainer testID="styled-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <PageTitle welcome={true} testID="welcome-title">
-          {name || "Zen User"}
-        </PageTitle>
+        <StyledHeader>
+          <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
+          <PageTitle welcome={true} testID="welcome-title">
+            {name || "Zen User"}
+          </PageTitle>
+        </StyledHeader>
 
         <StyledFormArea>
-          <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
           <Line testID="line" />
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
