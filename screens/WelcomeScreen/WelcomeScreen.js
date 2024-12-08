@@ -3,6 +3,7 @@ import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
   InnerContainer,
+  Circle,
   StyledHeader,
   StyledUserName,
   PageTitle,
@@ -173,6 +174,7 @@ const WelcomeScreen = ({ navigation }) => {
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
         <StyledHeader>
+          <Circle />
           <StyledUserName>
             <Avatar
               resizeMode="cover"

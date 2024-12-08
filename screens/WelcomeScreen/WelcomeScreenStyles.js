@@ -40,11 +40,22 @@ export const InnerContainer = styled(View)`
   justify-content: center;
 `;
 
+export const Circle = styled(View)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: ${seaGreen};
+`;
+
 export const StyledHeader = styled(View)`
   width: 100%;
   flex-direction: column;
   align-items: left;
-  padding: 15px 20px;
+  padding: 35px 20px;
+  background-color: ${red};
 `;
 
 export const StyledUserName = styled(View)`
@@ -54,8 +65,8 @@ export const StyledUserName = styled(View)`
 `;
 
 export const Avatar = styled(Image)`
-  width: ${({ size }) => size || 45}px;
-  height: ${({ size }) => size || 45}px;
+  width: ${({ size }) => size || 50}px;
+  height: ${({ size }) => size || 50}px;
   border-radius: ${({ size }) => (size || 50) / 2}px;
   border-width: ${({ size }) => (size || 50) * 0.04}px;
   overflow: hidden;
