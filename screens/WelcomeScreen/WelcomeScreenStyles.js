@@ -42,11 +42,11 @@ export const InnerContainer = styled(View)`
 
 export const Circle = styled(View)`
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  top: -50px;
+  left: -70px;
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
   background-color: ${seaGreen};
 `;
 
@@ -54,8 +54,8 @@ export const StyledHeader = styled(View)`
   width: 100%;
   flex-direction: column;
   align-items: left;
-  padding: 35px 20px;
-  background-color: ${red};
+  padding: 30px 0px 10px 20px;
+  overflow: hidden;
 `;
 
 export const StyledUserName = styled(View)`
@@ -65,9 +65,9 @@ export const StyledUserName = styled(View)`
 `;
 
 export const Avatar = styled(Image)`
-  width: ${({ size }) => size || 50}px;
-  height: ${({ size }) => size || 50}px;
-  border-radius: ${({ size }) => (size || 50) / 2}px;
+  width: ${({ size }) => size || 60}px;
+  height: ${({ size }) => size || 60}px;
+  border-radius: ${({ size }) => (size || 60) / 2}px;
   border-width: ${({ size }) => (size || 50) * 0.04}px;
   overflow: hidden;
   border-width: 2px;
@@ -95,7 +95,7 @@ export const PageTitle = styled(Text)`
 export const SubTitle = styled(Text)`
   font-size: 12px;
   text-align: left;
-  padding-left: 60px;
+  padding-left: 75px;
   padding-vertical: 3px;
   letter-spacing: 1px;
   color: ${darkGrey};
@@ -137,7 +137,7 @@ export const ButtonText = styled(Text)`
 
 export const Line = styled(View)`
   height: 2px;
-  width: 98%;
+  width: 100%;
   background-color: ${white};
   margin-vertical: 5px;
   shadow-color: ${infoGrey};
