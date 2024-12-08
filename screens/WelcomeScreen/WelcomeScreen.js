@@ -184,10 +184,7 @@ const WelcomeScreen = ({ navigation }) => {
             </PageTitle>
           </StyledUserName>
 
-          <SubTitle>
-            Days with records: {daysWithRecords} | Daily Average:{" "}
-            {dailyAverageMinutes} minutes
-          </SubTitle>
+          <SubTitle>Days with records: {daysWithRecords}</SubTitle>
         </StyledHeader>
 
         <Line testID="line" />

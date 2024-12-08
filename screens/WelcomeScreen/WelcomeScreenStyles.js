@@ -43,25 +43,15 @@ export const InnerContainer = styled(View)`
 export const StyledHeader = styled(View)`
   width: 100%;
   flex-direction: column;
-  justify-content: left;
-  align-items: center;
-  padding: 35px 20px;
-  background-color: ${orange};
+  align-items: left;
+  padding: 15px 20px;
 `;
 
 export const StyledUserName = styled(View)`
   width: 100%;
   flex-direction: row;
-  justify-content: left;
   align-items: center;
-
-  background-color: ${green};
 `;
-
-// export const WelcomeContainer = styled(InnerContainer)`
-//   padding-top: 10px;
-//   justify-content: center;
-// `;
 
 export const Avatar = styled(Image)`
   width: ${({ size }) => size || 45}px;
@@ -77,18 +67,13 @@ export const Avatar = styled(Image)`
   box-shadow: none;
 `;
 
-// export const WelcomeImage = styled(Image)`
-//   height: 50%;
-//   width: 100%;
-// `;
-
 export const PageTitle = styled(Text)`
   font-size: 10px;
   text-align: center;
   font-weight: bold;
   color: ${black};
   padding: 0px 15px;
-  background-color: ${black};
+
   ${props =>
     props.welcome &&
     `
@@ -97,11 +82,12 @@ export const PageTitle = styled(Text)`
 `;
 
 export const SubTitle = styled(Text)`
-  font-size: 14px;
-  text-align: center;
+  font-size: 12px;
+  text-align: left;
+  padding-left: 60px;
+  padding-vertical: 3px;
   letter-spacing: 1px;
-  color: rgba(128, 128, 128, 0.6);
-  background-color: ${red};
+  color: ${darkGrey};
 `;
 
 export const StyledFormArea = styled(View)`
