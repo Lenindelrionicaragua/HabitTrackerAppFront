@@ -13,7 +13,9 @@ const {
   darkGrey,
   black,
   softGray,
-  orange
+  orange,
+  green,
+  red
 } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "90%" : "90%";
@@ -40,11 +42,20 @@ export const InnerContainer = styled(View)`
 
 export const StyledHeader = styled(View)`
   width: 100%;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: left;
   align-items: center;
   padding: 35px 20px;
   background-color: ${orange};
+`;
+
+export const StyledUserName = styled(View)`
+  width: 100%;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+
+  background-color: ${green};
 `;
 
 // export const WelcomeContainer = styled(InnerContainer)`
@@ -77,7 +88,7 @@ export const PageTitle = styled(Text)`
   font-weight: bold;
   color: ${black};
   padding: 0px 15px;
-
+  background-color: ${black};
   ${props =>
     props.welcome &&
     `
@@ -85,20 +96,13 @@ export const PageTitle = styled(Text)`
   `}
 `;
 
-// export const SubTitle = styled(Text)`
-//   font-size: 15px;
-//   margin-bottom: 20px;
-//   letter-spacing: 1px;
-//   font-weight: bold;
-//   color: ${infoGrey};
-
-//   ${props =>
-//     props.welcome &&
-//     `
-//     margin-bottom: 5px;
-//     font-weight: normal;
-//   `}
-// `;
+export const SubTitle = styled(Text)`
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: rgba(128, 128, 128, 0.6);
+  background-color: ${red};
+`;
 
 export const StyledFormArea = styled(View)`
   width: 90%;

@@ -3,8 +3,9 @@ import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
   InnerContainer,
-  PageTitle,
   StyledHeader,
+  StyledUserName,
+  PageTitle,
   SubTitle,
   StyledFormArea,
   StyledButton,
@@ -23,6 +24,7 @@ import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
+
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -47,10 +49,18 @@ const WelcomeScreen = ({ navigation }) => {
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
+  const {
+    totalMinutes,
+    daysWithRecords,
+    dailyAverageMinutes,
+    categoryData,
+    isDemo
+  } = useSelector(state => state.monthlyStats);
   // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
   const [token, setToken] = useState(null);
+
   // Local state
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
@@ -163,11 +173,23 @@ const WelcomeScreen = ({ navigation }) => {
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
         <StyledHeader>
-          <Avatar resizeMode="cover" source={AvatarImg} testID="avatar-image" />
-          <PageTitle welcome={true} testID="welcome-title">
-            {name || "Zen User"}
-          </PageTitle>
+          <StyledUserName>
+            <Avatar
+              resizeMode="cover"
+              source={AvatarImg}
+              testID="avatar-image"
+            />
+            <PageTitle welcome={true} testID="welcome-title">
+              {name || "Zen User"}
+            </PageTitle>
+          </StyledUserName>
+
+          <SubTitle>
+            Days with records: {daysWithRecords} | Daily Average:{" "}
+            {dailyAverageMinutes} minutes
+          </SubTitle>
         </StyledHeader>
+
         <Line testID="line" />
 
         <StyledFormArea>

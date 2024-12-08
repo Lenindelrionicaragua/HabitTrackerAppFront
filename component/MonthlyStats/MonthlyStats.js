@@ -14,7 +14,7 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
-import { setMonthlyStats } from "../../actions/counterActions";
+// import { setMonthlyStats } from "../../actions/counterActions";
 
 // Get monthly stats from the custom hook
 const MonthlyStats = () => {
