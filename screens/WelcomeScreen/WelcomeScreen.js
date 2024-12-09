@@ -14,7 +14,7 @@ import {
   Line,
   Avatar
 } from "./WelcomeScreenStyles";
-
+import HabitCategoryList from "../../component/HabitCategoryList/HabitCategoryList";
 import * as Google from "expo-auth-session/providers/google";
 import { revokeAsync } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -188,7 +188,7 @@ const WelcomeScreen = ({ navigation }) => {
           <SubTitle>Days with records: {daysWithRecords}</SubTitle>
           <Line testID="line" />
         </StyledHeader>
-
+        <HabitCategoryList testID="habit-category-component" />
         <StyledFormArea>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>

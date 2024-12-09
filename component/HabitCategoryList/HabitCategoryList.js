@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const HabitCategoryList = () => {
   const habitCategories = useSelector(
-    state => state.habitCategories.categories
+    state => state.habitCategories.habitCategories
   );
 
   return (

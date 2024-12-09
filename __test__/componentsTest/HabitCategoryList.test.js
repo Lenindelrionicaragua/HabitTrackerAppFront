@@ -11,7 +11,7 @@ describe("HabitCategoryList Component", () => {
   beforeEach(() => {
     const initialState = {
       habitCategories: {
-        categories: [
+        habitCategories: [
           {
             id: "674dbad93b1c8db22d452d55",
             name: "Work",
@@ -72,7 +72,7 @@ describe("HabitCategoryList Component", () => {
   it("renders 'Not Set' for categories without a goal", () => {
     const initialState = {
       habitCategories: {
-        categories: [{ id: 1, name: "Fitness" }]
+        habitCategories: [{ id: 1, name: "Fitness" }]
       }
     };
     store = createStore(rootReducer, initialState);
@@ -90,7 +90,7 @@ describe("HabitCategoryList Component", () => {
   it("renders an empty list when there are no categories", () => {
     const initialState = {
       habitCategories: {
-        categories: []
+        habitCategories: []
       }
     };
     store = createStore(rootReducer, initialState);

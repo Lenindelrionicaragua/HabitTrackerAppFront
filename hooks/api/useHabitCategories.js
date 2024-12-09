@@ -26,10 +26,6 @@ const useHabitCategories = storedCredentials => {
           logInfo("No categories found, attempting to auto-create categories.");
           await createCategories();
         } else {
-          console.log(
-            "Datos recibidos:",
-            JSON.stringify(receivedData, null, 2)
-          );
           const categoriesWithIdAndName = receivedData.categories.map(
             category => ({
               id: category.id,
@@ -44,10 +40,7 @@ const useHabitCategories = storedCredentials => {
               JSON.stringify(categoriesWithIdAndName)
             );
             dispatch(setHabitCategories(categoriesWithIdAndName));
-            logInfo(
-              "Categories saved to AsyncStorage:",
-              categoriesWithIdAndName
-            );
+            logInfo("Categories saved to AsyncStorage");
           } catch (e) {
             logInfo("Error saving categories to AsyncStorage:", e);
           }

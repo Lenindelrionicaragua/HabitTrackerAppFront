@@ -1,5 +1,5 @@
 const initialHabitCategoriesState = {
-  // Default categories without ids for the first view
+  // Default categories without ids and dailyGoals for the first view
   habitCategories: [
     {
       id: "674dbad93b1c8db22d452d55",
