@@ -31,6 +31,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
   resetHabitCategories,
+  setHabitCategories,
   setHabitCategoryIndex,
   clearMonthlyStats
 } from "../../actions/counterActions";
@@ -194,8 +195,8 @@ const WelcomeScreen = ({ navigation }) => {
           <CategoryList>
             {categories.map((category, index) => (
               <CategoryCard key={index}>
-                <Text>{category.name}</Text>
-                <Text>Daily Goal: {category.goal}</Text>
+                <SubTitle>{category.name}</SubTitle>
+                <SubTitle>Daily Goal: {category.goal}</SubTitle>
               </CategoryCard>
             ))}
           </CategoryList>
