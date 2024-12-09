@@ -109,43 +109,6 @@ export const StyledFormArea = styled(View)`
   width: 90%;
 `;
 
-export const CategoryContainer = styled(View)`
-  flex: 1;
-  padding: 10px;
-  background-color: ${softGray};
-`;
-
-export const CategoryCard = styled(View)`
-  background-color: ${white};
-  border-radius: 10px;
-  padding: 15px;
-  margin: 10px;
-  shadow-color: ${darkGrey};
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  elevation: 2;
-  width: 100%;
-  justify-content: flex-start;
-`;
-
-export const CategoryTitle = styled(Text)`
-  font-size: 16px;
-  font-weight: bold;
-  color: ${black};
-`;
-
-export const CategoryGoal = styled(Text)`
-  font-size: 14px;
-  color: ${darkGrey};
-  margin-top: 5px;
-`;
-
-export const CategoryListWrapper = styled(View)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const StyledButton = styled(Pressable)`
   padding: 15px;
   background-color: ${black};
