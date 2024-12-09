@@ -9,8 +9,6 @@ import {
   PageTitle,
   SubTitle,
   StyledFormArea,
-  CategoryCard,
-  CategoryList,
   StyledButton,
   ButtonText,
   Line,
@@ -192,14 +190,6 @@ const WelcomeScreen = ({ navigation }) => {
         </StyledHeader>
 
         <StyledFormArea>
-          <CategoryList>
-            {categories.map((category, index) => (
-              <CategoryCard key={index}>
-                <SubTitle>{category.name}</SubTitle>
-                <SubTitle>Daily Goal: {category.goal}</SubTitle>
-              </CategoryCard>
-            ))}
-          </CategoryList>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
           </StyledButton>
