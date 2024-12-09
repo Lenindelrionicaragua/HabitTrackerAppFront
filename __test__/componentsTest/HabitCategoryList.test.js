@@ -101,7 +101,6 @@ describe("HabitCategoryList Component", () => {
       </Provider>
     );
 
-    // Asegura que no haya categorías en la lista
     expect(queryByText("Daily Goal")).toBeNull();
   });
 });
