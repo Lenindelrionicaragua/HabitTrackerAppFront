@@ -42,8 +42,8 @@ export const InnerContainer = styled(View)`
 
 export const Circle = styled(View)`
   position: absolute;
-  top: -50px;
-  left: -70px;
+  top: -70px;
+  left: -80px;
   width: 150px;
   height: 150px;
   border-radius: 75px;
@@ -51,16 +51,20 @@ export const Circle = styled(View)`
 `;
 
 export const StyledHeader = styled(View)`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   flex-direction: column;
-  align-items: left;
-  padding: 30px 0px 10px 20px;
+  align-items: flex-start;
+  padding: 30px 0px 0px 0px;
   overflow: hidden;
 `;
 
 export const StyledUserName = styled(View)`
   width: 100%;
   flex-direction: row;
+  padding: 0px 0px 0px 20px;
   align-items: center;
 `;
 
@@ -95,7 +99,7 @@ export const PageTitle = styled(Text)`
 export const SubTitle = styled(Text)`
   font-size: 12px;
   text-align: left;
-  padding-left: 75px;
+  padding-left: 95px;
   padding-vertical: 3px;
   letter-spacing: 1px;
   color: ${darkGrey};
@@ -103,6 +107,24 @@ export const SubTitle = styled(Text)`
 
 export const StyledFormArea = styled(View)`
   width: 90%;
+`;
+
+export const CategoryCard = styled(View)`
+  background-color: ${white};
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  box-shadow: ${darkGrey};
+`;
+
+export const CategoryList = styled(View)`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px;
 `;
 
 export const StyledButton = styled(Pressable)`
@@ -136,7 +158,7 @@ export const ButtonText = styled(Text)`
 `;
 
 export const Line = styled(View)`
-  height: 2px;
+  height: 1px;
   width: 100%;
   background-color: ${white};
   margin-vertical: 5px;

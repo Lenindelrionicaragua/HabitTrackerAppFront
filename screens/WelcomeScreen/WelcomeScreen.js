@@ -9,11 +9,11 @@ import {
   PageTitle,
   SubTitle,
   StyledFormArea,
+  CategoryCard,
+  CategoryList,
   StyledButton,
   ButtonText,
   Line,
-  WelcomeContainer,
-  WelcomeImage,
   Avatar
 } from "./WelcomeScreenStyles";
 
@@ -187,11 +187,18 @@ const WelcomeScreen = ({ navigation }) => {
           </StyledUserName>
 
           <SubTitle>Days with records: {daysWithRecords}</SubTitle>
+          <Line testID="line" />
         </StyledHeader>
 
-        <Line testID="line" />
-
         <StyledFormArea>
+          <CategoryList>
+            {categories.map((category, index) => (
+              <CategoryCard key={index}>
+                <Text>{category.name}</Text>
+                <Text>Daily Goal: {category.goal}</Text>
+              </CategoryCard>
+            ))}
+          </CategoryList>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
           </StyledButton>

@@ -44,10 +44,6 @@ export const StyledHeader = styled(View)`
   justify-content: center;
   align-items: center;
   padding: 10px 45px;
-  shadow-color: ${black};
-  shadow-opacity: 0.5;
-  shadow-radius: 2px;
-  elevation: 2;
 `;
 
 export const Line = styled(View)`
@@ -55,10 +51,10 @@ export const Line = styled(View)`
   width: 100%;
   background-color: ${white};
   margin-vertical: 5px;
-  shadow-color: ${black};
+  shadow-color: ${infoGrey};
   shadow-opacity: 0.5;
-  shadow-radius: 4px;
-  elevation: 3;
+  shadow-radius: 2px;
+  elevation: 2;
 `;
 
 export const AvatarContainer = styled(View)`
