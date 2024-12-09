@@ -26,10 +26,15 @@ const useHabitCategories = storedCredentials => {
           logInfo("No categories found, attempting to auto-create categories.");
           await createCategories();
         } else {
+          console.log(
+            "Datos recibidos:",
+            JSON.stringify(receivedData, null, 2)
+          );
           const categoriesWithIdAndName = receivedData.categories.map(
             category => ({
               id: category.id,
-              name: category.name
+              name: category.name,
+              dailyGoal: category.dailyGoal
             })
           );
 

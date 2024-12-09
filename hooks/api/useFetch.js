@@ -87,7 +87,7 @@ const useFetch = (initialRoute, onReceived) => {
           error: serverError
         } = response.data;
 
-        logInfo(`Response Data: ${JSON.stringify(response.data)}`);
+        logInfo(`Response Data: ${JSON.stringify(response.data, null, 2)}`);
 
         if (success) {
           setData(response.data);
