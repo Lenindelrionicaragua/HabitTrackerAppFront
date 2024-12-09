@@ -27,8 +27,8 @@ describe("useHabitCategories Hook", () => {
   const dataResponseWithCategories = {
     success: true,
     categories: [
-      { id: "1", name: "Fitness" },
-      { id: "2", name: "Wellness" }
+      { id: "1", name: "Fitness", dailyGoal: 55 },
+      { id: "2", name: "Wellness", dailyGoal: 55 }
     ]
   };
 

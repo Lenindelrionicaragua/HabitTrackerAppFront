@@ -12,9 +12,36 @@ describe("HabitCategoryList Component", () => {
     const initialState = {
       habitCategories: {
         categories: [
-          { id: 1, name: "Fitness", goal: "30 minutes" },
-          { id: 2, name: "Reading", goal: "10 pages" },
-          { id: 3, name: "Meditation", goal: "10 minutes" }
+          {
+            id: "674dbad93b1c8db22d452d55",
+            name: "Work",
+            dailyGoal: 55
+          },
+          {
+            id: "674dbad93b1c8db22d452d58",
+            name: "Family time",
+            dailyGoal: 45
+          },
+          {
+            id: "674dbad93b1c8db22d452d5b",
+            name: "Exercise",
+            dailyGoal: 35
+          },
+          {
+            id: "674dbad93b1c8db22d452d5e",
+            name: "Screen-free",
+            dailyGoal: 25
+          },
+          {
+            id: "674dbad93b1c8db22d452d61",
+            name: "Rest",
+            dailyGoal: 15
+          },
+          {
+            id: "674dbad93b1c8db22d452d64",
+            name: "Study",
+            dailyGoal: 5
+          }
         ]
       }
     };
@@ -28,12 +55,18 @@ describe("HabitCategoryList Component", () => {
       </Provider>
     );
 
-    expect(getByText("Fitness")).toBeTruthy();
-    expect(getByText("Daily Goal: 30 minutes")).toBeTruthy();
-    expect(getByText("Reading")).toBeTruthy();
-    expect(getByText("Daily Goal: 10 pages")).toBeTruthy();
-    expect(getByText("Meditation")).toBeTruthy();
-    expect(getByText("Daily Goal: 10 minutes")).toBeTruthy();
+    expect(getByText("Work")).toBeTruthy();
+    expect(getByText("Daily Goal: 55")).toBeTruthy();
+    expect(getByText("Family time")).toBeTruthy();
+    expect(getByText("Daily Goal: 45")).toBeTruthy();
+    expect(getByText("Exercise")).toBeTruthy();
+    expect(getByText("Daily Goal: 35")).toBeTruthy();
+    expect(getByText("Screen-free")).toBeTruthy();
+    expect(getByText("Daily Goal: 25")).toBeTruthy();
+    expect(getByText("Rest")).toBeTruthy();
+    expect(getByText("Daily Goal: 15")).toBeTruthy();
+    expect(getByText("Study")).toBeTruthy();
+    expect(getByText("Daily Goal: 5")).toBeTruthy();
   });
 
   it("renders 'Not Set' for categories without a goal", () => {

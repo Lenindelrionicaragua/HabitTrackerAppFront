@@ -21,7 +21,7 @@ const HabitCategoryList = () => {
         renderItem={({ item }) => (
           <ListCard>
             <CardTitle>{item.name}</CardTitle>
-            <CardGoal>Daily Goal: {item.goal || "Not Set"}</CardGoal>
+            <CardGoal>Daily Goal: {item.dailyGoal || "Not Set"}</CardGoal>
           </ListCard>
         )}
         contentContainerStyle={{ paddingBottom: 20 }}
