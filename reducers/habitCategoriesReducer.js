@@ -45,7 +45,8 @@ const habitCategoriesReducer = (
     case SET_HABIT_CATEGORIES:
       const categoriesWithIdName = action.payload.map(category => ({
         id: category.id,
-        name: category.name
+        name: category.name,
+        dailyGoal: category.dailyGoal
       }));
       return { ...state, habitCategories: categoriesWithIdName };
 

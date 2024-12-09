@@ -1,34 +1,40 @@
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
+import { View, Image, Text, Pressable, Platform } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, darkGrey, softGray, black } = Colors;
+const { white, darkGrey, softGray, black, orange } = Colors;
+
+const containerHeight = Platform.OS === "web" ? "80%" : "50%";
+const containerWidth = Platform.OS === "web" ? "100%" : "100%";
+const paddingTop = Platform.OS === "web" ? "0%" : "5%";
+const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
 
 export const ListContainer = styled(View)`
   flex: 1;
-  padding: 10px;
-  background-color: ${softGray};
+
+  top: 150px;
+  width: ${containerWidth};
+  height: ${containerHeight};
+  background-color: ${orange};
 `;
 
 export const ListCard = styled(View)`
   background-color: ${white};
-  border-radius: 10px;
-  padding: 15px;
-  margin: 10px;
-  shadow-color: ${darkGrey};
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  elevation: 2;
-  width: 100%;
+  flex-direction: row;
+
+  border-bottom-width: 1px;
+  border-color: ${darkGrey};
 `;
 
 export const CardTitle = styled(Text)`
-  font-size: 16px;
+  padding: 10px;
+  font-size: 12px;
   font-weight: bold;
   color: ${black};
 `;
 
 export const CardGoal = styled(Text)`
+  padding: 10px;
   font-size: 14px;
   color: ${darkGrey};
   margin-top: 5px;
