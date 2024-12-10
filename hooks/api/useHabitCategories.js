@@ -29,7 +29,8 @@ const useHabitCategories = storedCredentials => {
           const categoriesWithIdAndName = receivedData.categories.map(
             category => ({
               id: category.id,
-              name: category.name
+              name: category.name,
+              dailyGoal: category.dailyGoal
             })
           );
 
@@ -39,10 +40,7 @@ const useHabitCategories = storedCredentials => {
               JSON.stringify(categoriesWithIdAndName)
             );
             dispatch(setHabitCategories(categoriesWithIdAndName));
-            logInfo(
-              "Categories saved to AsyncStorage:",
-              categoriesWithIdAndName
-            );
+            logInfo("Categories saved to AsyncStorage");
           } catch (e) {
             logInfo("Error saving categories to AsyncStorage:", e);
           }

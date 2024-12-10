@@ -3,17 +3,18 @@ import { StatusBar, Alert } from "react-native";
 import {
   StyledContainer,
   InnerContainer,
+  Circle,
+  StyledHeader,
+  StyledUserName,
   PageTitle,
   SubTitle,
   StyledFormArea,
   StyledButton,
   ButtonText,
   Line,
-  WelcomeContainer,
-  WelcomeImage,
   Avatar
 } from "./WelcomeScreenStyles";
-
+import HabitCategoryList from "../../component/HabitCategoryList/HabitCategoryList";
 import * as Google from "expo-auth-session/providers/google";
 import { revokeAsync } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,11 +23,13 @@ import { logInfo, logError } from "../../util/logging";
 
 // Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
+
 // Redux store
 import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
   resetHabitCategories,
+  setHabitCategories,
   setHabitCategoryIndex,
   clearMonthlyStats
 } from "../../actions/counterActions";
@@ -46,10 +49,18 @@ const WelcomeScreen = ({ navigation }) => {
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
+  const {
+    totalMinutes,
+    daysWithRecords,
+    dailyAverageMinutes,
+    categoryData,
+    isDemo
+  } = useSelector(state => state.monthlyStats);
   // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
   const [token, setToken] = useState(null);
+
   // Local state
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
@@ -60,9 +71,7 @@ const WelcomeScreen = ({ navigation }) => {
     photoUrl
   } = storedCredentials || {};
 
-  const AvatarImg = photoUrl
-    ? { uri: photoUrl }
-    : require("./../../assets/logoZenTimer2.png");
+  const AvatarImg = require("./../../assets/user.png");
 
   // Google authentication setup
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -163,34 +172,28 @@ const WelcomeScreen = ({ navigation }) => {
     <StyledContainer testID="styled-container">
       <StatusBar style="light" />
       <InnerContainer testID="inner-container">
-        <WelcomeImage
-          resizeMode="cover"
-          source={require("./../../assets/ZenTimer6.png")}
-          testID="welcome-image"
-        />
-
-        <WelcomeContainer testID="welcome-container">
-          <PageTitle welcome={true} testID="welcome-title">
-            Welcome!
-          </PageTitle>
-          <SubTitle welcome={true} testID="user-name">
-            {name || "Zen User"}
-          </SubTitle>
-          <SubTitle welcome={true} testID="user-email">
-            {email || "serenity@gmail.com"}
-          </SubTitle>
-          <StyledFormArea>
+        <StyledHeader>
+          <Circle />
+          <StyledUserName>
             <Avatar
               resizeMode="cover"
               source={AvatarImg}
               testID="avatar-image"
             />
-            <Line testID="line" />
-            <StyledButton onPress={clearLogin} testID="logout-styled-button">
-              <ButtonText testID="logout-button-text">Logout</ButtonText>
-            </StyledButton>
-          </StyledFormArea>
-        </WelcomeContainer>
+            <PageTitle welcome={true} testID="welcome-title">
+              {name || "Zen User"}
+            </PageTitle>
+          </StyledUserName>
+
+          <SubTitle>Days with records: {daysWithRecords}</SubTitle>
+          <Line testID="line" />
+        </StyledHeader>
+        <HabitCategoryList testID="habit-category-component" />
+        <StyledFormArea>
+          <StyledButton onPress={clearLogin} testID="logout-styled-button">
+            <ButtonText testID="logout-button-text">Logout</ButtonText>
+          </StyledButton>
+        </StyledFormArea>
       </InnerContainer>
     </StyledContainer>
   );

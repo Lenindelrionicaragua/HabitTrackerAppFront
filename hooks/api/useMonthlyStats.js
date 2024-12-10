@@ -142,10 +142,10 @@ const useMonthlyStats = storedCredentials => {
 
       // Dispatch to Redux store
       dispatch(setMonthlyStats(monthlyStatsState));
-      console.log(
-        "Dispatching monthly stats to Redux:",
-        JSON.stringify(monthlyStatsState, null, 2)
-      );
+      // console.log(
+      //   "Dispatching monthly stats to Redux:",
+      //   JSON.stringify(monthlyStatsState, null, 2)
+      // );
     }
   }, [roundedData, month, year, dispatch]);
 

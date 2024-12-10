@@ -53,7 +53,6 @@ const MetricsScreen = () => {
             <FontAwesome name="pie-chart" size={34} color={infoGrey} />
           </IconContainer>
         </StyledHeader>
-
         <Line testID="line" />
         <SubTitle welcome={true} testID="metrics-title">
           This Month

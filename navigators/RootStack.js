@@ -73,6 +73,7 @@ const RootStack = () => {
         <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
+          options={{ headerShown: false }}
           testID="welcome-screen"
         />
         <Stack.Screen
