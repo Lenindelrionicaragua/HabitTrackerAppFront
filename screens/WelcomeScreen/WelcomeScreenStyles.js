@@ -27,7 +27,7 @@ export const StyledContainer = styled(SafeAreaView)`
   background-color: ${softGray};
   width: ${containerWidth};
   height: ${containerHeight};
-  align-items: ${Platform.OS === "web" ? "center" : "stretch"};
+  align-items: ${Platform.OS === "web" ? "stretch" : "stretch"};
   margin-left: auto;
   margin-right: auto;
 `;
@@ -51,9 +51,6 @@ export const Circle = styled(View)`
 `;
 
 export const StyledHeader = styled(View)`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
@@ -115,7 +112,7 @@ export const StyledButton = styled(Pressable)`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 5px;
+  margin-vertical: 20px;
   height: 60px;
 
   ${props =>
