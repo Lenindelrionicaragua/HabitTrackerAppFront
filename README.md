@@ -4,9 +4,9 @@ Web version of the app:
 
 [https://habit-tracker-app-front.netlify.app](https://habit-tracker-app-front.netlify.app)
 
-![2](https://github.com/user-attachments/assets/83725c9e-2dbf-48f1-9a12-ebd88ec08a26)
-
 ![1](https://github.com/user-attachments/assets/a1bce511-8181-4bb5-a28e-c77520a4f952)
+
+![2](https://github.com/user-attachments/assets/83725c9e-2dbf-48f1-9a12-ebd88ec08a26)
 
 Full Server:
 
