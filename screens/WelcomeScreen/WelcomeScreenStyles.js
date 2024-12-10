@@ -21,7 +21,7 @@ const {
 const containerHeight = Platform.OS === "web" ? "90%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingTop = Platform.OS === "web" ? "0%" : "5%";
-const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
+const paddingBottom = Platform.OS === "web" ? "1%" : "1%";
 
 export const StyledContainer = styled(SafeAreaView)`
   background-color: ${softGray};
@@ -112,7 +112,7 @@ export const StyledButton = styled(Pressable)`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 20px;
+  margin-vertical: 10px;
   height: 60px;
 
   ${props =>

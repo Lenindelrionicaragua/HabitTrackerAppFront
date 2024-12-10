@@ -6,23 +6,23 @@ const { white, darkGrey, softGray, black, orange, green, red } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "90%" : "80%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
-const paddingTop = Platform.OS === "web" ? "0%" : "5%";
-const paddingBottom = Platform.OS === "web" ? "5%" : "0%";
+const paddingLeft = Platform.OS === "web" ? "20px" : "5px";
+const paddingRight = Platform.OS === "web" ? "20px" : "5px";
 
 export const ListContainer = styled(View)`
   flex: 1;
-
   width: ${containerWidth};
   background-color: ${softGray};
 `;
 
-// top: 130px;
-
 export const ListCard = styled(View)`
   flex-direction: row;
   align-items: center;
-  border-bottom-width: 1px;
+  padding-left: ${paddingLeft};
+  padding-right: ${paddingRight};
+  border-bottom-width: 0.5px;
   border-color: ${darkGrey};
+  background-color: ${white};
 `;
 
 export const CardTitle = styled(Text)`
