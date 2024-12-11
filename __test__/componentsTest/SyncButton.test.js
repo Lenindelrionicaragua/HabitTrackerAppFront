@@ -30,7 +30,7 @@ describe("SyncButton Component", () => {
     const buttonContainer = getByTestId("sync-button-container");
     expect(buttonContainer).toBeTruthy();
 
-    // Change getByTestId to querySelector
+    // Ensure the Sync Button container and icon are rendered
     const icon = buttonContainer.find(
       node => node.type === "div" && node.props["data-testid"] === "sync-icon"
     );
@@ -38,6 +38,12 @@ describe("SyncButton Component", () => {
     expect(icon.props["data-name"]).toBe("sync");
     expect(icon.props["data-size"]).toBe(28);
     expect(icon.props["data-color"]).toBe("#2c2c2c"); // darkGrey
+
+    // Test that the text "Synchronize" is rendered correctly
+    const buttonText = getByTestId("sync-button-container").find(
+      node => node.type === "Text" && node.props.children === "Synchronize"
+    );
+    expect(buttonText).toBeTruthy();
   });
 
   it("should call syncApp when pressed", async () => {
@@ -66,5 +72,20 @@ describe("SyncButton Component", () => {
     });
 
     expect(startAnimationMock).toHaveBeenCalled();
+  });
+
+  it("should contain the Animated.View element", () => {
+    const { getByTestId } = render(<SyncButton />);
+    const animatedView = getByTestId("sync-button-pressable").find(
+      node => node.type === "div" && node.props["data-testid"] === "sync-icon"
+    );
+
+    expect(animatedView).toBeTruthy();
+  });
+
+  it("should render the text 'Synchronize'", () => {
+    const { getByText } = render(<SyncButton />);
+    const syncText = getByText("Synchronize");
+    expect(syncText).toBeTruthy();
   });
 });
