@@ -43,10 +43,10 @@ const SyncButton = () => {
   };
 
   return (
-    <StyledSyncButtonContainer>
-      <Pressable onPress={startSyncAnimation}>
+    <StyledSyncButtonContainer testID="sync-button-container">
+      <Pressable onPress={startSyncAnimation} testID="sync-button-pressable">
         <Animated.View style={animatedStyle}>
-          <Ionicons name="sync" size={28} color={darkGrey} />
+          <Ionicons name="sync" size={28} color={darkGrey} testID="sync-icon" />
         </Animated.View>
       </Pressable>
     </StyledSyncButtonContainer>
