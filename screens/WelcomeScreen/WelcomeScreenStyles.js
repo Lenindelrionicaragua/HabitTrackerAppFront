@@ -137,7 +137,6 @@ export const ButtonText = styled(Text)`
 `;
 
 export const StyledSyncButtonContainer = styled(View)`
-  padding: 10px;
   align-items: center;
   justify-content: center;
 `;
@@ -146,8 +145,9 @@ export const StyledSyncRowContainer = styled(View)`
   width: 100%;
   flex-direction: row;
   align-items: center;
-  justify-content: left;
-  padding: 5px;
+  justify-content: flex-start;
+  padding: 20px 0px 20px 30px;
+  margin-vertical: 20px;
   background-color: ${({ bgColor }) => bgColor || "transparent"};
 `;
 
@@ -158,6 +158,7 @@ export const ButtonSyncText = styled(Text)`
   letter-spacing: 1px;
   color: ${darkGrey};
   margin-left: 10px;
+  flex: 1;
 `;
 
 export const Line = styled(View)`
