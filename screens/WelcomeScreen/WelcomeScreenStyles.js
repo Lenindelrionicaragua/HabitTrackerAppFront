@@ -142,6 +142,23 @@ export const StyledSyncButtonContainer = styled(View)`
   justify-content: center;
 `;
 
+export const StyledSyncRowContainer = styled(View)`
+  width: 90%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  padding: 5px;
+`;
+
+export const ButtonSyncText = styled(Text)`
+  font-size: 12px;
+  padding: 5px;
+  padding-vertical: 3px;
+  letter-spacing: 1px;
+  color: ${darkGrey};
+  margin-left: 10px;
+`;
+
 export const Line = styled(View)`
   height: 1px;
   width: 100%;

@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import { Animated, Easing, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyledSyncButtonContainer } from "../../screens/WelcomeScreen/WelcomeScreenStyles";
+import {
+  StyledSyncButtonContainer,
+  StyledSyncRowContainer,
+  ButtonSyncText
+} from "../../screens/WelcomeScreen/WelcomeScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 import { logInfo } from "../../util/logging";
 
@@ -43,13 +47,21 @@ const SyncButton = () => {
   };
 
   return (
-    <StyledSyncButtonContainer testID="sync-button-container">
-      <Pressable onPress={startSyncAnimation} testID="sync-button-pressable">
-        <Animated.View style={animatedStyle}>
-          <Ionicons name="sync" size={28} color={darkGrey} testID="sync-icon" />
-        </Animated.View>
-      </Pressable>
-    </StyledSyncButtonContainer>
+    <Pressable onPress={startSyncAnimation} testID="sync-button-pressable">
+      <StyledSyncRowContainer>
+        <StyledSyncButtonContainer>
+          <Animated.View style={animatedStyle}>
+            <Ionicons
+              name="sync"
+              size={28}
+              color={darkGrey}
+              testID="sync-icon"
+            />
+          </Animated.View>
+        </StyledSyncButtonContainer>
+        <ButtonSyncText>Synchronize</ButtonSyncText>
+      </StyledSyncRowContainer>
+    </Pressable>
   );
 };
 

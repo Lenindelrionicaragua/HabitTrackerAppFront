@@ -11,7 +11,8 @@ import {
   StyledFormArea,
   StyledButton,
   ButtonText,
-  StyledSyncButtonContainer,
+  StyledSyncRowContainer,
+  ButtonSyncText,
   Line,
   Avatar
 } from "./WelcomeScreenStyles";
@@ -191,7 +192,9 @@ const WelcomeScreen = ({ navigation }) => {
           <Line testID="line" />
         </StyledHeader>
         <HabitCategoryList testID="habit-category-component" />
+
         <SyncButton />
+
         <StyledFormArea>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
