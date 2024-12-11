@@ -1,37 +1,53 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react-native";
-import SyncButton from "../SyncButton"; // Ajusta el path según tu estructura
-import { logInfo } from "../../util/logging"; // Mockeamos esta función
+import { render, fireEvent, act } from "@testing-library/react-native";
+import SyncButton from "../../component/SyncButton/SyncButton";
+import { logInfo } from "../../util/logging";
+
+jest.mock("@expo/vector-icons/Ionicons", () => {
+  const MockIonicons = ({ name, size, color, testID }) => (
+    <div
+      data-testid={testID}
+      data-name={name}
+      data-size={size}
+      data-color={color}
+    />
+  );
+  return MockIonicons;
+});
 
 jest.mock("../../util/logging", () => ({
   logInfo: jest.fn()
 }));
 
-jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper"); // Para evitar errores con Animated
+jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper"); // Avoid mistakes with Animated
+
+jest.useFakeTimers(); // To control the timing of animations
 
 describe("SyncButton Component", () => {
   it("should render correctly", () => {
     const { getByTestId } = render(<SyncButton />);
 
-    // Verifica que el contenedor del botón exista
     const buttonContainer = getByTestId("sync-button-container");
     expect(buttonContainer).toBeTruthy();
 
-    // Verifica que el ícono esté presente
-    const icon = getByTestId("sync-icon");
-    expect(icon.props.name).toBe("sync");
-    expect(icon.props.size).toBe(28);
-    expect(icon.props.color).toBe("#A9A9A9"); // `darkGrey` en formato hexadecimal
+    // Change getByTestId to querySelector
+    const icon = buttonContainer.find(
+      node => node.type === "div" && node.props["data-testid"] === "sync-icon"
+    );
+    expect(icon).toBeTruthy();
+    expect(icon.props["data-name"]).toBe("sync");
+    expect(icon.props["data-size"]).toBe(28);
+    expect(icon.props["data-color"]).toBe("#2c2c2c"); // darkGrey
   });
 
-  it("should call syncApp when pressed", () => {
+  it("should call syncApp when pressed", async () => {
     const { getByTestId } = render(<SyncButton />);
     const button = getByTestId("sync-button-pressable");
 
-    // Simula el evento de toque
-    fireEvent.press(button);
+    await act(async () => {
+      fireEvent.press(button);
+    });
 
-    // Verifica que logInfo haya sido llamado
     expect(logInfo).toHaveBeenCalledWith("Sync button called");
   });
 
@@ -44,10 +60,11 @@ describe("SyncButton Component", () => {
     const { getByTestId } = render(<SyncButton />);
     const button = getByTestId("sync-button-pressable");
 
-    // Simula el toque
-    fireEvent.press(button);
+    act(() => {
+      fireEvent.press(button);
+      jest.advanceTimersByTime(1000);
+    });
 
-    // Verifica que Animated.timing haya sido invocado
     expect(startAnimationMock).toHaveBeenCalled();
   });
 });
