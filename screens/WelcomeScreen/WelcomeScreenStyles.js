@@ -136,6 +136,12 @@ export const ButtonText = styled(Text)`
   `}
 `;
 
+export const StyledSyncButtonContainer = styled(View)`
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Line = styled(View)`
   height: 1px;
   width: 100%;

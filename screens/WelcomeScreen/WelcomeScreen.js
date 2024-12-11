@@ -11,9 +11,11 @@ import {
   StyledFormArea,
   StyledButton,
   ButtonText,
+  StyledSyncButtonContainer,
   Line,
   Avatar
 } from "./WelcomeScreenStyles";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import HabitCategoryList from "../../component/HabitCategoryList/HabitCategoryList";
 import * as Google from "expo-auth-session/providers/google";
 import { revokeAsync } from "expo-auth-session";
@@ -189,6 +191,10 @@ const WelcomeScreen = ({ navigation }) => {
           <Line testID="line" />
         </StyledHeader>
         <HabitCategoryList testID="habit-category-component" />
+        <StyledSyncButtonContainer>
+          <MaterialCommunityIcons name="sync" size={34} color="black" />
+        </StyledSyncButtonContainer>
+
         <StyledFormArea>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>
