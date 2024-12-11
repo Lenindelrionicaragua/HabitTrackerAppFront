@@ -143,11 +143,12 @@ export const StyledSyncButtonContainer = styled(View)`
 `;
 
 export const StyledSyncRowContainer = styled(View)`
-  width: 90%;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: left;
   padding: 5px;
+  background-color: ${({ bgColor }) => bgColor || "transparent"};
 `;
 
 export const ButtonSyncText = styled(Text)`

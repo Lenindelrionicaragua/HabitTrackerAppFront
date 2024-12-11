@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Animated, Easing, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
@@ -9,9 +9,10 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logInfo } from "../../util/logging";
 
-const { darkGrey } = Colors;
+const { darkGrey, white } = Colors;
 
 const SyncButton = () => {
+  const [bgColor, setBgColor] = useState("transparent");
   const rotation = useRef(new Animated.Value(0)).current;
 
   const syncApp = () => {
@@ -20,6 +21,12 @@ const SyncButton = () => {
 
   const startSyncAnimation = () => {
     syncApp();
+
+    setBgColor(white);
+
+    setTimeout(() => {
+      setBgColor("transparent");
+    }, 1000);
 
     Animated.sequence([
       Animated.timing(rotation, {
@@ -48,7 +55,7 @@ const SyncButton = () => {
 
   return (
     <Pressable onPress={startSyncAnimation} testID="sync-button-pressable">
-      <StyledSyncRowContainer testID="sync-button-container">
+      <StyledSyncRowContainer bgColor={bgColor} testID="sync-button-container">
         <StyledSyncButtonContainer>
           <Animated.View style={animatedStyle}>
             <Ionicons
