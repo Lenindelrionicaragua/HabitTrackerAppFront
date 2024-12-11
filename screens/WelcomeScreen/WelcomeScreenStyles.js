@@ -137,11 +137,9 @@ export const ButtonText = styled(Text)`
 `;
 
 export const StyledSyncButtonContainer = styled(View)`
-  width: 90%;
   padding: 10px;
-  align-items: left;
+  align-items: center;
   justify-content: center;
-  background-color: ${orange};
 `;
 
 export const Line = styled(View)`
