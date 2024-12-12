@@ -1,48 +1,61 @@
-import styled from "styled-components/native";
+import React, { useState } from "react";
+import { Modal, Button } from "react-native";
+import {
+  ModalBackground,
+  ModalContent,
+  Title,
+  Input,
+  ButtonRow,
+  TriggerButton,
+  TriggerButtonText
+} from "./EditGoalsModalStyles";
 
-export const ModalBackground = styled.View`
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-`;
+const EditGoalsModal = ({
+  isVisible,
+  onClose,
+  currentName,
+  currentGoal,
+  onSave
+}) => {
+  const [name, setName] = useState(currentName || "");
+  const [dailyGoal, setDailyGoal] = useState(currentGoal || "");
 
-export const ModalContent = styled.View`
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-`;
+  const handleSave = () => {
+    onSave({ name, dailyGoal });
+    onClose();
+  };
 
-export const Title = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-`;
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={onClose}
+    >
+      <ModalBackground>
+        <ModalContent>
+          <Title>Edit Goals</Title>
 
-export const Input = styled.TextInput`
-  border-width: 1px;
-  border-color: #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-vertical: 10px;
-  width: 100%;
-`;
+          {/* Input for Name */}
+          <Input placeholder="Name" value={name} onChangeText={setName} />
 
-export const ButtonRow = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
+          {/* Input for Daily Goal */}
+          <Input
+            placeholder="Daily Goal (mins)"
+            keyboardType="numeric"
+            value={dailyGoal}
+            onChangeText={setDailyGoal}
+          />
 
-export const TriggerButton = styled.TouchableOpacity`
-  padding: 10px;
-  background-color: #007bff;
-  border-radius: 5px;
-`;
+          {/* Action Buttons */}
+          <ButtonRow>
+            <Button title="Cancel" onPress={onClose} />
+            <Button title="Save" onPress={handleSave} />
+          </ButtonRow>
+        </ModalContent>
+      </ModalBackground>
+    </Modal>
+  );
+};
 
-export const TriggerButtonText = styled.Text`
-  color: white;
-  font-weight: bold;
-`;
+export default EditGoalsModal;
