@@ -192,8 +192,10 @@ const WelcomeScreen = ({ navigation }) => {
           <Line testID="line" />
         </StyledHeader>
         <HabitCategoryList testID="habit-category-component" />
-
-        <SyncButton />
+        <StyledSyncRowContainer>
+          <SyncButton />
+          <ButtonSyncText>Synchronize</ButtonSyncText>
+        </StyledSyncRowContainer>
 
         <StyledFormArea>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
