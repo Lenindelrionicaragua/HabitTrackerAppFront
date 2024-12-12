@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList } from "react-native";
+import React, { useState } from "react";
+import { FlatList, Pressable } from "react-native";
 import {
   ListContainer,
   ListCard,
@@ -7,11 +7,25 @@ import {
   CardGoal
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
+import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
 
 const HabitCategoryList = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
   );
+
+  const handleSaveGoals = updatedGoals => {
+    // Update the specific item in the habitCategories list (assuming state is handled globally)
+    // You can also implement this update logic in Redux if the data is stored in a global store.
+    if (selectedItem) {
+      selectedItem.name = updatedGoals.name;
+      selectedItem.dailyGoal = updatedGoals.dailyGoal;
+    }
+    setModalVisible(false);
+  };
 
   return (
     <ListContainer>
@@ -19,13 +33,31 @@ const HabitCategoryList = () => {
         data={habitCategories}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <ListCard>
-            <CardTitle>{item.name}</CardTitle>
-            <CardGoal>Daily Goal: {item.dailyGoal || "Not Set"}</CardGoal>
-          </ListCard>
+          <Pressable
+            onPress={() => {
+              setSelectedItem(item);
+              setModalVisible(true);
+            }}
+          >
+            <ListCard>
+              <CardTitle>{item.name}</CardTitle>
+              <CardGoal>Daily Goal: {item.dailyGoal || "Not Set"}</CardGoal>
+            </ListCard>
+          </Pressable>
         )}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+
+      {/* EditGoalsModal */}
+      {selectedItem && (
+        <EditGoalsModal
+          isVisible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          currentName={selectedItem.name}
+          currentGoal={selectedItem.dailyGoal}
+          onSave={handleSaveGoals}
+        />
+      )}
     </ListContainer>
   );
 };
