@@ -22,6 +22,7 @@ const containerHeight = Platform.OS === "web" ? "90%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingTop = Platform.OS === "web" ? "0%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "1%" : "1%";
+// const widthSyncRowContainer = Platform.OS === "web" ? "" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
   background-color: ${softGray};
@@ -142,12 +143,12 @@ export const StyledSyncButtonContainer = styled(View)`
 `;
 
 export const StyledSyncRowContainer = styled(View)`
-  width: 100%;
+  width: ${Platform.OS === "web" ? "calc(100vw - 5px)" : "100%"};
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px 0px 20px 30px;
-  margin-vertical: 20px;
+  padding: 15px 0px 15px 30px;
+  margin-vertical: 10px;
   background-color: ${({ bgColor }) => bgColor || "transparent"};
 `;
 
