@@ -1,4 +1,7 @@
 import styled from "styled-components/native";
+import { Colors } from "../../styles/AppStyles";
+
+const { black, white, orange, skyBlue, darkGrey, softGray } = Colors;
 
 export const ModalBackground = styled.View`
   flex: 1;
@@ -23,7 +26,7 @@ export const Title = styled.Text`
 
 export const Input = styled.TextInput`
   border-width: 1px;
-  border-color: #ccc;
+  border-color: ${darkGrey};
   border-radius: 5px;
   padding: 10px;
   margin-vertical: 10px;
@@ -38,11 +41,13 @@ export const ButtonRow = styled.View`
 
 export const TriggerButton = styled.TouchableOpacity`
   padding: 10px;
-  background-color: #007bff;
+  width: 100px;
+  background-color: ${black};
+  align-items: center;
   border-radius: 5px;
 `;
 
 export const TriggerButtonText = styled.Text`
-  color: white;
+  color: ${white};
   font-weight: bold;
 `;

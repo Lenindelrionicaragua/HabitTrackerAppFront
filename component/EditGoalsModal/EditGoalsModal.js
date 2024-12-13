@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-native";
+import { Modal } from "react-native";
 import {
   ModalBackground,
   ModalContent,
@@ -34,7 +34,7 @@ const EditGoalsModal = ({
     >
       <ModalBackground>
         <ModalContent>
-          <Title>Edit Goals</Title>
+          <Title>Edit Habits</Title>
 
           {/* Input for Name */}
           <Input placeholder="Name" value={name} onChangeText={setName} />
@@ -49,8 +49,12 @@ const EditGoalsModal = ({
 
           {/* Action Buttons */}
           <ButtonRow>
-            <Button title="Cancel" onPress={onClose} />
-            <Button title="Save" onPress={handleSave} />
+            <TriggerButton>
+              <TriggerButtonText onPress={onClose}>Cancel</TriggerButtonText>
+            </TriggerButton>
+            <TriggerButton>
+              <TriggerButtonText onPress={handleSave}>Save</TriggerButtonText>
+            </TriggerButton>
           </ButtonRow>
         </ModalContent>
       </ModalBackground>
