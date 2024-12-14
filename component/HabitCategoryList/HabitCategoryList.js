@@ -6,8 +6,10 @@ import {
   CardTitle,
   CardGoal
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
+import useFetch from "../../hooks/api/useFetch";
+import { logInfo, logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,20 +19,41 @@ const HabitCategoryList = () => {
     state => state.habitCategories.habitCategories
   );
 
-  const handleSaveGoals = updatedGoals => {
-    // Update the specific item in the habitCategories list (assuming state is handled globally)
-    // You can also implement this update logic in Redux if the data is stored in a global store.
-    if (selectedItem) {
-      selectedItem.name = updatedGoals.name;
-      selectedItem.dailyGoal = updatedGoals.dailyGoal;
+  const { performFetch, isLoading, error } = useFetch(
+    "",
+    async responseData => {
+      if (responseData.success) {
+        setModalVisible(false);
+        setSelectedItem(null);
+      } else {
+        logError(responseData.message || "Failed to update daily goal");
+      }
     }
-    setModalVisible(false);
-    setSelectedItem(null);
+  );
+
+  const handleSaveGoals = async updatedGoals => {
+    if (selectedItem) {
+      try {
+        await performFetch(
+          {
+            method: "PATCH",
+            data: { dailyGoal: updatedGoals.dailyGoal }
+          },
+          `/habit-categories/${selectedItem.id}/update-daily-goal`
+        );
+        setSelectedItem(prevItem => ({
+          ...prevItem,
+          dailyGoal: updatedGoals.dailyGoal
+        }));
+      } catch (err) {
+        logError("Error updating goal:", err);
+      }
+    }
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    setSelectedItem(null); // Clear the selected item when closing
+    setSelectedItem(null);
   };
 
   return (
@@ -54,7 +77,6 @@ const HabitCategoryList = () => {
         contentContainerStyle={{ paddingBottom: 20 }}
       />
 
-      {/* EditGoalsModal */}
       {selectedItem && (
         <EditGoalsModal
           isVisible={modalVisible}
@@ -62,8 +84,11 @@ const HabitCategoryList = () => {
           currentName={selectedItem.name}
           currentGoal={selectedItem.dailyGoal}
           onSave={handleSaveGoals}
+          isLoading={isLoading}
         />
       )}
+
+      {error && logError("API Error:", error.message)}
     </ListContainer>
   );
 };
