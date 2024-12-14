@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Animated } from "react-native";
 import {
   ModalBackground,
   ModalContent,
@@ -20,19 +20,39 @@ const EditGoalsModal = ({
   const [name, setName] = useState(currentName || "");
   const [dailyGoal, setDailyGoal] = useState(currentGoal || "");
 
+  // Animated value for background opacity
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (isVisible) {
+      Animated.timing(fadeAnim, {
+        toValue: 1, // Fully visible
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0, // Fully hidden
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    }
+  }, [isVisible]);
+
   const handleSave = () => {
     onSave({ name, dailyGoal });
     onClose();
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={onClose}
-    >
-      <ModalBackground>
+    <Modal transparent={true} visible={isVisible} onRequestClose={onClose}>
+      {/* Animated Background */}
+      <Animated.View
+        style={{
+          ...ModalBackground,
+          opacity: fadeAnim // Use animated opacity
+        }}
+      >
         <ModalContent>
           <Title>Edit Habits</Title>
 
@@ -49,15 +69,15 @@ const EditGoalsModal = ({
 
           {/* Action Buttons */}
           <ButtonRow>
-            <TriggerButton>
-              <TriggerButtonText onPress={onClose}>Cancel</TriggerButtonText>
+            <TriggerButton onPress={onClose}>
+              <TriggerButtonText>Cancel</TriggerButtonText>
             </TriggerButton>
-            <TriggerButton>
-              <TriggerButtonText onPress={handleSave}>Save</TriggerButtonText>
+            <TriggerButton onPress={handleSave}>
+              <TriggerButtonText>Save</TriggerButtonText>
             </TriggerButton>
           </ButtonRow>
         </ModalContent>
-      </ModalBackground>
+      </Animated.View>
     </Modal>
   );
 };

@@ -1,17 +1,18 @@
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
 
-const { black, white, orange, skyBlue, darkGrey, softGray } = Colors;
+const { black, white, darkGrey } = Colors;
 
-export const ModalBackground = styled.View`
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-`;
+// Keep ModalBackground as a plain object for Animated.View compatibility
+export const ModalBackground = {
+  flex: 1,
+  backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black
+  justifyContent: "center",
+  alignItems: "center"
+};
 
 export const ModalContent = styled.View`
-  background-color: white;
+  background-color: ${white};
   padding: 20px;
   border-radius: 10px;
   width: 90%;
