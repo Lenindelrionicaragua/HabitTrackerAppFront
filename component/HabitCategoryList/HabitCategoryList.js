@@ -25,6 +25,12 @@ const HabitCategoryList = () => {
       selectedItem.dailyGoal = updatedGoals.dailyGoal;
     }
     setModalVisible(false);
+    setSelectedItem(null);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedItem(null); // Clear the selected item when closing
   };
 
   return (
@@ -52,7 +58,7 @@ const HabitCategoryList = () => {
       {selectedItem && (
         <EditGoalsModal
           isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
+          onClose={handleCloseModal}
           currentName={selectedItem.name}
           currentGoal={selectedItem.dailyGoal}
           onSave={handleSaveGoals}
