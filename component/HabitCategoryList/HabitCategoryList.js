@@ -4,11 +4,14 @@ import {
   ListContainer,
   ListCard,
   CardTitle,
+  Title,
   CardGoal
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
-import useFetch from "../../hooks/api/useFetch";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { baseApiUrl } from "../../component/Shared/SharedUrl";
 import { logInfo, logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
@@ -19,34 +22,38 @@ const HabitCategoryList = () => {
     state => state.habitCategories.habitCategories
   );
 
-  const { performFetch, isLoading, error } = useFetch(
-    "",
-    async responseData => {
-      if (responseData.success) {
-        setModalVisible(false);
-        setSelectedItem(null);
-      } else {
-        logError(responseData.message || "Failed to update daily goal");
-      }
-    }
-  );
-
   const handleSaveGoals = async updatedGoals => {
     if (selectedItem) {
+      const url = `${baseApiUrl}/habit-categories/${selectedItem.id}/update-daily-goal`;
+
       try {
-        await performFetch(
-          {
-            method: "PATCH",
-            data: { dailyGoal: updatedGoals.dailyGoal }
-          },
-          `/habit-categories/${selectedItem.id}/update-daily-goal`
+        const token = await AsyncStorage.getItem("zenTimerToken");
+        if (!token) {
+          throw new Error("No token found for authentication.");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        };
+
+        const response = await axios.patch(
+          url,
+          { dailyGoal: updatedGoals.dailyGoal },
+          { headers }
         );
+
+        logInfo(`Goal updated successfully: ${JSON.stringify(response.data)}`);
+        // Update the UI locally
         setSelectedItem(prevItem => ({
           ...prevItem,
           dailyGoal: updatedGoals.dailyGoal
         }));
-      } catch (err) {
-        logError("Error updating goal:", err);
+
+        setModalVisible(false);
+        setSelectedItem(null);
+      } catch (error) {
+        logError("Failed to update daily goal:", error);
       }
     }
   };
@@ -84,11 +91,8 @@ const HabitCategoryList = () => {
           currentName={selectedItem.name}
           currentGoal={selectedItem.dailyGoal}
           onSave={handleSaveGoals}
-          isLoading={isLoading}
         />
       )}
-
-      {error && logError("API Error:", error.message)}
     </ListContainer>
   );
 };

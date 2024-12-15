@@ -6,7 +6,7 @@ const { black, white, darkGrey } = Colors;
 // Keep ModalBackground as a plain object for Animated.View compatibility
 export const ModalBackground = {
   flex: 1,
-  backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
   justifyContent: "center",
   alignItems: "center"
 };
