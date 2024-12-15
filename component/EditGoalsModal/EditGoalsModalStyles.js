@@ -6,7 +6,7 @@ const { black, white, darkGrey } = Colors;
 // Keep ModalBackground as a plain object for Animated.View compatibility
 export const ModalBackground = {
   flex: 1,
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black
   justifyContent: "center",
   alignItems: "center"
 };
@@ -50,5 +50,13 @@ export const TriggerButton = styled.TouchableOpacity`
 
 export const TriggerButtonText = styled.Text`
   color: ${white};
+  font-weight: bold;
+`;
+
+export const ErrorText = styled.Text`
+  color: ${red || "red"}; // You can define a custom color in Colors.js
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
   font-weight: bold;
 `;

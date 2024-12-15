@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Animated } from "react-native";
+import { Modal, Animated, Text } from "react-native";
 import {
   ModalBackground,
   ModalContent,
@@ -7,7 +7,8 @@ import {
   Input,
   ButtonRow,
   TriggerButton,
-  TriggerButtonText
+  TriggerButtonText,
+  ErrorText
 } from "./EditGoalsModalStyles";
 
 const EditGoalsModal = ({
@@ -19,8 +20,8 @@ const EditGoalsModal = ({
 }) => {
   const [name, setName] = useState(currentName || "");
   const [dailyGoal, setDailyGoal] = useState(currentGoal || "");
+  const [errors, setErrors] = useState([]);
 
-  // Animated value for background opacity
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -40,8 +41,35 @@ const EditGoalsModal = ({
   }, [isVisible]);
 
   const handleSave = () => {
-    onSave({ name, dailyGoal });
-    onClose();
+    const newErrors = [];
+
+    // Name validation
+    if (!name || typeof name !== "string") {
+      newErrors.push("Category name is required.");
+    } else if (!/^[a-zA-Z0-9\s\-\!]{1,15}$/.test(name)) {
+      newErrors.push(
+        "Category name must contain only letters, numbers, spaces, hyphens, or exclamation marks, and have a maximum length of 15 characters."
+      );
+    }
+
+    // Daily Goal validation
+    if (dailyGoal !== undefined) {
+      if (typeof dailyGoal !== "number" || !Number.isInteger(dailyGoal)) {
+        newErrors.push("Daily goal must be an integer.");
+      } else if (dailyGoal < 15) {
+        newErrors.push("Daily goal must be at least 15 minutes.");
+      } else if (dailyGoal > 1440) {
+        newErrors.push("Daily goal cannot exceed 1440 minutes (24 hours).");
+      }
+    }
+
+    if (newErrors.length > 0) {
+      setErrors(newErrors);
+    } else {
+      // Proceed to save data
+      onSave({ name, dailyGoal });
+      onClose();
+    }
   };
 
   return (
@@ -66,6 +94,9 @@ const EditGoalsModal = ({
             value={dailyGoal}
             onChangeText={setDailyGoal}
           />
+
+          {/* Error Messages */}
+          {errors.length > 0 && <ErrorText>{errors.join("\n")}</ErrorText>}
 
           {/* Action Buttons */}
           <ButtonRow>
