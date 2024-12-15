@@ -4,14 +4,11 @@ import {
   ListContainer,
   ListCard,
   CardTitle,
-  Title,
   CardGoal
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { baseApiUrl } from "../../component/Shared/SharedUrl";
+import useSaveCategoryUpdates from "../../hooks/api/useSaveCategoryUpdates";
 import { logInfo, logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
@@ -22,38 +19,36 @@ const HabitCategoryList = () => {
     state => state.habitCategories.habitCategories
   );
 
+  const { saveCategoryUpdates } = useSaveCategoryUpdates();
+
   const handleSaveGoals = async updatedGoals => {
     if (selectedItem) {
-      const url = `${baseApiUrl}/habit-categories/${selectedItem.id}/update-daily-goal`;
+      const {
+        id,
+        name: currentName,
+        dailyGoal: currentDailyGoal
+      } = selectedItem;
+      const { name: newName, dailyGoal: newDailyGoal } = updatedGoals;
 
       try {
-        const token = await AsyncStorage.getItem("zenTimerToken");
-        if (!token) {
-          throw new Error("No token found for authentication.");
-        }
+        await saveCategoryUpdates({
+          id,
+          newName: newName !== currentName ? newName : null,
+          newDailyGoal:
+            newDailyGoal !== currentDailyGoal ? newDailyGoal : undefined
+        });
 
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        };
-
-        const response = await axios.patch(
-          url,
-          { dailyGoal: updatedGoals.dailyGoal },
-          { headers }
-        );
-
-        logInfo(`Goal updated successfully: ${JSON.stringify(response.data)}`);
-        // Update the UI locally
-        setSelectedItem(prevItem => ({
-          ...prevItem,
-          dailyGoal: updatedGoals.dailyGoal
+        // Update local UI
+        setSelectedItem(prev => ({
+          ...prev,
+          name: newName || currentName,
+          dailyGoal:
+            newDailyGoal !== undefined ? newDailyGoal : currentDailyGoal
         }));
-
+      } catch (err) {
+        logError("Error while saving category updates", err);
+      } finally {
         setModalVisible(false);
-        setSelectedItem(null);
-      } catch (error) {
-        logError("Failed to update daily goal:", error);
       }
     }
   };
