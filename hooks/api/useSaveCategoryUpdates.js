@@ -49,7 +49,16 @@ const useSaveCategoryUpdates = () => {
         );
       }
 
-      const responses = await Promise.all(requests);
+      const responses = await Promise.allSettled(requests);
+
+      responses.forEach((result, index) => {
+        if (result.status === "fulfilled") {
+          logInfo(`Request ${index} succeeded:`, result.value.data);
+        } else {
+          logError(`Request ${index} failed:`, result.reason);
+        }
+      });
+
       logInfo(`Responses: ${JSON.stringify(responses.map(res => res.data))}`);
       return responses.map(response => response.data);
     } catch (error) {

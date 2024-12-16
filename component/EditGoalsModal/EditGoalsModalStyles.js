@@ -1,15 +1,15 @@
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
+import { Animated } from "react-native";
 
-const { black, white, darkGrey } = Colors;
+const { black, white, darkGrey, red } = Colors;
 
-// Keep ModalBackground as a plain object for Animated.View compatibility
-export const ModalBackground = {
-  flex: 1,
-  backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black
-  justifyContent: "center",
-  alignItems: "center"
-};
+export const ModalBackground = styled(Animated.View)`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ModalContent = styled.View`
   background-color: ${white};
@@ -30,7 +30,8 @@ export const Input = styled.TextInput`
   border-color: ${darkGrey};
   border-radius: 5px;
   padding: 10px;
-  margin-vertical: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
 `;
 
@@ -54,7 +55,7 @@ export const TriggerButtonText = styled.Text`
 `;
 
 export const ErrorText = styled.Text`
-  color: ${red || "red"}; // You can define a custom color in Colors.js
+  color: ${red};
   margin-top: 10px;
   font-size: 14px;
   text-align: center;
