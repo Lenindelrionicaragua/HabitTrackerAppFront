@@ -16,8 +16,7 @@ const EditGoalsModal = ({
   onClose,
   currentName,
   currentGoal,
-  onSaveName,
-  onSaveDailyGoal
+  onSave // Single function to handle both updates
 }) => {
   const [name, setName] = useState(currentName || "");
   const [dailyGoal, setDailyGoal] = useState(currentGoal || "");
@@ -28,13 +27,13 @@ const EditGoalsModal = ({
   useEffect(() => {
     if (isVisible) {
       Animated.timing(fadeAnim, {
-        toValue: 1, // Fully visible
+        toValue: 1,
         duration: 300,
         useNativeDriver: true
       }).start();
     } else {
       Animated.timing(fadeAnim, {
-        toValue: 0, // Fully hidden
+        toValue: 0,
         duration: 300,
         useNativeDriver: true
       }).start();
@@ -69,14 +68,12 @@ const EditGoalsModal = ({
 
   const handleNameChange = value => {
     setName(value);
-    const nameAlert = validateName(value);
-    setAlerts(prev => ({ ...prev, name: nameAlert }));
+    setAlerts(prev => ({ ...prev, name: validateName(value) }));
   };
 
   const handleDailyGoalChange = value => {
     setDailyGoal(value);
-    const goalAlert = validateDailyGoal(value);
-    setAlerts(prev => ({ ...prev, dailyGoal: goalAlert }));
+    setAlerts(prev => ({ ...prev, dailyGoal: validateDailyGoal(value) }));
   };
 
   const handleSave = () => {
@@ -85,19 +82,10 @@ const EditGoalsModal = ({
 
     if (nameAlert || goalAlert) {
       setAlerts({ name: nameAlert, dailyGoal: goalAlert });
-      return;
+    } else {
+      onSave({ name, dailyGoal: parseInt(dailyGoal, 10) });
+      onClose();
     }
-
-    // Call the appropriate save functions based on changes
-    if (name !== currentName) {
-      onSaveName(name);
-    }
-
-    if (dailyGoal !== currentGoal) {
-      onSaveDailyGoal(parseInt(dailyGoal, 10));
-    }
-
-    onClose();
   };
 
   return (
