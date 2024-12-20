@@ -8,7 +8,8 @@ import {
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
-import useSaveCategoryUpdates from "../../hooks/api/useSaveCategoryUpdates";
+import useUpdateCategoryName from "../../hooks/api/useUpdateCategoryName";
+import useUpdateCategoryDailyGoal from "../../hooks/api/useUpdateCategoryDailyGoal";
 import { logInfo, logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
@@ -19,7 +20,17 @@ const HabitCategoryList = () => {
     state => state.habitCategories.habitCategories
   );
 
-  const { saveCategoryUpdates } = useSaveCategoryUpdates();
+  const {
+    updateCategoryName,
+    isLoading: isUpdatingName,
+    error: nameError
+  } = useUpdateCategoryName();
+
+  const {
+    updateCategoryDailyGoal,
+    isLoading: isUpdatingDailyGoal,
+    error: dailyGoalError
+  } = useUpdateCategoryDailyGoal();
 
   const handleSaveGoals = async updatedGoals => {
     if (selectedItem) {
@@ -31,12 +42,17 @@ const HabitCategoryList = () => {
       const { name: newName, dailyGoal: newDailyGoal } = updatedGoals;
 
       try {
-        await saveCategoryUpdates({
-          id,
-          newName: newName !== currentName ? newName : null,
-          newDailyGoal:
-            newDailyGoal !== currentDailyGoal ? newDailyGoal : undefined
-        });
+        // Update name if changed
+        if (newName && newName !== currentName) {
+          await updateCategoryName(id, newName);
+          logInfo(`Category name updated to: ${newName}`);
+        }
+
+        // Update dailyGoal if changed
+        if (newDailyGoal !== undefined && newDailyGoal !== currentDailyGoal) {
+          await updateCategoryDailyGoal(id, newDailyGoal);
+          logInfo(`Category daily goal updated to: ${newDailyGoal}`);
+        }
 
         // Update local UI
         setSelectedItem(prev => ({
@@ -87,6 +103,16 @@ const HabitCategoryList = () => {
           currentGoal={selectedItem.dailyGoal}
           onSave={handleSaveGoals}
         />
+      )}
+
+      {/* Loading and Error States */}
+      {(isUpdatingName || isUpdatingDailyGoal) && (
+        <CardGoal>Updating...</CardGoal>
+      )}
+      {(nameError || dailyGoalError) && (
+        <CardGoal style={{ color: "red" }}>
+          Error: {nameError || dailyGoalError}
+        </CardGoal>
       )}
     </ListContainer>
   );
