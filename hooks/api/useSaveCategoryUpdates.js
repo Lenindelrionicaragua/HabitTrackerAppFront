@@ -20,7 +20,7 @@ const useSaveCategoryUpdates = () => {
       if (newName) {
         requests.push(
           axios.patch(
-            `${baseApiUrl}/habit-categories/${id}/name`,
+            `${baseApiUrl}/habit-categories/${id}`,
             { name: newName },
             {
               headers: {
