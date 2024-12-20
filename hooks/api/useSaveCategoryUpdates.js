@@ -20,7 +20,7 @@ const useSaveCategoryUpdates = () => {
       if (newName) {
         requests.push(
           axios.patch(
-            url,
+            `${baseApiUrl}/api/habit-categories/${id}/name`,
             { name: newName },
             {
               headers: {
@@ -51,16 +51,24 @@ const useSaveCategoryUpdates = () => {
 
       const responses = await Promise.allSettled(requests);
 
-      responses.forEach((result, index) => {
+      const updatedCategories = responses.map((result, index) => {
         if (result.status === "fulfilled") {
-          logInfo(`Request ${index} succeeded:`, result.value.data);
+          const responseData = result.value.data;
+          if (responseData.success) {
+            logInfo(`Request ${index} succeeded:`, responseData.category);
+            return responseData.category;
+          } else {
+            logError(`Request ${index} failed:`, responseData.message);
+            return null;
+          }
         } else {
           logError(`Request ${index} failed:`, result.reason);
+          return null;
         }
       });
 
       logInfo(`Responses: ${JSON.stringify(responses.map(res => res.data))}`);
-      return responses.map(response => response.data);
+      return updatedCategories.filter(category => category !== null);
     } catch (error) {
       logError("Failed to save category updates", error);
       throw error;
