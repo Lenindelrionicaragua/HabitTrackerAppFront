@@ -31,11 +31,15 @@ const HabitCategoryList = () => {
       const { name: newName, dailyGoal: newDailyGoal } = updatedGoals;
 
       try {
+        const encodedName = encodeURIComponent(newName || currentName);
+        const url = `${baseApiUrl}/habit-categories/${id}/name/${encodedName}`;
+
         await saveCategoryUpdates({
           id,
           newName: newName !== currentName ? newName : null,
           newDailyGoal:
-            newDailyGoal !== currentDailyGoal ? newDailyGoal : undefined
+            newDailyGoal !== currentDailyGoal ? newDailyGoal : undefined,
+          url
         });
 
         // Update local UI
