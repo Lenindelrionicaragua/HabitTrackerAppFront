@@ -16,7 +16,8 @@ const EditGoalsModal = ({
   onClose,
   currentName,
   currentGoal,
-  onSave
+  onSaveName,
+  onSaveDailyGoal
 }) => {
   const [name, setName] = useState(currentName || "");
   const [dailyGoal, setDailyGoal] = useState(currentGoal || "");
@@ -84,10 +85,19 @@ const EditGoalsModal = ({
 
     if (nameAlert || goalAlert) {
       setAlerts({ name: nameAlert, dailyGoal: goalAlert });
-    } else {
-      onSave({ name, dailyGoal: parseInt(dailyGoal, 10) });
-      onClose();
+      return;
     }
+
+    // Call the appropriate save functions based on changes
+    if (name !== currentName) {
+      onSaveName(name);
+    }
+
+    if (dailyGoal !== currentGoal) {
+      onSaveDailyGoal(parseInt(dailyGoal, 10));
+    }
+
+    onClose();
   };
 
   return (
