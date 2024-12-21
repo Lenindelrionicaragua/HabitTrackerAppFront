@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Pressable } from "react-native";
 import {
   ListContainer,
@@ -17,6 +17,8 @@ import { logInfo, logError } from "../../util/logging";
 const HabitCategoryList = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
@@ -35,6 +37,28 @@ const HabitCategoryList = () => {
     error: dailyGoalError,
     successMessage: dailyGoalSuccess
   } = useUpdateCategoryDailyGoal();
+
+  // Synchronize messages with hook states
+  useEffect(() => {
+    if (nameError || dailyGoalError) {
+      setErrorMessage(nameError || dailyGoalError);
+    }
+    if (nameSuccess || dailyGoalSuccess) {
+      setSuccessMessage(nameSuccess || dailyGoalSuccess);
+    }
+  }, [nameError, dailyGoalError, nameSuccess, dailyGoalSuccess]);
+
+  // Clear messages after 2 seconds
+  useEffect(() => {
+    if (successMessage || errorMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null);
+        setErrorMessage(null);
+      }, 3000);
+
+      return () => clearTimeout(timer); // Cleanup
+    }
+  }, [successMessage, errorMessage]);
 
   const handleSaveGoals = async updatedGoals => {
     if (selectedItem) {
@@ -107,14 +131,14 @@ const HabitCategoryList = () => {
         />
       )}
 
-      {/* Loading and Error States */}
+      {/* Loading and Messages */}
       {(isUpdatingName || isUpdatingDailyGoal) && (
         <CardGoal>Updating...</CardGoal>
       )}
-      {(nameError || dailyGoalError || nameSuccess || dailyGoalSuccess) && (
+      {(successMessage || errorMessage) && (
         <MessageWrapper>
-          <MessageContainer isError={!!(nameError || dailyGoalError)}>
-            {nameError || dailyGoalError || nameSuccess || dailyGoalSuccess}
+          <MessageContainer isError={!!errorMessage}>
+            {errorMessage || successMessage}
           </MessageContainer>
         </MessageWrapper>
       )}

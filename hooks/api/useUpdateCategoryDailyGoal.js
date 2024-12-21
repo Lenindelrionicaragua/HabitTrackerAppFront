@@ -30,7 +30,7 @@ const useUpdateCategoryDailyGoal = () => {
       }
 
       const response = await axios.patch(
-        `${baseApiUrl}/habit-categories/${categoryId}/update-daily-goal`,
+        `${baseApiUrl}/api/habit-categories/${categoryId}/update-daily-goal`,
         { dailyGoal: newDailyGoal },
         {
           headers: {

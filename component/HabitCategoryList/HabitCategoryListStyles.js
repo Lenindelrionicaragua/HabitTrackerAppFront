@@ -48,7 +48,7 @@ export const MessageWrapper = styled(View)`
 `;
 
 export const MessageContainer = styled(Text)`
-  color: ${props => (props.isError ? red : green)};
+  color: ${props => (props.isError ? red : darkGrey)};
   font-size: 14px;
   text-align: center;
 `;
