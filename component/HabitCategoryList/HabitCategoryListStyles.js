@@ -51,5 +51,4 @@ export const MessageContainer = styled(Text)`
   color: ${props => (props.isError ? red : green)};
   font-size: 14px;
   text-align: center;
-  font-weight: bold;
 `;

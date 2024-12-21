@@ -25,7 +25,7 @@ const useUpdateCategoryName = () => {
       }
 
       const response = await axios.patch(
-        `${baseApiUrl}/habit-categories/${categoryId}/name`,
+        `${baseApiUrl}/api/habit-categories/${categoryId}/name`,
         { name: newName },
         {
           headers: {
@@ -39,7 +39,9 @@ const useUpdateCategoryName = () => {
       // Check for success
       if (response.status === 200) {
         setSuccessMessage("Category name updated successfully!");
-        logInfo("Category name updated:", response.data);
+        logInfo(
+          `Category name updated to: ${JSON.stringify(response.data.category.name, null, 2)}`
+        );
       } else {
         throw new Error(
           response.data?.message || "Failed to update category name"

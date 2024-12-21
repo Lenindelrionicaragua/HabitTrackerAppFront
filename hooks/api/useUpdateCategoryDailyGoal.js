@@ -30,7 +30,7 @@ const useUpdateCategoryDailyGoal = () => {
       }
 
       const response = await axios.patch(
-        `${baseApiUrl}/habit-categories/${categoryId}/update-daily-goal`,
+        `${baseApiUrl}/api/habit-categories/${categoryId}/update-daily-goal`,
         { dailyGoal: newDailyGoal },
         {
           headers: {
@@ -44,7 +44,9 @@ const useUpdateCategoryDailyGoal = () => {
       // Check for success
       if (response.status === 200) {
         setSuccessMessage("Category daily goal updated successfully!");
-        logInfo("Category daily goal updated:", response.data);
+        logInfo(
+          `Category daily goal updated to: ${JSON.stringify(response.data.category.dailyGoal, null, 2)}`
+        );
       } else {
         throw new Error(
           response.data?.message || "Failed to update daily goal"

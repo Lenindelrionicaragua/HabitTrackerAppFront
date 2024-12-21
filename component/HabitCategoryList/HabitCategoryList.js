@@ -47,13 +47,11 @@ const HabitCategoryList = () => {
         // Update name if changed
         if (newName && newName !== currentName) {
           await updateCategoryName(id, newName);
-          logInfo(`Category name updated to: ${newName}`);
         }
 
         // Update dailyGoal if changed
         if (newDailyGoal !== undefined && newDailyGoal !== currentDailyGoal) {
           await updateCategoryDailyGoal(id, newDailyGoal);
-          logInfo(`Category daily goal updated to: ${newDailyGoal}`);
         }
 
         // Update local UI
@@ -114,7 +112,7 @@ const HabitCategoryList = () => {
       {(nameError || dailyGoalError) && (
         <MessageWrapper>
           <MessageContainer isError={!!nameError}>
-            {nameError || dailyGoalError}
+            {nameError || dailyGoalError || success}
           </MessageContainer>
         </MessageWrapper>
       )}
