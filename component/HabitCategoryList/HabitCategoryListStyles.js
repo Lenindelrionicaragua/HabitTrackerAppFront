@@ -48,14 +48,8 @@ export const MessageWrapper = styled(View)`
 `;
 
 export const MessageContainer = styled(Text)`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 12px;
-  margin: 0px;
-  color: ${darkGrey};
-  margin-bottom: 5px;
+  color: ${props => (props.isError ? red : green)};
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
 `;

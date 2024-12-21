@@ -5,6 +5,7 @@ import {
   ListCard,
   CardTitle,
   CardGoal,
+  MessageWrapper,
   MessageContainer
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
@@ -111,9 +112,11 @@ const HabitCategoryList = () => {
         <CardGoal>Updating...</CardGoal>
       )}
       {(nameError || dailyGoalError) && (
-        <MessageContainer style={{ color: "red" }}>
-          Error: {nameError || dailyGoalError}
-        </MessageContainer>
+        <MessageWrapper>
+          <MessageContainer isError={!!nameError}>
+            {nameError || dailyGoalError}
+          </MessageContainer>
+        </MessageWrapper>
       )}
     </ListContainer>
   );
