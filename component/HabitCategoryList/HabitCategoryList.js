@@ -25,13 +25,15 @@ const HabitCategoryList = () => {
   const {
     updateCategoryName,
     isLoading: isUpdatingName,
-    error: nameError
+    error: nameError,
+    successMessage: nameSuccess
   } = useUpdateCategoryName();
 
   const {
     updateCategoryDailyGoal,
     isLoading: isUpdatingDailyGoal,
-    error: dailyGoalError
+    error: dailyGoalError,
+    successMessage: dailyGoalSuccess
   } = useUpdateCategoryDailyGoal();
 
   const handleSaveGoals = async updatedGoals => {
@@ -109,10 +111,10 @@ const HabitCategoryList = () => {
       {(isUpdatingName || isUpdatingDailyGoal) && (
         <CardGoal>Updating...</CardGoal>
       )}
-      {(nameError || dailyGoalError) && (
+      {(nameError || dailyGoalError || nameSuccess || dailyGoalSuccess) && (
         <MessageWrapper>
-          <MessageContainer isError={!!nameError}>
-            {nameError || dailyGoalError || success}
+          <MessageContainer isError={!!(nameError || dailyGoalError)}>
+            {nameError || dailyGoalError || nameSuccess || dailyGoalSuccess}
           </MessageContainer>
         </MessageWrapper>
       )}
