@@ -4,7 +4,8 @@ import {
   ListContainer,
   ListCard,
   CardTitle,
-  CardGoal
+  CardGoal,
+  MessageContainer
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
@@ -110,9 +111,9 @@ const HabitCategoryList = () => {
         <CardGoal>Updating...</CardGoal>
       )}
       {(nameError || dailyGoalError) && (
-        <CardGoal style={{ color: "red" }}>
+        <MessageContainer style={{ color: "red" }}>
           Error: {nameError || dailyGoalError}
-        </CardGoal>
+        </MessageContainer>
       )}
     </ListContainer>
   );

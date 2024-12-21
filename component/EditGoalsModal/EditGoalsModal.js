@@ -100,7 +100,7 @@ const EditGoalsModal = ({
             value={name}
             onChangeText={handleNameChange}
           />
-          {alerts.name && <ErrorText>{alerts.name}</ErrorText>}
+          {alerts.name && <ErrorText>{String(alerts.name)}</ErrorText>}
 
           {/* Input for Daily Goal */}
           <Input
@@ -109,7 +109,9 @@ const EditGoalsModal = ({
             value={dailyGoal}
             onChangeText={handleDailyGoalChange}
           />
-          {alerts.dailyGoal && <ErrorText>{alerts.dailyGoal}</ErrorText>}
+          {alerts.dailyGoal && (
+            <ErrorText>{String(alerts.dailyGoal)}</ErrorText>
+          )}
 
           {/* Action Buttons */}
           <ButtonRow>

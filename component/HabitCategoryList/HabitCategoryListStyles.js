@@ -35,11 +35,27 @@ export const CardTitle = styled(Text)`
 export const CardGoal = styled(Text)`
   padding: 20px;
   font-size: 14px;
-  display: flex;
+  color: ${darkGrey};
+  margin-left: auto;
+`;
+
+export const MessageWrapper = styled(View)`
+  width: 100%;
+  padding: 10px 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${softGray};
+`;
+
+export const MessageContainer = styled(Text)`
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
-  justify-content: center;
-  margin: 0;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin: 0px;
   color: ${darkGrey};
+  margin-bottom: 5px;
 `;
