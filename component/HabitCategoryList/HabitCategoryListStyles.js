@@ -35,6 +35,11 @@ export const CardTitle = styled(Text)`
 export const CardGoal = styled(Text)`
   padding: 20px;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  margin: 0;
   color: ${darkGrey};
-  margin-left: auto;
 `;
