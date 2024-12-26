@@ -44,6 +44,9 @@ const EditGoalsModal = ({
     if (!value || typeof value !== "string") {
       return "Category name is required.";
     }
+    if (!/^[a-zA-Z]/.test(value)) {
+      return "Category name must start with a letter.";
+    }
     if (!/^[a-zA-Z0-9\s\-\!]{1,15}$/.test(value)) {
       return "Category name must contain only letters, numbers, spaces, hyphens, or exclamation marks, and have a maximum length of 15 characters.";
     }
