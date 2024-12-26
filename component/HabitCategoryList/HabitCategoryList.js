@@ -73,6 +73,11 @@ const HabitCategoryList = () => {
     }
   }, [successMessage, errorMessage]);
 
+  const capitalizeFirstLetter = string => {
+    if (!string) return string;
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   const handleSaveGoals = async updatedGoals => {
     if (selectedItem) {
       const {
@@ -83,9 +88,14 @@ const HabitCategoryList = () => {
       const { name: newName, dailyGoal: newDailyGoal } = updatedGoals;
 
       try {
+        // Capitalize the first letter of the new category name
+        const formattedName = newName
+          ? capitalizeFirstLetter(newName)
+          : currentName;
+
         // Update name if changed
-        if (newName && newName !== currentName) {
-          await updateCategoryName(id, newName);
+        if (formattedName !== currentName) {
+          await updateCategoryName(id, formattedName);
         }
 
         // Update dailyGoal if changed
@@ -96,7 +106,7 @@ const HabitCategoryList = () => {
         // Update local UI
         setSelectedItem(prev => ({
           ...prev,
-          name: newName || currentName,
+          name: formattedName || currentName,
           dailyGoal:
             newDailyGoal !== undefined ? newDailyGoal : currentDailyGoal
         }));
