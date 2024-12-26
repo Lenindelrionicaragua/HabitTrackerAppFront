@@ -11,9 +11,12 @@ import {
   StyledFormArea,
   StyledButton,
   ButtonText,
+  StyledSyncRowContainer,
+  ButtonSyncText,
   Line,
   Avatar
 } from "./WelcomeScreenStyles";
+import SyncButton from "../../component/SyncButton/SyncButton";
 import HabitCategoryList from "../../component/HabitCategoryList/HabitCategoryList";
 import * as Google from "expo-auth-session/providers/google";
 import { revokeAsync } from "expo-auth-session";
@@ -189,6 +192,9 @@ const WelcomeScreen = ({ navigation }) => {
           <Line testID="line" />
         </StyledHeader>
         <HabitCategoryList testID="habit-category-component" />
+
+        <SyncButton />
+
         <StyledFormArea>
           <StyledButton onPress={clearLogin} testID="logout-styled-button">
             <ButtonText testID="logout-button-text">Logout</ButtonText>

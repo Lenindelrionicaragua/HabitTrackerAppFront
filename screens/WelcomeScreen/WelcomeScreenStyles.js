@@ -22,6 +22,7 @@ const containerHeight = Platform.OS === "web" ? "90%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingTop = Platform.OS === "web" ? "0%" : "5%";
 const paddingBottom = Platform.OS === "web" ? "1%" : "1%";
+// const widthSyncRowContainer = Platform.OS === "web" ? "" : "100%";
 
 export const StyledContainer = styled(SafeAreaView)`
   background-color: ${softGray};
@@ -134,6 +135,31 @@ export const ButtonText = styled(Text)`
     padding: 25px;
     color: ${black}
   `}
+`;
+
+export const StyledSyncButtonContainer = styled(View)`
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledSyncRowContainer = styled(View)`
+  width: ${Platform.OS === "web" ? "calc(100vw - 5px)" : "100%"};
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px 0px 15px 30px;
+  margin-vertical: 10px;
+  background-color: ${({ bgColor }) => bgColor || "transparent"};
+`;
+
+export const ButtonSyncText = styled(Text)`
+  font-size: 12px;
+  padding: 5px;
+  padding-vertical: 3px;
+  letter-spacing: 1px;
+  color: ${darkGrey};
+  margin-left: 10px;
+  flex: 1;
 `;
 
 export const Line = styled(View)`

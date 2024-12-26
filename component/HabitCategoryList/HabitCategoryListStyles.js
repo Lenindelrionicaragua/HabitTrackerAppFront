@@ -38,3 +38,17 @@ export const CardGoal = styled(Text)`
   color: ${darkGrey};
   margin-left: auto;
 `;
+
+export const MessageWrapper = styled(View)`
+  width: 100%;
+  padding: 10px 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${softGray};
+`;
+
+export const MessageContainer = styled(Text)`
+  color: ${props => (props.isError ? red : darkGrey)};
+  font-size: 14px;
+  text-align: center;
+`;
