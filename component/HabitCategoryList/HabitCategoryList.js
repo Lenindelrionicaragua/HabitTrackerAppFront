@@ -13,6 +13,7 @@ import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
 import useUpdateCategoryName from "../../hooks/api/useUpdateCategoryName";
 import useUpdateCategoryDailyGoal from "../../hooks/api/useUpdateCategoryDailyGoal";
 import { logInfo, logError } from "../../util/logging";
+import useHabitCategories from "../../hooks/api/useHabitCategories";
 
 const HabitCategoryList = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,6 +38,13 @@ const HabitCategoryList = () => {
     error: dailyGoalError,
     successMessage: dailyGoalSuccess
   } = useUpdateCategoryDailyGoal();
+
+  const {
+    fetchHabitCategories,
+    isLoading: isUpdatingHabitCategory,
+    error: habitCategoryError,
+    message: habitCategoriesSuccess
+  } = useHabitCategories();
 
   // Synchronize messages with hook states
   useEffect(() => {
@@ -87,6 +95,8 @@ const HabitCategoryList = () => {
           dailyGoal:
             newDailyGoal !== undefined ? newDailyGoal : currentDailyGoal
         }));
+        // Fetch updated categories from the server
+        fetchHabitCategories();
       } catch (err) {
         logError("Error while saving category updates", err);
       } finally {

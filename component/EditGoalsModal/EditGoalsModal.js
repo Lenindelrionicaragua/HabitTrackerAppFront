@@ -97,7 +97,7 @@ const EditGoalsModal = ({
           {/* Input for Name */}
           <Input
             placeholder="Name"
-            value={name}
+            value={name || ""}
             onChangeText={handleNameChange}
           />
           {alerts.name && <ErrorText>{String(alerts.name)}</ErrorText>}
@@ -106,7 +106,7 @@ const EditGoalsModal = ({
           <Input
             placeholder="Daily Goal (mins)"
             keyboardType="numeric"
-            value={dailyGoal}
+            value={dailyGoal || ""}
             onChangeText={handleDailyGoalChange}
           />
           {alerts.dailyGoal && (
