@@ -10,12 +10,17 @@ import {
 } from "../../component/HabitCategoryList/HabitCategoryListStyles";
 import { useSelector } from "react-redux";
 import EditGoalsModal from "../EditGoalsModal/EditGoalsModal";
+// Hooks Api
 import useUpdateCategoryName from "../../hooks/api/useUpdateCategoryName";
 import useUpdateCategoryDailyGoal from "../../hooks/api/useUpdateCategoryDailyGoal";
-import { logInfo, logError } from "../../util/logging";
 import useHabitCategories from "../../hooks/api/useHabitCategories";
+// Redux Store
+import { useDispatch } from "react-redux";
+// Utils
+import { logInfo, logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -97,6 +102,7 @@ const HabitCategoryList = () => {
         }));
         // Fetch updated categories from the server
         fetchHabitCategories();
+        dispatch({ type: "TRIGGER_METRICS_UPDATE" });
       } catch (err) {
         logError("Error while saving category updates", err);
       } finally {
