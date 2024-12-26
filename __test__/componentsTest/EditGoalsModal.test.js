@@ -6,14 +6,12 @@ describe("EditGoalsModal Component", () => {
   let mockOnSave;
   let mockOnClose;
 
-  // Este bloque silencia los warnings antes de cada prueba
   beforeAll(() => {
-    jest.spyOn(console, "warn").mockImplementation(() => {}); // Silencia todos los console.warn
+    jest.useFakeTimers(); // Enable fake timers globally in this file
   });
 
-  // Restaura el comportamiento normal de los warnings después de cada prueba
   afterAll(() => {
-    console.warn.mockRestore();
+    jest.clearAllTimers();
   });
 
   beforeEach(() => {
@@ -36,7 +34,13 @@ describe("EditGoalsModal Component", () => {
       fireEvent.press(getByText("Save"));
     });
 
-    expect(mockOnSave).toHaveBeenCalled();
+    await act(async () => {
+      jest.runAllTimers();
+    });
+
+    await waitFor(() => {
+      expect(mockOnSave).toHaveBeenCalled();
+    });
   });
 
   it("should not render the modal when isVisible is false", () => {
@@ -76,8 +80,16 @@ describe("EditGoalsModal Component", () => {
       fireEvent.press(getByText("Save"));
     });
 
-    expect(mockOnSave).toHaveBeenCalledWith({ name: "Running", dailyGoal: 45 });
-    expect(mockOnClose).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockOnSave).toHaveBeenCalledWith({
+        name: "Running",
+        dailyGoal: 45
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockOnClose).toHaveBeenCalled();
+    });
   });
 
   it("should show error when invalid name is provided", async () => {
@@ -143,6 +155,8 @@ describe("EditGoalsModal Component", () => {
       fireEvent.press(getByText("Cancel"));
     });
 
-    expect(mockOnClose).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockOnClose).toHaveBeenCalled();
+    });
   });
 });
