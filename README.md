@@ -79,7 +79,7 @@ After completing the setup steps, you can run the app locally on your machine.
 Use the following command to start the app:
 
 ```bash
-npm start
+npx expo start
 ```
 
 Follow the instructions in the terminal to run it on either an emulator or a physical device.
