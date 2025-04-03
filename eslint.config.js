@@ -20,10 +20,7 @@ module.exports = [
     },
     languageOptions: {
       ecmaVersion: 2021,
-      sourceType: "module",
-      ecmaFeatures: {
-        jsx: true
-      }
+      sourceType: "module"
     },
     settings: {
       react: {
