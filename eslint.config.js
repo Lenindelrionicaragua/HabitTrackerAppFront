@@ -4,10 +4,10 @@ const eslintPluginReactNative = require("eslint-plugin-react-native");
 const eslintPluginJsxA11y = require("eslint-plugin-jsx-a11y");
 const eslintPluginReactHooks = require("eslint-plugin-react-hooks");
 
-const compat = new FlatCompat();
+const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
-  ...compat.extends("eslint:recommended", "plugin:react/recommended"),
+  ...compat.extends("plugin:react/recommended"), // Eliminar "eslint:recommended" si da problemas
   {
     ignores: ["**/node_modules/**", "**/.next/**", "**/dist/**"]
   },
