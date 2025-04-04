@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StatusBar, Alert } from "react-native";
+import PropTypes from "prop-types";
 import {
   StyledContainer,
   InnerContainer,
@@ -65,16 +66,12 @@ const WelcomeScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
-  const {
-    name = "Zen User",
-    email = "serenity@gmail.com",
-    photoUrl
-  } = storedCredentials || {};
+  const { name = "Zen User" } = storedCredentials || {};
 
   const AvatarImg = require("./../../assets/user.png");
 
   // Google authentication setup
-  const [request, response, promptAsync] = Google.useAuthRequest({
+  Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
     androidClientId: ANDROID_CLIENT_ID,
@@ -203,3 +200,9 @@ const WelcomeScreen = ({ navigation }) => {
 };
 
 export default WelcomeScreen;
+
+WelcomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired
+  }).isRequired
+};

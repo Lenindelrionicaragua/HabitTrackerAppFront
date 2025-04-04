@@ -30,8 +30,6 @@ const RootStack = () => {
     useHabitCategories(storedCredentials);
   const { isLoading: monthlyStatsLoading } = useMonthlyStats(storedCredentials);
 
-  logInfo("storedCredentials:", storedCredentials); // 🔥 Verifica que storedCredentials no es null/undefined
-
   return (
     <NavigationContainer>
       <Stack.Navigator
