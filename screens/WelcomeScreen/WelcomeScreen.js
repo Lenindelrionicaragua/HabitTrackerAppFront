@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { StatusBar, Alert } from "react-native";
 import PropTypes from "prop-types";
 import {
@@ -50,21 +50,13 @@ const WelcomeScreen = ({ navigation }) => {
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
-  const {
-    totalMinutes,
-    daysWithRecords,
-    dailyAverageMinutes,
-    categoryData,
-    isDemo
-  } = useSelector(state => state.monthlyStats);
+  logInfo("Active Screen:", activeScreen);
+  logInfo("Habit Category Index:", habitCategoryIndex);
+
+  const { daysWithRecords } = useSelector(state => state.monthlyStats);
   // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
-  const [token, setToken] = useState(null);
-
-  // Local state
-  const [msg, setMsg] = useState("");
-  const [success, setSuccessStatus] = useState("");
 
   const { name = "Zen User" } = storedCredentials || {};
 
@@ -81,7 +73,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   // Handler for receiving API responses
   const onReceived = response => {
-    const { success, msg, user } = response;
+    const { success, msg } = response;
     if (success) {
       logInfo("User successfully logged out");
       navigation.navigate("LoginScreen");
@@ -93,10 +85,7 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   // Fetch API for server-side logout request
-  const { performFetch, isLoading, error } = useFetch(
-    `/user/log-out`,
-    onReceived
-  );
+  const { performFetch, error } = useFetch(`/user/log-out`, onReceived);
 
   // Handle errors from API calls
   useEffect(() => {
