@@ -11,8 +11,6 @@ import {
   StyledFormArea,
   StyledButton,
   ButtonText,
-  StyledSyncRowContainer,
-  ButtonSyncText,
   Line,
   Avatar
 } from "./WelcomeScreenStyles";
@@ -32,7 +30,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
   resetHabitCategories,
-  setHabitCategories,
   setHabitCategoryIndex,
   clearMonthlyStats
 } from "../../actions/counterActions";

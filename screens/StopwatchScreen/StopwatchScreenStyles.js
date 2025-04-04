@@ -3,21 +3,11 @@ import { View, Text, Pressable, Platform, SafeAreaView } from "react-native";
 
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoWhite,
-  lightPink,
-  darkGrey,
-  black,
-  skyBlue,
-  lightGreen,
-  softGray
-} = Colors;
+const { white, black, softGray } = Colors;
 
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingBottom = Platform.OS === "web" ? "7%" : "0%";
-const marginTop = Platform.OS === "web" ? "1%" : "2%";
+// const marginTop = Platform.OS === "web" ? "1%" : "2%";
 const ScreenTitleMarginTop = Platform.OS === "web" ? "5%" : "2%";
 
 export const StyledContainer = styled(SafeAreaView)`

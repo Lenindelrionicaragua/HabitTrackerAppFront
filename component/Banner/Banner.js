@@ -8,17 +8,24 @@ import {
   Button,
   ButtonText
 } from "./BannerStyles";
+import { logInfo } from "../../util/logging";
 
 const Banner = ({ storedCredentials }) => {
   const navigation = useNavigation();
 
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
+  logInfo("Navigation:", navigation);
+  logInfo("Active Screen:", activeScreen);
+
   return (
     <BannerContainer>
       <ButtonContainer>
         <Button
-          onPress={() => navigation.navigate("MetricsScreen")}
+          onPress={() => {
+            logInfo("Metrics button pressed");
+            navigation.navigate("MetricsScreen");
+          }}
           testID="metrics-banner-button"
         >
           <Ionicons name="stats-chart" size={24} color="white" />

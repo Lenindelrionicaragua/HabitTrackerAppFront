@@ -3,20 +3,7 @@ import { View, Image, Text, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoGrey,
-  infoWhite,
-  lightPink,
-  skyBlue,
-  darkGrey,
-  black,
-  softGray,
-  orange,
-  green,
-  red
-} = Colors;
+const { seaGreen, white, infoGrey, darkGrey, black, softGray } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "90%" : "90%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";

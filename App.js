@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 // Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
-import { logInfo, logError } from "./util/logging";
+import { logError } from "./util/logging";
 
 SplashScreen.preventAutoHideAsync();
 
