@@ -10,18 +10,7 @@ import {
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoGrey,
-  lightPink,
-  darkGrey,
-  black,
-  skyBlue,
-  lightGreen,
-  softGray,
-  orange
-} = Colors;
+const { white, infoGrey, black, lightGreen, softGray, orange } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
