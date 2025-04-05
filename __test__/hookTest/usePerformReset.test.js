@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react-native";
 import { useDispatch } from "react-redux";
 import { usePerformReset } from "../../hooks/usePerformReset";
 import {
