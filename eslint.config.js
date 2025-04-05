@@ -33,7 +33,7 @@ module.exports = [
       "react/jsx-uses-react": "off",
       "react/jsx-uses-vars": "error",
       "no-console": ["error", { allow: ["warn", "error"] }],
-      "react-native/no-inline-styles": "warn",
+      "react-native/no-inline-styles": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "off",
       "react/no-unescaped-entities": "off"
