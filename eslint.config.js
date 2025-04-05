@@ -38,5 +38,11 @@ module.exports = [
       "react-hooks/exhaustive-deps": "off",
       "react/no-unescaped-entities": "off"
     }
+  },
+  {
+    files: ["**/*.test.js", "**/__tests__/**/*.{js,ts}"],
+    rules: {
+      "react/prop-types": "off"
+    }
   }
 ];

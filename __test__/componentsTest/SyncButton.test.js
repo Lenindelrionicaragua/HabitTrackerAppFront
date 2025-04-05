@@ -12,6 +12,7 @@ jest.mock("@expo/vector-icons/Ionicons", () => {
       data-color={color}
     />
   );
+
   return MockIonicons;
 });
 
