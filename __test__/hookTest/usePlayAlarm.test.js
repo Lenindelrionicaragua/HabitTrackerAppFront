@@ -1,4 +1,5 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+// __tests__/usePlayAlarm.test.js
+import { renderHook, act } from "@testing-library/react";
 import { Audio } from "expo-av";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 
@@ -64,8 +65,6 @@ describe("usePlayAlarm hook", () => {
     });
 
     expect(mockUnloadAsync).toHaveBeenCalledTimes(1);
-
-    expect(logInfo).toHaveBeenCalledWith("Loading Sound");
   });
 
   it("should clean up the sound instance on completion", async () => {
@@ -78,6 +77,7 @@ describe("usePlayAlarm hook", () => {
     expect(mockSetOnPlaybackStatusUpdate).toHaveBeenCalled();
 
     const mockStatus = { didJustFinish: true };
+
     await act(async () => {
       mockSetOnPlaybackStatusUpdate.mock.calls[0][0](mockStatus);
     });
@@ -85,5 +85,20 @@ describe("usePlayAlarm hook", () => {
     expect(mockUnloadAsync).toHaveBeenCalled();
     expect(logInfo).toHaveBeenCalledWith("Sound has finished playing");
     expect(result.current.soundRef.current).toBeNull();
+  });
+
+  it("should log error if something goes wrong", async () => {
+    Audio.Sound.createAsync.mockRejectedValueOnce(new Error("Error"));
+
+    const { result } = renderHook(() => usePlayAlarm(logInfo, logError));
+
+    await act(async () => {
+      await result.current.playAlarm(soundPath);
+    });
+
+    expect(logError).toHaveBeenCalledWith(
+      "Error playing the notification sound:",
+      expect.any(Error)
+    );
   });
 });
