@@ -3,19 +3,7 @@ import { View, Text, TextInput, Pressable, Platform } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoWhite,
-  lightPink,
-  darkGrey,
-  black,
-  infoGrey,
-  skyBlue,
-  lightGreen,
-  softGray,
-  orange
-} = Colors;
+const { white, black, infoGrey, lightGreen, softGray, orange } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";

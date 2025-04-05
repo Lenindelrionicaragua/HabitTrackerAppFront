@@ -56,7 +56,7 @@
     "@expo/config-plugins": "8.0.4"
   },
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --watch",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

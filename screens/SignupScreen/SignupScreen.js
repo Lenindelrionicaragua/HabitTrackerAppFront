@@ -45,8 +45,7 @@ const SignupScreen = ({ navigation }) => {
   const [success, setSuccessStatus] = useState("");
 
   // Context;
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
+  const { setStoredCredentials } = useContext(CredentialsContext);
 
   // Redux state and actions
   const dispatch = useDispatch();
@@ -313,6 +312,10 @@ const SignupScreen = ({ navigation }) => {
       </StyledContainer>
     </KeyboardAvoider>
   );
+};
+
+SignupScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
 };
 
 export default SignupScreen;
