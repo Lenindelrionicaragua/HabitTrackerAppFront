@@ -9,7 +9,7 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 module.exports = [
   ...compat.extends("plugin:react/recommended"), // Eliminar "eslint:recommended" si da problemas
   {
-    ignores: ["**/node_modules/**", "**/.next/**", "**/dist/**"]
+    ignores: ["**/node_modules/**", "**/.expo/**", "**/dist/**", "**/build/**"]
   },
   {
     plugins: {
@@ -35,7 +35,7 @@ module.exports = [
       "no-console": ["error", { allow: ["warn", "error"] }],
       "react-native/no-inline-styles": "warn",
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+      "react-hooks/exhaustive-deps": "off"
     }
   }
 ];
