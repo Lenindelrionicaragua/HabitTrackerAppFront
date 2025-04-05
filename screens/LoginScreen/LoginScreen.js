@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
 import { useFocusEffect } from "@react-navigation/native";
-import { Platform, StatusBar, ActivityIndicator } from "react-native";
+import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
 import { Fontisto } from "@expo/vector-icons";
@@ -41,12 +42,12 @@ import {
 } from "../../component/Shared/SharedUrl";
 
 // Redux store
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const { seaGreen, infoGrey, darkGrey, lightGreen } = Colors;
+const { seaGreen, infoGrey, lightGreen } = Colors;
 
 const LoginScreen = ({ navigation, route }) => {
   // Local state for handling form interactions
@@ -57,7 +58,6 @@ const LoginScreen = ({ navigation, route }) => {
 
   // Redux state and actions
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   // Google authentication request setup
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -69,15 +69,13 @@ const LoginScreen = ({ navigation, route }) => {
   });
 
   // Retrieve stored credentials from context
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
+  const { setStoredCredentials } = useContext(CredentialsContext);
 
   // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user, token } = response;
     if (success) {
       saveLoginCredentials(user, token, success, msg);
-      // document.cookie = response.headers["set-cookie"];
       navigation.navigate("WelcomeScreen");
       dispatch(setActiveScreen("WelcomeScreen"));
     } else {
@@ -125,12 +123,9 @@ const LoginScreen = ({ navigation, route }) => {
     }
   };
 
-  const {
-    performGoogleFetch,
-    isLoading: googleLoading,
-    error: googleError,
-    data: googleData
-  } = useGoogleFetch(onReceivedGoogleResponse);
+  const { performGoogleFetch, error: googleError } = useGoogleFetch(
+    onReceivedGoogleResponse
+  );
 
   // Handle errors from Google API
   useEffect(() => {
@@ -198,7 +193,7 @@ const LoginScreen = ({ navigation, route }) => {
   }, [response]);
 
   // Handle form submission for login
-  const handleLogin = (values, setSubmitting) => {
+  const handleLogin = values => {
     setMsg("");
     setSuccessStatus("");
 
@@ -264,7 +259,7 @@ const LoginScreen = ({ navigation, route }) => {
           <Formik
             initialValues={{ email: route?.params?.email ?? "", password: "" }}
             enableReinitialize={true}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={values => {
               if (values.email == "" || values.password == "") {
                 handleMessage({ msg: "Please fill all the fields" });
               } else {
@@ -368,6 +363,17 @@ const LoginScreen = ({ navigation, route }) => {
       </StyledContainer>
     </KeyboardAvoider>
   );
+};
+
+LoginScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      email: PropTypes.string
+    })
+  }).isRequired
 };
 
 export default LoginScreen;

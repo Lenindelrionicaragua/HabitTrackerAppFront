@@ -57,19 +57,17 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
           style={
             {
               "alignItems": "stretch",
-              "backgroundColor": "#fffff",
+              "backgroundColor": "#f5f5f5",
               "flexBasis": 0,
               "flexGrow": 1,
               "flexShrink": 1,
               "height": "100%",
-              "marginBottom": "10%",
               "marginLeft": "auto",
               "marginRight": "auto",
-              "marginTop": "0%",
-              "paddingBottom": 15,
-              "paddingLeft": 15,
-              "paddingRight": 15,
-              "paddingTop": 15,
+              "paddingBottom": 0,
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "paddingTop": 0,
               "width": "100%",
             }
           }
@@ -79,12 +77,12 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
             style={
               {
                 "alignItems": "center",
-                "backgroundColor": "#fffff",
                 "flexBasis": 0,
                 "flexGrow": 1,
                 "flexShrink": 1,
                 "justifyContent": "center",
-                "paddingTop": 15,
+                "paddingBottom": "10%",
+                "paddingTop": "7%",
                 "width": "100%",
               }
             }
@@ -99,9 +97,9 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   "borderBottomRightRadius": 80,
                   "borderTopLeftRadius": 80,
                   "borderTopRightRadius": 80,
-                  "height": 160,
+                  "height": 150,
                   "overflow": "hidden",
-                  "width": 160,
+                  "width": 150,
                 }
               }
               testID="page-logo"
@@ -197,7 +195,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="serenity@gmail.com"
-                  placeholderTextColor="#fffff"
+                  placeholderTextColor="#6c747c"
                   style={
                     {
                       "backgroundColor": "#ffffff",
@@ -274,7 +272,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="* * * * * * *"
-                  placeholderTextColor="#fffff"
+                  placeholderTextColor="#6c747c"
                   secureTextEntry={true}
                   style={
                     {
@@ -346,7 +344,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#fffff",
+                          "color": "#2c2c2c",
                           "fontSize": 25,
                         },
                         undefined,
@@ -427,7 +425,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#5cbcfc",
+                      "color": "#ffffff",
                       "fontSize": 16,
                     }
                   }
@@ -480,11 +478,13 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                 style={
                   {
                     "alignItems": "center",
-                    "backgroundColor": "#ffffff",
+                    "backgroundColor": "#FFA500",
                     "borderBottomLeftRadius": 5,
                     "borderBottomRightRadius": 5,
+                    "borderColor": "#ffffff",
                     "borderTopLeftRadius": 5,
                     "borderTopRightRadius": 5,
+                    "borderWidth": 1,
                     "flexDirection": "row",
                     "height": 60,
                     "justifyContent": "center",
@@ -542,7 +542,7 @@ exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
                     "paddingBottom": 10,
                     "paddingLeft": 10,
                     "paddingRight": 10,
-                    "paddingTop": 15,
+                    "paddingTop": 0,
                   }
                 }
                 testID="footer-view"
@@ -629,9 +629,9 @@ exports[`PageLogo Renders the PageLogo component correctly 1`] = `
       "borderBottomRightRadius": 80,
       "borderTopLeftRadius": 80,
       "borderTopRightRadius": 80,
-      "height": 160,
+      "height": 150,
       "overflow": "hidden",
-      "width": 160,
+      "width": 150,
     }
   }
 />

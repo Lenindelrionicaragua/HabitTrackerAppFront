@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { StatusBar } from "react-native";
 import {
   StyledContainer,
@@ -7,7 +7,6 @@ import {
   SubTitle,
   StyledTitleContainer,
   StyledHeader,
-  InfoMessageContainer,
   Line,
   AvatarContainer,
   IconContainer,
@@ -47,7 +46,7 @@ const MetricsScreen = () => {
             <UpgradeButton onPress={upGradeToPremium} testID="upgrade-button" />
           </StyledTitleContainer>
           <IconContainer
-            onPress={() => console.log("Pie chart icon clicked!")}
+            onPress={() => logInfo("Pie chart icon clicked!")}
             testID="pie-chart-icon"
           >
             <FontAwesome name="pie-chart" size={34} color={infoGrey} />
