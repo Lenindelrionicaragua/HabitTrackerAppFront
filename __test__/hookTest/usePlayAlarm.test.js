@@ -1,5 +1,4 @@
-// __tests__/usePlayAlarm.test.js
-import { renderHook, act } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react-native"; // Importa de react-native, no de react
 import { Audio } from "expo-av";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 
