@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-native"; // Importa de react-native, no de react
+import { renderHook, act } from "@testing-library/react-native";
 import { Audio } from "expo-av";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
 

@@ -35,7 +35,8 @@ module.exports = [
       "no-console": ["error", { allow: ["warn", "error"] }],
       "react-native/no-inline-styles": "warn",
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "off"
+      "react-hooks/exhaustive-deps": "off",
+      "react/no-unescaped-entities": "off"
     }
   }
 ];
