@@ -7,7 +7,7 @@ const eslintPluginReactHooks = require("eslint-plugin-react-hooks");
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
-  ...compat.extends("plugin:react/recommended"), // Eliminar "eslint:recommended" si da problemas
+  ...compat.extends("plugin:react/recommended"),
   {
     ignores: ["**/node_modules/**", "**/.expo/**", "**/dist/**", "**/build/**"]
   },
