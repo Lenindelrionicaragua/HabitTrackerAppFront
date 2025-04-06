@@ -22,11 +22,7 @@ import { revokeAsync } from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 import { logInfo, logError } from "../../util/logging";
-
-// Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
-
-// Redux store
 import { useSelector, useDispatch } from "react-redux";
 import {
   setActiveScreen,
@@ -34,8 +30,6 @@ import {
   setHabitCategoryIndex,
   clearMonthlyStats
 } from "../../actions/counterActions";
-
-// Credentials
 import {
   EXPO_CLIENT_ID,
   IOS_CLIENT_ID,
@@ -44,17 +38,8 @@ import {
 } from "@env";
 
 const WelcomeScreen = ({ navigation }) => {
-  // Redux store
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-  const habitCategoryIndex = useSelector(
-    state => state.habitCategoryIndex.habitCategoryIndex
-  );
-  logInfo("Active Screen:", activeScreen);
-  logInfo("Habit Category Index:", habitCategoryIndex);
-
   const { daysWithRecords } = useSelector(state => state.monthlyStats);
-  // Context
   const { storedCredentials, setStoredCredentials } =
     useContext(CredentialsContext);
 
