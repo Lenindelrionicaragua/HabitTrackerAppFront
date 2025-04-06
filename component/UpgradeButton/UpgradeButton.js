@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   StyledButton,
   ButtonText,
@@ -23,6 +24,10 @@ const UpgradeButton = ({ onPress }) => {
       </RightIcon>
     </StyledButton>
   );
+};
+
+UpgradeButton.propTypes = {
+  onPress: PropTypes.func.isRequired
 };
 
 export default UpgradeButton;
