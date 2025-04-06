@@ -108,7 +108,7 @@ const StopwatchScreen = () => {
     handleResetClicksTwoOrMore
   } = useResetStopwatch();
 
-  const { playAlarm } = usePlayAlarm(logInfo, logError);
+  const { playAlarm } = usePlayAlarm();
 
   useEffect(() => {
     if (infoText) {

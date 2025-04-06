@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Audio } from "expo-av";
 import { logInfo, logError } from "../util/logging";
 
-export const usePlayAlarm = (logInfo, logError) => {
+export const usePlayAlarm = () => {
   const soundRef = useRef(null);
 
   const playAlarm = async soundPath => {

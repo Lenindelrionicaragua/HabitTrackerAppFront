@@ -1,6 +1,12 @@
 import { renderHook, act } from "@testing-library/react-native";
 import { Audio } from "expo-av";
 import { usePlayAlarm } from "../../hooks/usePlayAlarm";
+import { logInfo, logError } from "../../util/logging";
+
+jest.mock("../../util/logging", () => ({
+  logInfo: jest.fn(),
+  logError: jest.fn()
+}));
 
 jest.mock("expo-av", () => ({
   Audio: {
@@ -16,8 +22,6 @@ describe("usePlayAlarm hook", () => {
   let mockSetOnPlaybackStatusUpdate;
 
   const soundPath = require("../../assets/alarm_2.wav");
-  const logInfo = jest.fn();
-  const logError = jest.fn();
 
   beforeEach(() => {
     mockUnloadAsync = jest.fn();
@@ -31,27 +35,28 @@ describe("usePlayAlarm hook", () => {
         setOnPlaybackStatusUpdate: mockSetOnPlaybackStatusUpdate
       }
     });
-  });
 
-  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("should load and play the sound correctly", async () => {
-    const { result } = renderHook(() => usePlayAlarm(logInfo, logError));
+    const { result } = renderHook(() => usePlayAlarm());
 
     await act(async () => {
       await result.current.playAlarm(soundPath);
     });
 
-    expect(Audio.Sound.createAsync).toHaveBeenCalledWith(soundPath);
-    expect(result.current.soundRef.current.playAsync).toHaveBeenCalled();
+    // Verificar que se haya llamado a logInfo con los mensajes correctos
     expect(logInfo).toHaveBeenCalledWith("Loading Sound");
     expect(logInfo).toHaveBeenCalledWith("Playing notification Sound");
+
+    // Verificar que el sonido se haya creado y reproducido correctamente
+    expect(Audio.Sound.createAsync).toHaveBeenCalledWith(soundPath);
+    expect(result.current.soundRef.current.playAsync).toHaveBeenCalled();
   });
 
   it("should unload the previous sound before loading a new one", async () => {
-    const { result } = renderHook(() => usePlayAlarm(logInfo, logError));
+    const { result } = renderHook(() => usePlayAlarm());
 
     await act(async () => {
       await result.current.playAlarm(soundPath);
@@ -63,11 +68,11 @@ describe("usePlayAlarm hook", () => {
       await result.current.playAlarm(soundPath);
     });
 
-    expect(mockUnloadAsync).toHaveBeenCalledTimes(1);
+    expect(mockUnloadAsync).toHaveBeenCalledTimes(1); // Verificar que se haya descargado el sonido anterior
   });
 
   it("should clean up the sound instance on completion", async () => {
-    const { result } = renderHook(() => usePlayAlarm(logInfo, logError));
+    const { result } = renderHook(() => usePlayAlarm());
 
     await act(async () => {
       await result.current.playAlarm(soundPath);
@@ -83,13 +88,13 @@ describe("usePlayAlarm hook", () => {
 
     expect(mockUnloadAsync).toHaveBeenCalled();
     expect(logInfo).toHaveBeenCalledWith("Sound has finished playing");
-    expect(result.current.soundRef.current).toBeNull();
+    expect(result.current.soundRef.current).toBeNull(); // Asegurarse de que soundRef sea nulo
   });
 
   it("should log error if something goes wrong", async () => {
     Audio.Sound.createAsync.mockRejectedValueOnce(new Error("Error"));
 
-    const { result } = renderHook(() => usePlayAlarm(logInfo, logError));
+    const { result } = renderHook(() => usePlayAlarm());
 
     await act(async () => {
       await result.current.playAlarm(soundPath);

@@ -14,7 +14,6 @@ function useResetStopwatch() {
   const resetButtonLabel = useSelector(
     state => state.resetButtonLabel.resetButtonLabel
   );
-  const resetClicks = useSelector(state => state.resetClicks.resetClicks);
   const remainingTime = useSelector(state => state.remainingTime);
 
   const dispatch = useDispatch();
