@@ -1,6 +1,6 @@
 import { Colors } from "../styles/AppStyles";
 
-const { skyBlue, white, green } = Colors;
+const { white } = Colors;
 
 const initialInnerCircleColor = {
   innerCircleColor: white

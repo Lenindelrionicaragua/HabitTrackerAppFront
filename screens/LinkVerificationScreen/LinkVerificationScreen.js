@@ -13,23 +13,13 @@ import {
   ButtonText
 } from "./LinkVerificationStyles";
 import PropTypes from "prop-types";
-// Icon
 import { Octicons, Ionicons } from "@expo/vector-icons";
-
-// Resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
-
-// Redux-store
 import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
-
-// Credentials context
 import { CredentialsContext } from "../../context/credentialsContext";
-
-// useFetch hook
 import useFetch from "../../hooks/api/useFetch";
 
-// Colors
 const { white } = Colors;
 
 const LinkVerificationScreen = ({ navigation }) => {
