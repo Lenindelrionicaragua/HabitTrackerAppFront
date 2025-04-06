@@ -17,17 +17,13 @@ function useStopwatch() {
   const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
   const initialTime = useSelector(state => state.initialTime.initialTime);
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
-  const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
-  const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
   const isRunning = useSelector(state => state.isRunning.isRunning);
-  const hasStarted = useSelector(state => state.hasStarted.hasStarted);
   const habitCategoryIndex = useSelector(
     state => state.habitCategoryIndex.habitCategoryIndex
   );
   const habitCategories = useSelector(
     state => state.habitCategories.habitCategories
   );
-  const firstRun = useSelector(state => state.firstRun.firstRun);
 
   const dispatch = useDispatch();
 
@@ -39,7 +35,6 @@ function useStopwatch() {
   const MAX_TIME_SECONDS = MAX_TIME_HOURS * 3600;
   const MIN_TIME_MINUTES = 0;
 
-  // Function to start the timer with a specified initial time
   const startTimer = initialTime => {
     dispatch(setInitialTime(initialTime));
     startTimeRef.current = Date.now();
@@ -50,7 +45,6 @@ function useStopwatch() {
     }, 3000);
   };
 
-  // Function to pause the stopwatch
   const pauseStopwatch = () => {
     if (isRunning) {
       updateInfoText("Timer paused.");
@@ -59,7 +53,6 @@ function useStopwatch() {
     }
   };
 
-  // Function to resume the stopwatch
   const resumeStopwatch = () => {
     if (!isRunning) {
       updateInfoText("Timer resume.");
@@ -75,7 +68,6 @@ function useStopwatch() {
     }
   };
 
-  // Update the time each second
   const updateTime = () => {
     if (isRunning) {
       const now = Date.now();
@@ -94,7 +86,6 @@ function useStopwatch() {
     }
   };
 
-  // Function to handle time selection (similar to handleTimeSelection)
   const handleTimeSelection = selectedTime => {
     const newInitialTime = Math.max(selectedTime, MIN_TIME_MINUTES);
 

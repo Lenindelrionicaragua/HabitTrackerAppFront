@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setCircleColor, setInnerCircleColor } from "../actions/counterActions";
-import { logInfo, logError } from "../util/logging";
+import { logError } from "../util/logging";
 
 const useUpdateCircleColors = () => {
   const dispatch = useDispatch();
