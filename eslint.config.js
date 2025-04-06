@@ -40,8 +40,9 @@ module.exports = [
     }
   },
   {
-    files: ["**/*.test.js", "**/__tests__/**/*.{js,ts}"],
+    files: ["**/*.test.js", "**/__tests__/**/*.{js,ts}", "cypress/**/*.js"],
     rules: {
+      "no-unused-vars": "off",
       "react/prop-types": "off"
     }
   }
