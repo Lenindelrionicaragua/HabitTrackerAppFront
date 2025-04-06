@@ -8,10 +8,7 @@ import {
   MonthlyStatsColors,
   DoughnutChartSmallColors
 } from "../../styles/AppStyles";
-import {
-  setMonthlyStats,
-  triggerMetricsUpdateWithReset
-} from "../../actions/counterActions";
+import { setMonthlyStats } from "../../actions/counterActions";
 import { prepareChartData } from "../../util/prepareChartData";
 
 // Colors
@@ -142,10 +139,6 @@ const useMonthlyStats = storedCredentials => {
 
       // Dispatch to Redux store
       dispatch(setMonthlyStats(monthlyStatsState));
-      // console.log(
-      //   "Dispatching monthly stats to Redux:",
-      //   JSON.stringify(monthlyStatsState, null, 2)
-      // );
     }
   }, [roundedData, month, year, dispatch]);
 

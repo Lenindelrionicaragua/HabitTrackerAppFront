@@ -15,7 +15,6 @@ import useInfoText from "../../hooks/useInfoText";
 import useSaveTimeRecords from "../../hooks/useSaveTimeRecords";
 // Utils
 import { formatTime } from "../../util/formatTime";
-import { logInfo, logError } from "../../util/logging";
 // Store
 import {
   setResetClicks,
