@@ -46,7 +46,7 @@ const useGoogleFetch = onReceived => {
       );
 
       const { email, name, picture } = res.data;
-      console.log("Google user data:", { email, name, picture });
+      logInfo("Google user data:", { email, name, picture });
 
       const userData = {
         email,
@@ -68,7 +68,7 @@ const useGoogleFetch = onReceived => {
         }
       );
 
-      const { success, msg, user, error: serverError } = serverResponse.data;
+      const { success, msg, error: serverError } = serverResponse.data;
 
       logInfo(`serverResponse: ${JSON.stringify(serverResponse.data)}`);
 
