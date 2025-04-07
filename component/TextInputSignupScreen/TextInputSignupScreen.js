@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, Pressable, Platform } from "react-native";
 import { Octicons, Feather } from "@expo/vector-icons";
 import {
@@ -9,7 +10,7 @@ import {
 } from "../../screens/SignupScreen/SignupScreenStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const { darkGrey, black, lightGreen } = Colors;
+const { darkGrey, black } = Colors;
 
 const iconSize = Platform.OS === "web" ? 22 : 25;
 const rightIconSize = Platform.OS === "web" ? 20 : 22;
@@ -60,6 +61,16 @@ const TextInputSignupScreen = props => {
       )}
     </View>
   );
+};
+
+TextInputSignupScreen.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  isPassword: PropTypes.bool,
+  hidePassword: PropTypes.bool,
+  setHidePassword: PropTypes.func,
+  isDate: PropTypes.bool,
+  showDatePicker: PropTypes.func
 };
 
 export default TextInputSignupScreen;
