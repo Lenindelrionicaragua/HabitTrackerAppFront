@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, Platform } from "react-native";
 import { Octicons, Feather } from "@expo/vector-icons";
 import {
@@ -55,6 +56,14 @@ const TextInputLoginScreen = props => {
       )}
     </View>
   );
+};
+
+TextInputLoginScreen.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  isPassword: PropTypes.bool,
+  hidePassword: PropTypes.bool,
+  setHidePassword: PropTypes.func
 };
 
 export default TextInputLoginScreen;
