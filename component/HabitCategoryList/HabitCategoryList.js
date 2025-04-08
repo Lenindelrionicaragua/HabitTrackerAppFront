@@ -17,7 +17,7 @@ import useHabitCategories from "../../hooks/api/useHabitCategories";
 // Redux Store
 import { useDispatch } from "react-redux";
 // Utils
-import { logInfo, logError } from "../../util/logging";
+import { logError } from "../../util/logging";
 
 const HabitCategoryList = () => {
   const dispatch = useDispatch();
@@ -44,12 +44,7 @@ const HabitCategoryList = () => {
     successMessage: dailyGoalSuccess
   } = useUpdateCategoryDailyGoal();
 
-  const {
-    fetchHabitCategories,
-    isLoading: isUpdatingHabitCategory,
-    error: habitCategoryError,
-    message: habitCategoriesSuccess
-  } = useHabitCategories();
+  const { fetchHabitCategories } = useHabitCategories();
 
   // Synchronize messages with hook states
   useEffect(() => {
