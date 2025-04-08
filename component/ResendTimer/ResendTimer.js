@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { ActivityIndicator, View } from "react-native";
 import {
   InfoText,
@@ -65,6 +66,15 @@ const ResendTimer = ({
       )}
     </View>
   );
+};
+
+ResendTimer.propTypes = {
+  activeResend: PropTypes.bool.isRequired,
+  resendEmail: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  resendStatus: PropTypes.string.isRequired,
+  timeLeft: PropTypes.number,
+  targetTime: PropTypes.number
 };
 
 export default ResendTimer;
