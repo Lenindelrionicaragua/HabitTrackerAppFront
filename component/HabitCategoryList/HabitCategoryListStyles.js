@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
-import { View, Image, Text, Pressable, Platform } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, darkGrey, softGray, black, orange, green, red } = Colors;
+const { white, darkGrey, softGray, black, red } = Colors;
 
-const containerHeight = Platform.OS === "web" ? "90%" : "80%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
 const paddingLeft = Platform.OS === "web" ? "20px" : "5px";
 const paddingRight = Platform.OS === "web" ? "20px" : "5px";
