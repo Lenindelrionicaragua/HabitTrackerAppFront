@@ -6,7 +6,7 @@ import { ChartContainer } from "./MixedChartStyles";
 import { Colors } from "../../styles/AppStyles";
 import { logInfo } from "../../util/logging";
 
-const MixedChart = ({ chartColors }) => {
+const MixedChart = () => {
   const { totalDailyMinutes, categoryData } = useSelector(
     state => state.monthlyStats
   );

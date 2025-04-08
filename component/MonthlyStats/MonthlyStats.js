@@ -14,9 +14,7 @@ import {
 } from "../../component/MonthlyStats/MonthlyStatsStyles";
 import DoughnutChart from "../DoughnutChart/DoughnutChart";
 import DoughnutGrid from "../DoughnutGrid/DoughnutGrid";
-// import { setMonthlyStats } from "../../actions/counterActions";
 
-// Get monthly stats from the custom hook
 const MonthlyStats = () => {
   const {
     totalMinutes,
@@ -26,7 +24,7 @@ const MonthlyStats = () => {
     isDemo
   } = useSelector(state => state.monthlyStats);
 
-  const dataForDoughnutGrid = categoryData.map((category, index) => {
+  const dataForDoughnutGrid = categoryData.map(category => {
     const primaryColor = category.colors.primary;
     const secondaryColor = category.colors.secondary;
 
@@ -58,7 +56,7 @@ const MonthlyStats = () => {
             text={totalMinutes}
           />
           <CategoryContainer>
-            {categoryData.map((category, index) => (
+            {categoryData.map(category => (
               <CategoryItem key={category.name}>
                 <ColorBox
                   style={{ backgroundColor: category.colors.primary }}
