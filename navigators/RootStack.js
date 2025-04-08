@@ -35,8 +35,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        initialRouteName={StopwatchScreen}
-      >
+        initialRouteName={StopwatchScreen}>
         <Stack.Screen
           name="StopwatchScreen"
           component={StopwatchScreen}

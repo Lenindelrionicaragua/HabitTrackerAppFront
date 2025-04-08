@@ -131,8 +131,7 @@ const HabitCategoryList = () => {
             onPress={() => {
               setSelectedItem(item);
               setModalVisible(true);
-            }}
-          >
+            }}>
             <ListCard>
               <CardTitle>{item.name}</CardTitle>
               <CardGoal>Daily Goal: {item.dailyGoal || "Not Set"}</CardGoal>

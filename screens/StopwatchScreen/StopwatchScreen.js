@@ -247,55 +247,47 @@ const StopwatchScreen = () => {
       <ScreenTitle testID="stopwatch-title">Habit Tracker</ScreenTitle>
       <TimeButtonsContainer
         style={getButtonStyles(13)}
-        testID="stopwatch-time-buttons"
-      >
+        testID="stopwatch-time-buttons">
         <TimeButton
           onPress={() => handleTimeButtonPress(remainingTime - 60, 12)}
           style={getButtonStyles(12)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>-</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(5 * 60, 1)}
           style={getButtonStyles(1)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>05</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(15 * 60, 2)}
           style={getButtonStyles(2)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>15</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(30 * 60, 3)}
           style={getButtonStyles(3)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>30</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(45 * 60, 4)}
           style={getButtonStyles(4)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>45</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(55 * 60, 5)}
           style={getButtonStyles(5)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>55</ButtonTimeText>
         </TimeButton>
         <TimeButton
           onPress={() => handleTimeButtonPress(remainingTime + 60, 11)}
           style={getButtonStyles(11)}
-          disabled={isRunning || firstRun}
-        >
+          disabled={isRunning || firstRun}>
           <ButtonTimeText>+</ButtonTimeText>
         </TimeButton>
       </TimeButtonsContainer>
@@ -335,8 +327,7 @@ const StopwatchScreen = () => {
             fontSize="48"
             fontWeight="bold"
             fill={black}
-            testID="svg-time-text"
-          >
+            testID="svg-time-text">
             {formatTime(remainingTime)}
           </SvgText>
           <SvgText
@@ -345,8 +336,7 @@ const StopwatchScreen = () => {
             textAnchor="middle"
             fontSize="10"
             fill={black}
-            testID="svg-info-text"
-          >
+            testID="svg-info-text">
             {infoText}
           </SvgText>
         </Svg>
@@ -365,8 +355,7 @@ const StopwatchScreen = () => {
             opacity: buttonsDisabled || firstRun ? 0.5 : 1,
             cursor: buttonsDisabled || firstRun ? "not-allowed" : "pointer"
           }}
-          disabled={buttonsDisabled}
-        >
+          disabled={buttonsDisabled}>
           {habitCategoryIndex === null ? "Click here" : categoryName}{" "}
         </FocusTitleText>
       </FocusTitleContainer>
@@ -375,8 +364,7 @@ const StopwatchScreen = () => {
         <StyledButtonLeft
           onPress={debouncedResetStopwatch}
           disabled={buttonsDisabled}
-          testID="reset-button"
-        >
+          testID="reset-button">
           <MaterialCommunityIcons
             name="restart"
             size={34}
@@ -390,8 +378,7 @@ const StopwatchScreen = () => {
           <StyledStartButton
             onPress={debouncedPauseStopwatch}
             disabled={buttonsDisabled}
-            testID="pause-button"
-          >
+            testID="pause-button">
             <AntDesign
               name="pause"
               size={44}
@@ -402,8 +389,7 @@ const StopwatchScreen = () => {
           <StyledStartButton
             onPress={debouncedStartStopwatch}
             disabled={buttonsDisabled}
-            testID="start-button"
-          >
+            testID="start-button">
             <MaterialIcons
               name="play-arrow"
               size={44}
@@ -415,8 +401,7 @@ const StopwatchScreen = () => {
         <StyledButtonRight
           onPress={debouncedSaveTimeRecords}
           disabled={buttonsDisabled}
-          testID="save-button"
-        >
+          testID="save-button">
           <Feather
             name="save"
             size={34}

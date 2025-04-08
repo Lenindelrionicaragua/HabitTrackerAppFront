@@ -47,8 +47,7 @@ const MetricsScreen = () => {
           </StyledTitleContainer>
           <IconContainer
             onPress={() => logInfo("Pie chart icon clicked!")}
-            testID="pie-chart-icon"
-          >
+            testID="pie-chart-icon">
             <FontAwesome name="pie-chart" size={34} color={infoGrey} />
           </IconContainer>
         </StyledHeader>

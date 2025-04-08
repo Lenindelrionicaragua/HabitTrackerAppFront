@@ -3,10 +3,10 @@ name: Deploy to Netlify
 on:
   pull_request:
     branches:
-      - main 
+      - main
   push:
     branches:
-      - main  
+      - main
 
 jobs:
   build:
@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3 
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
@@ -28,7 +28,7 @@ jobs:
         run: npm run build
 
       - name: List files in the build directory
-        run: ls -la dist 
+        run: ls -la dist
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli

@@ -197,8 +197,7 @@ const SignupScreen = ({ navigation }) => {
                 );
               }
             }}
-            testID="signup-form-formik"
-          >
+            testID="signup-form-formik">
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInputSignupScreen
@@ -274,8 +273,7 @@ const SignupScreen = ({ navigation }) => {
                 {!isLoading && (
                   <StyledButton
                     testID="signup-styled-button"
-                    onPress={handleSubmit}
-                  >
+                    onPress={handleSubmit}>
                     <ButtonText testID="signup-button-text">Sign Up</ButtonText>
                   </StyledButton>
                 )}
@@ -293,8 +291,7 @@ const SignupScreen = ({ navigation }) => {
                   </FooterText>
                   <FooterLink
                     onPress={() => navigation.navigate("LoginScreen")}
-                    testID="footer-login-link"
-                  >
+                    testID="footer-login-link">
                     <FooterLinkContent testID="footer-login-link-content">
                       Login
                     </FooterLinkContent>

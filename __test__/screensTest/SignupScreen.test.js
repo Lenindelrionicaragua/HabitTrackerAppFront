@@ -44,8 +44,7 @@ const renderSignupScreen = () =>
   render(
     <Provider store={store}>
       <CredentialsContext.Provider
-        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
-      >
+        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
           <SignupScreen />
         </NavigationContainer>
@@ -57,8 +56,7 @@ const renderSignupScreenWithRenderer = () =>
   renderer.create(
     <Provider store={store}>
       <CredentialsContext.Provider
-        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
-      >
+        value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
           <SignupScreen />
         </NavigationContainer>
@@ -355,8 +353,7 @@ describe("SignupScreen navigation", () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <CredentialsContext.Provider
-          value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}
-        >
+          value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
           <NavigationContainer>
             <SignupScreen navigation={mockNavigation} />
           </NavigationContainer>

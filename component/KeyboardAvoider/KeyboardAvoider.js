@@ -16,8 +16,7 @@ const KeyboardAvoider = ({ children }) => {
       style={styles.keyboardAvoider}
       behavior={Platform.OS === "ios" ? "padding" : null}
       enabled={Platform.OS !== "android"}
-      testID="keyboard-avoiding-view"
-    >
+      testID="keyboard-avoiding-view">
       <ScrollView testID="scroll-view">
         <Pressable onPress={Keyboard.dismiss} testID="pressable">
           {children}

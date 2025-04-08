@@ -266,8 +266,7 @@ const LoginScreen = ({ navigation, route }) => {
                 handleLogin({ email: values.email, password: values.password });
               }
             }}
-            testID="login-form-formik"
-          >
+            testID="login-form-formik">
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInputLoginScreen
@@ -301,8 +300,7 @@ const LoginScreen = ({ navigation, route }) => {
                 {!isLoading && (
                   <StyledButton
                     onPress={handleSubmit}
-                    testID="login-styled-button"
-                  >
+                    testID="login-styled-button">
                     <ButtonText>Login</ButtonText>
                   </StyledButton>
                 )}
@@ -320,8 +318,7 @@ const LoginScreen = ({ navigation, route }) => {
                     google={true}
                     disabled={!request}
                     onPress={handleGoogleSignIn}
-                    testID="google-styled-button"
-                  >
+                    testID="google-styled-button">
                     <Fontisto
                       name="google"
                       color={infoGrey}
@@ -338,8 +335,7 @@ const LoginScreen = ({ navigation, route }) => {
                   <StyledButton
                     google={true}
                     disabled={true}
-                    testID="google-styled-button"
-                  >
+                    testID="google-styled-button">
                     <ActivityIndicator size="large" color={seaGreen} />
                   </StyledButton>
                 )}
@@ -349,8 +345,7 @@ const LoginScreen = ({ navigation, route }) => {
                   </FooterText>
                   <SignupLink
                     onPress={() => navigation.navigate("SignupScreen")}
-                    testID="signup-link"
-                  >
+                    testID="signup-link">
                     <SignupLinkContent testID="signup-link-content">
                       Signup
                     </SignupLinkContent>

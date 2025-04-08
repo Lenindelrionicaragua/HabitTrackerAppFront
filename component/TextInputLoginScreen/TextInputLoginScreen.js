@@ -43,8 +43,7 @@ const TextInputLoginScreen = props => {
       {isPassword && (
         <RightIcon
           onPress={() => setHidePassword(!hidePassword)}
-          testID="right-icon"
-        >
+          testID="right-icon">
           <Feather
             name={hidePassword ? "eye" : "eye-off"}
             size={rightIconSize}

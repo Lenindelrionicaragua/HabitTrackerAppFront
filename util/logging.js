@@ -17,7 +17,6 @@ export const logInfo = message => {
  * logWarning should be used to log anything that signals a problem that is not app breaking
  */
 export const logWarning = message => {
-   
   console.warn(message);
 };
 
