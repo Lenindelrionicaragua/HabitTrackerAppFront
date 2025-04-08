@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -34,6 +35,10 @@ const styles = {
     width: "100%",
     height: "100%"
   }
+};
+
+KeyboardAvoider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default KeyboardAvoider;
