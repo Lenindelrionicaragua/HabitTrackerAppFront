@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Platform } from "react-native";
 import PieChart from "react-native-pie-chart";
 import {
@@ -9,7 +10,7 @@ import {
 } from "./DoughnutChartStyles";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black } = Colors;
+const { white } = Colors;
 
 const DoughnutChart = ({ series, sliceColor, text }) => {
   const widthAndHeight = Platform.OS === "web" ? "160" : "160";
@@ -29,6 +30,12 @@ const DoughnutChart = ({ series, sliceColor, text }) => {
       </InfoTextContainer>
     </PieChartContainer>
   );
+};
+
+DoughnutChart.propTypes = {
+  series: PropTypes.arrayOf(PropTypes.number).isRequired,
+  sliceColor: PropTypes.arrayOf(PropTypes.string).isRequired,
+  text: PropTypes.string.isRequired
 };
 
 export default DoughnutChart;
