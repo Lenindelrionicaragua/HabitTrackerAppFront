@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Platform } from "react-native";
 import PieChart from "react-native-pie-chart";
 import {
@@ -8,9 +9,8 @@ import {
   SubText
 } from "../DoughnutChartSmall/DoughnutChartSmallStyles";
 import { Colors } from "../../styles/AppStyles";
-import MonthlyStats from "../MonthlyStats/MonthlyStats";
 
-const { white, black } = Colors;
+const { white } = Colors;
 
 const DoughnutChartSmall = ({ series, sliceColor, name, progress }) => {
   const widthAndHeight = Platform.OS === "web" ? "80" : "80";
@@ -30,6 +30,13 @@ const DoughnutChartSmall = ({ series, sliceColor, name, progress }) => {
       </InfoTextContainer>
     </PieChartContainer>
   );
+};
+
+DoughnutChartSmall.propTypes = {
+  series: PropTypes.arrayOf(PropTypes.number).isRequired,
+  sliceColor: PropTypes.arrayOf(PropTypes.string).isRequired,
+  name: PropTypes.string.isRequired,
+  progress: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
 export default DoughnutChartSmall;
