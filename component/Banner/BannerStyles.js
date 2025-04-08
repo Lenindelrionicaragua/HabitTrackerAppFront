@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { black, seaGreen, white } = Colors;
+const { black, white } = Colors;
 
 export const BannerContainer = styled(View)`
   position: absolute;

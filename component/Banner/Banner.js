@@ -10,13 +10,9 @@ import {
 } from "./BannerStyles";
 import { logInfo } from "../../util/logging";
 
-const Banner = ({ storedCredentials }) => {
+const Banner = () => {
   const navigation = useNavigation();
-
   const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-
-  logInfo("Navigation:", navigation);
-  logInfo("Active Screen:", activeScreen);
 
   return (
     <BannerContainer>
