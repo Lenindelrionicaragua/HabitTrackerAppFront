@@ -1,4 +1,4 @@
-name: Deploy to Netlify
+name: ci-tests-and-code-style
 
 on:
   pull_request:
@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -39,6 +38,10 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NEXT_PUBLIC_API_URL_LOCAL: ${{ secrets.NEXT_PUBLIC_API_URL_LOCAL }}
+          NEXT_PUBLIC_API_URL_PRODUCTION: ${{ secrets.NEXT_PUBLIC_API_URL_PRODUCTION }}
+          NEXT_PUBLIC_API_URL_STAGING: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
 
       - name: Deploy to Netlify (Final build after merge with clean cache)
         if: github.event_name == 'push'
@@ -47,3 +50,13 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NEXT_PUBLIC_API_URL_LOCAL: ${{ secrets.NEXT_PUBLIC_API_URL_LOCAL }}
+          NEXT_PUBLIC_API_URL_PRODUCTION: ${{ secrets.NEXT_PUBLIC_API_URL_PRODUCTION }}
+          NEXT_PUBLIC_API_URL_STAGING: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Run Code Style Checks
+        run: npm run code-style-check
