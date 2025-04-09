@@ -63,8 +63,7 @@ const WelcomeScreen = ({ navigation }) => {
       navigation.navigate("LoginScreen");
       dispatch(setActiveScreen("LoginScreen"));
     } else {
-      logInfo(msg);
-      handleMessage({ successStatus: false, msg });
+      logError(msg);
     }
   };
 
@@ -75,15 +74,9 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
-      handleMessage({ successStatus: false, msg: errorMessage });
+      logError(errorMessage);
     }
   }, [error]);
-
-  // Update message box based on success or error
-  const handleMessage = ({ successStatus, msg }) => {
-    setSuccessStatus(successStatus);
-    setMsg(msg);
-  };
 
   const revokeGoogleToken = async token => {
     await revokeAsync(
