@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import { Alert } from "react-native";
 
 jest.spyOn(Alert, "alert").mockImplementation(() => {});
+
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 jest.mock("expo-constants", () => {
@@ -16,6 +17,14 @@ jest.mock("expo-constants", () => {
   };
 });
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 global.__expoConstants = Constants.manifest;
 
 jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
