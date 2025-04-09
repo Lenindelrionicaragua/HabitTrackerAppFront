@@ -47,7 +47,6 @@ const WelcomeScreen = ({ navigation }) => {
 
   const AvatarImg = require("./../../assets/user.png");
 
-  // Google authentication setup
   Google.useAuthRequest({
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,

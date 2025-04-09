@@ -1,9 +1,6 @@
 import React from "react";
 import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
-import { Alert } from "react-native";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
-
-jest.spyOn(Alert, "alert").mockImplementation(() => {});
 
 describe("TextInputLoginScreen", () => {
   test("Renders correctly", () => {
