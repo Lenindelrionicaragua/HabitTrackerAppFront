@@ -1,8 +1,8 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Text } from "react-native";
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, green, orange } = Colors;
+const { black } = Colors;
 
 export const PieChartContainer = styled(View)`
   justify-content: center;

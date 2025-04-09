@@ -7,7 +7,7 @@ describe("EditGoalsModal Component", () => {
   let mockOnClose;
 
   beforeAll(() => {
-    jest.useFakeTimers(); // Enable fake timers globally in this file
+    jest.useFakeTimers();
   });
 
   afterAll(() => {
@@ -17,6 +17,10 @@ describe("EditGoalsModal Component", () => {
   beforeEach(() => {
     mockOnSave = jest.fn();
     mockOnClose = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it("should render and animate correctly", async () => {

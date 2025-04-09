@@ -57,17 +57,17 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
           style={
             {
               "alignItems": "stretch",
-              "backgroundColor": "#fffff",
+              "backgroundColor": "#FFA500",
               "flexBasis": 0,
               "flexGrow": 1,
               "flexShrink": 1,
               "height": "100%",
               "marginLeft": "auto",
               "marginRight": "auto",
-              "paddingBottom": "20%",
-              "paddingLeft": 15,
-              "paddingRight": 15,
-              "paddingTop": "5%",
+              "paddingBottom": 0,
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "paddingTop": 0,
               "width": "100%",
             }
           }
@@ -77,11 +77,13 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
             style={
               {
                 "alignItems": "center",
-                "backgroundColor": "#fffff",
+                "backgroundColor": "#f5f5f5",
                 "flexBasis": 0,
                 "flexGrow": 1,
                 "flexShrink": 1,
                 "justifyContent": "center",
+                "paddingBottom": "0%",
+                "paddingTop": "5%",
                 "width": "100%",
               }
             }
@@ -176,6 +178,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="Zen User"
+                  placeholderTextColor="#6c747c"
                   style={
                     {
                       "backgroundColor": "#ffffff",
@@ -250,6 +253,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="serenity@gmail.com"
+                  placeholderTextColor="#6c747c"
                   style={
                     {
                       "backgroundColor": "#ffffff",
@@ -355,6 +359,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     onBlur={[Function]}
                     onChangeText={[Function]}
                     placeholder="Tue Feb 01 1984"
+                    placeholderTextColor="#6c747c"
                     style={
                       {
                         "backgroundColor": "#ffffff",
@@ -429,6 +434,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="* * * * * * *"
+                  placeholderTextColor="#6c747c"
                   secureTextEntry={true}
                   style={
                     {
@@ -497,7 +503,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#fffff",
+                          "color": "#2c2c2c",
                           "fontSize": 22,
                         },
                         undefined,
@@ -565,6 +571,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   placeholder="* * * * * * *"
+                  placeholderTextColor="#6c747c"
                   secureTextEntry={true}
                   style={
                     {
@@ -633,7 +640,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                     style={
                       [
                         {
-                          "color": "#fffff",
+                          "color": "#2c2c2c",
                           "fontSize": 22,
                         },
                         undefined,
@@ -712,7 +719,7 @@ exports[`SignupScreen Renders correctly the SignupScreen Component 1`] = `
                 <Text
                   style={
                     {
-                      "color": "#5cbcfc",
+                      "color": "#ffffff",
                       "fontSize": 15,
                     }
                   }

@@ -10,18 +10,7 @@ import {
 import { SafeAreaView } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const {
-  seaGreen,
-  white,
-  infoGrey,
-  lightPink,
-  darkGrey,
-  black,
-  skyBlue,
-  lightGreen,
-  softGray,
-  orange
-} = Colors;
+const { white, infoGrey, black, lightGreen, softGray, orange } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";
@@ -37,7 +26,7 @@ const buttonHeight = Platform.OS === "web" ? "50px" : "60px";
 const SubTitleMarginBottom = Platform.OS === "web" ? "0px" : "10px";
 
 const lineMarginVertical = Platform.OS === "web" ? "5px" : "10px";
-const footerPaddingTop = Platform.OS === "web" ? "15px" : "15px";
+const footerPaddingTop = Platform.OS === "web" ? "15px" : "0px";
 
 export const StyledContainer = styled(
   Platform.OS === "web" ? View : SafeAreaView
@@ -62,8 +51,8 @@ export const InnerContainer = styled(View)`
 `;
 
 export const PageLogo = styled(Image)`
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 80px;
   overflow: hidden;
 `;

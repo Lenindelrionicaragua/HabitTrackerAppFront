@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { ActivityIndicator, View } from "react-native";
 import {
   InfoText,
@@ -34,15 +35,13 @@ const ResendTimer = ({
         {!isLoading && (
           <TextLink
             disable={!activeResend}
-            onPress={activeResend ? resendEmail : null}
-          >
+            onPress={activeResend ? resendEmail : null}>
             <TextLinkContent
               style={{
                 opacity: activeResend ? 1 : 0.5,
                 textDecorationLine: "underline",
                 color: textColor
-              }}
-            >
+              }}>
               {resendStatus}
             </TextLinkContent>
           </TextLink>
@@ -51,8 +50,7 @@ const ResendTimer = ({
         {isLoading && (
           <TextLink disable>
             <TextLinkContent
-              style={{ textDecorationLine: "underline", color: darkGrey }}
-            >
+              style={{ textDecorationLine: "underline", color: darkGrey }}>
               <ActivityIndicator color={darkGrey} />
             </TextLinkContent>
           </TextLink>
@@ -65,6 +63,15 @@ const ResendTimer = ({
       )}
     </View>
   );
+};
+
+ResendTimer.propTypes = {
+  activeResend: PropTypes.bool.isRequired,
+  resendEmail: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  resendStatus: PropTypes.string.isRequired,
+  timeLeft: PropTypes.number,
+  targetTime: PropTypes.number
 };
 
 export default ResendTimer;

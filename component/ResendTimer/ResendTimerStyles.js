@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../styles/AppStyles";
 
-const { infoWhite, lightPink, black, lightGrey, seaGreen } = Colors;
+const { black, lightGrey } = Colors;
 
 const green = "#00ff00";
 const red = "#ff0000";

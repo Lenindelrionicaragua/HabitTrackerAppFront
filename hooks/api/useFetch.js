@@ -79,13 +79,7 @@ const useFetch = (initialRoute, onReceived) => {
           return;
         }
 
-        const {
-          success,
-          msg,
-          message,
-          user,
-          error: serverError
-        } = response.data;
+        const { success, msg, message, error: serverError } = response.data;
 
         logInfo(`Response Data: ${JSON.stringify(response.data, null, 2)}`);
 

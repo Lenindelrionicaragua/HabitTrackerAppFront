@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react-native";
 import axios from "axios";
 import useGoogleFetch from "../../../hooks/api/useGoogleFetch";
 
@@ -15,8 +15,7 @@ describe("useGoogleFetch Hook", () => {
   });
 
   it("should throw an error if onReceived is not a function", () => {
-    const { result } = renderHook(() => useGoogleFetch(null));
-    expect(result.error.message).toBe(
+    expect(() => renderHook(() => useGoogleFetch(null))).toThrow(
       "useGoogleFetch: onReceived must be a function"
     );
   });

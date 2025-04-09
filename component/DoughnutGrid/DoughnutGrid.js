@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import {
   MainStatsContainer,
   GridContainer,
@@ -26,6 +26,17 @@ const DoughnutGrid = ({ data }) => {
       </GridContainer>
     </MainStatsContainer>
   );
+};
+
+DoughnutGrid.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      series: PropTypes.array.isRequired,
+      sliceColor: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      progress: PropTypes.number.isRequired
+    })
+  ).isRequired
 };
 
 export default DoughnutGrid;

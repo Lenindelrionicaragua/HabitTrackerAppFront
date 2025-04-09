@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import { StatusBar, ActivityIndicator } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -29,7 +30,7 @@ import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/api/useFetch";
 
 // Redux-store
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
 // Colors
@@ -45,12 +46,11 @@ const SignupScreen = ({ navigation }) => {
   const [success, setSuccessStatus] = useState("");
 
   // Context;
-  const { storedCredentials, setStoredCredentials } =
-    useContext(CredentialsContext);
+  const { setStoredCredentials } = useContext(CredentialsContext);
 
   // Redux state and actions
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
+  // const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -98,7 +98,7 @@ const SignupScreen = ({ navigation }) => {
   }, [error]);
 
   // Handle form submission for Signup
-  const handleSignup = (values, setSubmitting) => {
+  const handleSignup = values => {
     setMsg("");
     setSuccessStatus("");
 
@@ -121,7 +121,7 @@ const SignupScreen = ({ navigation }) => {
   };
 
   // Save user-related credentials to AsyncStorage for later use
-  const saveLoginCredentials = (user, msg, successStatus) => {
+  const saveLoginCredentials = user => {
     AsyncStorage.setItem("zenTimerUser", JSON.stringify(user))
       .then(() => {
         handleMessage({
@@ -197,15 +197,8 @@ const SignupScreen = ({ navigation }) => {
                 );
               }
             }}
-            testID="signup-form-formik"
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              isSubmitting
-            }) => (
+            testID="signup-form-formik">
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInputSignupScreen
                   label="Name"
@@ -280,8 +273,7 @@ const SignupScreen = ({ navigation }) => {
                 {!isLoading && (
                   <StyledButton
                     testID="signup-styled-button"
-                    onPress={handleSubmit}
-                  >
+                    onPress={handleSubmit}>
                     <ButtonText testID="signup-button-text">Sign Up</ButtonText>
                   </StyledButton>
                 )}
@@ -299,8 +291,7 @@ const SignupScreen = ({ navigation }) => {
                   </FooterText>
                   <FooterLink
                     onPress={() => navigation.navigate("LoginScreen")}
-                    testID="footer-login-link"
-                  >
+                    testID="footer-login-link">
                     <FooterLinkContent testID="footer-login-link-content">
                       Login
                     </FooterLinkContent>
@@ -313,6 +304,10 @@ const SignupScreen = ({ navigation }) => {
       </StyledContainer>
     </KeyboardAvoider>
   );
+};
+
+SignupScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
 };
 
 export default SignupScreen;

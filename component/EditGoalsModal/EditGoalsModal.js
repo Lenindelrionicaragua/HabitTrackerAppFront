@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { Modal, Animated } from "react-native";
 import {
   ModalBackground,
@@ -97,7 +98,6 @@ const EditGoalsModal = ({
         <ModalContent>
           <Title>Edit Habits</Title>
 
-          {/* Input for Name */}
           <Input
             placeholder="Name"
             value={name || ""}
@@ -105,7 +105,6 @@ const EditGoalsModal = ({
           />
           {alerts.name && <ErrorText>{String(alerts.name)}</ErrorText>}
 
-          {/* Input for Daily Goal */}
           <Input
             placeholder="Daily Goal (mins)"
             keyboardType="numeric"
@@ -115,8 +114,6 @@ const EditGoalsModal = ({
           {alerts.dailyGoal && (
             <ErrorText>{String(alerts.dailyGoal)}</ErrorText>
           )}
-
-          {/* Action Buttons */}
           <ButtonRow>
             <TriggerButton onPress={onClose}>
               <TriggerButtonText>Cancel</TriggerButtonText>
@@ -129,6 +126,14 @@ const EditGoalsModal = ({
       </ModalBackground>
     </Modal>
   );
+};
+
+EditGoalsModal.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  currentName: PropTypes.string.isRequired,
+  currentGoal: PropTypes.number.isRequired,
+  onSave: PropTypes.func.isRequired
 };
 
 export default EditGoalsModal;

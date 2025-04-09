@@ -63,7 +63,7 @@ describe("TextInputSignupScreen", () => {
         icon="person"
         isPassword={false}
         isDate={false}
-        onChangeText={(text) => handleChangeMock(text)}
+        onChangeText={text => handleChangeMock(text)}
         onBlur={() => {}}
         value=""
       />
@@ -86,7 +86,7 @@ describe("TextInputSignupScreen", () => {
         icon="person"
         isPassword={false}
         isDate={true}
-        onChangeText={(text) => handleChangeMock(text)}
+        onChangeText={text => handleChangeMock(text)}
         onBlur={() => {}}
         value=""
       />

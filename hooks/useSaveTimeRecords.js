@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logInfo, logError } from "../util/logging";
 import {
@@ -11,7 +11,6 @@ import useInfoText from "./useInfoText";
 import useUpdateCircleColors from "./useUpdateCircleColors";
 import useSaveDailyRecords from "./api/useSaveDailyRecords";
 import { usePerformReset } from "./usePerformReset";
-import { formatTime } from "../util/formatTime";
 import { usePlayAlarm } from "./usePlayAlarm";
 import { Colors } from "../styles/AppStyles";
 import { CredentialsContext } from "../context/credentialsContext";
@@ -23,12 +22,11 @@ function useSaveTimeRecords() {
   const remainingTime = useSelector(state => state.remainingTime.remainingTime);
   const firstRun = useSelector(state => state.firstRun.firstRun);
   const timeCompleted = useSelector(state => state.timeCompleted.timeCompleted);
-  const elapsedTime = useSelector(state => state.elapsedTime.elapsedTime);
   // Hooks
   const { updateColors } = useUpdateCircleColors();
   const performReset = usePerformReset();
   const { updateInfoText, clearTimeoutsAndMessage } = useInfoText();
-  const { error, isLoading, createDailyRecord } = useSaveDailyRecords();
+  const { createDailyRecord } = useSaveDailyRecords();
   const { playAlarm } = usePlayAlarm(logInfo, logError);
 
   const { green, red } = Colors;
@@ -48,8 +46,6 @@ function useSaveTimeRecords() {
     }
 
     if ((remainingTime !== 0 && firstRun) || timeCompleted) {
-      // logInfo(`Remaining time saved: ${formatTime(remainingTime)}`);
-      // logInfo(`Elapsed time saved: ${formatTime(elapsedTime)}`);
       await processSaveAndUpdateUI();
       return;
     }

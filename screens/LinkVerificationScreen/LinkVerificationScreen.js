@@ -12,27 +12,17 @@ import {
   StyledButton,
   ButtonText
 } from "./LinkVerificationStyles";
-
-// Icon
+import PropTypes from "prop-types";
 import { Octicons, Ionicons } from "@expo/vector-icons";
-
-// Resend timer
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
-
-// Redux-store
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
-
-// Credentials context
 import { CredentialsContext } from "../../context/credentialsContext";
-
-// useFetch hook
 import useFetch from "../../hooks/api/useFetch";
 
-// Colors
 const { white } = Colors;
 
-const LinkVerificationScreen = ({ navigation, route }) => {
+const LinkVerificationScreen = ({ navigation }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
   // Resend timer
@@ -42,7 +32,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Redux-store
   const dispatch = useDispatch();
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
@@ -98,8 +87,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     }, 5000);
   };
 
-  // Fetch API for server-side resend email request
-  const { performFetch, isLoading, msg, error, data } = useFetch(
+  const { performFetch, isLoading, error, data } = useFetch(
     `/auth/resend-verification-link`,
     onReceived
   );
@@ -108,7 +96,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     setResendStatus("Sending...");
     setResendingEmail(true);
 
-    // Perform the fetch request with email and userId
     performFetch({
       method: "POST",
       data: { email, userId }
@@ -156,8 +143,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   return (
     <StyledContainer
       style={{ alignItems: "center" }}
-      testID="link-verification-container"
-    >
+      testID="link-verification-container">
       <TopContainer>
         <IconBackGround>
           <StatusBar style="dark" />
@@ -186,6 +172,10 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       </BottomContainer>
     </StyledContainer>
   );
+};
+
+LinkVerificationScreen.propTypes = {
+  navigation: PropTypes.object.isRequired
 };
 
 export default LinkVerificationScreen;

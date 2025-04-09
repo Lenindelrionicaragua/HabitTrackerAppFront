@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Colors } from "../styles/AppStyles";
-import { useSelector, useDispatch } from "react-redux";
-// Screens
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
@@ -11,24 +9,17 @@ import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerifi
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
 import Banner from "../component/Banner/Banner";
-// Redux actions
-import { setActiveScreen } from "../actions/counterActions";
-//Fetch hook
 import useHabitCategories from "../hooks/api/useHabitCategories";
 import useMonthlyStats from "../hooks/api/useMonthlyStats";
-// Context
 import { CredentialsContext } from "../context/credentialsContext";
 
 const { softGray, black } = Colors;
 const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
-  const activeScreen = useSelector(state => state.activeScreen.activeScreen);
   const { storedCredentials } = useContext(CredentialsContext);
-  // Pass storedCredentials to the hook to trigger data fetching on app load
-  const { isLoading: categoriesLoading } =
-    useHabitCategories(storedCredentials);
-  const { isLoading: monthlyStatsLoading } = useMonthlyStats(storedCredentials);
+  void useHabitCategories(storedCredentials);
+  void useMonthlyStats(storedCredentials);
 
   return (
     <NavigationContainer>
@@ -44,10 +35,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        // initialRouteName={activeScreen}
-        initialRouteName={StopwatchScreen}
-      >
-        {/* Common Screens */}
+        initialRouteName={StopwatchScreen}>
         <Stack.Screen
           name="StopwatchScreen"
           component={StopwatchScreen}

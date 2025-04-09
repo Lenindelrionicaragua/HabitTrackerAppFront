@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -15,8 +16,7 @@ const KeyboardAvoider = ({ children }) => {
       style={styles.keyboardAvoider}
       behavior={Platform.OS === "ios" ? "padding" : null}
       enabled={Platform.OS !== "android"}
-      testID="keyboard-avoiding-view"
-    >
+      testID="keyboard-avoiding-view">
       <ScrollView testID="scroll-view">
         <Pressable onPress={Keyboard.dismiss} testID="pressable">
           {children}
@@ -34,6 +34,10 @@ const styles = {
     width: "100%",
     height: "100%"
   }
+};
+
+KeyboardAvoider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default KeyboardAvoider;

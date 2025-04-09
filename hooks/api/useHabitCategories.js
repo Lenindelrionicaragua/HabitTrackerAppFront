@@ -7,18 +7,15 @@ import {
   setHabitCategories,
   setHabitCategoryIndex
 } from "../../actions/counterActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useHabitCategories = storedCredentials => {
   const dispatch = useDispatch();
-  const habitCategoryIndex = useSelector(
-    state => state.habitCategoryIndex.habitCategoryIndex
-  );
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
   // Hook to create defaultCategories
   const { createCategories } = useCreateDefaultCategories();
 
-  const { data, error, isLoading, performFetch, cancelFetch } = useFetch(
+  const { data, error, isLoading, performFetch } = useFetch(
     "/habit-categories",
     async receivedData => {
       if (receivedData.success) {

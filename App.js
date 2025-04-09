@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 // Credentials context
 import { CredentialsContext } from "./context/credentialsContext";
-import { logInfo, logError } from "./util/logging";
+import { logError } from "./util/logging";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,8 +41,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <CredentialsContext.Provider
-        value={{ storedCredentials, setStoredCredentials }}
-      >
+        value={{ storedCredentials, setStoredCredentials }}>
         <RootStack testID="root-stack" />
       </CredentialsContext.Provider>
     </Provider>

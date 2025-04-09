@@ -1,8 +1,8 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import styled from "styled-components/native";
 import { Colors } from "../../styles/AppStyles";
 
-const { white, black, green } = Colors;
+const { black } = Colors;
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;

@@ -76,8 +76,7 @@ const Wrapper = ({ children }) => {
         value={{
           storedCredentials: mockStoredCredentials,
           setStoredCredentials: mockSetStoredCredentials
-        }}
-      >
+        }}>
         {children}
       </CredentialsContext.Provider>
     </Provider>

@@ -1,0 +1,5 @@
+#!/bin/sh
+# .husky/pre-commit
+
+# Run the lint and prettier checks
+npm run code-style-check
