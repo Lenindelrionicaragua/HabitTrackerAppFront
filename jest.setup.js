@@ -17,3 +17,5 @@ jest.mock("expo-constants", () => {
 });
 
 global.__expoConstants = Constants.manifest;
+
+jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
