@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { StatusBar, Alert } from "react-native";
+import { StatusBar } from "react-native";
 import PropTypes from "prop-types";
 import {
   StyledContainer,
@@ -126,15 +126,10 @@ const WelcomeScreen = ({ navigation }) => {
 
       await clearStorage();
 
-      Alert.alert(
-        "Logout successful",
-        "You have been logged out successfully."
-      );
       navigation.navigate("LoginScreen");
       dispatch(setActiveScreen("LoginScreen"));
     } catch (error) {
       logError(error);
-      Alert.alert("Logout error", "There was an error logging out.");
     }
   };
 
