@@ -1,6 +1,8 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import Constants from "expo-constants";
+import { Alert } from "react-native";
 
+jest.spyOn(Alert, "alert").mockImplementation(() => {});
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
 jest.mock("expo-constants", () => {
