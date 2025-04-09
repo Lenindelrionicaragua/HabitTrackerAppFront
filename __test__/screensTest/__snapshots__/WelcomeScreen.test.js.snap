@@ -24,30 +24,818 @@ exports[`WelcomeScreen Renders correctly the WelcomeScreen Component 1`] = `
         "flexGrow": 1,
         "flexShrink": 1,
         "justifyContent": "center",
-        "paddingBottom": "0%",
+        "paddingBottom": "1%",
         "width": "100%",
       }
     }
     testID="inner-container"
   >
-    <Text
+    <View
       style={
         {
-          "color": "#040c0c",
-          "fontSize": 35,
-          "fontWeight": "bold",
-          "paddingBottom": 10,
-          "paddingLeft": 10,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "textAlign": "center",
+          "alignItems": "flex-start",
+          "flexDirection": "column",
+          "overflow": "hidden",
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 30,
+          "width": "100%",
         }
       }
-      testID="welcome-title"
-      welcome={true}
     >
-      Zen User
-    </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "#5cbcfc",
+            "borderBottomLeftRadius": 75,
+            "borderBottomRightRadius": 75,
+            "borderTopLeftRadius": 75,
+            "borderTopRightRadius": 75,
+            "height": 150,
+            "left": -80,
+            "position": "absolute",
+            "top": -70,
+            "width": 150,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingBottom": 0,
+            "paddingLeft": 20,
+            "paddingRight": 0,
+            "paddingTop": 0,
+            "width": "100%",
+          }
+        }
+      >
+        <Image
+          resizeMode="cover"
+          source={1}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderBottomLeftRadius": 30,
+              "borderBottomRightRadius": 30,
+              "borderColor": "#ffffff",
+              "borderTopLeftRadius": 30,
+              "borderTopRightRadius": 30,
+              "borderWidth": 2,
+              "height": 60,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "shadowColor": "black",
+              "shadowOffset": {
+                "height": 0,
+                "width": 0,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 0,
+              "width": 60,
+            }
+          }
+          testID="avatar-image"
+        />
+        <Text
+          style={
+            {
+              "color": "#040c0c",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "paddingBottom": 0,
+              "paddingLeft": 15,
+              "paddingRight": 15,
+              "paddingTop": 0,
+              "textAlign": "center",
+            }
+          }
+          testID="welcome-title"
+          welcome={true}
+        >
+          Zen User
+        </Text>
+      </View>
+      <Text
+        style={
+          {
+            "color": "#2c2c2c",
+            "fontSize": 12,
+            "letterSpacing": 1,
+            "paddingLeft": 95,
+            "paddingVertical": 3,
+            "textAlign": "left",
+          }
+        }
+      >
+        Days with records: 
+        0.01
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "#ffffff",
+            "elevation": 2,
+            "height": 1,
+            "marginVertical": 5,
+            "shadowColor": "",
+            "shadowOpacity": 0.5,
+            "shadowRadius": 2,
+            "width": "100%",
+          }
+        }
+        testID="line"
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#f5f5f5",
+          "flexBasis": 0,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <RCTScrollView
+        contentContainerStyle={
+          {
+            "paddingBottom": 20,
+          }
+        }
+        data={
+          [
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d55",
+              "name": "Work",
+            },
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d58",
+              "name": "Family time",
+            },
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d5b",
+              "name": "Exercise",
+            },
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d5e",
+              "name": "Screen-free",
+            },
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d61",
+              "name": "Rest",
+            },
+            {
+              "dailyGoal": 55,
+              "id": "674dbad93b1c8db22d452d64",
+              "name": "Study",
+            },
+          ]
+        }
+        getItem={[Function]}
+        getItemCount={[Function]}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={0.0001}
+        stickyHeaderIndices={[]}
+        viewabilityConfigCallbackPairs={[]}
+      >
+        <View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Work
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Family time
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Exercise
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Screen-free
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Rest
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            onFocusCapture={[Function]}
+            onLayout={[Function]}
+            style={null}
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderBottomWidth": 0.5,
+                    "borderColor": "#2c2c2c",
+                    "flexDirection": "row",
+                    "paddingLeft": 5,
+                    "paddingRight": 5,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Study
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#2c2c2c",
+                      "fontSize": 14,
+                      "marginLeft": "auto",
+                      "paddingBottom": 20,
+                      "paddingLeft": 20,
+                      "paddingRight": 20,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  Daily Goal: 
+                  55
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="sync-button-pressable"
+    >
+      <View
+        bgColor="transparent"
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+            "marginVertical": 10,
+            "paddingBottom": 15,
+            "paddingLeft": 30,
+            "paddingRight": 0,
+            "paddingTop": 15,
+            "width": "100%",
+          }
+        }
+        testID="sync-button-container"
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": "#2c2c2c",
+                    "fontSize": 28,
+                  },
+                  undefined,
+                  {
+                    "fontFamily": "ionicons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {},
+                ]
+              }
+              testID="sync-icon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={
+            {
+              "color": "#2c2c2c",
+              "flexBasis": 0,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 12,
+              "letterSpacing": 1,
+              "marginLeft": 10,
+              "paddingBottom": 5,
+              "paddingLeft": 5,
+              "paddingRight": 5,
+              "paddingTop": 5,
+              "paddingVertical": 3,
+            }
+          }
+        >
+          Synchronize
+        </Text>
+      </View>
+    </View>
     <View
       style={
         {
@@ -55,38 +843,6 @@ exports[`WelcomeScreen Renders correctly the WelcomeScreen Component 1`] = `
         }
       }
     >
-      <Image
-        resizeMode="cover"
-        source={1}
-        style={
-          {
-            "borderBottomLeftRadius": 50,
-            "borderBottomRightRadius": 50,
-            "borderColor": "#ffffff",
-            "borderTopLeftRadius": 50,
-            "borderTopRightRadius": 50,
-            "borderWidth": 2,
-            "height": 100,
-            "marginBottom": 10,
-            "marginLeft": "auto",
-            "marginRight": "auto",
-            "marginTop": 10,
-            "width": 100,
-          }
-        }
-        testID="avatar-image"
-      />
-      <View
-        style={
-          {
-            "backgroundColor": "#ffffff",
-            "height": 1,
-            "marginVertical": 5,
-            "width": "100%",
-          }
-        }
-        testID="line"
-      />
       <View
         accessibilityState={
           {
@@ -127,7 +883,7 @@ exports[`WelcomeScreen Renders correctly the WelcomeScreen Component 1`] = `
             "borderTopRightRadius": 5,
             "height": 60,
             "justifyContent": "center",
-            "marginVertical": 5,
+            "marginVertical": 10,
             "paddingBottom": 15,
             "paddingLeft": 15,
             "paddingRight": 15,
