@@ -48,31 +48,29 @@ const LinkVerificationScreen = ({ navigation }) => {
 
   useEffect(() => {
     const handleDeepLink = event => {
-      const { token } = event.url
-        .split("?")[1]
-        ?.split("&")
-        .reduce((acc, part) => {
-          const [key, value] = part.split("=");
-          acc[key] = value;
-          return acc;
-        }, {});
+      // Only parse if there is a query-string
+      const parts = event.url.split("?");
+      const queryString = parts.length > 1 ? parts[1] : null;
+      if (!queryString) {
+        return;
+      }
 
+      const params = queryString
+        .split("&")
+        .map(pair => pair.split("="))
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+      const token = params.token;
       if (token) {
         setToken(token);
       }
     };
 
-    Linking.addEventListener("url", handleDeepLink);
-
+    const subscription = Linking.addEventListener("url", handleDeepLink);
     Linking.getInitialURL().then(url => {
-      if (url) {
-        handleDeepLink({ url });
-      }
+      if (url) handleDeepLink({ url });
     });
-
-    return () => {
-      Linking.removeEventListener("url", handleDeepLink);
-    };
+    return () => subscription.remove();
   }, []);
 
   const calculateTimeLeft = finalTime => {
@@ -101,7 +99,7 @@ const LinkVerificationScreen = ({ navigation }) => {
     triggerTimer();
 
     return () => {
-      clearInterval(resendTimerInterval);
+      clearInterval(resendTimerRef.current);
     };
   }, []);
 
