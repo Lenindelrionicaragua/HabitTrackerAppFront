@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -23,6 +24,7 @@ import useFetch from "../../hooks/api/useFetch";
 const { white } = Colors;
 
 const LinkVerificationScreen = ({ navigation }) => {
+  const [token, setToken] = useState(null);
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendStatus, setResendStatus] = useState("Please wait");
   // Resend timer
@@ -38,6 +40,35 @@ const LinkVerificationScreen = ({ navigation }) => {
 
   const email = storedCredentials?.email;
   const userId = storedCredentials?._id;
+
+  useEffect(() => {
+    const handleDeepLink = event => {
+      const { token } = event.url
+        .split("?")[1]
+        ?.split("&")
+        .reduce((acc, part) => {
+          const [key, value] = part.split("=");
+          acc[key] = value;
+          return acc;
+        }, {});
+
+      if (token) {
+        setToken(token);
+      }
+    };
+
+    Linking.addEventListener("url", handleDeepLink);
+
+    Linking.getInitialURL().then(url => {
+      if (url) {
+        handleDeepLink({ url });
+      }
+    });
+
+    return () => {
+      Linking.removeEventListener("url", handleDeepLink);
+    };
+  }, []);
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -66,8 +97,19 @@ const LinkVerificationScreen = ({ navigation }) => {
     };
   }, []);
 
-  // Handler for receiving API responses
-  const onReceived = response => {
+  const handleVerifyResponse = response => {
+    const { success, msg, error: serverError } = response;
+
+    if (success) {
+      alert("Account verified successfully!");
+      dispatch(setActiveScreen("LoginScreen"));
+      navigation.navigate("LoginScreen", { email });
+    } else {
+      alert(`Verification failed: ${serverError || msg}`);
+    }
+  };
+
+  const handleResendResponse = response => {
     const { success, msg, error: serverError } = response;
 
     if (success) {
@@ -87,24 +129,43 @@ const LinkVerificationScreen = ({ navigation }) => {
     }, 5000);
   };
 
-  const { performFetch, isLoading, error, data } = useFetch(
-    `/auth/resend-verification-link`,
-    onReceived
-  );
+  const {
+    performFetch: verifyPerformFetch,
+    isLoading,
+    error,
+    data
+  } = useFetch(`/auth/sign-up`, handleVerifyResponse);
+
+  const {
+    performFetch: resendPerformFetch,
+    isLoading: resendIsLoading,
+    error: resendError,
+    data: resendData
+  } = useFetch(`/auth/pre-sign-up`, handleResendResponse);
 
   const resendEmail = () => {
     setResendStatus("Sending...");
     setResendingEmail(true);
 
-    performFetch({
+    resendPerformFetch({
       method: "POST",
       data: { email, userId }
     });
   };
 
+  const verifyToken = token => {
+    verifyPerformFetch({
+      method: "POST",
+      data: { token }
+    });
+  };
+
   const handleProceed = () => {
-    dispatch(setActiveScreen("LoginScreen"));
-    navigation.navigate("LoginScreen", { email });
+    if (token) {
+      verifyToken(token);
+    } else {
+      alert("No token found in deep link.");
+    }
   };
 
   // Update resend status based on loading state
