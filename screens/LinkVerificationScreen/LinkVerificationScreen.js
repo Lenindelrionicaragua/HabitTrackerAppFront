@@ -27,10 +27,11 @@ const { white, black, red, green } = Colors;
 const LinkVerificationScreen = ({ navigation }) => {
   const [token, setToken] = useState(null);
   const [resendingEmail, setResendingEmail] = useState(false);
-  const [message, setMessage] = useState(null);
+  const defaultText = "We will send you an email to verify your account.";
+  const [message, setMessage] = useState(defaultText);
   const [errorMessage, setErrorMessage] = useState(null);
   const [resendStatus, setResendStatus] = useState("Please wait");
-  const defaultText = "We will send you an email to verify your account.";
+
   // Resend timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
@@ -43,7 +44,7 @@ const LinkVerificationScreen = ({ navigation }) => {
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
 
-  const email = storedCredentials?.email;
+  const email = storedCredentials?.email || "example@email.com";
   const userId = storedCredentials?._id;
 
   useEffect(() => {
@@ -190,15 +191,21 @@ const LinkVerificationScreen = ({ navigation }) => {
             color: errorMessage ? red : message !== defaultText ? green : black
           }}>
           {!errorMessage && message === defaultText && (
-            <EmphasizeText>{email}</EmphasizeText>
+            <>
+              <EmphasizeText>{message}</EmphasizeText>
+              <EmphasizeText>{email}</EmphasizeText>
+            </>
           )}
+
           {errorMessage && (
             <EmphasizeText style={{ color: red }}>{errorMessage}</EmphasizeText>
           )}
+
           {!errorMessage && message !== defaultText && (
             <EmphasizeText style={{ color: green }}>{message}</EmphasizeText>
           )}
         </InfoText>
+
         <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
           <ButtonText>Proceed</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
