@@ -15,6 +15,14 @@ import { CredentialsContext } from "../context/credentialsContext";
 
 const { softGray, black } = Colors;
 const Stack = createNativeStackNavigator();
+const linking = {
+  prefixes: ["zenTimer://"],
+  config: {
+    screens: {
+      LinkVerificationScreen: "verify"
+    }
+  }
+};
 
 const RootStack = () => {
   const { storedCredentials } = useContext(CredentialsContext);
@@ -22,7 +30,7 @@ const RootStack = () => {
   void useMonthlyStats(storedCredentials);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
