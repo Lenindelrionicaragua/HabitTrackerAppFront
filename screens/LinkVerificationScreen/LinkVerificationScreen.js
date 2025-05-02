@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
