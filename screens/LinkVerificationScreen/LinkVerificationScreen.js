@@ -20,13 +20,17 @@ import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/api/useFetch";
+import { logError } from "../../util/logging";
 
-const { white } = Colors;
+const { white, black, red, green } = Colors;
 
 const LinkVerificationScreen = ({ navigation }) => {
   const [token, setToken] = useState(null);
   const [resendingEmail, setResendingEmail] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [resendStatus, setResendStatus] = useState("Please wait");
+  const defaultText = "We will send you an email to verify your account.";
   // Resend timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
@@ -105,11 +109,11 @@ const LinkVerificationScreen = ({ navigation }) => {
     const { success, msg, error: serverError } = response;
 
     if (success) {
-      alert("Account verified successfully!");
+      setMessage("Account verified successfully!");
       dispatch(setActiveScreen("LoginScreen"));
       navigation.navigate("LoginScreen", { email });
     } else {
-      alert(`Verification failed: ${serverError || msg}`);
+      setErrorMessage(`Verification failed: ${serverError || msg}`);
     }
   };
 
@@ -126,11 +130,10 @@ const LinkVerificationScreen = ({ navigation }) => {
     if (success) {
       setResendStatus("Sent!");
       setActiveResend(false);
-      alert(msg);
     } else {
       setResendStatus("Failed");
       setActiveResend(false);
-      alert(`Resending email failed! ${serverError || msg}`);
+      setErrorMessage(`Resending email failed! ${serverError || msg}`);
     }
 
     handleTimerReset();
@@ -167,7 +170,8 @@ const LinkVerificationScreen = ({ navigation }) => {
     if (token) {
       verifyToken(token);
     } else {
-      alert("No token found in deep link.");
+      logError("No token found in deep link.");
+      setErrorMessage("No token found. Please try again.");
     }
   };
 
@@ -183,9 +187,19 @@ const LinkVerificationScreen = ({ navigation }) => {
       </TopContainer>
       <BottomContainer>
         <PageTitle style={{ fontSize: 25 }}>Account Verification</PageTitle>
-        <InfoText>
-          We will send you an email to verify your account.
-          <EmphasizeText>{`${email}`}</EmphasizeText>
+        <InfoText
+          style={{
+            color: errorMessage ? red : message !== defaultText ? green : black
+          }}>
+          {!errorMessage && message === defaultText && (
+            <EmphasizeText>{email}</EmphasizeText>
+          )}
+          {errorMessage && (
+            <EmphasizeText style={{ color: red }}>{errorMessage}</EmphasizeText>
+          )}
+          {!errorMessage && message !== defaultText && (
+            <EmphasizeText style={{ color: green }}>{message}</EmphasizeText>
+          )}
         </InfoText>
         <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
           <ButtonText>Proceed</ButtonText>
