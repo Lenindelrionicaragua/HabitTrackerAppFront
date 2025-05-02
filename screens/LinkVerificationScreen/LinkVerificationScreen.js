@@ -31,6 +31,7 @@ const LinkVerificationScreen = ({ navigation }) => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [targetTime, setTargetTime] = useState(null);
   const [activeResend, setActiveResend] = useState(false);
+  const resendTimerRef = useRef(null);
 
   // Redux-store
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const LinkVerificationScreen = ({ navigation }) => {
       setTimeLeft(Math.round(seconds / 1000));
     } else {
       setTimeLeft(null);
-      clearInterval(resendTimerInterval);
+      clearInterval(resendTimerRef.current);
       setActiveResend(true);
       setResendStatus("Resend");
     }
@@ -86,7 +87,10 @@ const LinkVerificationScreen = ({ navigation }) => {
     setTargetTime(targetTimeInSeconds);
     setActiveResend(false);
     const finalTime = +new Date() + targetTimeInSeconds * 1000;
-    resendTimerInterval = setInterval(() => calculateTimeLeft(finalTime), 1000);
+    resendTimerRef.current = setInterval(
+      () => calculateTimeLeft(finalTime),
+      1000
+    );
   };
 
   useEffect(() => {
@@ -112,6 +116,13 @@ const LinkVerificationScreen = ({ navigation }) => {
   const handleResendResponse = response => {
     const { success, msg, error: serverError } = response;
 
+    const handleTimerReset = () => {
+      setTimeout(() => {
+        setResendStatus("Please wait");
+        triggerTimer();
+      }, 5000);
+    };
+
     if (success) {
       setResendStatus("Sent!");
       setActiveResend(false);
@@ -122,26 +133,18 @@ const LinkVerificationScreen = ({ navigation }) => {
       alert(`Resending email failed! ${serverError || msg}`);
     }
 
-    // Reset the resend button state after 5 seconds
-    setTimeout(() => {
-      setResendStatus("Please wait");
-      triggerTimer();
-    }, 5000);
+    handleTimerReset();
   };
 
-  const {
-    performFetch: verifyPerformFetch,
-    isLoading,
-    error,
-    data
-  } = useFetch(`/auth/sign-up`, handleVerifyResponse);
+  const { performFetch: verifyPerformFetch, isLoading } = useFetch(
+    `/auth/sign-up`,
+    handleVerifyResponse
+  );
 
-  const {
-    performFetch: resendPerformFetch,
-    isLoading: resendIsLoading,
-    error: resendError,
-    data: resendData
-  } = useFetch(`/auth/pre-sign-up`, handleResendResponse);
+  const { performFetch: resendPerformFetch } = useFetch(
+    `/auth/pre-sign-up`,
+    handleResendResponse
+  );
 
   const resendEmail = () => {
     setResendStatus("Sending...");
@@ -168,39 +171,6 @@ const LinkVerificationScreen = ({ navigation }) => {
     }
   };
 
-  // Update resend status based on loading state
-  useEffect(() => {
-    const handleTimerReset = () => {
-      setTimeout(() => {
-        setResendStatus("Please wait");
-        triggerTimer();
-      }, 5000);
-    };
-
-    if (isLoading) {
-      setResendStatus("Sending...");
-    } else if (data) {
-      if (data.success) {
-        setResendStatus("Sent!");
-        setActiveResend(false);
-        alert(data.msg);
-        handleTimerReset();
-      } else {
-        setResendStatus("Failed");
-        setActiveResend(false);
-        alert(`Error: ${data.error || "An unknown error occurred."}`);
-        handleTimerReset();
-      }
-    } else if (error) {
-      setResendStatus("Failed to send!");
-      setActiveResend(false);
-
-      const errorMessage = error.response?.data?.error || error.message;
-      alert(`Network error: ${errorMessage}`);
-      handleTimerReset();
-    }
-  }, [isLoading, data, error]);
-
   return (
     <StyledContainer
       style={{ alignItems: "center" }}
@@ -214,7 +184,7 @@ const LinkVerificationScreen = ({ navigation }) => {
       <BottomContainer>
         <PageTitle style={{ fontSize: 25 }}>Account Verification</PageTitle>
         <InfoText>
-          We will sent you an email to verify your account.
+          We will send you an email to verify your account.
           <EmphasizeText>{`${email}`}</EmphasizeText>
         </InfoText>
         <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
