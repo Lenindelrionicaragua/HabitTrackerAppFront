@@ -52,75 +52,75 @@ describe("LinkVerificationScreen", () => {
     expect(queryByText("test@example.com")).toBeTruthy();
   });
 
-  //   it("handles deep link token and calls verifyPerformFetch when Proceed pressed", async () => {
-  //     ReactNative.Linking.getInitialURL.mockResolvedValue(
-  //       "myapp://verify?token=abc123"
-  //     );
-  //     const mockVerifyFetch = jest.fn();
-  //     useFetch.mockReturnValue({
-  //       performFetch: mockVerifyFetch,
-  //       isLoading: false
-  //     });
+  it("handles deep link token and calls verifyPerformFetch when Proceed pressed", async () => {
+    ReactNative.Linking.getInitialURL.mockResolvedValue(
+      "myapp://verify?token=abc123"
+    );
+    const mockVerifyFetch = jest.fn();
+    useFetch.mockReturnValue({
+      performFetch: mockVerifyFetch,
+      isLoading: false
+    });
 
-  //     const { getByText } = render(
-  //       <CredentialsContext.Provider
-  //         value={{ storedCredentials: { email: "test@example.com" } }}>
-  //         <LinkVerificationScreen navigation={{ navigate: mockNavigate }} />
-  //       </CredentialsContext.Provider>
-  //     );
+    const { getByText } = render(
+      <CredentialsContext.Provider
+        value={{ storedCredentials: { email: "test@example.com" } }}>
+        <LinkVerificationScreen navigation={{ navigate: mockNavigate }} />
+      </CredentialsContext.Provider>
+    );
 
-  //     await waitFor(() => expect(mockVerifyFetch).not.toHaveBeenCalled());
+    await waitFor(() => expect(mockVerifyFetch).not.toHaveBeenCalled());
 
-  //     fireEvent.press(getByText("Proceed"));
+    fireEvent.press(getByText("Proceed"));
 
-  //     await waitFor(() => {
-  //       expect(mockVerifyFetch).toHaveBeenCalledWith({
-  //         method: "POST",
-  //         data: { token: "abc123" }
-  //       });
-  //     });
-  //   });
+    await waitFor(() => {
+      expect(mockVerifyFetch).toHaveBeenCalledWith({
+        method: "POST",
+        data: { token: "abc123" }
+      });
+    });
+  });
 
   it("calls resendPerformFetch when Resend button pressed", async () => {
-    jest.useFakeTimers(); // Simular temporizador
+    jest.useFakeTimers();
 
+    const mockVerifyFetch = jest.fn();
     const mockResendFetch = jest.fn();
 
-    // Asegúrate que useFetch retorne el valor adecuado en ambos casos
-    useFetch.mockReturnValueOnce({
-      performFetch: jest.fn(), // Primer mock para verificación
-      isLoading: false
-    });
-
-    useFetch.mockReturnValueOnce({
-      performFetch: mockResendFetch, // Segundo mock para "Resend"
-      isLoading: false
-    });
+    useFetch
+      .mockImplementationOnce(() => ({
+        performFetch: mockVerifyFetch,
+        isLoading: false
+      }))
+      .mockImplementationOnce(() => ({
+        performFetch: mockResendFetch,
+        isLoading: false
+      }));
 
     const { getByText } = render(
       <CredentialsContext.Provider
         value={{
           storedCredentials: { email: "test@example.com", _id: "user-id" }
         }}>
-        <LinkVerificationScreen navigation={{ navigate: mockNavigate }} />
+        <LinkVerificationScreen navigation={{ navigate: jest.fn() }} />
       </CredentialsContext.Provider>
     );
 
-    // Avanzar el tiempo lo suficiente para activar el botón "Resend"
+    // Avanza el tiempo para activar el botón
     act(() => {
-      jest.advanceTimersByTime(31000); // 31 segundos
+      jest.advanceTimersByTime(31000);
     });
 
-    await waitFor(() => {
-      fireEvent.press(getByText("Resend"));
-    });
+    const resendButton = await waitFor(() => getByText("Resend"));
+    expect(resendButton).toBeTruthy();
 
-    // Verifica que el mock de "Resend" se haya llamado con los parámetros correctos
+    fireEvent.press(resendButton);
+
     expect(mockResendFetch).toHaveBeenCalledWith({
       method: "POST",
       data: { email: "test@example.com", userId: "user-id" }
     });
 
-    jest.useRealTimers(); // Restaurar timers reales
+    jest.useRealTimers();
   });
 });

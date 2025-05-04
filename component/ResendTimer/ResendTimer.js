@@ -34,6 +34,7 @@ const ResendTimer = ({
 
         {!isLoading && (
           <TextLink
+            testID="resend-button"
             disable={!activeResend}
             onPress={activeResend ? resendEmail : null}>
             <TextLinkContent
