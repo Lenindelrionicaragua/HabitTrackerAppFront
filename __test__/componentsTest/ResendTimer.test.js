@@ -42,7 +42,7 @@ describe("ResendTimer component", () => {
   it("shows loading indicator when isLoading is true", () => {
     const mockResendEmail = jest.fn();
 
-    const { getByTestId, getByRole } = render(
+    const { getByTestId } = render(
       <ResendTimer
         activeResend={false}
         resendEmail={mockResendEmail}
@@ -53,6 +53,6 @@ describe("ResendTimer component", () => {
       />
     );
 
-    expect(getByRole("progressbar")).toBeTruthy(); // ActivityIndicator
+    expect(getByTestId("activity-indicator")).toBeTruthy();
   });
 });

@@ -4,12 +4,19 @@ import * as ReactNative from "react-native";
 import LinkVerificationScreen from "../../../screens/LinkVerificationScreen/LinkVerificationScreen";
 import useFetch from "../../../hooks/api/useFetch";
 import { CredentialsContext } from "../../../context/credentialsContext";
+import { screen } from "@testing-library/react-native";
 
 // Mocks globales
 jest.mock("../../../hooks/api/useFetch");
 jest.spyOn(ReactNative.Linking, "getInitialURL").mockResolvedValue(null);
 
 const mockNavigate = jest.fn();
+const mockAddListener = jest.fn(() => ({ remove: jest.fn() }));
+const mockNavigation = {
+  navigate: mockNavigate,
+  addListener: mockAddListener
+};
+
 const mockDispatch = jest.fn();
 const defaultText = "We will send you an email to verify your account.";
 
@@ -43,7 +50,7 @@ describe("LinkVerificationScreen", () => {
     const { getByText, queryByText } = render(
       <CredentialsContext.Provider
         value={{ storedCredentials: { email: "test@example.com" } }}>
-        <LinkVerificationScreen navigation={{ navigate: mockNavigate }} />
+        <LinkVerificationScreen navigation={mockNavigation} />
       </CredentialsContext.Provider>
     );
 
@@ -65,7 +72,7 @@ describe("LinkVerificationScreen", () => {
     const { getByText } = render(
       <CredentialsContext.Provider
         value={{ storedCredentials: { email: "test@example.com" } }}>
-        <LinkVerificationScreen navigation={{ navigate: mockNavigate }} />
+        <LinkVerificationScreen navigation={mockNavigation} />
       </CredentialsContext.Provider>
     );
 
@@ -102,19 +109,20 @@ describe("LinkVerificationScreen", () => {
         value={{
           storedCredentials: { email: "test@example.com", _id: "user-id" }
         }}>
-        <LinkVerificationScreen navigation={{ navigate: jest.fn() }} />
+        <LinkVerificationScreen navigation={mockNavigation} />
       </CredentialsContext.Provider>
     );
 
-    // Avanza el tiempo para activar el botón
+    // Avanza el tiempo del timer interno (30s)
     act(() => {
-      jest.advanceTimersByTime(31000);
+      jest.advanceTimersByTime(45000);
     });
 
-    const resendButton = await waitFor(() => getByText("Resend"));
-    expect(resendButton).toBeTruthy();
-
+    // Espera a que el texto cambie a "Resend"
+    const resendButton = await waitFor(() => getByTestId("resend-button"));
     fireEvent.press(resendButton);
+
+    expect(resendButton).toBeTruthy();
 
     expect(mockResendFetch).toHaveBeenCalledWith({
       method: "POST",

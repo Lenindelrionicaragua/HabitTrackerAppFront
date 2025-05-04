@@ -155,6 +155,11 @@ const LinkVerificationScreen = ({ navigation }) => {
     resendPerformFetch({
       method: "POST",
       data: { email, userId }
+    }).finally(() => {
+      setResendingEmail(false);
+      if (resendStatus !== "Sent!") {
+        setResendStatus("Failed");
+      }
     });
   };
 

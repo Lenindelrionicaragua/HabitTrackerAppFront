@@ -52,7 +52,7 @@ const ResendTimer = ({
           <TextLink disable>
             <TextLinkContent
               style={{ textDecorationLine: "underline", color: darkGrey }}>
-              <ActivityIndicator color={darkGrey} />
+              <ActivityIndicator color={darkGrey} testID="activity-indicator" />
             </TextLinkContent>
           </TextLink>
         )}
