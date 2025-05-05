@@ -35,7 +35,7 @@ const ResendTimer = ({
         {!isLoading && (
           <TextLink
             testID="resend-button"
-            disable={!activeResend}
+            disabled={!activeResend}
             onPress={activeResend ? resendEmail : null}>
             <TextLinkContent
               style={{
@@ -49,7 +49,7 @@ const ResendTimer = ({
         )}
 
         {isLoading && (
-          <TextLink disable>
+          <TextLink disabled testID="resend-button">
             <TextLinkContent
               style={{ textDecorationLine: "underline", color: darkGrey }}>
               <ActivityIndicator color={darkGrey} testID="activity-indicator" />

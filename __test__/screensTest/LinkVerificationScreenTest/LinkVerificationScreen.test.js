@@ -88,23 +88,17 @@ describe("LinkVerificationScreen", () => {
     });
   });
 
-  it("calls resendPerformFetch when Resend button pressed", async () => {
+  it("resend link triggers API call and shows status", async () => {
     jest.useFakeTimers();
 
-    const mockVerifyFetch = jest.fn();
-    const mockResendFetch = jest.fn();
+    const mockResendFetch = jest.fn(() => Promise.resolve());
 
-    useFetch
-      .mockImplementationOnce(() => ({
-        performFetch: mockVerifyFetch,
-        isLoading: false
-      }))
-      .mockImplementationOnce(() => ({
-        performFetch: mockResendFetch,
-        isLoading: false
-      }));
+    useFetch.mockReturnValue({
+      performFetch: mockResendFetch,
+      isLoading: false
+    });
 
-    const { getByText } = render(
+    const { getByTestId, getByText } = render(
       <CredentialsContext.Provider
         value={{
           storedCredentials: { email: "test@example.com", _id: "user-id" }
@@ -113,20 +107,20 @@ describe("LinkVerificationScreen", () => {
       </CredentialsContext.Provider>
     );
 
-    // Avanza el tiempo del timer interno (30s)
     act(() => {
       jest.advanceTimersByTime(45000);
     });
 
-    // Espera a que el texto cambie a "Resend"
     const resendButton = await waitFor(() => getByTestId("resend-button"));
     fireEvent.press(resendButton);
-
-    expect(resendButton).toBeTruthy();
 
     expect(mockResendFetch).toHaveBeenCalledWith({
       method: "POST",
       data: { email: "test@example.com", userId: "user-id" }
+    });
+
+    await waitFor(() => {
+      expect(getByText("Sending...")).toBeTruthy();
     });
 
     jest.useRealTimers();
