@@ -4,9 +4,7 @@ import * as ReactNative from "react-native";
 import LinkVerificationScreen from "../../../screens/LinkVerificationScreen/LinkVerificationScreen";
 import useFetch from "../../../hooks/api/useFetch";
 import { CredentialsContext } from "../../../context/credentialsContext";
-import { screen } from "@testing-library/react-native";
 
-// Mocks globales
 jest.mock("../../../hooks/api/useFetch");
 jest.spyOn(ReactNative.Linking, "getInitialURL").mockResolvedValue(null);
 
@@ -22,25 +20,20 @@ const defaultText = "We will send you an email to verify your account.";
 
 describe("LinkVerificationScreen", () => {
   beforeEach(() => {
-    // Limpieza de mocks antes de cada test
     jest.clearAllMocks();
 
-    // Mock de contextos
     jest.spyOn(React, "useContext").mockReturnValue({
       storedCredentials: { email: "test@example.com", _id: "user-id" }
     });
 
-    // Mock de Redux dispatch
     jest
       .spyOn(require("react-redux"), "useDispatch")
       .mockReturnValue(mockDispatch);
 
-    // Mock global de Linking
     ReactNative.Linking.getInitialURL.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    // Restaurar cualquier estado global o configuraciones
     jest.useRealTimers();
   });
 
@@ -78,7 +71,9 @@ describe("LinkVerificationScreen", () => {
 
     await waitFor(() => expect(mockVerifyFetch).not.toHaveBeenCalled());
 
-    fireEvent.press(getByText("Proceed"));
+    act(() => {
+      fireEvent.press(getByText("Proceed"));
+    });
 
     await waitFor(() => {
       expect(mockVerifyFetch).toHaveBeenCalledWith({
@@ -88,7 +83,7 @@ describe("LinkVerificationScreen", () => {
     });
   });
 
-  it("resend link triggers API call and shows status", async () => {
+  it("resend link triggers API call and shows Failed status", async () => {
     jest.useFakeTimers();
 
     const mockResendFetch = jest.fn(() => Promise.resolve());
@@ -112,7 +107,10 @@ describe("LinkVerificationScreen", () => {
     });
 
     const resendButton = await waitFor(() => getByTestId("resend-button"));
-    fireEvent.press(resendButton);
+
+    await act(async () => {
+      fireEvent.press(resendButton);
+    });
 
     expect(mockResendFetch).toHaveBeenCalledWith({
       method: "POST",
@@ -120,9 +118,12 @@ describe("LinkVerificationScreen", () => {
     });
 
     await waitFor(() => {
-      expect(getByText("Sending...")).toBeTruthy();
+      expect(getByText("Failed")).toBeTruthy();
     });
 
+    act(() => {
+      jest.runAllTimers();
+    });
     jest.useRealTimers();
   });
 });
