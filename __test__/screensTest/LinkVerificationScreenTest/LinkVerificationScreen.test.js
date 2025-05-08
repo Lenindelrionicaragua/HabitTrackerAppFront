@@ -86,7 +86,11 @@ describe("LinkVerificationScreen", () => {
   it("resend link triggers API call and shows Failed status", async () => {
     jest.useFakeTimers();
 
-    const mockResendFetch = jest.fn(() => Promise.resolve());
+    ReactNative.Linking.getInitialURL.mockResolvedValue(
+      "myapp://verify?token=abc123"
+    );
+
+    const mockResendFetch = jest.fn(() => Promise.resolve({ success: false }));
 
     useFetch.mockReturnValue({
       performFetch: mockResendFetch,
@@ -106,24 +110,29 @@ describe("LinkVerificationScreen", () => {
       jest.advanceTimersByTime(45000);
     });
 
-    const resendButton = await waitFor(() => getByTestId("resend-button"));
+    await waitFor(() => {
+      expect(getByTestId("resend-button")).toBeTruthy();
+    });
+
+    const resendButton = getByTestId("resend-button");
 
     await act(async () => {
       fireEvent.press(resendButton);
     });
 
-    expect(mockResendFetch).toHaveBeenCalledWith({
-      method: "POST",
-      data: { email: "test@example.com", userId: "user-id" }
+    await waitFor(() => {
+      expect(mockResendFetch).toHaveBeenCalledWith({
+        method: "POST",
+        data: { token: "abc123" }
+      });
     });
 
-    await waitFor(() => {
-      expect(getByText("Failed")).toBeTruthy();
-    });
+    expect(getByText("Failed")).toBeTruthy();
 
     act(() => {
       jest.runAllTimers();
     });
+
     jest.useRealTimers();
   });
 });

@@ -45,7 +45,6 @@ const LinkVerificationScreen = ({ navigation }) => {
   const { storedCredentials } = useContext(CredentialsContext);
 
   const email = storedCredentials?.email || "example@email.com";
-  const userId = storedCredentials?._id;
 
   useEffect(() => {
     const handleDeepLink = event => {
@@ -144,7 +143,7 @@ const LinkVerificationScreen = ({ navigation }) => {
   );
 
   const { performFetch: resendPerformFetch } = useFetch(
-    `/auth/pre-sign-up`,
+    `/auth/resend-verification-email`,
     handleResendResponse
   );
 
@@ -154,7 +153,7 @@ const LinkVerificationScreen = ({ navigation }) => {
 
     resendPerformFetch({
       method: "POST",
-      data: { email, userId }
+      data: { token }
     }).finally(() => {
       setResendingEmail(false);
       if (resendStatus !== "Sent!") {
