@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -153,7 +153,7 @@ const LinkVerificationScreen = ({ navigation }) => {
 
     resendPerformFetch({
       method: "POST",
-      data: { token }
+      data: { token, platform: Platform.OS }
     }).finally(() => {
       setResendingEmail(false);
       if (resendStatus !== "Sent!") {
@@ -165,7 +165,7 @@ const LinkVerificationScreen = ({ navigation }) => {
   const verifyToken = token => {
     verifyPerformFetch({
       method: "POST",
-      data: { token }
+      data: { token, platform: Platform.OS }
     });
   };
 

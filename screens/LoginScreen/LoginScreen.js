@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useFocusEffect } from "@react-navigation/native";
-import { StatusBar, ActivityIndicator } from "react-native";
+import { StatusBar, ActivityIndicator, Platform } from "react-native";
 import KeyboardAvoider from "../../component/KeyboardAvoider/KeyboardAvoider";
 import { Formik } from "formik";
 import { Fontisto } from "@expo/vector-icons";
@@ -109,7 +109,8 @@ const LoginScreen = ({ navigation, route }) => {
         {
           email: user.email,
           name: user.name,
-          photoUrl: user.picture
+          photoUrl: user.picture,
+          platform: Platform.OS
         },
         token,
         success,
@@ -199,7 +200,8 @@ const LoginScreen = ({ navigation, route }) => {
 
     const credentials = {
       email: values.email,
-      password: values.password
+      password: values.password,
+      platform: Platform.OS
     };
 
     // Perform login API request
