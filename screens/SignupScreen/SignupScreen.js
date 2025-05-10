@@ -50,7 +50,6 @@ const SignupScreen = ({ navigation }) => {
 
   // Redux state and actions
   const dispatch = useDispatch();
-  // const activeScreen = useSelector(state => state.activeScreen.activeScreen);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -82,7 +81,7 @@ const SignupScreen = ({ navigation }) => {
 
   // Fetch API for login request
   const { performFetch, isLoading, error } = useFetch(
-    `/auth/sign-up`,
+    `/auth/pre-sign-up`,
     onReceived
   );
 
@@ -97,7 +96,6 @@ const SignupScreen = ({ navigation }) => {
     }
   }, [error]);
 
-  // Handle form submission for Signup
   const handleSignup = values => {
     setMsg("");
     setSuccessStatus("");
