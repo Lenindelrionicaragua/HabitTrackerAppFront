@@ -22,18 +22,12 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
-// Credentials Context
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
-
-// Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
-
-// Redux-store
 import { useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
 
-// Colors
 const { white, lightGreen } = Colors;
 
 const SignupScreen = ({ navigation }) => {
@@ -45,10 +39,8 @@ const SignupScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
-  // Context;
   const { setStoredCredentials } = useContext(CredentialsContext);
 
-  // Redux state and actions
   const dispatch = useDispatch();
 
   const onChange = (event, selectedDate) => {
@@ -62,7 +54,6 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
@@ -79,13 +70,11 @@ const SignupScreen = ({ navigation }) => {
     }
   };
 
-  // Fetch API for login request
   const { performFetch, isLoading, error } = useFetch(
     `/auth/pre-sign-up`,
     onReceived
   );
 
-  // Handle errors from API calls
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
@@ -118,7 +107,6 @@ const SignupScreen = ({ navigation }) => {
     setMsg(msg);
   };
 
-  // Save user-related credentials to AsyncStorage for later use
   const saveLoginCredentials = user => {
     AsyncStorage.setItem("zenTimerUser", JSON.stringify(user))
       .then(() => {
