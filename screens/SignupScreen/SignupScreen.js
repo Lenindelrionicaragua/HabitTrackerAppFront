@@ -25,8 +25,6 @@ import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInp
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/api/useFetch";
-import { useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
 
 const { white, lightGreen } = Colors;
 
@@ -41,9 +39,7 @@ const SignupScreen = ({ navigation }) => {
 
   const { setStoredCredentials } = useContext(CredentialsContext);
 
-  const dispatch = useDispatch();
-
-  const onChange = (event, selectedDate) => {
+  const onChange = (_, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
@@ -57,13 +53,8 @@ const SignupScreen = ({ navigation }) => {
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(user, { successStatus: true, msg });
-      dispatch(setActiveScreen("LinkVerificationScreen"));
-      navigation.navigate("LinkVerificationScreen", {
-        ...user
-      });
-
-      return saveLoginCredentials(user, msg, success);
+      saveLoginCredentials(user);
+      handleMessage({ successStatus: true, msg });
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
@@ -110,18 +101,10 @@ const SignupScreen = ({ navigation }) => {
   const saveLoginCredentials = user => {
     AsyncStorage.setItem("zenTimerUser", JSON.stringify(user))
       .then(() => {
-        handleMessage({
-          successStatus: true,
-          msg: "User credentials saved successfully"
-        });
         setStoredCredentials(user);
       })
       .catch(error => {
         logError(error);
-        handleMessage({
-          successStatus: false,
-          msg: "Failed to save user credentials"
-        });
       });
   };
 
