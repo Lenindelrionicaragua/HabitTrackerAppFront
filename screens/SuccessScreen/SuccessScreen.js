@@ -16,13 +16,13 @@ const SuccessScreen = ({ navigation, message }) => {
       <MessageText>{message}</MessageText>
       <ButtonGroup>
         <StyledButton onPress={() => navigation.navigate("WelcomeScreen")}>
-          <ButtonText>Ir a versión móvil</ButtonText>
+          <ButtonText>Go to Mobile Version</ButtonText>
         </StyledButton>
         <StyledButton
           onPress={() =>
             Linking.openURL("https://habit-tracker-app-front.netlify.app")
           }>
-          <ButtonText>Ir a versión web</ButtonText>
+          <ButtonText>Go to Web Version</ButtonText>
         </StyledButton>
         <StyledButton
           onPress={() =>
@@ -30,7 +30,7 @@ const SuccessScreen = ({ navigation, message }) => {
               "https://play.google.com/store/apps/details?id=com.yourapp"
             )
           }>
-          <ButtonText>Descargar la app</ButtonText>
+          <ButtonText>Download the App</ButtonText>
         </StyledButton>
       </ButtonGroup>
     </StyledContainer>
@@ -43,7 +43,7 @@ SuccessScreen.propTypes = {
 };
 
 SuccessScreen.defaultProps = {
-  message: "¡Cuenta verificada con éxito!"
+  message: "Account verified successfully!"
 };
 
 export default SuccessScreen;
