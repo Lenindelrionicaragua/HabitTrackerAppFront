@@ -25,7 +25,7 @@ const linking = {
     screens: {
       LoginScreen: "login",
       SignupScreen: "signup",
-      LinkVerificationScreen: "verify",
+      LinkVerificationScreen: "verify/:token",
       MetricsScreen: "metrics",
       StopwatchScreen: "stopwatch",
       WelcomeScreen: "welcome"

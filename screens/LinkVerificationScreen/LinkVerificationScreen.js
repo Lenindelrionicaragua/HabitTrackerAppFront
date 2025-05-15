@@ -80,8 +80,8 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
     if (success) {
       setMessage("Account verified successfully!");
-      dispatch(setActiveScreen("LoginScreen"));
-      navigation.navigate("LoginScreen", { email });
+      // dispatch(setActiveScreen("LoginScreen"));
+      // navigation.navigate("LoginScreen", { email });
     } else {
       setErrorMessage(`Verification failed: ${serverError || msg}`);
     }
@@ -134,10 +134,10 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     });
   };
 
-  const verifyToken = token => {
+  const verifyToken = (token, email) => {
     verifyPerformFetch({
       method: "POST",
-      data: { token, platform: Platform.OS }
+      data: { email, token }
     });
   };
 
@@ -145,7 +145,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     if (token) {
       verifyToken(token);
     } else {
-      logError("No token found in deep link.");
+      logError("No token found in the request.");
       setErrorMessage("No token found. Please try again.");
     }
   };
