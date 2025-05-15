@@ -35,6 +35,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
+        // * Use initialRouteName to set which screen you are looking at while designing/developing, use "", not {}
         initialRouteName={StopwatchScreen}>
         <Stack.Screen
           name="StopwatchScreen"
