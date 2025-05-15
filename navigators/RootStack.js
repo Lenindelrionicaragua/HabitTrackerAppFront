@@ -16,10 +16,19 @@ import { CredentialsContext } from "../context/credentialsContext";
 const { softGray, black } = Colors;
 const Stack = createNativeStackNavigator();
 const linking = {
-  prefixes: ["zenTimer://"],
+  prefixes: [
+    "https://habit-tracker-app-front.netlify.app",
+    "http://localhost:8081",
+    "zenTimer://"
+  ],
   config: {
     screens: {
-      LinkVerificationScreen: "verify"
+      LoginScreen: "login",
+      SignupScreen: "signup",
+      LinkVerificationScreen: "verify",
+      MetricsScreen: "metrics",
+      StopwatchScreen: "stopwatch",
+      WelcomeScreen: "welcome"
     }
   }
 };
