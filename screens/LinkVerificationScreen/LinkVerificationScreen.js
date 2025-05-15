@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Linking, Platform } from "react-native";
+import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
@@ -24,8 +24,7 @@ import { logError } from "../../util/logging";
 
 const { white, black, red, green } = Colors;
 
-const LinkVerificationScreen = ({ navigation }) => {
-  const [token, setToken] = useState(null);
+const LinkVerificationScreen = ({ navigation, route }) => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const defaultText = "We will send you an email to verify your account.";
   const [message, setMessage] = useState(defaultText);
@@ -43,35 +42,8 @@ const LinkVerificationScreen = ({ navigation }) => {
 
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
-
+  const token = route.params?.token || null;
   const email = storedCredentials?.email || "example@email.com";
-
-  useEffect(() => {
-    const handleDeepLink = event => {
-      // Only parse if there is a query-string
-      const parts = event.url.split("?");
-      const queryString = parts.length > 1 ? parts[1] : null;
-      if (!queryString) {
-        return;
-      }
-
-      const params = queryString
-        .split("&")
-        .map(pair => pair.split("="))
-        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-
-      const token = params.token;
-      if (token) {
-        setToken(token);
-      }
-    };
-
-    const subscription = Linking.addEventListener("url", handleDeepLink);
-    Linking.getInitialURL().then(url => {
-      if (url) handleDeepLink({ url });
-    });
-    return () => subscription.remove();
-  }, []);
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -229,7 +201,12 @@ const LinkVerificationScreen = ({ navigation }) => {
 };
 
 LinkVerificationScreen.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      token: PropTypes.string
+    })
+  }).isRequired
 };
 
 export default LinkVerificationScreen;
