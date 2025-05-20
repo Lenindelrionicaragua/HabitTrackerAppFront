@@ -51,9 +51,9 @@ const SignupScreen = ({ navigation }) => {
   };
 
   const onReceived = response => {
-    const { success, msg, pendingUser } = response;
+    const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(pendingUser);
+      saveLoginCredentials(user);
       handleMessage({ successStatus: true, msg });
     } else {
       logInfo(msg);
@@ -98,10 +98,14 @@ const SignupScreen = ({ navigation }) => {
     setMsg(msg);
   };
 
-  const saveLoginCredentials = pendingUser => {
-    AsyncStorage.setItem("zenTimerUser", JSON.stringify(pendingUser))
+  const saveLoginCredentials = user => {
+    if (!user) {
+      logError("User data is missing in the response");
+      return;
+    }
+    AsyncStorage.setItem("zenTimerUser", JSON.stringify(user))
       .then(() => {
-        setStoredCredentials(pendingUser);
+        setStoredCredentials(user);
       })
       .catch(error => {
         logError(error);
