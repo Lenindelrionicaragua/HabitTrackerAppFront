@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import LinkVerificationScreen from "../../../screens/LinkVerificationScreen/LinkVerificationScreen";
 import { CredentialsContext } from "../../../context/credentialsContext";
-import { useDispatch } from "react-redux";
 
 // Mock navigation and dispatch
 const mockNavigate = jest.fn();
@@ -12,48 +11,55 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
-// Mock useFetch hook
-jest.mock("../../../hooks/api/useFetch", () => ({
-  __esModule: true,
-  default: (url, callback) => {
+// Mock useFetch
+jest.mock("../../../hooks/api/useFetch", () => {
+  return jest.fn((url, callback) => {
     return {
-      performFetch: jest.fn(async ({ method, data }) => {
+      performFetch: jest.fn(({ method, data }) => {
         if (url.includes("sign-up")) {
-          // Simulate success response for verification
-          callback({ success: true, msg: "Verified" });
+          callback({ success: true });
         } else if (url.includes("resend-verification-email")) {
-          // Simulate success response for resend email
-          callback({ success: true, msg: "Email sent" });
+          callback({ success: true });
         }
+        return Promise.resolve();
       }),
       isLoading: false
     };
-  }
-}));
+  });
+});
 
 describe("LinkVerificationScreen", () => {
-  const route = {
-    params: {
-      token: "test-token-123"
-    }
+  const storedCredentials = {
+    email: "user@example.com"
   };
 
   const navigation = {
-    navigate: mockNavigate
+    replace: mockNavigate,
+    navigate: mockNavigate,
+    goBack: jest.fn()
   };
 
-  const storedCredentials = {
-    email: "user@example.com"
+  const routeWithToken = {
+    params: {
+      token: "valid-token"
+    }
+  };
+
+  const routeWithoutToken = {
+    params: {}
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("renders correctly and shows default message", () => {
+  test("renders default verification message", () => {
     const { getByText } = render(
       <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen navigation={navigation} route={route} />
+        <LinkVerificationScreen
+          navigation={navigation}
+          route={routeWithToken}
+        />
       </CredentialsContext.Provider>
     );
 
@@ -64,10 +70,13 @@ describe("LinkVerificationScreen", () => {
     expect(getByText(storedCredentials.email)).toBeTruthy();
   });
 
-  test("proceeds with verification when token exists", async () => {
+  test("navigates to SuccessScreen on valid token", async () => {
     const { getByText } = render(
       <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen navigation={navigation} route={route} />
+        <LinkVerificationScreen
+          navigation={navigation}
+          route={routeWithToken}
+        />
       </CredentialsContext.Provider>
     );
 
@@ -78,16 +87,13 @@ describe("LinkVerificationScreen", () => {
         type: "SET_ACTIVE_SCREEN",
         payload: "LoginScreen"
       });
-      expect(mockNavigate).toHaveBeenCalledWith("LoginScreen", {
+      expect(mockNavigate).toHaveBeenCalledWith("SuccessScreen", {
         email: storedCredentials.email
       });
-      expect(getByText("Account verified successfully!")).toBeTruthy();
     });
   });
 
-  test("shows error message if token is missing", async () => {
-    const routeWithoutToken = { params: {} };
-
+  test("shows error if token is missing", async () => {
     const { getByText } = render(
       <CredentialsContext.Provider value={{ storedCredentials }}>
         <LinkVerificationScreen
@@ -104,16 +110,24 @@ describe("LinkVerificationScreen", () => {
     });
   });
 
-  test("resends verification email", async () => {
+  test("handles resend email action", async () => {
     const { getByText } = render(
       <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen navigation={navigation} route={route} />
+        <LinkVerificationScreen
+          navigation={navigation}
+          route={routeWithToken}
+        />
       </CredentialsContext.Provider>
     );
 
-    fireEvent.press(getByText("Resend"));
+    // Simulate clicking resend (you may need to adjust this if button is inside a child)
+    fireEvent.press(getByText(/Resend/i));
 
-    // No assertions here because resend email button might be inside ResendTimer component,
-    // which might need further mocking or querying by testID depending on your implementation
+    await waitFor(() => {
+      // We can’t check UI change easily, but we can rely on no crash and callback
+      expect(mockDispatch).not.toHaveBeenCalledWith(
+        expect.objectContaining({ type: "SET_ACTIVE_SCREEN" })
+      );
+    });
   });
 });

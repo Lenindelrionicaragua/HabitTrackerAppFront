@@ -78,12 +78,13 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const handleVerifyResponse = response => {
     const { success, msg, error: serverError } = response;
 
+    dispatch(setActiveScreen("LoginScreen"));
+
     if (success) {
-      setMessage("Account verified successfully!");
-      // dispatch(setActiveScreen("LoginScreen"));
-      // navigation.navigate("LoginScreen", { email });
+      navigation.replace("SuccessScreen", { email });
     } else {
-      setErrorMessage(`Verification failed: ${serverError || msg}`);
+      logError(`Verification failed: ${serverError || msg}`);
+      navigation.replace("ErrorScreen", { email });
     }
   };
 

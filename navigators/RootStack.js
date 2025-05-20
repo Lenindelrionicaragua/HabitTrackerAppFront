@@ -5,9 +5,11 @@ import { Colors } from "../styles/AppStyles";
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
-import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
+import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
+import ErrorScreen from "../screens/ErrorScreen/ErrorScreen";
+import SuccessScreen from "../screens/SuccessScreen/SuccessScreen";
 import Banner from "../component/Banner/Banner";
 import useHabitCategories from "../hooks/api/useHabitCategories";
 import useMonthlyStats from "../hooks/api/useMonthlyStats";
@@ -25,10 +27,12 @@ const linking = {
     screens: {
       LoginScreen: "login",
       SignupScreen: "signup",
-      LinkVerificationScreen: "verify/:token",
       MetricsScreen: "metrics",
       StopwatchScreen: "stopwatch",
-      WelcomeScreen: "welcome"
+      WelcomeScreen: "welcome",
+      LinkVerificationScreen: "verify/:token",
+      ErrorScreen: "error",
+      SuccessScreen: "success"
     }
   }
 };
@@ -85,6 +89,18 @@ const RootStack = () => {
           name="LinkVerificationScreen"
           component={LinkVerificationScreen}
           testID="link-verification"
+        />
+        <Stack.Screen
+          name="ErrorScreen"
+          component={ErrorScreen}
+          options={{ title: "Error" }}
+          testID="error-screen"
+        />
+        <Stack.Screen
+          name="SuccessScreen"
+          component={SuccessScreen}
+          options={{ title: "Success" }}
+          testID="success-screen"
         />
       </Stack.Navigator>
       <Banner storedCredentials={storedCredentials} />
