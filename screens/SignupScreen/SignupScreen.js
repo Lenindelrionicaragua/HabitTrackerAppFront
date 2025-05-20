@@ -55,6 +55,10 @@ const SignupScreen = ({ navigation }) => {
     if (success) {
       saveLoginCredentials(user);
       handleMessage({ successStatus: true, msg });
+
+      navigation.navigate("LinkVerificationScreen", {
+        ...user
+      });
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
