@@ -4,12 +4,12 @@
     "slug": "ZenTimer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logoZenTimer2.png",
+    "icon": "./assets/iconZenTimerApp.png",
     "userInterfaceStyle": "light",
     "scheme": "zenTimerScheme",
     "splash": {
-      "image": "./assets/ZenTimer1.png",
-      "resizeMode": "contain",
+      "image": "./assets/splashWelcomeScreen.jpg",
+      "resizeMode": "cover",
       "backgroundColor": "#000"
     },
     "assetBundlePatterns": ["**/*"],
@@ -23,14 +23,14 @@
     "android": {
       "package": "com.zentimer.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logoZenTimer2.png",
+        "foregroundImage": "./assets/iconZenTimerApp.png",
         "backgroundColor": "#ffffff"
       },
       "jsEngine": "hermes",
       "permissions": ["AUDIO_RECORDING"]
     },
     "web": {
-      "favicon": "./assets/logoZenTimer2.png"
+      "favicon": "./assets/iconZenTimerApp.png"
     },
     "extra": {
       "eas": {
