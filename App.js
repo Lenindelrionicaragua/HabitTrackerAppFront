@@ -30,7 +30,19 @@ export default function App() {
   };
 
   useEffect(() => {
-    checkLoginCredentials();
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync(); // optional here, but safe
+        await checkLoginCredentials();
+      } catch (e) {
+        logError("Error during app preparation:", e);
+      } finally {
+        setAppReady(true);
+        await SplashScreen.hideAsync(); // <-- Hide splash screen here
+      }
+    }
+
+    prepare();
   }, []);
 
   if (!appReady) {
