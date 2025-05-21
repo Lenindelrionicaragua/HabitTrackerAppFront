@@ -26,7 +26,6 @@ export default function App() {
       logError("Error retrieving stored credentials:", error);
     } finally {
       setAppReady(true);
-      SplashScreen.hideAsync();
     }
   };
 
@@ -38,6 +37,7 @@ export default function App() {
     return null;
   }
 
+  // Uncomment this once you’re ready to show RootStack after splash
   return (
     <Provider store={store}>
       <CredentialsContext.Provider
