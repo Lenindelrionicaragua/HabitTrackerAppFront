@@ -6,7 +6,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["HabitTrackerAppFront/**/*"],
+  "include": ["ZenTimerAppFront/**/*"],
   "exclude": ["node_modules"],
   "extends": "expo/tsconfig.base"
 }
