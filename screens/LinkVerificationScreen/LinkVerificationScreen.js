@@ -42,7 +42,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
 
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
-  const token = route.params?.token || null;
+  // const token = route.params?.token || null;
   const email = storedCredentials?.email || "example@email.com";
 
   const calculateTimeLeft = finalTime => {
@@ -75,19 +75,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  const handleVerifyResponse = response => {
-    const { success, msg, error: serverError } = response;
-
-    dispatch(setActiveScreen("LoginScreen"));
-
-    if (success) {
-      navigation.replace("SuccessScreen", { email });
-    } else {
-      logError(`Verification failed: ${serverError || msg}`);
-      navigation.replace("ErrorScreen", { email });
-    }
-  };
-
   const handleResendResponse = response => {
     const { success, msg, error: serverError } = response;
 
@@ -101,6 +88,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     if (success) {
       setResendStatus("Sent!");
       setActiveResend(false);
+      setMessage("We send a new email to verify your account to: ");
     } else {
       setResendStatus("Failed");
       setActiveResend(false);
@@ -110,12 +98,7 @@ const LinkVerificationScreen = ({ navigation, route }) => {
     handleTimerReset();
   };
 
-  const { performFetch: verifyPerformFetch, isLoading } = useFetch(
-    `/auth/sign-up`,
-    handleVerifyResponse
-  );
-
-  const { performFetch: resendPerformFetch } = useFetch(
+  const { performFetch: resendPerformFetch, isLoading } = useFetch(
     `/auth/resend-verification-email`,
     handleResendResponse
   );
@@ -133,22 +116,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
         setResendStatus("Failed");
       }
     });
-  };
-
-  const verifyToken = (token, email) => {
-    verifyPerformFetch({
-      method: "POST",
-      data: { email, token }
-    });
-  };
-
-  const handleProceed = () => {
-    if (token) {
-      verifyToken(token);
-    } else {
-      logError("No token found in the request.");
-      setErrorMessage("No token found. Please try again.");
-    }
   };
 
   return (
@@ -183,8 +150,8 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           )}
         </InfoText>
 
-        <StyledButton onPress={handleProceed} style={{ flexDirection: "row" }}>
-          <ButtonText>Proceed</ButtonText>
+        <StyledButton onPress={resendEmail} style={{ flexDirection: "row" }}>
+          <ButtonText>{resendStatus}</ButtonText>
           <Ionicons name="arrow-forward-circle" size={25} color={white} />
         </StyledButton>
         <ResendTimer
