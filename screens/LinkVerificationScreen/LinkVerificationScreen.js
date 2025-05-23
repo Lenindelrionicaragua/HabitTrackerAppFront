@@ -34,7 +34,7 @@ const LinkVerificationScreen = () => {
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
   const email = storedCredentials?.email || "example@email.com";
-  const userId = storedCredentials?._id;
+  const token = storedCredentials?.token;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -100,7 +100,10 @@ const LinkVerificationScreen = () => {
 
     resendPerformFetch({
       method: "POST",
-      data: { token, platform: Platform.OS }
+      data: {
+        email,
+        token
+      }
     }).finally(() => {
       setResendingEmail(false);
       if (resendStatus !== "Sent!") {
