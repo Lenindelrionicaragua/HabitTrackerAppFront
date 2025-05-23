@@ -1,133 +1,84 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
+import { act } from "react-test-renderer";
 import LinkVerificationScreen from "../../../screens/LinkVerificationScreen/LinkVerificationScreen";
 import { CredentialsContext } from "../../../context/credentialsContext";
+import useFetch from "../../../hooks/api/useFetch";
 
-// Mock navigation and dispatch
-const mockNavigate = jest.fn();
-const mockDispatch = jest.fn();
-
-jest.mock("react-redux", () => ({
-  useDispatch: () => mockDispatch
-}));
-
-// Mock useFetch
-jest.mock("../../../hooks/api/useFetch", () => {
-  return jest.fn((url, callback) => {
-    return {
-      performFetch: jest.fn(({ method, data }) => {
-        if (url.includes("sign-up")) {
-          callback({ success: true });
-        } else if (url.includes("resend-verification-email")) {
-          callback({ success: true });
-        }
-        return Promise.resolve();
-      }),
-      isLoading: false
-    };
-  });
-});
+// Mock del hook useFetch
+jest.mock("../../../hooks/api/useFetch");
 
 describe("LinkVerificationScreen", () => {
-  const storedCredentials = {
-    email: "user@example.com"
-  };
-
-  const navigation = {
-    replace: mockNavigate,
-    navigate: mockNavigate,
-    goBack: jest.fn()
-  };
-
-  const routeWithToken = {
-    params: {
-      token: "valid-token"
-    }
-  };
-
-  const routeWithoutToken = {
-    params: {}
-  };
+  const mockPerformFetch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
+    useFetch.mockReturnValue({
+      performFetch: mockPerformFetch,
+      isLoading: false
+    });
   });
 
-  test("renders default verification message", () => {
+  const storedCredentialsMock = {
+    email: "test@example.com",
+    token: "abc123token"
+  };
+
+  it("renders and shows email from context", () => {
     const { getByText } = render(
-      <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen
-          navigation={navigation}
-          route={routeWithToken}
-        />
+      <CredentialsContext.Provider
+        value={{ storedCredentials: storedCredentialsMock }}>
+        <LinkVerificationScreen />
       </CredentialsContext.Provider>
     );
 
-    expect(getByText("Account Verification")).toBeTruthy();
-    expect(
-      getByText("We will send you an email to verify your account.")
-    ).toBeTruthy();
-    expect(getByText(storedCredentials.email)).toBeTruthy();
+    expect(getByText("We've sent a verification email to:")).toBeTruthy();
+    expect(getByText(storedCredentialsMock.email)).toBeTruthy();
   });
 
-  test("navigates to SuccessScreen on valid token", async () => {
+  it("calls resendEmail and updates status on success", async () => {
+    jest.useFakeTimers();
+
+    const localMockPerformFetch = jest.fn(() =>
+      Promise.resolve({ success: true, msg: "Sent!" })
+    );
+
+    useFetch.mockReturnValue({
+      performFetch: localMockPerformFetch,
+      isLoading: false
+    });
+
     const { getByText } = render(
-      <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen
-          navigation={navigation}
-          route={routeWithToken}
-        />
+      <CredentialsContext.Provider
+        value={{ storedCredentials: storedCredentialsMock }}>
+        <LinkVerificationScreen />
       </CredentialsContext.Provider>
     );
 
-    fireEvent.press(getByText("Proceed"));
+    await act(async () => {
+      jest.advanceTimersByTime(30000);
+    });
 
     await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: "SET_ACTIVE_SCREEN",
-        payload: "LoginScreen"
+      expect(getByText(/resend/i)).toBeTruthy();
+    });
+
+    const resendButton = getByText(/resend/i);
+
+    await act(async () => {
+      fireEvent.press(resendButton);
+    });
+
+    await waitFor(() => {
+      expect(localMockPerformFetch).toHaveBeenCalledWith({
+        method: "POST",
+        data: {
+          email: storedCredentialsMock.email,
+          token: storedCredentialsMock.token
+        }
       });
-      expect(mockNavigate).toHaveBeenCalledWith("SuccessScreen", {
-        email: storedCredentials.email
-      });
     });
-  });
 
-  test("shows error if token is missing", async () => {
-    const { getByText } = render(
-      <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen
-          navigation={navigation}
-          route={routeWithoutToken}
-        />
-      </CredentialsContext.Provider>
-    );
-
-    fireEvent.press(getByText("Proceed"));
-
-    await waitFor(() => {
-      expect(getByText("No token found. Please try again.")).toBeTruthy();
-    });
-  });
-
-  test("handles resend email action", async () => {
-    const { getByText } = render(
-      <CredentialsContext.Provider value={{ storedCredentials }}>
-        <LinkVerificationScreen
-          navigation={navigation}
-          route={routeWithToken}
-        />
-      </CredentialsContext.Provider>
-    );
-
-    // Simulate clicking resend (you may need to adjust this if button is inside a child)
-    fireEvent.press(getByText(/Resend/i));
-
-    await waitFor(() => {
-      // We can’t check UI change easily, but we can rely on no crash and callback
-      expect(mockDispatch).not.toHaveBeenCalledWith(
-        expect.objectContaining({ type: "SET_ACTIVE_SCREEN" })
-      );
-    });
+    jest.useRealTimers();
   });
 });

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "./../../styles/AppStyles";
 import {
