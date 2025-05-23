@@ -9,24 +9,18 @@ import {
   IconBackGround,
   PageTitle,
   InfoText,
-  EmphasizeText,
-  StyledButton,
-  ButtonText
+  EmphasizeText
 } from "./LinkVerificationStyles";
-import PropTypes from "prop-types";
-import { Octicons, Ionicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
-import { useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
 import { CredentialsContext } from "../../context/credentialsContext";
 import useFetch from "../../hooks/api/useFetch";
-import { logError } from "../../util/logging";
 
 const { white, black, red, green } = Colors;
 
-const LinkVerificationScreen = ({ navigation, route }) => {
+const LinkVerificationScreen = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
-  const defaultText = "We will send you an email to verify your account.";
+  const defaultText = "We've sent a verification email to:";
   const [message, setMessage] = useState(defaultText);
   const [errorMessage, setErrorMessage] = useState(null);
   const [resendStatus, setResendStatus] = useState("Please wait");
@@ -37,13 +31,10 @@ const LinkVerificationScreen = ({ navigation, route }) => {
   const [activeResend, setActiveResend] = useState(false);
   const resendTimerRef = useRef(null);
 
-  // Redux-store
-  const dispatch = useDispatch();
-
   // Credentials context
   const { storedCredentials } = useContext(CredentialsContext);
-  // const token = route.params?.token || null;
   const email = storedCredentials?.email || "example@email.com";
+  const userId = storedCredentials?._id;
 
   const calculateTimeLeft = finalTime => {
     const seconds = finalTime - +new Date();
@@ -150,10 +141,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
           )}
         </InfoText>
 
-        <StyledButton onPress={resendEmail} style={{ flexDirection: "row" }}>
-          <ButtonText>{resendStatus}</ButtonText>
-          <Ionicons name="arrow-forward-circle" size={25} color={white} />
-        </StyledButton>
         <ResendTimer
           activeResend={activeResend}
           isLoading={isLoading}
@@ -166,15 +153,6 @@ const LinkVerificationScreen = ({ navigation, route }) => {
       </BottomContainer>
     </StyledContainer>
   );
-};
-
-LinkVerificationScreen.propTypes = {
-  navigation: PropTypes.object.isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      token: PropTypes.string
-    })
-  }).isRequired
 };
 
 export default LinkVerificationScreen;
