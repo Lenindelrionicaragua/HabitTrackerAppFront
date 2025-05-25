@@ -2,19 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import {
-  StyledContainer,
-  TopContainer,
-  BottomContainer,
-  PageTitle,
-  InfoText,
-  IconBackGround
-} from "./EmailVerificationStyles";
-import { ActivityIndicator } from "react-native";
-import { Octicons } from "@expo/vector-icons";
-import { Colors } from "../../styles/AppStyles";
-
-const { white } = Colors;
 
 const EmailVerificationScreen = () => {
   const route = useRoute();
@@ -45,20 +32,7 @@ const EmailVerificationScreen = () => {
     verifyToken();
   }, [token]);
 
-  return (
-    <StyledContainer>
-      <TopContainer>
-        <IconBackGround>
-          <Octicons name="mail" size={125} color={white} />
-        </IconBackGround>
-      </TopContainer>
-      <BottomContainer>
-        <PageTitle>Email Verification</PageTitle>
-        <InfoText>We're verifying your email, please wait...</InfoText>
-        <ActivityIndicator size="large" />
-      </BottomContainer>
-    </StyledContainer>
-  );
+  return null; // o puedes mostrar un spinner mientras se verifica
 };
 
 export default EmailVerificationScreen;

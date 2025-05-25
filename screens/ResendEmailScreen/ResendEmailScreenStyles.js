@@ -1,18 +1,10 @@
+// EmailVerificationStyles.js
 import styled from "styled-components/native";
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  Platform
-} from "react-native";
-import { Colors } from "../../styles/AppStyles";
+import { View, Text, Platform, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native";
+import { Colors } from "../../styles/AppStyles";
 
-const { seaGreen, white, lightGrey, black, lightGreen, softGray } = Colors;
-
-const green = "#00ff00";
-const red = "#ff0000";
+const { seaGreen, white, lightGrey, black, softGray } = Colors;
 
 const containerHeight = Platform.OS === "web" ? "90%" : "85%";
 const containerWidth = Platform.OS === "web" ? "100%" : "100%";
@@ -37,7 +29,6 @@ export const TopContainer = styled(View)`
 export const IconBackGround = styled(View)`
   width: 250px;
   height: 250px;
-
   background-color: ${black};
   border-radius: 500px;
   justify-content: center;
@@ -62,68 +53,4 @@ export const InfoText = styled(Text)`
   color: ${lightGrey};
   font-size: 15px;
   text-align: center;
-`;
-
-export const EmphasizeText = styled(Text)`
-  font-weight: bold;
-  font-style: italic;
-  padding-left: 2px;
-`;
-
-export const StyledButton = styled(Pressable)`
-  padding: 15px;
-  background-color: ${black};
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  margin-vertical: 5px;
-  height: 60px;
-
-  ${props =>
-    props.google == true &&
-    `
-    background-color: ${white};
-    flex-direction: row;
-    justify-content: center;
-  `}
-`;
-
-export const ButtonText = styled(Text)`
-  color: ${seaGreen};
-  font-size: 16px;
-  padding-right: 5px;
-
-  ${props =>
-    props.google == true &&
-    `
-    padding: 25px;
-    color: ${black}
-  `}
-`;
-
-export const InlineGroup = styled(View)`
-  flex-direction: row;
-  padding: 10px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const TextLink = styled(TouchableOpacity)`
-  justify-content: center;
-  align-items: center;
-  color: ${green};
-  padding-left: 5px;
-`;
-
-export const TextLinkContent = styled(Text)`
-  font-size: 15px;
-
-  ${props => {
-    const { resendStatus } = props;
-    if (resendStatus === "Failed!") {
-      return `color: ${red}`;
-    } else if (resendStatus === "Sent!") {
-      return `color: ${lightGreen}`;
-    }
-  }}
 `;

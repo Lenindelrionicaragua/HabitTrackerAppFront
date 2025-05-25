@@ -56,7 +56,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        initialRouteName="LinkVerificationScreen">
+        initialRouteName="ResendEmailScreen">
         <Stack.Screen
           name="StopwatchScreen"
           component={StopwatchScreen}
