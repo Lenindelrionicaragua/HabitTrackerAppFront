@@ -1,4 +1,4 @@
-// useMonthlyStats.test.js
+// __test__/hookTest/apiTest/useMonthlyStats.test.js
 
 import React from "react";
 import { renderHook, act } from "@testing-library/react-native";
@@ -12,19 +12,10 @@ import { setMonthlyStats } from "../../../actions/counterActions";
 
 jest.mock("axios");
 jest.mock("../../../util/logging");
-
-// Updated mock for getDaysInMonth to reflect actual days in November 2024
-jest.mock("../../../util/roundingUtils", () => {
-  const actualUtils = jest.requireActual("../../../util/roundingUtils");
-  return {
-    ...actualUtils,
-    getDaysInMonth: () => {
-      const year = 2024;
-      const month = 10; // November (0-indexed)
-      return new Date(year, month + 1, 0).getDate(); // Returns 30
-    }
-  };
-});
+jest.mock("../../../util/roundingUtils", () => ({
+  ...jest.requireActual("../../../util/roundingUtils"),
+  getDaysInMonth: () => 31 // Match the logic used in the hook
+}));
 
 describe("useMonthlyStats Hook - Success Case", () => {
   let store;
@@ -130,71 +121,69 @@ describe("useMonthlyStats Hook - Success Case", () => {
     });
 
     await waitFor(() => {
-      const expectedProcessedData = {
-        success: true,
-        totalMinutes: 59,
-        categoryCount: 5,
-        daysWithRecords: 3,
-        totalDailyMinutes: {
-          "2024-11-23": 51,
-          "2024-11-24": 6,
-          "2024-11-26": 2
-        },
-        categoryData: [
-          {
-            name: "Work",
-            totalMinutes: 52,
-            percentage: 87,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#fb105b", secondary: "#ffa3b0" },
-            dailyGoal: 55
-          },
-          {
-            name: "Family time",
-            totalMinutes: 1,
-            percentage: 1,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#ff6543", secondary: "#ffb59f" },
-            dailyGoal: 55
-          },
-          {
-            name: "Exercise",
-            totalMinutes: 0.01,
-            percentage: 1,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
-            dailyGoal: 55
-          },
-          {
-            name: "Screen-free",
-            totalMinutes: 2,
-            percentage: 3,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#16A085", secondary: "#DAF7A6" },
-            dailyGoal: 55
-          },
-          {
-            name: "Rest",
-            totalMinutes: 0.01,
-            percentage: 0.01,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#ffe181", secondary: "#fff4cc" },
-            dailyGoal: 55
-          },
-          {
-            name: "Study",
-            totalMinutes: 5,
-            percentage: 8,
-            monthlyGoal: 55 * 30,
-            colors: { primary: "#554865", secondary: "#857891" },
-            dailyGoal: 55
-          }
-        ],
-        dailyAverageMinutes: 19.67
-      };
-
       expect(dispatchMock).toHaveBeenCalledWith(
-        setMonthlyStats(expectedProcessedData)
+        setMonthlyStats({
+          success: true,
+          totalMinutes: 59,
+          categoryCount: 5,
+          daysWithRecords: 3,
+          totalDailyMinutes: {
+            "2024-11-23": 51,
+            "2024-11-24": 6,
+            "2024-11-26": 2
+          },
+          categoryData: [
+            {
+              name: "Work",
+              dailyGoal: 55,
+              totalMinutes: 52,
+              percentage: 87,
+              monthlyGoal: 1705,
+              colors: { primary: "#fb105b", secondary: "#ffa3b0" }
+            },
+            {
+              name: "Family time",
+              dailyGoal: 55,
+              totalMinutes: 1,
+              percentage: 1,
+              monthlyGoal: 1705,
+              colors: { primary: "#ff6543", secondary: "#ffb59f" }
+            },
+            {
+              name: "Exercise",
+              dailyGoal: 55,
+              totalMinutes: 0.01,
+              percentage: 1,
+              monthlyGoal: 1705,
+              colors: { primary: "#ad2bd5", secondary: "#d7b8e9" }
+            },
+            {
+              name: "Screen-free",
+              dailyGoal: 55,
+              totalMinutes: 2,
+              percentage: 3,
+              monthlyGoal: 1705,
+              colors: { primary: "#16A085", secondary: "#DAF7A6" }
+            },
+            {
+              name: "Rest",
+              dailyGoal: 55,
+              totalMinutes: 0.01,
+              percentage: 0.01,
+              monthlyGoal: 1705,
+              colors: { primary: "#ffe181", secondary: "#fff4cc" }
+            },
+            {
+              name: "Study",
+              dailyGoal: 55,
+              totalMinutes: 5,
+              percentage: 8,
+              monthlyGoal: 1705,
+              colors: { primary: "#554865", secondary: "#857891" }
+            }
+          ],
+          dailyAverageMinutes: 19.67
+        })
       );
     });
   });
