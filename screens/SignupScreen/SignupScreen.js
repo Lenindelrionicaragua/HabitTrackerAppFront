@@ -56,7 +56,7 @@ const SignupScreen = ({ navigation }) => {
       saveLoginCredentials(user);
       handleMessage({ successStatus: true, msg });
 
-      navigation.navigate("LinkVerificationScreen", {
+      navigation.navigate("ResendEmailScreen", {
         ...user
       });
     } else {

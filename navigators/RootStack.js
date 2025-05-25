@@ -7,7 +7,7 @@ import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
-import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
+import ResendEmailScreen from "../screens/ResendEmailScreen/ResendEmailScreen";
 import ErrorScreen from "../screens/ErrorScreen/ErrorScreen";
 import SuccessScreen from "../screens/SuccessScreen/SuccessScreen";
 import Banner from "../component/Banner/Banner";
@@ -30,7 +30,7 @@ const linking = {
       MetricsScreen: "metrics",
       StopwatchScreen: "stopwatch",
       WelcomeScreen: "welcome",
-      LinkVerificationScreen: "verify/:token",
+      ResendEmailScreen: "verify/:token",
       ErrorScreen: "error",
       SuccessScreen: "success"
     }
@@ -86,9 +86,9 @@ const RootStack = () => {
           testID="welcome-screen"
         />
         <Stack.Screen
-          name="LinkVerificationScreen"
-          component={LinkVerificationScreen}
-          testID="link-verification"
+          name="ResendEmailScreen"
+          component={ResendEmailScreen}
+          testID="resend-email-screen"
         />
         <Stack.Screen
           name="ErrorScreen"

@@ -9,7 +9,7 @@ import {
   PageTitle,
   InfoText,
   EmphasizeText
-} from "./LinkVerificationStyles";
+} from "../ResendEmailScreen/ResendEmailScreenStyles";
 import { Octicons } from "@expo/vector-icons";
 import ResendTimer from "../../component/ResendTimer/ResendTimer";
 import { CredentialsContext } from "../../context/credentialsContext";
@@ -17,7 +17,7 @@ import useFetch from "../../hooks/api/useFetch";
 
 const { white, black, red, green } = Colors;
 
-const LinkVerificationScreen = () => {
+const ResendEmailScreen = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const defaultText = "We've sent a verification email to:";
   const [message, setMessage] = useState(defaultText);
@@ -157,4 +157,4 @@ const LinkVerificationScreen = () => {
   );
 };
 
-export default LinkVerificationScreen;
+export default ResendEmailScreen;
