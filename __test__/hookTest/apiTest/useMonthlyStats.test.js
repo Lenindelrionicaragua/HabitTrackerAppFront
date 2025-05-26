@@ -134,7 +134,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Work",
             totalMinutes: 52,
             percentage: 87,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#fb105b", secondary: "#ffa3b0" },
             dailyGoal: 55
           },
@@ -142,7 +142,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Family time",
             totalMinutes: 1,
             percentage: 1,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#ff6543", secondary: "#ffb59f" },
             dailyGoal: 55
           },
@@ -150,7 +150,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Exercise",
             totalMinutes: 0.01,
             percentage: 1,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
             dailyGoal: 55
           },
@@ -158,7 +158,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Screen-free",
             totalMinutes: 2,
             percentage: 3,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#16A085", secondary: "#DAF7A6" },
             dailyGoal: 55
           },
@@ -166,7 +166,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Rest",
             totalMinutes: 0.01,
             percentage: 0.01,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#ffe181", secondary: "#fff4cc" },
             dailyGoal: 55
           },
@@ -174,7 +174,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Study",
             totalMinutes: 5,
             percentage: 8,
-            monthlyGoal: 55 * 30,
+            monthlyGoal: 55 * 31,
             colors: { primary: "#554865", secondary: "#857891" },
             dailyGoal: 55
           }
