@@ -1,5 +1,5 @@
 // EmailVerificationScreen.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
@@ -7,7 +7,6 @@ const EmailVerificationScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { token } = route.params;
-  const [status, setStatus] = useState("verifying");
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -17,14 +16,11 @@ const EmailVerificationScreen = () => {
         });
 
         if (res.data.success) {
-          setStatus("success");
           navigation.replace("SuccessScreen");
         } else {
-          setStatus("fail");
           navigation.replace("ErrorScreen", { msg: res.data.msg });
         }
       } catch (err) {
-        setStatus("fail");
         navigation.replace("ErrorScreen", { msg: err.message });
       }
     };
@@ -32,7 +28,7 @@ const EmailVerificationScreen = () => {
     verifyToken();
   }, [token]);
 
-  return null; // o puedes mostrar un spinner mientras se verifica
+  return null;
 };
 
 export default EmailVerificationScreen;
