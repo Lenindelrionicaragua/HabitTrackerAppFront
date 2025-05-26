@@ -1,5 +1,4 @@
-// EmailVerificationScreen.js
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 

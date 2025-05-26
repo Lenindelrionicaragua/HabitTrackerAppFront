@@ -1,64 +1,160 @@
-// EmailVerificationScreen.js
-import React, { useEffect, useState } from "react";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import axios from "axios";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { StatusBar } from "expo-status-bar";
+import { Colors } from "./../../styles/AppStyles";
 import {
   StyledContainer,
   TopContainer,
   BottomContainer,
+  IconBackGround,
   PageTitle,
   InfoText,
-  IconBackGround
-} from "./EmailVerificationStyles";
-import { ActivityIndicator } from "react-native";
+  EmphasizeText
+} from "../ResendEmailScreen/ResendEmailScreenStyles";
 import { Octicons } from "@expo/vector-icons";
-import { Colors } from "../../styles/AppStyles";
+import ResendTimer from "../../component/ResendTimer/ResendTimer";
+import { CredentialsContext } from "../../context/credentialsContext";
+import useFetch from "../../hooks/api/useFetch";
 
-const { white } = Colors;
+const { white, black, red, green } = Colors;
 
-const EmailVerificationScreen = () => {
-  const route = useRoute();
-  const navigation = useNavigation();
-  const { token } = route.params;
-  const [status, setStatus] = useState("verifying");
+const ResendEmailScreen = () => {
+  const [resendingEmail, setResendingEmail] = useState(false);
+  const defaultText = "We've sent a verification email to:";
+  const [message, setMessage] = useState(defaultText);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [resendStatus, setResendStatus] = useState("Please wait");
+
+  // Resend timer
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
+  const [activeResend, setActiveResend] = useState(false);
+  const resendTimerRef = useRef(null);
+
+  // Credentials context
+  const { storedCredentials } = useContext(CredentialsContext);
+  const email = storedCredentials?.email || "example@email.com";
+  const token = storedCredentials?.token;
+
+  const calculateTimeLeft = finalTime => {
+    const seconds = finalTime - +new Date();
+    if (seconds >= 0) {
+      setTimeLeft(Math.round(seconds / 1000));
+    } else {
+      setTimeLeft(null);
+      clearInterval(resendTimerRef.current);
+      setActiveResend(true);
+      setResendStatus("Resend");
+    }
+  };
+
+  const triggerTimer = (targetTimeInSeconds = 30) => {
+    setTargetTime(targetTimeInSeconds);
+    setActiveResend(false);
+    const finalTime = +new Date() + targetTimeInSeconds * 1000;
+    resendTimerRef.current = setInterval(
+      () => calculateTimeLeft(finalTime),
+      1000
+    );
+  };
 
   useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const res = await axios.post("http://localhost:8081/auth/verify", {
-          token
-        });
+    triggerTimer();
 
-        if (res.data.success) {
-          setStatus("success");
-          navigation.replace("SuccessScreen");
-        } else {
-          setStatus("fail");
-          navigation.replace("ErrorScreen", { msg: res.data.msg });
-        }
-      } catch (err) {
-        setStatus("fail");
-        navigation.replace("ErrorScreen", { msg: err.message });
-      }
+    return () => {
+      clearInterval(resendTimerRef.current);
+    };
+  }, []);
+
+  const handleResendResponse = response => {
+    const { success, msg, error: serverError } = response;
+
+    const handleTimerReset = () => {
+      setTimeout(() => {
+        setResendStatus("Please wait");
+        triggerTimer();
+      }, 5000);
     };
 
-    verifyToken();
-  }, [token]);
+    if (success) {
+      setResendStatus("Sent!");
+      setActiveResend(false);
+      setMessage("We send a new email to verify your account to: ");
+    } else {
+      setResendStatus("Failed");
+      setActiveResend(false);
+      setErrorMessage(`Resending email failed! ${serverError || msg}`);
+    }
+
+    handleTimerReset();
+  };
+
+  const { performFetch: resendPerformFetch, isLoading } = useFetch(
+    `/auth/resend-verification-email`,
+    handleResendResponse
+  );
+
+  const resendEmail = () => {
+    setResendStatus("Sending...");
+    setResendingEmail(true);
+
+    resendPerformFetch({
+      method: "POST",
+      data: {
+        email,
+        token
+      }
+    }).finally(() => {
+      setResendingEmail(false);
+      if (resendStatus !== "Sent!") {
+        setResendStatus("Failed");
+      }
+    });
+  };
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      style={{ alignItems: "center" }}
+      testID="link-verification-container">
       <TopContainer>
         <IconBackGround>
+          <StatusBar style="dark" />
           <Octicons name="mail" size={125} color={white} />
         </IconBackGround>
       </TopContainer>
       <BottomContainer>
-        <PageTitle>Email Verification</PageTitle>
-        <InfoText>We're verifying your email, please wait...</InfoText>
-        <ActivityIndicator size="large" />
+        <PageTitle style={{ fontSize: 25 }}>Account Verification</PageTitle>
+        <InfoText
+          style={{
+            color: errorMessage ? red : message !== defaultText ? green : black
+          }}>
+          {!errorMessage && message === defaultText && (
+            <>
+              <EmphasizeText>{message}</EmphasizeText>
+              <EmphasizeText>{email}</EmphasizeText>
+            </>
+          )}
+
+          {errorMessage && (
+            <EmphasizeText style={{ color: red }}>{errorMessage}</EmphasizeText>
+          )}
+
+          {!errorMessage && message !== defaultText && (
+            <EmphasizeText style={{ color: green }}>{message}</EmphasizeText>
+          )}
+        </InfoText>
+
+        <ResendTimer
+          activeResend={activeResend}
+          isLoading={isLoading}
+          resendStatus={resendStatus}
+          timeLeft={timeLeft}
+          targetTime={targetTime}
+          resendEmail={resendEmail}
+          resendingEmail={resendingEmail}
+        />
       </BottomContainer>
     </StyledContainer>
   );
 };
 
-export default EmailVerificationScreen;
+export default ResendEmailScreen;
