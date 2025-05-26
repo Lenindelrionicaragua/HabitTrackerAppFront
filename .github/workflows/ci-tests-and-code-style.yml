@@ -34,7 +34,7 @@ jobs:
 
       - name: Deploy to Netlify (PR preview)
         if: github.event_name == 'pull_request'
-        run: netlify deploy --json --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Deploy preview"
+        run: netlify deploy --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --dir=dist --message="Deploy preview"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
