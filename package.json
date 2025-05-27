@@ -56,7 +56,7 @@
     "@expo/config-plugins": "8.0.4"
   },
   "scripts": {
-    "test": "jest --verbose --runInBand",
+    "test": "jest --verbose",
     "test:ci": "jest --verbose --runInBand",
     "start": "expo start",
     "android": "expo start --android",

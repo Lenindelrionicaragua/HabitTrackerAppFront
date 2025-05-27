@@ -3,6 +3,10 @@ import { render, act, fireEvent, cleanup } from "@testing-library/react-native";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
 
 describe("TextInputSignupScreen", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   test("renders correctly", () => {
     const { getByTestId } = render(
       <TextInputSignupScreen
@@ -99,9 +103,5 @@ describe("TextInputSignupScreen", () => {
     });
 
     expect(handleChangeMock).toHaveBeenCalledWith("newText");
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 });
