@@ -1,63 +1,47 @@
-// import React from "react";
-// import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
-// import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
+import React from "react";
+import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
+import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
 
-// describe("TextInputLoginScreen", () => {
-//   test("Renders correctly", () => {
-//     const { getByTestId } = render(
-//       <TextInputLoginScreen
-//         label="Email"
-//         icon="mail"
-//         onChangeText={() => {}}
-//         value=""
-//         isPassword={false}
-//         hidePassword={false}
-//         setHidePassword={() => {}}
-//       />
-//     );
-//     expect(getByTestId("text-input-login-screen")).toBeTruthy();
-//   });
+describe("TextInputLoginScreen", () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-//   test("Renders label and icon correctly", () => {
-//     const { getByText, getByTestId } = render(
-//       <TextInputLoginScreen
-//         label="Email"
-//         icon="mail"
-//         onChangeText={() => {}}
-//         value=""
-//         isPassword={false}
-//         hidePassword={false}
-//         setHidePassword={() => {}}
-//       />
-//     );
-//     expect(getByText("Email")).toBeTruthy();
-//     expect(getByTestId("octicons-icon")).toBeTruthy();
-//   });
+  const defaultProps = {
+    label: "Email",
+    icon: "mail",
+    onChangeText: jest.fn(),
+    value: "",
+    isPassword: false,
+    hidePassword: false,
+    setHidePassword: jest.fn()
+  };
 
-//   test("Calls handleChange when text is inputted", () => {
-//     const handleChangeMock = jest.fn();
-//     const { getByTestId } = render(
-//       <TextInputLoginScreen
-//         label="Email"
-//         icon="mail"
-//         onChangeText={handleChangeMock}
-//         value=""
-//         isPassword={false}
-//         hidePassword={false}
-//         setHidePassword={() => {}}
-//       />
-//     );
+  test("renders text input component", () => {
+    const { getByTestId } = render(<TextInputLoginScreen {...defaultProps} />);
+    expect(getByTestId("text-input-login-screen")).toBeTruthy();
+  });
 
-//     const textInput = getByTestId("styled-text-input-login-screen");
+  test("renders label and icon correctly", () => {
+    const { getByText, getByTestId } = render(
+      <TextInputLoginScreen {...defaultProps} />
+    );
+    expect(getByText("Email")).toBeTruthy();
+    expect(getByTestId("octicons-icon")).toBeTruthy();
+  });
 
-//     act(() => {
-//       fireEvent.changeText(textInput, "newText");
-//     });
+  test("calls onChangeText when input changes", () => {
+    const handleChangeMock = jest.fn();
+    const { getByTestId } = render(
+      <TextInputLoginScreen {...defaultProps} onChangeText={handleChangeMock} />
+    );
 
-//     expect(handleChangeMock).toHaveBeenCalledWith("newText");
-//   });
+    const textInput = getByTestId("styled-text-input-login-screen");
 
-//   afterEach(() => {
-//     cleanup();
-//   });
-// });
+    act(() => {
+      fireEvent.changeText(textInput, "newText");
+    });
+
+    expect(handleChangeMock).toHaveBeenCalledWith("newText");
+  });
+});
