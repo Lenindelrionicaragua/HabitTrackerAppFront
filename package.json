@@ -57,7 +57,7 @@
   },
   "scripts": {
     "test": "jest --verbose",
-    "test:ci": "jest --verbose --runInBand",
+    "test:ci": "jest --verbose",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

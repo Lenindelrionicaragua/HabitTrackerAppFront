@@ -9,7 +9,9 @@ module.exports = {
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
-    "^@env$": "<rootDir>/__mocks__/@env.js"
+    "^@env$": "<rootDir>/__mocks__/@env.js",
+    "^react-native-vector-icons/(.*)$":
+      "<rootDir>/__mocks__/react-native-vector-icons.js"
   },
   testTimeout: 60000,
   maxWorkers: "50%",
