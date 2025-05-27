@@ -14,6 +14,5 @@ module.exports = {
       "<rootDir>/__mocks__/react-native-vector-icons.js"
   },
   testTimeout: 60000,
-  maxWorkers: "50%",
   watchman: false
 };
