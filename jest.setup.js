@@ -1,7 +1,5 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import Constants from "expo-constants";
-import "@testing-library/jest-native/extend-expect";
-import { cleanup } from "@testing-library/react-native";
 
 // Mock de AsyncStorage
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
@@ -19,9 +17,7 @@ jest.mock("expo-constants", () => {
 });
 
 afterEach(() => {
-  cleanup();
-  jest.clearAllMocks();
-  jest.useRealTimers();
+  jest.restoreAllMocks();
 });
 
 global.__expoConstants = Constants.manifest;
