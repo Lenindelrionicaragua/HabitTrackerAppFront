@@ -1,6 +1,5 @@
 import React from "react";
-import { renderHook, act } from "@testing-library/react-native";
-import { waitFor } from "@testing-library/react-native";
+import { renderHook, act, waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "../../../reducers/rootReducer";
@@ -10,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setHabitCategories } from "../../../actions/counterActions";
 import useCreateDefaultCategories from "../../../hooks/api/useCreateDefaultCategories";
 
+// Mocks globales
 jest.mock("axios");
 jest.mock("@react-native-async-storage/async-storage");
 jest.mock("../../../hooks/api/useCreateDefaultCategories");
@@ -40,6 +40,9 @@ describe("useHabitCategories Hook", () => {
   };
 
   beforeEach(() => {
+    // Limpiar mocks y estados compartidos
+    jest.resetAllMocks();
+
     dispatchMock = jest.fn();
     createCategoriesMock = jest.fn().mockResolvedValue();
 
@@ -54,18 +57,14 @@ describe("useHabitCategories Hook", () => {
     useCreateDefaultCategories.mockReturnValue({
       createCategories: createCategoriesMock
     });
-  });
 
-  afterEach(() => {
-    jest.clearAllMocks();
+    AsyncStorage.setItem.mockResolvedValue(undefined);
   });
 
   it("should store categories in AsyncStorage when categories are found", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
+    axios.mockResolvedValueOnce({
+      data: dataResponseWithCategories
+    });
 
     const { result } = renderHook(() => useHabitCategories(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
@@ -88,11 +87,9 @@ describe("useHabitCategories Hook", () => {
   });
 
   it("should call createCategories when categories are not found", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithoutCategories
-      })
-    );
+    axios.mockResolvedValueOnce({
+      data: dataResponseWithoutCategories
+    });
 
     const { result } = renderHook(() => useHabitCategories(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
@@ -106,42 +103,9 @@ describe("useHabitCategories Hook", () => {
   });
 
   it("should log an error when storing categories in AsyncStorage fails", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
-
-    AsyncStorage.setItem.mockImplementationOnce(() => {
-      throw new Error("Failed to save");
+    axios.mockResolvedValueOnce({
+      data: dataResponseWithCategories
     });
-
-    const logSpy = jest.spyOn(require("../../../util/logging"), "logInfo");
-
-    const { result } = renderHook(() => useHabitCategories(storedCredentials), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
-    });
-
-    await act(async () => {
-      await result.current.fetchHabitCategories();
-    });
-
-    await waitFor(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        "Error saving categories to AsyncStorage:",
-        expect.any(Error)
-      );
-    });
-
-    logSpy.mockRestore();
-  });
-
-  it("should log an error when storing categories in AsyncStorage fails", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
 
     AsyncStorage.setItem.mockImplementationOnce(() => {
       throw new Error("Failed to save");
