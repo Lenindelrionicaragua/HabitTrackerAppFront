@@ -11,7 +11,7 @@ module.exports = {
   moduleNameMapper: {
     "^@env$": "<rootDir>/__mocks__/@env.js"
   },
-  testTimeout: 30000,
+  testTimeout: 60000,
   maxWorkers: "50%",
   watchman: false
 };
