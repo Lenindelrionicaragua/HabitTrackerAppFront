@@ -11,6 +11,8 @@ module.exports = {
   moduleNameMapper: {
     "^@env$": "<rootDir>/__mocks__/@env.js",
     "^react-native-vector-icons/(.*)$":
+      "<rootDir>/__mocks__/react-native-vector-icons.js",
+    "^@expo/vector-icons/(.*)$":
       "<rootDir>/__mocks__/react-native-vector-icons.js"
   },
   testTimeout: 60000,

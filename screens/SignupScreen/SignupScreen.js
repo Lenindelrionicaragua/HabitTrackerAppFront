@@ -284,7 +284,7 @@ const SignupScreen = ({ navigation }) => {
 };
 
 SignupScreen.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object.isRequired
 };
 
 export default SignupScreen;
