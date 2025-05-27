@@ -55,7 +55,7 @@ describe("TextInputSignupScreen", () => {
     );
 
     const leftIcon = getByTestId("left-icon");
-    expect(leftIcon).toBeDefined();
+    expect(leftIcon).toBeTruthy();
     expect(leftIcon.props.children.props.name).toBe(icon);
   });
 
