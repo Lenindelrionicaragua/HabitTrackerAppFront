@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-const mockIcon = props => <Text>{props.name}</Text>;
+const mockIcon = props => <Text testID={props.testID}>{props.name}</Text>;
 
 export default mockIcon;
 export const Ionicons = mockIcon;
