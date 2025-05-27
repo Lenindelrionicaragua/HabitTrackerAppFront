@@ -7,3 +7,4 @@ export default mockIcon;
 export const Ionicons = mockIcon;
 export const FontAwesome = mockIcon;
 export const MaterialIcons = mockIcon;
+export const Octicons = mockIcon;
