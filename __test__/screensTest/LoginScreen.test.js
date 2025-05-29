@@ -11,8 +11,6 @@ import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
 import { CredentialsContext } from "../../context/credentialsContext";
 import { NavigationContainer } from "@react-navigation/native";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
 
 // Mock the environment variables
 jest.mock("@env", () => ({
@@ -36,14 +34,14 @@ jest.mock("expo-auth-session/providers/google", () => ({
 
 // Mock navigation
 const mockNavigate = jest.fn();
+const mockNavigation = { navigate: mockNavigate };
+
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
     navigate: mockNavigate
   })
 }));
-
-// Mock `useFetch` and `useGoogleFetch` hooks in your test setup file or at the top of your test file
 
 jest.mock("../../hooks/api/useFetch", () => ({
   __esModule: true,
@@ -57,7 +55,7 @@ jest.mock("../../hooks/api/useFetch", () => ({
 
 jest.mock("../../hooks/api/useGoogleFetch", () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(onReceived => ({
+  default: jest.fn().mockImplementation(() => ({
     performGoogleFetch: jest.fn(),
     isLoading: false,
     error: null,
@@ -65,7 +63,6 @@ jest.mock("../../hooks/api/useGoogleFetch", () => ({
   }))
 }));
 
-// Create a mock store with initial state
 const initialState = {
   activeScreen: {
     activeScreen: "mockActiveScreen"
@@ -74,14 +71,13 @@ const initialState = {
 
 const store = createStore(rootReducer, initialState);
 
-// Function to render LoginScreen wrapped in Provider, CredentialsContext, and NavigationContainer
 const renderLoginScreen = () =>
   render(
     <Provider store={store}>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
-          <LoginScreen />
+          <LoginScreen navigation={mockNavigation} />
         </NavigationContainer>
       </CredentialsContext.Provider>
     </Provider>
@@ -93,7 +89,7 @@ const renderLoginScreenWithRenderer = () =>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
-          <LoginScreen />
+          <LoginScreen navigation={mockNavigation} />
         </NavigationContainer>
       </CredentialsContext.Provider>
     </Provider>
@@ -107,7 +103,6 @@ beforeEach(() => {
   loginScreenRenderWithRenderer = renderLoginScreenWithRenderer();
 });
 
-//LoginScreen
 describe("LoginScreen", () => {
   afterEach(() => {
     cleanup();
@@ -155,7 +150,6 @@ describe("LoginScreen", () => {
   });
 });
 
-// PageLogo
 describe("PageLogo", () => {
   afterEach(() => {
     cleanup();
@@ -167,7 +161,6 @@ describe("PageLogo", () => {
   });
 });
 
-// Formik Integration Tests
 describe("Formik Integration Tests", () => {
   let formikComponent;
 
@@ -200,7 +193,6 @@ describe("Formik Integration Tests", () => {
   });
 });
 
-// LoginTextInput
 describe("LoginTextInput", () => {
   let emailInput;
   let passwordInput;
@@ -258,7 +250,6 @@ describe("LoginTextInput", () => {
     });
   });
 
-  // Login StyledButton
   describe("StyledButton", () => {
     afterEach(() => {
       cleanup();
@@ -271,7 +262,6 @@ describe("LoginTextInput", () => {
     });
   });
 
-  // MsgBox
   describe("MsgBox", () => {
     afterEach(() => {
       cleanup();
@@ -296,7 +286,6 @@ describe("LoginTextInput", () => {
       cleanup();
     });
 
-    // Google StyledButton
     test("Render correctly", () => {
       const { getByTestId } = loginScreenRender;
       const googleStyledButton = getByTestId("google-styled-button");
@@ -338,7 +327,6 @@ describe("LoginTextInput", () => {
     });
   });
 
-  // Footer
   describe("FooterView", () => {
     afterEach(() => {
       cleanup();
@@ -385,25 +373,12 @@ describe("LoginTextInput", () => {
     });
   });
 
-  //Navigation Test
-
   describe("loginScreen navigation", () => {
-    let navigation;
-
-    beforeEach(() => {
-      navigation = { navigate: jest.fn() };
-
-      // Render the LoginScreen wrapped with the necessary providers
-      loginScreenRender = renderLoginScreen();
-    });
-
     afterEach(() => {
       cleanup();
     });
 
     test("Navigate to SignupScreen when Signup link is clicked", () => {
-      const mockNavigation = { navigate: jest.fn() };
-
       const { getByTestId } = render(
         <Provider store={store}>
           <CredentialsContext.Provider

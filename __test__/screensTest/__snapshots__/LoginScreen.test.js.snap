@@ -1,5 +1,626 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`LoginScreen Component Tests renders LoginScreen correctly (snapshot) 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+        "height": "100%",
+        "width": "100%",
+      },
+      {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+  testID="keyboard-avoiding-view"
+>
+  <RCTScrollView
+    testID="scroll-view"
+  >
+    <View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="pressable"
+      >
+        <RCTSafeAreaView
+          style={
+            {
+              "alignItems": "stretch",
+              "backgroundColor": "#f5f5f5",
+              "flexBasis": 0,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "height": "100%",
+              "marginLeft": "auto",
+              "marginRight": "auto",
+              "paddingBottom": 0,
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "paddingTop": 0,
+              "width": "100%",
+            }
+          }
+          testID="login-styled-container"
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexBasis": 0,
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+                "paddingBottom": "10%",
+                "paddingTop": "7%",
+                "width": "100%",
+              }
+            }
+            testID="inner-container"
+          >
+            <Image
+              resizeMode="cover"
+              source={1}
+              style={
+                {
+                  "borderBottomLeftRadius": 80,
+                  "borderBottomRightRadius": 80,
+                  "borderTopLeftRadius": 80,
+                  "borderTopRightRadius": 80,
+                  "height": 150,
+                  "overflow": "hidden",
+                  "width": 150,
+                }
+              }
+              testID="page-logo"
+            />
+            <Text
+              style={
+                {
+                  "color": "#040c0c",
+                  "fontSize": 30,
+                  "fontWeight": "bold",
+                  "paddingBottom": 10,
+                  "paddingLeft": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
+                  "textAlign": "center",
+                }
+              }
+              testID="page-title"
+            >
+              Habit Tracker
+            </Text>
+            <Text
+              style={
+                {
+                  "color": "",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                  "letterSpacing": 1,
+                  "marginBottom": 10,
+                }
+              }
+              testID="sub-title"
+            >
+              Account Login
+            </Text>
+            <View
+              style={
+                {
+                  "width": "90%",
+                }
+              }
+            >
+              <View
+                testID="text-input-login-screen"
+              >
+                <View
+                  style={
+                    {
+                      "left": 15,
+                      "position": "absolute",
+                      "top": "40%",
+                      "zIndex": 1,
+                    }
+                  }
+                  testID="left-icon"
+                >
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "color": "#040c0c",
+                          "fontSize": 30,
+                        },
+                        undefined,
+                        {
+                          "fontFamily": "octicons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        {},
+                      ]
+                    }
+                    testID="octicons-icon"
+                  >
+                    
+                  </Text>
+                </View>
+                <Text
+                  style={
+                    {
+                      "color": "",
+                      "fontSize": 13,
+                      "textAlign": "left",
+                    }
+                  }
+                >
+                  Email Address
+                </Text>
+                <TextInput
+                  keyboardType="email-address"
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  placeholder="serenity@gmail.com"
+                  placeholderTextColor="#6c747c"
+                  style={
+                    {
+                      "backgroundColor": "#ffffff",
+                      "borderBottomLeftRadius": 5,
+                      "borderBottomRightRadius": 5,
+                      "borderTopLeftRadius": 5,
+                      "borderTopRightRadius": 5,
+                      "color": "",
+                      "fontSize": 16,
+                      "height": 60,
+                      "marginBottom": 10,
+                      "marginVertical": 3,
+                      "paddingBottom": 15,
+                      "paddingLeft": 55,
+                      "paddingRight": 55,
+                      "paddingTop": 15,
+                      "position": "relative",
+                      "zIndex": 0,
+                    }
+                  }
+                  testID="email-input"
+                  value=""
+                />
+              </View>
+              <View
+                testID="text-input-login-screen"
+              >
+                <View
+                  style={
+                    {
+                      "left": 15,
+                      "position": "absolute",
+                      "top": "40%",
+                      "zIndex": 1,
+                    }
+                  }
+                  testID="left-icon"
+                >
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "color": "#040c0c",
+                          "fontSize": 30,
+                        },
+                        undefined,
+                        {
+                          "fontFamily": "octicons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        {},
+                      ]
+                    }
+                    testID="octicons-icon"
+                  >
+                    
+                  </Text>
+                </View>
+                <Text
+                  style={
+                    {
+                      "color": "",
+                      "fontSize": 13,
+                      "textAlign": "left",
+                    }
+                  }
+                >
+                  Password
+                </Text>
+                <TextInput
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  placeholder="* * * * * * *"
+                  placeholderTextColor="#6c747c"
+                  secureTextEntry={true}
+                  style={
+                    {
+                      "backgroundColor": "#ffffff",
+                      "borderBottomLeftRadius": 5,
+                      "borderBottomRightRadius": 5,
+                      "borderTopLeftRadius": 5,
+                      "borderTopRightRadius": 5,
+                      "color": "",
+                      "fontSize": 16,
+                      "height": 60,
+                      "marginBottom": 10,
+                      "marginVertical": 3,
+                      "paddingBottom": 15,
+                      "paddingLeft": 55,
+                      "paddingRight": 55,
+                      "paddingTop": 15,
+                      "position": "relative",
+                      "zIndex": 0,
+                    }
+                  }
+                  testID="password-input"
+                  value=""
+                />
+                <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    {
+                      "position": "absolute",
+                      "right": 15,
+                      "top": "40%",
+                      "zIndex": 1,
+                    }
+                  }
+                  testID="right-icon"
+                >
+                  <Text
+                    allowFontScaling={false}
+                    onPress={[Function]}
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "color": "#2c2c2c",
+                          "fontSize": 25,
+                        },
+                        undefined,
+                        {
+                          "fontFamily": "feather",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        {},
+                      ]
+                    }
+                    testID="feather-icon"
+                  >
+                    
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={
+                  {
+                    "color": "#ff0000",
+                    "fontSize": 13,
+                    "textAlign": "center",
+                  }
+                }
+                testID="msg-box"
+                type="ERROR"
+              />
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#040c0c",
+                    "borderBottomLeftRadius": 5,
+                    "borderBottomRightRadius": 5,
+                    "borderTopLeftRadius": 5,
+                    "borderTopRightRadius": 5,
+                    "height": 60,
+                    "justifyContent": "center",
+                    "marginVertical": 5,
+                    "paddingBottom": 15,
+                    "paddingLeft": 15,
+                    "paddingRight": 15,
+                    "paddingTop": 15,
+                  }
+                }
+                testID="login-styled-button"
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  Login
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "backgroundColor": "#ffffff",
+                    "height": 1,
+                    "marginVertical": "10pxx",
+                    "width": "100%",
+                  }
+                }
+                testID="line"
+              />
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                google={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#FFA500",
+                    "borderBottomLeftRadius": 5,
+                    "borderBottomRightRadius": 5,
+                    "borderColor": "#ffffff",
+                    "borderTopLeftRadius": 5,
+                    "borderTopRightRadius": 5,
+                    "borderWidth": 1,
+                    "flexDirection": "row",
+                    "height": 60,
+                    "justifyContent": "center",
+                    "marginVertical": 5,
+                    "paddingBottom": 15,
+                    "paddingLeft": 15,
+                    "paddingRight": 15,
+                    "paddingTop": 15,
+                  }
+                }
+                testID="google-styled-button"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "color": undefined,
+                        "fontSize": 20,
+                      },
+                      undefined,
+                      {
+                        "fontFamily": "Fontisto",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
+                  }
+                  testID="google-icon"
+                >
+                  
+                </Text>
+                <Text
+                  google={true}
+                  style={
+                    {
+                      "color": "#040c0c",
+                      "fontSize": 16,
+                      "paddingLeft": 15,
+                    }
+                  }
+                  testID="google-button-text"
+                >
+                  Sign in with Google
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingBottom": 10,
+                    "paddingLeft": 10,
+                    "paddingRight": 10,
+                    "paddingTop": 0,
+                  }
+                }
+                testID="footer-view"
+              >
+                <Text
+                  style={
+                    {
+                      "alignContent": "center",
+                      "color": "",
+                      "fontSize": 15,
+                      "justifyContent": "center",
+                    }
+                  }
+                  testID="footer-text"
+                >
+                  Don't you have an account already?
+                </Text>
+                <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    }
+                  }
+                  testID="signup-link"
+                >
+                  <Text
+                    style={
+                      {
+                        "color": "#6c747c",
+                        "fontSize": 15,
+                        "paddingLeft": 5,
+                      }
+                    }
+                    testID="signup-link-content"
+                  >
+                    Signup
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RCTSafeAreaView>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
 exports[`LoginScreen Renders correctly the LoginScreen Component 1`] = `
 <View
   onLayout={[Function]}
