@@ -18,6 +18,7 @@ jest.mock("expo-constants", () => {
 
 afterEach(() => {
   jest.clearAllMocks();
+  jest.clearAllTimers();
 });
 
 global.__expoConstants = Constants.manifest;
