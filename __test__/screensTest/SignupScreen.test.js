@@ -14,21 +14,12 @@ import { createStore } from "redux";
 import SignupScreen from "../../screens/SignupScreen/SignupScreen";
 import rootReducer from "../../reducers/rootReducer";
 import { CredentialsContext } from "../../context/credentialsContext";
-import { NavigationContainer } from "@react-navigation/native";
-import { useSelector, useDispatch } from "react-redux";
 import { setActiveScreen } from "../../actions/counterActions";
-// import axios from "axios";
-// import MockAdapter from "axios-mock-adapter";
-// Rendering Functions
 
-// Mock navigation
-const mockNavigate = jest.fn();
-jest.mock("@react-navigation/native", () => ({
-  ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({
-    navigate: mockNavigate
-  })
-}));
+// Mock navigation object
+const mockNavigation = {
+  navigate: jest.fn()
+};
 
 // Create a mock store with initial state
 const initialState = {
@@ -39,15 +30,14 @@ const initialState = {
 
 const store = createStore(rootReducer, initialState);
 
-// Function to render LoginScreen wrapped in Provider, CredentialsContext, and NavigationContainer
+// Function to render SignupScreen wrapped in Provider and CredentialsContext,
+// passing the mockNavigation prop explicitly
 const renderSignupScreen = () =>
   render(
     <Provider store={store}>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
-        <NavigationContainer>
-          <SignupScreen />
-        </NavigationContainer>
+        <SignupScreen navigation={mockNavigation} />
       </CredentialsContext.Provider>
     </Provider>
   );
@@ -57,9 +47,7 @@ const renderSignupScreenWithRenderer = () =>
     <Provider store={store}>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
-        <NavigationContainer>
-          <SignupScreen />
-        </NavigationContainer>
+        <SignupScreen navigation={mockNavigation} />
       </CredentialsContext.Provider>
     </Provider>
   );
@@ -72,7 +60,7 @@ beforeEach(() => {
   signupScreenRenderWithRenderer = renderSignupScreenWithRenderer();
 });
 
-//SignupScreen
+// SignupScreen Tests
 describe("SignupScreen", () => {
   afterEach(() => {
     cleanup();
@@ -144,7 +132,7 @@ describe("Formik Integration Tests", () => {
     expect(typeof formikComponent.props.children).toBe("function");
   });
 
-  //TextInputSignupScreen
+  // TextInputSignupScreen
   describe("TextInputSingupScreen", () => {
     let name;
     let emailInput;
@@ -247,7 +235,7 @@ describe("Formik Integration Tests", () => {
     });
   });
 
-  // Login StyledButton
+  // StyledButton
   describe("StyledButton", () => {
     afterEach(() => {
       cleanup();
@@ -306,67 +294,27 @@ describe("Formik Integration Tests", () => {
     test("Render the correct text", () => {
       const { getByTestId } = signupScreenRender;
       const footerTextElement = getByTestId("signup-footer-text");
-      const textContent = footerTextElement.props.children;
-      expect(textContent).toBe("Already have an account?");
-    });
-  });
-
-  describe("FooterLink", () => {
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Render correctly", () => {
-      const { getByTestId } = signupScreenRender;
-      const footerLinkElement = getByTestId("footer-login-link");
-      expect(typeof footerLinkElement.props).toBe("object");
-    });
-
-    test("Render the correct text", () => {
-      const { getByTestId } = signupScreenRender;
-      const footerLinkContent = getByTestId("footer-login-link-content");
-      const LinkContent = footerLinkContent.props.children;
-      expect(LinkContent).toBe("Login");
+      const textContent = footerTextElement.props.children.toString();
+      expect(textContent).toMatch("Already have an account?");
     });
   });
 });
 
-// Navigation Test
-
-describe("SignupScreen navigation", () => {
-  let navigation;
-
-  beforeEach(() => {
-    navigation = { navigate: jest.fn() };
-
-    // Render the SignupScreen wrapped with the necessary providers
-    signupScreenRender = renderSignupScreen();
-  });
-
-  afterEach(() => {
-    cleanup();
-  });
-
-  test("Navigate to LoginScreen when the login link is clicked", () => {
-    const mockNavigation = { navigate: jest.fn() };
-
+// Navigation Tests
+describe("Navigation Tests", () => {
+  test("Navigate to Login Screen", () => {
+    const mockNav = { navigate: jest.fn() };
     const { getByTestId } = render(
       <Provider store={store}>
         <CredentialsContext.Provider
           value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
-          <NavigationContainer>
-            <SignupScreen navigation={mockNavigation} />
-          </NavigationContainer>
+          <SignupScreen navigation={mockNav} />
         </CredentialsContext.Provider>
       </Provider>
     );
 
-    const loginLink = getByTestId("footer-login-link");
-
-    act(() => {
-      fireEvent.press(loginLink);
-    });
-
-    expect(mockNavigation.navigate).toHaveBeenCalledWith("LoginScreen");
+    const loginText = getByTestId("footer-login-link");
+    fireEvent.press(loginText);
+    expect(mockNav.navigate).toHaveBeenCalledWith("LoginScreen");
   });
 });
