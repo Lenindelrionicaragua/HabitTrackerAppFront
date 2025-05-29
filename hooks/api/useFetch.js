@@ -5,7 +5,6 @@ import { logInfo, logError } from "../../util/logging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const useFetch = (initialRoute, onReceived) => {
-  // Validate initial inputs
   if (!initialRoute || initialRoute.includes("api/")) {
     throw new Error("Invalid route provided");
   }
@@ -22,25 +21,36 @@ const useFetch = (initialRoute, onReceived) => {
   const [isLoading, setIsLoading] = useState(false);
   const [route, setRoute] = useState(initialRoute);
   const [data, setData] = useState(null);
-  const cancelTokenRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   const performFetch = async (options = {}, newUrl) => {
     if (newUrl) {
       cancelFetch();
       setRoute(newUrl);
     }
+
     setError(null);
     setData(null);
     setIsLoading(true);
 
-    // Validate the route format
     if (!route || !/^\/[a-zA-Z0-9/_-]*(\?[a-zA-Z0-9=&]*)?$/.test(route)) {
-      setError(new Error("Invalid URL"));
-      setIsLoading(false);
+      if (isMounted.current) {
+        setError(new Error("Invalid URL"));
+        setIsLoading(false);
+      }
       return;
     }
 
-    // Retrieve the token from AsyncStorage
     let token = null;
     try {
       token = await AsyncStorage.getItem("zenTimerToken");
@@ -48,83 +58,72 @@ const useFetch = (initialRoute, onReceived) => {
       logError("Failed to retrieve token", error);
     }
 
-    const baseOptions = {
+    abortControllerRef.current = new AbortController();
+
+    const fetchOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {})
       },
+      signal: abortControllerRef.current.signal,
       withCredentials: true,
-      cancelToken: new axios.CancelToken(cancel => {
-        cancelTokenRef.current = cancel;
-      }),
       ...options
     };
 
-    const fetchData = async () => {
-      try {
-        const url = `${baseApiUrl}/api${route}`;
-        const response = await axios(url, baseOptions);
+    try {
+      const url = `${baseApiUrl}/api${route}`;
+      const response = await axios(url, fetchOptions);
 
-        logInfo(`Request URL: ${url}`);
-        // Check if response and response.data are valid
-        if (!response || !response.data) {
-          setError(new Error("Unexpected server error"));
-          return;
-        }
+      logInfo(`Request URL: ${url}`);
 
-        // Check if response.data is empty
-        if (Object.keys(response.data).length === 0) {
-          setError(new Error("Empty response from server"));
-          return;
-        }
+      if (!response || !response.data) {
+        throw new Error("Unexpected server error");
+      }
 
-        const { success, msg, message, error: serverError } = response.data;
+      if (Object.keys(response.data).length === 0) {
+        throw new Error("Empty response from server");
+      }
 
-        logInfo(`Response Data: ${JSON.stringify(response.data, null, 2)}`);
+      const { success, msg, message, error: serverError } = response.data;
 
-        if (success) {
+      if (success) {
+        if (isMounted.current) {
           setData(response.data);
           onReceived(response.data);
-        } else {
-          const errorMsg =
-            serverError || msg || message || "Unexpected server error";
-          setError(new Error(errorMsg));
         }
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          setError(new Error("Fetch was canceled"));
-        } else {
-          const errorMsg =
-            error.response?.data?.msg || error.message || "Unexpected error";
-          setError(new Error(errorMsg));
-        }
-      } finally {
+      } else {
+        throw new Error(
+          serverError || msg || message || "Unexpected server error"
+        );
+      }
+    } catch (error) {
+      if (isMounted.current) {
+        const errorMsg =
+          error.name === "CanceledError"
+            ? "Fetch was canceled"
+            : error.response?.data?.msg || error.message || "Unexpected error";
+        setError(new Error(errorMsg));
+      }
+    } finally {
+      if (isMounted.current) {
         setIsLoading(false);
       }
-    };
-
-    fetchData();
+    }
   };
 
-  useEffect(() => {
-    return () => {
-      if (cancelTokenRef.current) {
-        cancelTokenRef.current("Fetch was canceled");
-      }
-    };
-  }, []);
+  const cancelFetch = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  };
 
   return {
     isLoading,
     error,
     data,
     performFetch,
-    cancelFetch: () => {
-      if (cancelTokenRef.current) {
-        cancelTokenRef.current();
-      }
-    }
+    cancelFetch
   };
 };
 
