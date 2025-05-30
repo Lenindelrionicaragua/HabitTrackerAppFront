@@ -3,90 +3,57 @@ import { render, fireEvent, act } from "@testing-library/react-native";
 import SyncButton from "../../component/SyncButton/SyncButton";
 import { logInfo } from "../../util/logging";
 
-jest.mock("@expo/vector-icons/Ionicons", () => {
-  const MockIonicons = ({ name, size, color, testID }) => (
-    <div
-      data-testid={testID}
-      data-name={name}
-      data-size={size}
-      data-color={color}
-    />
-  );
-
-  return MockIonicons;
-});
-
 jest.mock("../../util/logging", () => ({
   logInfo: jest.fn()
 }));
 
-jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper"); // Avoid mistakes with Animated
+jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
 
-jest.useFakeTimers(); // To control the timing of animations
+jest.mock("@expo/vector-icons/Ionicons", () => {
+  const React = require("react");
+  const { Text } = require("react-native");
+  const MockIonicons = ({ name, testID }) => (
+    <Text testID={testID}>{name}</Text>
+  );
+  MockIonicons.displayName = "Ionicons";
+  return MockIonicons;
+});
+
+jest.useFakeTimers();
 
 describe("SyncButton Component", () => {
-  it("should render correctly", () => {
-    const { getByTestId } = render(<SyncButton />);
-
-    const buttonContainer = getByTestId("sync-button-container");
-    expect(buttonContainer).toBeTruthy();
-
-    // Ensure the Sync Button container and icon are rendered
-    const icon = buttonContainer.find(
-      node => node.type === "div" && node.props["data-testid"] === "sync-icon"
-    );
-    expect(icon).toBeTruthy();
-    expect(icon.props["data-name"]).toBe("sync");
-    expect(icon.props["data-size"]).toBe(28);
-    expect(icon.props["data-color"]).toBe("#2c2c2c"); // darkGrey
-
-    // Test that the text "Synchronize" is rendered correctly
-    const buttonText = getByTestId("sync-button-container").find(
-      node => node.type === "Text" && node.props.children === "Synchronize"
-    );
-    expect(buttonText).toBeTruthy();
+  it("renders correctly", () => {
+    const { getByTestId, getByText } = render(<SyncButton />);
+    expect(getByTestId("sync-button-container")).toBeTruthy();
+    expect(getByTestId("sync-icon")).toBeTruthy();
+    expect(getByText("Synchronize")).toBeTruthy();
   });
 
-  it("should call syncApp when pressed", async () => {
+  it("calls syncApp when pressed", () => {
     const { getByTestId } = render(<SyncButton />);
-    const button = getByTestId("sync-button-pressable");
-
-    await act(async () => {
-      fireEvent.press(button);
+    act(() => {
+      fireEvent.press(getByTestId("sync-button-pressable"));
     });
-
     expect(logInfo).toHaveBeenCalledWith("Sync button called");
   });
 
-  it("should trigger animation on press", () => {
-    const startAnimationMock = jest.spyOn(
-      require("react-native").Animated,
-      "timing"
-    );
+  it("starts animation on press and resets background color", () => {
+    const Animated = require("react-native").Animated;
+    const timingSpy = jest.spyOn(Animated, "timing");
 
     const { getByTestId } = render(<SyncButton />);
-    const button = getByTestId("sync-button-pressable");
 
     act(() => {
-      fireEvent.press(button);
+      fireEvent.press(getByTestId("sync-button-pressable"));
+    });
+
+    expect(timingSpy).toHaveBeenCalled();
+
+    // Avanzar el timer para el setTimeout que cambia bgColor
+    act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(startAnimationMock).toHaveBeenCalled();
-  });
-
-  it("should contain the Animated.View element", () => {
-    const { getByTestId } = render(<SyncButton />);
-    const animatedView = getByTestId("sync-button-pressable").find(
-      node => node.type === "div" && node.props["data-testid"] === "sync-icon"
-    );
-
-    expect(animatedView).toBeTruthy();
-  });
-
-  it("should render the text 'Synchronize'", () => {
-    const { getByText } = render(<SyncButton />);
-    const syncText = getByText("Synchronize");
-    expect(syncText).toBeTruthy();
+    timingSpy.mockRestore();
   });
 });

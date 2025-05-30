@@ -11,10 +11,8 @@ import { createStore } from "redux";
 import rootReducer from "../../reducers/rootReducer";
 import { CredentialsContext } from "../../context/credentialsContext";
 import { NavigationContainer } from "@react-navigation/native";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
 
-// Mock the environment variables
+// Mock environment variables
 jest.mock("@env", () => ({
   EXPO_CLIENT_ID: "mock_expo_client_id",
   IOS_CLIENT_ID: "mock_ios_client_id",
@@ -25,26 +23,16 @@ jest.mock("@env", () => ({
 // Mock Google auth request
 jest.mock("expo-auth-session/providers/google", () => ({
   useAuthRequest: () => [
-    jest.fn(), // Mock request function
+    jest.fn(),
     {
       type: "success",
       authentication: { accessToken: "mockAccessToken", idToken: "mockIdToken" }
-    }, // Mock response
-    jest.fn() // Mock promptAsync function
+    },
+    jest.fn()
   ]
 }));
 
-// Mock navigation
-const mockNavigate = jest.fn();
-jest.mock("@react-navigation/native", () => ({
-  ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({
-    navigate: mockNavigate
-  })
-}));
-
-// Mock `useFetch` and `useGoogleFetch` hooks in your test setup file or at the top of your test file
-
+// Mock useFetch and useGoogleFetch hooks
 jest.mock("../../hooks/api/useFetch", () => ({
   __esModule: true,
   default: jest.fn().mockImplementation(() => ({
@@ -57,7 +45,7 @@ jest.mock("../../hooks/api/useFetch", () => ({
 
 jest.mock("../../hooks/api/useGoogleFetch", () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(onReceived => ({
+  default: jest.fn().mockImplementation(() => ({
     performGoogleFetch: jest.fn(),
     isLoading: false,
     error: null,
@@ -65,23 +53,25 @@ jest.mock("../../hooks/api/useGoogleFetch", () => ({
   }))
 }));
 
-// Create a mock store with initial state
+// Create mock store
 const initialState = {
-  activeScreen: {
-    activeScreen: "mockActiveScreen"
-  }
+  activeScreen: { activeScreen: "mockActiveScreen" }
 };
 
 const store = createStore(rootReducer, initialState);
 
-// Function to render LoginScreen wrapped in Provider, CredentialsContext, and NavigationContainer
+// Mock navigation and route to avoid prop warnings
+const mockNavigation = { navigate: jest.fn() };
+const mockRoute = {};
+
+// Render function passing navigation and route explicitly
 const renderLoginScreen = () =>
   render(
     <Provider store={store}>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
-          <LoginScreen />
+          <LoginScreen navigation={mockNavigation} route={mockRoute} />
         </NavigationContainer>
       </CredentialsContext.Provider>
     </Provider>
@@ -93,7 +83,7 @@ const renderLoginScreenWithRenderer = () =>
       <CredentialsContext.Provider
         value={{ storedCredentials: null, setStoredCredentials: jest.fn() }}>
         <NavigationContainer>
-          <LoginScreen />
+          <LoginScreen navigation={mockNavigation} route={mockRoute} />
         </NavigationContainer>
       </CredentialsContext.Provider>
     </Provider>
@@ -107,12 +97,11 @@ beforeEach(() => {
   loginScreenRenderWithRenderer = renderLoginScreenWithRenderer();
 });
 
-//LoginScreen
-describe("LoginScreen", () => {
-  afterEach(() => {
-    cleanup();
-  });
+afterEach(() => {
+  cleanup();
+});
 
+describe("LoginScreen", () => {
   test("Renders correctly the LoginScreen Component", () => {
     const loginScreenSnapshot = loginScreenRenderWithRenderer.toJSON();
     expect(loginScreenSnapshot).toMatchSnapshot();
@@ -155,29 +144,19 @@ describe("LoginScreen", () => {
   });
 });
 
-// PageLogo
 describe("PageLogo", () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it("Renders the PageLogo component correctly", () => {
     const pageLogoSnapshot = renderer.create(<PageLogo />).toJSON();
     expect(pageLogoSnapshot).toMatchSnapshot();
   });
 });
 
-// Formik Integration Tests
 describe("Formik Integration Tests", () => {
   let formikComponent;
 
   beforeEach(() => {
     const loginScreenInstance = loginScreenRenderWithRenderer.root;
     formikComponent = loginScreenInstance.findByType(Formik);
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 
   test("Render a Formik component", () => {
@@ -200,7 +179,6 @@ describe("Formik Integration Tests", () => {
   });
 });
 
-// LoginTextInput
 describe("LoginTextInput", () => {
   let emailInput;
   let passwordInput;
@@ -215,216 +193,131 @@ describe("LoginTextInput", () => {
     renderForm();
   });
 
-  afterEach(() => {
-    cleanup();
+  test("Renders correctly the email-input", () => {
+    expect(emailInput).toBeTruthy();
   });
 
-  describe("Rendering", () => {
-    test("Renders correctly the email-input", () => {
-      expect(emailInput).toBeTruthy();
-    });
-
-    test("Renders correctly the password-input", () => {
-      expect(passwordInput).toBeTruthy();
-    });
+  test("Renders correctly the password-input", () => {
+    expect(passwordInput).toBeTruthy();
   });
 
-  describe("Form State Update", () => {
-    beforeEach(() => {
-      renderForm();
-    });
+  test("Correctly updates form state on onChangeText and onBlur", () => {
+    const { getByTestId } = loginScreenRender;
 
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Correctly updates form state on onChangeText and onBlur", () => {
-      const { getByTestId } = loginScreenRender;
-
-      act(() => {
-        fireEvent.changeText(getByTestId("email-input"), "serenity@gmail.com");
-        fireEvent(getByTestId("email-input"), "blur", {
-          target: { value: "serenity@gmail.com" }
-        });
-
-        fireEvent.changeText(getByTestId("password-input"), "password123");
-        fireEvent(getByTestId("password-input"), "blur", {
-          target: { value: "password123" }
-        });
+    act(() => {
+      fireEvent.changeText(getByTestId("email-input"), "serenity@gmail.com");
+      fireEvent(getByTestId("email-input"), "blur", {
+        target: { value: "serenity@gmail.com" }
       });
 
-      expect(getByTestId("email-input").props.value).toBe("serenity@gmail.com");
-      expect(getByTestId("password-input").props.value).toBe("password123");
-    });
-  });
-
-  // Login StyledButton
-  describe("StyledButton", () => {
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Render StyledButton", () => {
-      const { getByTestId } = loginScreenRender;
-      const styledButtonElement = getByTestId("login-styled-button");
-      expect(styledButtonElement).toBeTruthy();
-    });
-  });
-
-  // MsgBox
-  describe("MsgBox", () => {
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Render a MsgBox", () => {
-      const { getByTestId } = loginScreenRender;
-      const msgBoxElement = getByTestId("msg-box");
-      expect(msgBoxElement).toBeTruthy();
-    });
-
-    test("MsgBox should render a string of letters, numbers or spaces", async () => {
-      const { getByTestId } = loginScreenRender;
-      const msgBoxElement = getByTestId("msg-box");
-      const textContent = msgBoxElement.props.children.toString();
-      expect(textContent).toMatch(/^[a-zA-Z0-9.\s]*$/);
-    });
-  });
-
-  describe("Google StyledButton", () => {
-    afterEach(() => {
-      cleanup();
-    });
-
-    // Google StyledButton
-    test("Render correctly", () => {
-      const { getByTestId } = loginScreenRender;
-      const googleStyledButton = getByTestId("google-styled-button");
-      expect(googleStyledButton).toBeTruthy();
-    });
-
-    test("Render the Google Icon", () => {
-      const { getByTestId } = loginScreenRender;
-      const googleIconElement = getByTestId("google-icon");
-      expect(googleIconElement).toBeTruthy();
-    });
-
-    test("Render the correct text", () => {
-      const { getByTestId } = loginScreenRender;
-      const googleButtonTextElement = getByTestId("google-button-text");
-      const textContent = googleButtonTextElement.props.children.toString();
-      expect(textContent).toMatch("Sign in with Google");
-    });
-
-    test("StyledButton should have an Fontisto component as Child", () => {
-      const { getByTestId } = loginScreenRender;
-      const styledButtonComponent = getByTestId("google-styled-button");
-      const children = styledButtonComponent.props.children;
-
-      let hasFontistoAsAChild = false;
-
-      React.Children.forEach(children, child => {
-        if (child && child.type === Fontisto) {
-          hasFontistoAsAChild = true;
-        }
+      fireEvent.changeText(getByTestId("password-input"), "password123");
+      fireEvent(getByTestId("password-input"), "blur", {
+        target: { value: "password123" }
       });
-      expect(hasFontistoAsAChild).toBe(true);
     });
 
-    test("Render a google-button-text", () => {
-      const { getByTestId } = loginScreenRender;
-      const buttonTextGoogle = getByTestId("google-button-text");
-      expect(buttonTextGoogle).toBeTruthy();
-    });
+    expect(getByTestId("email-input").props.value).toBe("serenity@gmail.com");
+    expect(getByTestId("password-input").props.value).toBe("password123");
+  });
+});
+
+describe("StyledButton", () => {
+  test("Render StyledButton", () => {
+    const { getByTestId } = loginScreenRender;
+    const styledButtonElement = getByTestId("login-styled-button");
+    expect(styledButtonElement).toBeTruthy();
+  });
+});
+
+describe("MsgBox", () => {
+  test("Render a MsgBox", () => {
+    const { getByTestId } = loginScreenRender;
+    const msgBoxElement = getByTestId("msg-box");
+    expect(msgBoxElement).toBeTruthy();
   });
 
-  // Footer
-  describe("FooterView", () => {
-    afterEach(() => {
-      cleanup();
-    });
+  test("MsgBox should render a string of letters, numbers or spaces", () => {
+    const { getByTestId } = loginScreenRender;
+    const msgBoxElement = getByTestId("msg-box");
+    const textContent = msgBoxElement.props.children.toString();
+    expect(textContent).toMatch(/^[a-zA-Z0-9.\s]*$/);
+  });
+});
 
-    test("Render correctly", () => {
-      const { getByTestId } = loginScreenRender;
-      const footerViewElement = getByTestId("footer-view");
-      expect(footerViewElement).toBeTruthy();
-    });
+describe("Google StyledButton", () => {
+  test("Render correctly", () => {
+    const { getByTestId } = loginScreenRender;
+    const googleStyledButton = getByTestId("google-styled-button");
+    expect(googleStyledButton).toBeTruthy();
   });
 
-  describe("FooterText", () => {
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Render correctly", () => {
-      const { getByTestId } = loginScreenRender;
-      const footerTextElement = getByTestId("footer-text");
-      expect(footerTextElement).toBeTruthy();
-    });
-
-    test("Render a text", () => {
-      const { getByTestId } = loginScreenRender;
-      const footerTextElement = getByTestId("footer-text");
-      const textContent = footerTextElement.props.children;
-      expect(textContent).toBe("Don't you have an account already?");
-    });
+  test("Render the Google Icon", () => {
+    const { getByTestId } = loginScreenRender;
+    const googleIconElement = getByTestId("google-icon");
+    expect(googleIconElement).toBeTruthy();
   });
 
-  describe("SignupLink", () => {
-    test("Render correctly", () => {
-      const { getByTestId } = loginScreenRender;
-      const SignupLinkElement = getByTestId("signup-link");
-      expect(typeof SignupLinkElement.props).toBe("object");
-    });
-
-    test("Render the correct text", () => {
-      const { getByTestId } = loginScreenRender;
-      const SignupLinkContent = getByTestId("signup-link-content");
-      const LinkContent = SignupLinkContent.props.children;
-      expect(LinkContent).toBe("Signup");
-    });
+  test("Render the correct text", () => {
+    const { getByTestId } = loginScreenRender;
+    const googleButtonTextElement = getByTestId("google-button-text");
+    const textContent = googleButtonTextElement.props.children.toString();
+    expect(textContent).toMatch("Sign in with Google");
   });
 
-  //Navigation Test
+  test("StyledButton should have an Fontisto component as Child", () => {
+    const { getByTestId } = loginScreenRender;
+    const styledButtonComponent = getByTestId("google-styled-button");
+    const children = styledButtonComponent.props.children;
 
-  describe("loginScreen navigation", () => {
-    let navigation;
+    let hasFontistoAsAChild = false;
 
-    beforeEach(() => {
-      navigation = { navigate: jest.fn() };
+    React.Children.forEach(children, child => {
+      if (child && child.type === Fontisto) {
+        hasFontistoAsAChild = true;
+      }
+    });
+    expect(hasFontistoAsAChild).toBe(true);
+  });
 
-      // Render the LoginScreen wrapped with the necessary providers
-      loginScreenRender = renderLoginScreen();
+  test("Render a google-button-text", () => {
+    const { getByTestId } = loginScreenRender;
+    const buttonTextGoogle = getByTestId("google-button-text");
+    expect(buttonTextGoogle).toBeTruthy();
+  });
+});
+
+describe("FooterView", () => {
+  test("Render correctly", () => {
+    const { getByTestId } = loginScreenRender;
+    const footerViewElement = getByTestId("footer-view");
+    expect(footerViewElement).toBeTruthy();
+  });
+});
+
+describe("FooterText", () => {
+  test("Render correctly", () => {
+    const { getByTestId } = loginScreenRender;
+    const footerTextElement = getByTestId("footer-text");
+    expect(footerTextElement).toBeTruthy();
+  });
+
+  test("Render a text", () => {
+    const { getByTestId } = loginScreenRender;
+    const footerTextElement = getByTestId("footer-text");
+    const textContent = footerTextElement.props.children;
+    expect(textContent).toBe("Don't you have an account already?");
+  });
+});
+
+describe("SignupLink", () => {
+  test("Navigate to SignupScreen when Signup link is clicked", () => {
+    const { getByTestId } = loginScreenRender;
+    const signupLink = getByTestId("signup-link");
+
+    act(() => {
+      fireEvent.press(signupLink);
     });
 
-    afterEach(() => {
-      cleanup();
-    });
-
-    test("Navigate to SignupScreen when Signup link is clicked", () => {
-      const mockNavigation = { navigate: jest.fn() };
-
-      const { getByTestId } = render(
-        <Provider store={store}>
-          <CredentialsContext.Provider
-            value={{
-              storedCredentials: null,
-              setStoredCredentials: jest.fn()
-            }}>
-            <NavigationContainer>
-              <LoginScreen navigation={mockNavigation} />
-            </NavigationContainer>
-          </CredentialsContext.Provider>
-        </Provider>
-      );
-
-      const signupLink = getByTestId("signup-link");
-
-      act(() => {
-        fireEvent.press(signupLink);
-      });
-
-      expect(mockNavigation.navigate).toHaveBeenCalledWith("SignupScreen");
-    });
+    expect(mockNavigation.navigate).toHaveBeenCalledWith("SignupScreen");
   });
 });

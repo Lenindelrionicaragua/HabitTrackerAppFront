@@ -5,9 +5,11 @@ import { Colors } from "../styles/AppStyles";
 import LoginScreen from "./../screens/LoginScreen/LoginScreen";
 import SignupScreen from "./../screens/SignupScreen/SignupScreen";
 import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
-import LinkVerificationScreen from "../screens/LinkVerificationScreen/LinkVerificationScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
+import ResendEmailScreen from "../screens/ResendEmailScreen/ResendEmailScreen";
+import ErrorScreen from "../screens/ErrorScreen/ErrorScreen";
+import SuccessScreen from "../screens/SuccessScreen/SuccessScreen";
 import Banner from "../component/Banner/Banner";
 import useHabitCategories from "../hooks/api/useHabitCategories";
 import useMonthlyStats from "../hooks/api/useMonthlyStats";
@@ -15,6 +17,25 @@ import { CredentialsContext } from "../context/credentialsContext";
 
 const { softGray, black } = Colors;
 const Stack = createNativeStackNavigator();
+const linking = {
+  prefixes: [
+    "https://habit-tracker-app-front.netlify.app",
+    "http://localhost:8081",
+    "zenTimer://"
+  ],
+  config: {
+    screens: {
+      LoginScreen: "login",
+      SignupScreen: "signup",
+      MetricsScreen: "metrics",
+      StopwatchScreen: "stopwatch",
+      WelcomeScreen: "welcome",
+      ResendEmailScreen: "verify/:token",
+      ErrorScreen: "error",
+      SuccessScreen: "success"
+    }
+  }
+};
 
 const RootStack = () => {
   const { storedCredentials } = useContext(CredentialsContext);
@@ -22,7 +43,7 @@ const RootStack = () => {
   void useMonthlyStats(storedCredentials);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -35,7 +56,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        initialRouteName={StopwatchScreen}>
+        initialRouteName="ResendEmailScreen">
         <Stack.Screen
           name="StopwatchScreen"
           component={StopwatchScreen}
@@ -65,9 +86,21 @@ const RootStack = () => {
           testID="welcome-screen"
         />
         <Stack.Screen
-          name="LinkVerificationScreen"
-          component={LinkVerificationScreen}
-          testID="link-verification"
+          name="ResendEmailScreen"
+          component={ResendEmailScreen}
+          testID="resend-email-screen"
+        />
+        <Stack.Screen
+          name="ErrorScreen"
+          component={ErrorScreen}
+          options={{ title: "Error" }}
+          testID="error-screen"
+        />
+        <Stack.Screen
+          name="SuccessScreen"
+          component={SuccessScreen}
+          options={{ title: "Success" }}
+          testID="success-screen"
         />
       </Stack.Navigator>
       <Banner storedCredentials={storedCredentials} />

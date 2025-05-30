@@ -22,18 +22,10 @@ import {
 import { Colors } from "../../styles/AppStyles";
 import { logError, logInfo } from "../../util/logging";
 import TextInputSignupScreen from "../../component/TextInputSignupScreen/TextInputSignupScreen";
-// Credentials Context
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../../context/credentialsContext";
-
-// Hooks for data fetching
 import useFetch from "../../hooks/api/useFetch";
 
-// Redux-store
-import { useDispatch } from "react-redux";
-import { setActiveScreen } from "../../actions/counterActions";
-
-// Colors
 const { white, lightGreen } = Colors;
 
 const SignupScreen = ({ navigation }) => {
@@ -45,14 +37,9 @@ const SignupScreen = ({ navigation }) => {
   const [msg, setMsg] = useState("");
   const [success, setSuccessStatus] = useState("");
 
-  // Context;
   const { setStoredCredentials } = useContext(CredentialsContext);
 
-  // Redux state and actions
-  const dispatch = useDispatch();
-  // const activeScreen = useSelector(state => state.activeScreen.activeScreen);
-
-  const onChange = (event, selectedDate) => {
+  const onChange = (_, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
@@ -63,30 +50,26 @@ const SignupScreen = ({ navigation }) => {
     setShow(true);
   };
 
-  // Handler for receiving API responses
   const onReceived = response => {
     const { success, msg, user } = response;
     if (success) {
-      saveLoginCredentials(user, { successStatus: true, msg });
-      dispatch(setActiveScreen("LinkVerificationScreen"));
-      navigation.navigate("LinkVerificationScreen", {
+      saveLoginCredentials(user);
+      handleMessage({ successStatus: true, msg });
+
+      navigation.navigate("ResendEmailScreen", {
         ...user
       });
-
-      return saveLoginCredentials(user, msg, success);
     } else {
       logInfo(msg);
       handleMessage({ successStatus: false, msg });
     }
   };
 
-  // Fetch API for login request
   const { performFetch, isLoading, error } = useFetch(
-    `/auth/sign-up`,
+    `/auth/pre-sign-up`,
     onReceived
   );
 
-  // Handle errors from API calls
   useEffect(() => {
     if (error) {
       const errorMessage = error.message || "An unexpected error occurred.";
@@ -97,7 +80,6 @@ const SignupScreen = ({ navigation }) => {
     }
   }, [error]);
 
-  // Handle form submission for Signup
   const handleSignup = values => {
     setMsg("");
     setSuccessStatus("");
@@ -120,22 +102,17 @@ const SignupScreen = ({ navigation }) => {
     setMsg(msg);
   };
 
-  // Save user-related credentials to AsyncStorage for later use
   const saveLoginCredentials = user => {
+    if (!user) {
+      logError("User data is missing in the response");
+      return;
+    }
     AsyncStorage.setItem("zenTimerUser", JSON.stringify(user))
       .then(() => {
-        handleMessage({
-          successStatus: true,
-          msg: "User credentials saved successfully"
-        });
         setStoredCredentials(user);
       })
       .catch(error => {
         logError(error);
-        handleMessage({
-          successStatus: false,
-          msg: "Failed to save user credentials"
-        });
       });
   };
 
