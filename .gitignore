@@ -45,3 +45,6 @@ ZenTimerAppFront/
 
 # cypress
 cypress.config.jk
+
+# Android builds
+android/

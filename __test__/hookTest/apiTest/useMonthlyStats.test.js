@@ -1,3 +1,5 @@
+// __test__/hookTest/apiTest/useMonthlyStats.test.js
+
 import React from "react";
 import { renderHook, act } from "@testing-library/react-native";
 import { waitFor } from "@testing-library/react-native";
@@ -12,7 +14,7 @@ jest.mock("axios");
 jest.mock("../../../util/logging");
 jest.mock("../../../util/roundingUtils", () => ({
   ...jest.requireActual("../../../util/roundingUtils"),
-  getDaysInMonth: () => 30
+  getDaysInMonth: () => 31 // Match the logic used in the hook
 }));
 
 describe("useMonthlyStats Hook - Success Case", () => {
@@ -189,7 +191,6 @@ describe("useMonthlyStats Hook - Success Case", () => {
   });
 
   it("should handle errors properly", async () => {
-    // Mock the axios call to return an error
     axios.mockImplementationOnce(() =>
       Promise.reject(new Error("Unexpected server error"))
     );
@@ -198,36 +199,29 @@ describe("useMonthlyStats Hook - Success Case", () => {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
-    // Perform the fetch, which will fail
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
-    // Wait for the error state to be set
     await waitFor(() => {
-      // Expect the error message to be the one returned by useFetch, which is a generic error
       expect(result.current.errorMessage).toBe("Unexpected server error");
       expect(result.current.success).toBe(false);
     });
   });
 
   it("should not fetch data if no credentials are provided", async () => {
-    // Set credentials to null or undefined
     const { result } = renderHook(() => useMonthlyStats(null), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
-    // Check that the fetch function is not called
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
-    // Ensure the hook doesn't try to fetch the data and the fetchMonthlyStats function is not called
     expect(result.current.isLoading).toBe(false);
   });
 
   it("should set loading state correctly while fetching", async () => {
-    // Mock the API call to resolve after a delay
     axios.mockImplementationOnce(
       () =>
         new Promise(resolve =>
@@ -239,15 +233,12 @@ describe("useMonthlyStats Hook - Success Case", () => {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
-    // Check if loading state is true while the fetch is in progress
     expect(result.current.isLoading).toBe(true);
 
-    // Wait for the fetch to complete
     await act(async () => {
       await result.current.fetchMonthlyStats();
     });
 
-    // Check if loading state is false after fetching
     expect(result.current.isLoading).toBe(false);
   });
 });
