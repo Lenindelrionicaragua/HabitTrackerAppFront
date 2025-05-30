@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/iconZenTimerApp.png",
     "userInterfaceStyle": "light",
-    "scheme": "zenTimerScheme",
+    "scheme": "zenTimer",
     "splash": {
       "image": "./assets/splashWelcomeScreen.jpg",
       "resizeMode": "cover",

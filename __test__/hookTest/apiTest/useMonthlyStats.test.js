@@ -121,69 +121,71 @@ describe("useMonthlyStats Hook - Success Case", () => {
     });
 
     await waitFor(() => {
-      expect(dispatchMock).toHaveBeenCalledWith(
-        setMonthlyStats({
-          success: true,
-          totalMinutes: 59,
-          categoryCount: 5,
-          daysWithRecords: 3,
-          totalDailyMinutes: {
-            "2024-11-23": 51,
-            "2024-11-24": 6,
-            "2024-11-26": 2
+      const expectedProcessedData = {
+        success: true,
+        totalMinutes: 59,
+        categoryCount: 5,
+        daysWithRecords: 3,
+        totalDailyMinutes: {
+          "2024-11-23": 51,
+          "2024-11-24": 6,
+          "2024-11-26": 2
+        },
+        categoryData: [
+          {
+            name: "Work",
+            totalMinutes: 52,
+            percentage: 87,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#fb105b", secondary: "#ffa3b0" },
+            dailyGoal: 55
           },
-          categoryData: [
-            {
-              name: "Work",
-              dailyGoal: 55,
-              totalMinutes: 52,
-              percentage: 87,
-              monthlyGoal: 1705,
-              colors: { primary: "#fb105b", secondary: "#ffa3b0" }
-            },
-            {
-              name: "Family time",
-              dailyGoal: 55,
-              totalMinutes: 1,
-              percentage: 1,
-              monthlyGoal: 1705,
-              colors: { primary: "#ff6543", secondary: "#ffb59f" }
-            },
-            {
-              name: "Exercise",
-              dailyGoal: 55,
-              totalMinutes: 0.01,
-              percentage: 1,
-              monthlyGoal: 1705,
-              colors: { primary: "#ad2bd5", secondary: "#d7b8e9" }
-            },
-            {
-              name: "Screen-free",
-              dailyGoal: 55,
-              totalMinutes: 2,
-              percentage: 3,
-              monthlyGoal: 1705,
-              colors: { primary: "#16A085", secondary: "#DAF7A6" }
-            },
-            {
-              name: "Rest",
-              dailyGoal: 55,
-              totalMinutes: 0.01,
-              percentage: 0.01,
-              monthlyGoal: 1705,
-              colors: { primary: "#ffe181", secondary: "#fff4cc" }
-            },
-            {
-              name: "Study",
-              dailyGoal: 55,
-              totalMinutes: 5,
-              percentage: 8,
-              monthlyGoal: 1705,
-              colors: { primary: "#554865", secondary: "#857891" }
-            }
-          ],
-          dailyAverageMinutes: 19.67
-        })
+          {
+            name: "Family time",
+            totalMinutes: 1,
+            percentage: 1,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#ff6543", secondary: "#ffb59f" },
+            dailyGoal: 55
+          },
+          {
+            name: "Exercise",
+            totalMinutes: 0.01,
+            percentage: 1,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
+            dailyGoal: 55
+          },
+          {
+            name: "Screen-free",
+            totalMinutes: 2,
+            percentage: 3,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#16A085", secondary: "#DAF7A6" },
+            dailyGoal: 55
+          },
+          {
+            name: "Rest",
+            totalMinutes: 0.01,
+            percentage: 0.01,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#ffe181", secondary: "#fff4cc" },
+            dailyGoal: 55
+          },
+          {
+            name: "Study",
+            totalMinutes: 5,
+            percentage: 8,
+            monthlyGoal: 55 * 31,
+            colors: { primary: "#554865", secondary: "#857891" },
+            dailyGoal: 55
+          }
+        ],
+        dailyAverageMinutes: 19.67
+      };
+
+      expect(dispatchMock).toHaveBeenCalledWith(
+        setMonthlyStats(expectedProcessedData)
       );
     });
   });

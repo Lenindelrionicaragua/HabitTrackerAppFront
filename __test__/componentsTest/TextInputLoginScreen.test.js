@@ -3,49 +3,37 @@ import { render, fireEvent, act, cleanup } from "@testing-library/react-native";
 import TextInputLoginScreen from "../../component/TextInputLoginScreen/TextInputLoginScreen";
 
 describe("TextInputLoginScreen", () => {
-  test("Renders correctly", () => {
-    const { getByTestId } = render(
-      <TextInputLoginScreen
-        label="Email"
-        icon="mail"
-        onChangeText={() => {}}
-        value=""
-        isPassword={false}
-        hidePassword={false}
-        setHidePassword={() => {}}
-      />
-    );
+  afterEach(() => {
+    cleanup();
+  });
+
+  const defaultProps = {
+    label: "Email",
+    icon: "mail",
+    onChangeText: jest.fn(),
+    value: "",
+    isPassword: false,
+    hidePassword: false,
+    setHidePassword: jest.fn()
+  };
+
+  test("renders text input component", () => {
+    const { getByTestId } = render(<TextInputLoginScreen {...defaultProps} />);
     expect(getByTestId("text-input-login-screen")).toBeTruthy();
   });
 
-  test("Renders label and icon correctly", () => {
+  test("renders label and icon correctly", () => {
     const { getByText, getByTestId } = render(
-      <TextInputLoginScreen
-        label="Email"
-        icon="mail"
-        onChangeText={() => {}}
-        value=""
-        isPassword={false}
-        hidePassword={false}
-        setHidePassword={() => {}}
-      />
+      <TextInputLoginScreen {...defaultProps} />
     );
     expect(getByText("Email")).toBeTruthy();
     expect(getByTestId("octicons-icon")).toBeTruthy();
   });
 
-  test("Calls handleChange when text is inputted", () => {
+  test("calls onChangeText when input changes", () => {
     const handleChangeMock = jest.fn();
     const { getByTestId } = render(
-      <TextInputLoginScreen
-        label="Email"
-        icon="mail"
-        onChangeText={handleChangeMock}
-        value=""
-        isPassword={false}
-        hidePassword={false}
-        setHidePassword={() => {}}
-      />
+      <TextInputLoginScreen {...defaultProps} onChangeText={handleChangeMock} />
     );
 
     const textInput = getByTestId("styled-text-input-login-screen");
@@ -55,9 +43,5 @@ describe("TextInputLoginScreen", () => {
     });
 
     expect(handleChangeMock).toHaveBeenCalledWith("newText");
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 });

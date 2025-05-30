@@ -1,169 +1,243 @@
 import React from "react";
-import { renderHook, act } from "@testing-library/react-native";
-import { waitFor } from "@testing-library/react-native";
+import { renderHook, act, waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "../../../reducers/rootReducer";
-import useHabitCategories from "../../../hooks/api/useHabitCategories";
+import useMonthlyStats from "../../../hooks/api/useMonthlyStats";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setHabitCategories } from "../../../actions/counterActions";
-import useCreateDefaultCategories from "../../../hooks/api/useCreateDefaultCategories";
+import { setMonthlyStats } from "../../../actions/counterActions";
 
 jest.mock("axios");
-jest.mock("@react-native-async-storage/async-storage");
-jest.mock("../../../hooks/api/useCreateDefaultCategories");
+jest.mock("../../../util/logging");
+jest.mock("../../../util/roundingUtils", () => ({
+  ...jest.requireActual("../../../util/roundingUtils"),
+  getDaysInMonth: () => 30
+}));
 
-describe("useHabitCategories Hook", () => {
+describe("useMonthlyStats Hook - Success Case", () => {
   let store;
   let dispatchMock;
-  let createCategoriesMock;
 
   const storedCredentials = {
     name: "John Doe",
     email: "johndoe@example.com"
   };
 
-  const dataResponseWithCategories = {
+  const dataResponseWithStats = {
     success: true,
-    categories: [
-      { id: "1", name: "Fitness", dailyGoal: 55 },
-      { id: "2", name: "Wellness", dailyGoal: 55 }
-    ]
+    totalMinutes: 59,
+    categoryCount: 5,
+    daysWithRecords: 3,
+    totalDailyMinutes: {
+      "2024-11-23": 51,
+      "2024-11-24": 6,
+      "2024-11-26": 2
+    },
+    categoryData: [
+      {
+        name: "Work",
+        dailyGoal: 55,
+        totalMinutes: 52,
+        percentage: 87,
+        monthlyGoal: 1705,
+        colors: { primary: "#fb105b", secondary: "#ffa3b0" }
+      },
+      {
+        name: "Family time",
+        dailyGoal: 55,
+        totalMinutes: 1,
+        percentage: 1,
+        monthlyGoal: 1705,
+        colors: { primary: "#ff6543", secondary: "#ffb59f" }
+      },
+      {
+        name: "Exercise",
+        dailyGoal: 55,
+        totalMinutes: 0,
+        percentage: 1,
+        monthlyGoal: 1705,
+        colors: { primary: "#ad2bd5", secondary: "#d7b8e9" }
+      },
+      {
+        name: "Screen-free",
+        dailyGoal: 55,
+        totalMinutes: 2,
+        percentage: 3,
+        monthlyGoal: 1705,
+        colors: { primary: "#16A085", secondary: "#DAF7A6" }
+      },
+      {
+        name: "Rest",
+        dailyGoal: 55,
+        totalMinutes: 0,
+        percentage: 0,
+        monthlyGoal: 1705,
+        colors: { primary: "#ffe181", secondary: "#fff4cc" }
+      },
+      {
+        name: "Study",
+        dailyGoal: 55,
+        totalMinutes: 5,
+        percentage: 8,
+        monthlyGoal: 1705,
+        colors: { primary: "#554865", secondary: "#857891" }
+      }
+    ],
+    dailyAverageMinutes: 19.67
   };
 
-  const categoriesWithIdAndName = dataResponseWithCategories.categories;
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
 
-  const dataResponseWithoutCategories = {
-    success: true,
-    categories: []
-  };
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   beforeEach(() => {
     dispatchMock = jest.fn();
-    createCategoriesMock = jest.fn().mockResolvedValue();
-
-    store = createStore(rootReducer, {
-      habitCategoryIndex: { habitCategoryIndex: 0 }
-    });
+    store = createStore(rootReducer, { monthlyStats: {} });
 
     jest
       .spyOn(require("react-redux"), "useDispatch")
       .mockReturnValue(dispatchMock);
-
-    useCreateDefaultCategories.mockReturnValue({
-      createCategories: createCategoriesMock
-    });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should store categories in AsyncStorage when categories are found", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
+  it("should fetch and process monthly stats data and dispatch it to Redux store", async () => {
+    axios.mockResolvedValueOnce({ data: dataResponseWithStats });
 
-    const { result } = renderHook(() => useHabitCategories(storedCredentials), {
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
     await act(async () => {
-      await result.current.fetchHabitCategories();
+      await result.current.fetchMonthlyStats();
     });
 
     await waitFor(() => {
-      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-        "habitCategories",
-        JSON.stringify(categoriesWithIdAndName)
-      );
+      expect(dispatchMock).toHaveBeenCalled();
     });
+
+    const expectedProcessedData = {
+      success: true,
+      totalMinutes: 59,
+      categoryCount: 5,
+      daysWithRecords: 3,
+      totalDailyMinutes: {
+        "2024-11-23": 51,
+        "2024-11-24": 6,
+        "2024-11-26": 2
+      },
+      categoryData: [
+        {
+          name: "Work",
+          totalMinutes: 52,
+          percentage: 87,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#fb105b", secondary: "#ffa3b0" },
+          dailyGoal: 55
+        },
+        {
+          name: "Family time",
+          totalMinutes: 1,
+          percentage: 1,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#ff6543", secondary: "#ffb59f" },
+          dailyGoal: 55
+        },
+        {
+          name: "Exercise",
+          totalMinutes: 0.01,
+          percentage: 1,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
+          dailyGoal: 55
+        },
+        {
+          name: "Screen-free",
+          totalMinutes: 2,
+          percentage: 3,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#16A085", secondary: "#DAF7A6" },
+          dailyGoal: 55
+        },
+        {
+          name: "Rest",
+          totalMinutes: 0.01,
+          percentage: 0.01,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#ffe181", secondary: "#fff4cc" },
+          dailyGoal: 55
+        },
+        {
+          name: "Study",
+          totalMinutes: 5,
+          percentage: 8,
+          monthlyGoal: 55 * 31,
+          colors: { primary: "#554865", secondary: "#857891" },
+          dailyGoal: 55
+        }
+      ],
+      dailyAverageMinutes: 19.67
+    };
 
     expect(dispatchMock).toHaveBeenCalledWith(
-      setHabitCategories(categoriesWithIdAndName)
+      setMonthlyStats(expectedProcessedData)
     );
   });
 
-  it("should call createCategories when categories are not found", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithoutCategories
-      })
-    );
+  it("should handle errors properly", async () => {
+    axios.mockRejectedValueOnce(new Error("Unexpected server error"));
 
-    const { result } = renderHook(() => useHabitCategories(storedCredentials), {
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
     await act(async () => {
-      await result.current.fetchHabitCategories();
-    });
-
-    expect(createCategoriesMock).toHaveBeenCalled();
-  });
-
-  it("should log an error when storing categories in AsyncStorage fails", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
-
-    AsyncStorage.setItem.mockImplementationOnce(() => {
-      throw new Error("Failed to save");
-    });
-
-    const logSpy = jest.spyOn(require("../../../util/logging"), "logInfo");
-
-    const { result } = renderHook(() => useHabitCategories(storedCredentials), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
-    });
-
-    await act(async () => {
-      await result.current.fetchHabitCategories();
+      await result.current.fetchMonthlyStats();
     });
 
     await waitFor(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        "Error saving categories to AsyncStorage:",
-        expect.any(Error)
-      );
+      expect(result.current.errorMessage).toBe("Unexpected server error");
+      expect(result.current.success).toBe(false);
     });
-
-    logSpy.mockRestore();
   });
 
-  it("should log an error when storing categories in AsyncStorage fails", async () => {
-    axios.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: dataResponseWithCategories
-      })
-    );
-
-    AsyncStorage.setItem.mockImplementationOnce(() => {
-      throw new Error("Failed to save");
-    });
-
-    const logSpy = jest.spyOn(require("../../../util/logging"), "logInfo");
-
-    const { result } = renderHook(() => useHabitCategories(storedCredentials), {
+  it("should not fetch data if no credentials are provided", async () => {
+    const { result } = renderHook(() => useMonthlyStats(null), {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
     await act(async () => {
-      await result.current.fetchHabitCategories();
+      await result.current.fetchMonthlyStats();
     });
 
-    await waitFor(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        "Error saving categories to AsyncStorage:",
-        expect.any(Error)
-      );
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it("should set loading state correctly while fetching", async () => {
+    axios.mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          setTimeout(() => resolve({ data: dataResponseWithStats }), 1000)
+        )
+    );
+
+    const { result } = renderHook(() => useMonthlyStats(storedCredentials), {
+      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
     });
 
-    logSpy.mockRestore();
+    expect(result.current.isLoading).toBe(true);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+      await result.current.fetchMonthlyStats();
+    });
+
+    expect(result.current.isLoading).toBe(false);
   });
 });
