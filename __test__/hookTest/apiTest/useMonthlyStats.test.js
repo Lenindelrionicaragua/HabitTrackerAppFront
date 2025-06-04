@@ -148,7 +148,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
           },
           {
             name: "Exercise",
-            totalMinutes: 0,
+            totalMinutes: 0.01,
             percentage: 1,
             monthlyGoal: 1650,
             colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
@@ -164,7 +164,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
           },
           {
             name: "Rest",
-            totalMinutes: 0,
+            totalMinutes: 0.01,
             percentage: 0,
             monthlyGoal: 1650,
             colors: { primary: "#ffe181", secondary: "#fff4cc" },
