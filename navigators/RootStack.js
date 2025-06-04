@@ -25,12 +25,14 @@ const linking = {
   ],
   config: {
     screens: {
+      FirstTimeWelcomeScreen: "first-time-welcome",
+      WelcomeScreen: "welcome",
       LoginScreen: "login",
       SignupScreen: "signup",
       MetricsScreen: "metrics",
       StopwatchScreen: "stopwatch",
-      WelcomeScreen: "welcome",
-      ResendEmailScreen: "verify/:token",
+      ResendEmailScreen: "resend-email",
+      EmailVerificationScreen: "verify/:token",
       ErrorScreen: "error",
       SuccessScreen: "success"
     }
