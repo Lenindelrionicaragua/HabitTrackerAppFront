@@ -8,6 +8,7 @@ import WelcomeScreen from "./../screens/WelcomeScreen/WelcomeScreen";
 import StopwatchScreen from "../screens/StopwatchScreen/StopwatchScreen";
 import MetricsScreen from "../screens/MetricsScreen/MetricsScreen";
 import ResendEmailScreen from "../screens/ResendEmailScreen/ResendEmailScreen";
+import EmailVerificationScreen from "../screens/EmailVerificationScreen/EmailVerificationScreen";
 import ErrorScreen from "../screens/ErrorScreen/ErrorScreen";
 import SuccessScreen from "../screens/SuccessScreen/SuccessScreen";
 import Banner from "../component/Banner/Banner";
@@ -25,12 +26,13 @@ const linking = {
   ],
   config: {
     screens: {
+      WelcomeScreen: "welcome",
       LoginScreen: "login",
       SignupScreen: "signup",
       MetricsScreen: "metrics",
       StopwatchScreen: "stopwatch",
-      WelcomeScreen: "welcome",
-      ResendEmailScreen: "verify/:token",
+      ResendEmailScreen: "resend-email",
+      EmailVerificationScreen: "verify/:token",
       ErrorScreen: "error",
       SuccessScreen: "success"
     }
@@ -56,7 +58,7 @@ const RootStack = () => {
             paddingLeft: 20
           }
         }}
-        initialRouteName="ResendEmailScreen">
+        initialRouteName="StopwatchScreen">
         <Stack.Screen
           name="StopwatchScreen"
           component={StopwatchScreen}
@@ -89,6 +91,11 @@ const RootStack = () => {
           name="ResendEmailScreen"
           component={ResendEmailScreen}
           testID="resend-email-screen"
+        />
+        <Stack.Screen
+          name="EmailVerificationScreen"
+          component={EmailVerificationScreen}
+          testID="email-verification-screen"
         />
         <Stack.Screen
           name="ErrorScreen"

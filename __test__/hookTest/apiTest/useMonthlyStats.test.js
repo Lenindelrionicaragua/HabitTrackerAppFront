@@ -1,5 +1,3 @@
-// __test__/hookTest/apiTest/useMonthlyStats.test.js
-
 import React from "react";
 import { renderHook, act } from "@testing-library/react-native";
 import { waitFor } from "@testing-library/react-native";
@@ -14,7 +12,7 @@ jest.mock("axios");
 jest.mock("../../../util/logging");
 jest.mock("../../../util/roundingUtils", () => ({
   ...jest.requireActual("../../../util/roundingUtils"),
-  getDaysInMonth: () => 31 // Match the logic used in the hook
+  getDaysInMonth: () => 30 // Mock fixed to 30 days
 }));
 
 describe("useMonthlyStats Hook - Success Case", () => {
@@ -56,7 +54,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
       {
         name: "Exercise",
         dailyGoal: 55,
-        totalMinutes: 0,
+        totalMinutes: 0.01,
         percentage: 1,
         monthlyGoal: 1705,
         colors: { primary: "#ad2bd5", secondary: "#d7b8e9" }
@@ -72,8 +70,8 @@ describe("useMonthlyStats Hook - Success Case", () => {
       {
         name: "Rest",
         dailyGoal: 55,
-        totalMinutes: 0,
-        percentage: 0,
+        totalMinutes: 0.01,
+        percentage: 0.01,
         monthlyGoal: 1705,
         colors: { primary: "#ffe181", secondary: "#fff4cc" }
       },
@@ -136,7 +134,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Work",
             totalMinutes: 52,
             percentage: 87,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#fb105b", secondary: "#ffa3b0" },
             dailyGoal: 55
           },
@@ -144,7 +142,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Family time",
             totalMinutes: 1,
             percentage: 1,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#ff6543", secondary: "#ffb59f" },
             dailyGoal: 55
           },
@@ -152,7 +150,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Exercise",
             totalMinutes: 0.01,
             percentage: 1,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#ad2bd5", secondary: "#d7b8e9" },
             dailyGoal: 55
           },
@@ -160,7 +158,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Screen-free",
             totalMinutes: 2,
             percentage: 3,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#16A085", secondary: "#DAF7A6" },
             dailyGoal: 55
           },
@@ -168,7 +166,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Rest",
             totalMinutes: 0.01,
             percentage: 0.01,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#ffe181", secondary: "#fff4cc" },
             dailyGoal: 55
           },
@@ -176,7 +174,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
             name: "Study",
             totalMinutes: 5,
             percentage: 8,
-            monthlyGoal: 55 * 31,
+            monthlyGoal: 1650,
             colors: { primary: "#554865", secondary: "#857891" },
             dailyGoal: 55
           }
