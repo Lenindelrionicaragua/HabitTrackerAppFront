@@ -14,7 +14,7 @@ jest.mock("axios");
 jest.mock("../../../util/logging");
 jest.mock("../../../util/roundingUtils", () => ({
   ...jest.requireActual("../../../util/roundingUtils"),
-  getDaysInMonth: () => 31 // Match the logic used in the hook
+  getDaysInMonth: () => 30 // Match the logic used in the hook
 }));
 
 describe("useMonthlyStats Hook - Success Case", () => {
