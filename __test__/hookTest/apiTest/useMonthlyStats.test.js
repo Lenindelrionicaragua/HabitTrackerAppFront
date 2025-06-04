@@ -71,7 +71,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
         name: "Rest",
         dailyGoal: 55,
         totalMinutes: 0.01,
-        percentage: 0,
+        percentage: 0.01,
         monthlyGoal: 1705,
         colors: { primary: "#ffe181", secondary: "#fff4cc" }
       },
@@ -165,7 +165,7 @@ describe("useMonthlyStats Hook - Success Case", () => {
           {
             name: "Rest",
             totalMinutes: 0.01,
-            percentage: 0,
+            percentage: 0.01,
             monthlyGoal: 1650,
             colors: { primary: "#ffe181", secondary: "#fff4cc" },
             dailyGoal: 55
