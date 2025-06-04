@@ -13,7 +13,7 @@ const ErrorScreen = ({ navigation, message }) => {
     <StyledContainer>
       <StatusBar style="dark" />
       <MessageText>{message}</MessageText>
-      <StyledButton onPress={() => navigation.goBack()}>
+      <StyledButton onPress={() => navigation.replace("ResendEmailScreen")}>
         <ButtonText>Try Again</ButtonText>
       </StyledButton>
     </StyledContainer>
